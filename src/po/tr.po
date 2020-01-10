@@ -3,580 +3,1057 @@
 # This file is distributed under the same license as the gnome-documents package.
 #
 # Osman Karagöz <osmank3@gmail.com>, 2012, 2013.
-# Muhammet Kara <muhammetk@gmail.com>, 2011, 2012, 2013.
+# Yaşar Şentürk <yasarix@gmail.com>, 2015.
+# Muhammet Kara <muhammetk@gmail.com>, 2011, 2012, 2013, 2014, 2015, 2016.
+# Neriman Kara <nerimankaraa@gmail.com>, 2016.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-documents master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
 "documents&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2013-04-16 01:24+0000\n"
-"PO-Revision-Date: 2013-04-14 10:48+0300\n"
-"Last-Translator: Muhammet Kara <muhammetk@gmail.com>\n"
-"Language-Team: Turkish <gnome-turk@gnome.org>\n"
+"POT-Creation-Date: 2016-07-31 22:34+0000\n"
+"PO-Revision-Date: 2016-08-06 21:52+0300\n"
+"Last-Translator: Neriman Kara <nerimankaraa@gmail.com>\n"
+"Language-Team: Türkçe <gnome-turk@gnome.org>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Gtranslator 2.91.6\n"
+"X-Generator: Gtranslator 2.91.7\n"
 
-#: ../data/gnome-documents.desktop.in.in.h:1 ../src/application.js:102
-#: ../src/mainWindow.js:53 ../src/mainWindow.js:274
-msgid "Documents"
-msgstr "Belgeler"
+#: ../data/org.gnome.Books.appdata.xml.in.h:1
+#: ../data/org.gnome.Books.desktop.in.h:1 ../src/application.js:109
+#: ../src/embed.js:79 ../src/lib/gd-utils.c:424
+msgid "Books"
+msgstr "Kitaplar"
 
-#: ../data/gnome-documents.desktop.in.in.h:2
-msgid "Access, manage and share documents"
-msgstr "Belgelerinize erişin, yönetin ve paylaşın"
+#: ../data/org.gnome.Books.appdata.xml.in.h:2
+msgid "An e-book manager application for GNOME"
+msgstr "GNOME için e-kitap yönetici uygulaması"
 
-#: ../data/gnome-documents.desktop.in.in.h:3
-msgid "Docs;PDF;Document;"
-msgstr "Dokümanlar;PDF;Belgeler;"
+#: ../data/org.gnome.Books.appdata.xml.in.h:3
+msgid ""
+"A simple application to access and organize your e-books on GNOME. It is "
+"meant to be a simple and elegant replacement for using a file manager to "
+"deal with e-books."
+msgstr ""
+"GNOME üzerinde belgelerinize erişmek, onları düzenlemek için basit bir "
+"uygulama. E-kitaplarınızı düzenlemek için dosya yöneticisinin yerini "
+"alabilecek basit ve şık bir çözüm olarak geliştirildi."
 
-#: ../data/org.gnome.documents.gschema.xml.in.h:1
-#: ../src/resources/app-menu.ui.h:1
+#: ../data/org.gnome.Books.appdata.xml.in.h:4
+#: ../data/org.gnome.Documents.appdata.xml.in.h:4
+msgid "It lets you:"
+msgstr "Şunları yapmanıza olanak tanır:"
+
+#: ../data/org.gnome.Books.appdata.xml.in.h:5
+msgid "View recent e-books"
+msgstr "Yakın zamanda kullanılan e-kitapları görüntülemek"
+
+#: ../data/org.gnome.Books.appdata.xml.in.h:6
+msgid "Search through e-books"
+msgstr "E-kitaplarda arama yapmak"
+
+#: ../data/org.gnome.Books.appdata.xml.in.h:7
+msgid "View e-books (PDF and comics) fullscreen"
+msgstr "E-kitapları (PDF ve çizgi roman) tam ekran görüntülemek"
+
+#: ../data/org.gnome.Books.appdata.xml.in.h:8
+msgid "Print e-books"
+msgstr "E-kitapları yazdırmak"
+
+#: ../data/org.gnome.Books.desktop.in.h:2
+msgid "Access, manage and share books"
+msgstr "Kitaplara erişin, yönetin ve paylaşın"
+
+#: ../data/org.gnome.Books.desktop.in.h:3
+msgid "Books;Comics;ePub;PDF;"
+msgstr "Kitaplar;Çizgi Romanlar;ePub;PDF;"
+
+#: ../data/org.gnome.books.gschema.xml.h:1
+#: ../data/org.gnome.documents.gschema.xml.h:1
 msgid "View as"
 msgstr "Görünüm:"
 
-#: ../data/org.gnome.documents.gschema.xml.in.h:2
+#: ../data/org.gnome.books.gschema.xml.h:2
+#: ../data/org.gnome.documents.gschema.xml.h:2
 msgid "View as type"
 msgstr "Türe göre görüntüle"
 
-#: ../data/org.gnome.documents.gschema.xml.in.h:3
+#: ../data/org.gnome.books.gschema.xml.h:3
+#: ../data/org.gnome.documents.gschema.xml.h:3
+msgid "Sort by"
+msgstr "Şuna göre sırala:"
+
+#: ../data/org.gnome.books.gschema.xml.h:4
+#: ../data/org.gnome.documents.gschema.xml.h:4
+msgid "Sort by type"
+msgstr "Türe göre sırala"
+
+#: ../data/org.gnome.books.gschema.xml.h:5
+#: ../data/org.gnome.documents.gschema.xml.h:5
 msgid "Window size"
 msgstr "Pencere boyutu"
 
-#: ../data/org.gnome.documents.gschema.xml.in.h:4
+#: ../data/org.gnome.books.gschema.xml.h:6
+#: ../data/org.gnome.documents.gschema.xml.h:6
 msgid "Window size (width and height)."
 msgstr "Pencere boyutu (genişlik ve yükseklik)."
 
-#: ../data/org.gnome.documents.gschema.xml.in.h:5
+#: ../data/org.gnome.books.gschema.xml.h:7
+#: ../data/org.gnome.documents.gschema.xml.h:7
 msgid "Window position"
 msgstr "Pencere konumu"
 
-#: ../data/org.gnome.documents.gschema.xml.in.h:6
+#: ../data/org.gnome.books.gschema.xml.h:8
+#: ../data/org.gnome.documents.gschema.xml.h:8
 msgid "Window position (x and y)."
 msgstr "Pencere konumu (x ve y)."
 
-#: ../data/org.gnome.documents.gschema.xml.in.h:7
+#: ../data/org.gnome.books.gschema.xml.h:9
+#: ../data/org.gnome.documents.gschema.xml.h:9
 msgid "Window maximized"
 msgstr "Pencere ekranı kapladı"
 
-#: ../data/org.gnome.documents.gschema.xml.in.h:8
+#: ../data/org.gnome.books.gschema.xml.h:10
+#: ../data/org.gnome.documents.gschema.xml.h:10
 msgid "Window maximized state"
 msgstr "Pencerenin büyütülmüş durumu"
 
+#: ../data/org.gnome.books.gschema.xml.h:11
+#: ../data/org.gnome.documents.gschema.xml.h:11
+msgid "Night mode"
+msgstr "﻿Gece kipi"
+
+#: ../data/org.gnome.books.gschema.xml.h:12
+#: ../data/org.gnome.documents.gschema.xml.h:12
+msgid "Whether the application is in night mode."
+msgstr "﻿Uygulamanın gece kipinde olup olmadığı."
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:1
+#: ../data/org.gnome.Documents.desktop.in.h:1 ../src/application.js:112
+#: ../src/embed.js:79 ../src/lib/gd-utils.c:417 ../src/mainWindow.js:52
+msgid "Documents"
+msgstr "Belgeler"
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:2
+msgid "A document manager application for GNOME"
+msgstr "GNOME için belge yönetimi uygulaması"
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:3
+msgid ""
+"A simple application to access, organize and share your documents on GNOME. "
+"It is meant to be a simple and elegant replacement for using a file manager "
+"to deal with documents. Seamless cloud integration is offered through GNOME "
+"Online Accounts."
+msgstr ""
+"GNOME üzerinde belgelerinize erişmek, onları düzenlemek ve paylaşmak için "
+"basit bir uygulama. Belgelerinizi düzenlemek için dosya yöneticisinin yerini "
+"alabilecek basit ve şık bir çözüm olarak geliştirildi. GNOME Çevirimiçi "
+"Hesapları üzerinden sorunsuz bir bulut bütünleşmesi sunar."
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:5
+msgid "View recent local and online documents"
+msgstr "﻿Son yerel ve çevrimiçi belgeleri görüntülemek"
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:6
+msgid "Access your Google, ownCloud or OneDrive content"
+msgstr "﻿Google, ownCloud veya OneDrive içeriğinize ulaşmak"
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:7
+msgid "Search through documents"
+msgstr "﻿Belgelerde arama yapmak"
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:8
+msgid "See new documents shared by friends"
+msgstr "Arkadaşlarınız tarafından paylaşılan yeni belgeleri görmek"
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:9
+msgid "View documents fullscreen"
+msgstr "Belgeleri tam ekran görüntülemek"
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:10
+msgid "Print documents"
+msgstr "Belgeleri yazdırmak"
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:11
+msgid "Select favorites"
+msgstr "Sık kullanılanları seçmek"
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:12
+msgid "Allow opening full featured editor for non-trivial changes"
+msgstr ""
+"Kapsamlı değişiklikler için tam özellikli düzenleyici açmaya izin vermek"
+
+#: ../data/org.gnome.Documents.desktop.in.h:2
+msgid "Access, manage and share documents"
+msgstr "Belgelerinize erişin, yönetin ve paylaşın"
+
+#: ../data/org.gnome.Documents.desktop.in.h:3
+msgid "Docs;PDF;Document;"
+msgstr "Dokümanlar;PDF;Belgeler;"
+
+#: ../data/ui/app-menu.ui.h:1 ../src/mainToolbar.js:107
+msgid "Fullscreen"
+msgstr "Tam ekran"
+
+#: ../data/ui/app-menu.ui.h:2 ../src/mainToolbar.js:119
+msgid "Night Mode"
+msgstr "Gece Kipi"
+
+#: ../data/ui/app-menu.ui.h:3
+msgid "Keyboard Shortcuts"
+msgstr "Klavye Kısayolları"
+
+#: ../data/ui/app-menu.ui.h:4
+msgid "Help"
+msgstr "Yardım"
+
+#: ../data/ui/app-menu.ui.h:5
+msgid "About"
+msgstr "Hakkında"
+
+#: ../data/ui/app-menu.ui.h:6
+#| msgid "Quit"
+msgctxt "app menu"
+msgid "Quit"
+msgstr "Çıkış"
+
+#: ../data/ui/help-overlay.ui.h:1
+msgctxt "shortcut window"
+msgid "General"
+msgstr "Genel"
+
+#: ../data/ui/help-overlay.ui.h:2
+msgctxt "shortcut window"
+msgid "Show help"
+msgstr "Yardımı göster"
+
+#: ../data/ui/help-overlay.ui.h:3
+msgctxt "shortcut window"
+msgid "Quit"
+msgstr "Çıkış"
+
+#: ../data/ui/help-overlay.ui.h:4
+msgctxt "shortcut window"
+msgid "Search"
+msgstr "Ara"
+
+#: ../data/ui/help-overlay.ui.h:5
+msgctxt "shortcut window"
+msgid "Print the current document"
+msgstr "Geçerli belgeyi yazdır"
+
+#: ../data/ui/help-overlay.ui.h:6
+msgctxt "shortcut window"
+msgid "Navigation"
+msgstr "Gezinme"
+
+#: ../data/ui/help-overlay.ui.h:7
+msgctxt "shortcut window"
+msgid "Go back"
+msgstr "Geri git"
+
+#: ../data/ui/help-overlay.ui.h:8
+msgctxt "shortcut window"
+msgid "Preview"
+msgstr "Önizleme"
+
+#: ../data/ui/help-overlay.ui.h:9
+msgctxt "shortcut window"
+msgid "Zoom in"
+msgstr "Yakınlaştır"
+
+#: ../data/ui/help-overlay.ui.h:10
+msgctxt "shortcut window"
+msgid "Zoom out"
+msgstr "Uzaklaştır"
+
+#: ../data/ui/help-overlay.ui.h:11
+msgctxt "shortcut window"
+msgid "Bookmark the current page"
+msgstr "Geçerli sayfayı yer imlerine ekle"
+
+#: ../data/ui/help-overlay.ui.h:12
+msgctxt "shortcut window"
+msgid "Open places and bookmarks dialog"
+msgstr "Konumlar ve yer imleri iletişim penceresini aç"
+
+#: ../data/ui/help-overlay.ui.h:13
+msgctxt "shortcut window"
+msgid "Copy selected text to clipboard"
+msgstr "Seçili metni panoya kopyala"
+
+#: ../data/ui/help-overlay.ui.h:14
+msgctxt "shortcut window"
+msgid "Rotate anti-clockwise"
+msgstr "Saat yönünün tersine döndür"
+
+#: ../data/ui/help-overlay.ui.h:15
+msgctxt "shortcut window"
+msgid "Rotate clockwise"
+msgstr "Saat yönünde döndür"
+
+#: ../data/ui/help-overlay.ui.h:16
+msgctxt "shortcut window"
+msgid "Next occurrence of the search string"
+msgstr "Arama dizgisinin belirdiği bir sonraki yer"
+
+#: ../data/ui/help-overlay.ui.h:17
+msgctxt "shortcut window"
+msgid "Previous occurrence of the search string"
+msgstr "Arama dizgisinin belirdiği bir önceki yer"
+
+#: ../data/ui/help-overlay.ui.h:18
+msgctxt "shortcut window"
+msgid "Presentation mode"
+msgstr "Sunum kipi"
+
+#: ../data/ui/help-overlay.ui.h:19
+msgctxt "shortcut window"
+msgid "Open action menu"
+msgstr "Eylem menüsünü aç"
+
+#: ../data/ui/help-overlay.ui.h:20
+msgctxt "shortcut window"
+msgid "Fullscreen"
+msgstr "Tam ekran"
+
+#: ../data/ui/organize-collection-dialog.ui.h:1
+msgid "Enter a name for your first collection"
+msgstr "İlk koleksiyonunuz için bir isim girin"
+
+#: ../data/ui/organize-collection-dialog.ui.h:2
+msgid "New Collection…"
+msgstr "Yeni Koleksiyon…"
+
+#: ../data/ui/organize-collection-dialog.ui.h:3 ../src/sharing.js:226
+msgid "Add"
+msgstr "Ekle"
+
+#: ../data/ui/organize-collection-dialog.ui.h:4 ../src/mainToolbar.js:239
+msgid "Cancel"
+msgstr "İptal"
+
+#. Label for Done button in Sharing dialog
+#: ../data/ui/organize-collection-dialog.ui.h:5 ../src/sharing.js:112
+msgid "Done"
+msgstr "Yapıldı"
+
+#: ../data/ui/preview-context-menu.ui.h:1
+msgid "_Copy"
+msgstr "_Kopyala"
+
+#. Translators: this is the Open action in a context menu
+#: ../data/ui/preview-menu.ui.h:1 ../data/ui/selection-toolbar.ui.h:1
+#: ../src/selections.js:986
+msgid "Open"
+msgstr "Aç"
+
+#: ../data/ui/preview-menu.ui.h:2
+msgid "Edit"
+msgstr "Düzenle"
+
+#: ../data/ui/preview-menu.ui.h:3
+msgid "Print…"
+msgstr "Yazdır..."
+
+#: ../data/ui/preview-menu.ui.h:4
+msgid "Present"
+msgstr "Sunum"
+
+#: ../data/ui/preview-menu.ui.h:5
+msgid "Zoom In"
+msgstr "Yakınlaştır"
+
+#: ../data/ui/preview-menu.ui.h:6
+msgid "Zoom Out"
+msgstr "Uzaklaştır"
+
+#: ../data/ui/preview-menu.ui.h:7
+msgid "Rotate ↶"
+msgstr "↶ döndür"
+
+#: ../data/ui/preview-menu.ui.h:8
+msgid "Rotate ↷"
+msgstr "↷ döndür"
+
+#: ../data/ui/preview-menu.ui.h:9 ../data/ui/selection-toolbar.ui.h:2
+#: ../src/properties.js:61
+msgid "Properties"
+msgstr "Özellikler"
+
+#: ../data/ui/selection-menu.ui.h:1
+msgid "Select All"
+msgstr "Tümünü Seç"
+
+#: ../data/ui/selection-menu.ui.h:2
+msgid "Select None"
+msgstr "Hiçbirini Seçme"
+
+#: ../data/ui/selection-toolbar.ui.h:3 ../src/embed.js:83 ../src/search.js:202
+#: ../src/search.js:208
+msgid "Collections"
+msgstr "Koleksiyonlar"
+
+#: ../data/ui/view-menu.ui.h:1
+msgid "View items as a grid of icons"
+msgstr "Ögeleri simge olarak göster"
+
+#: ../data/ui/view-menu.ui.h:2
+msgid "View items as a list"
+msgstr "Ögeleri liste olarak göster"
+
+#: ../data/ui/view-menu.ui.h:3
+msgid "Sort"
+msgstr "Sırala"
+
+#: ../data/ui/view-menu.ui.h:4
+msgid "Author"
+msgstr "Yazar"
+
+#: ../data/ui/view-menu.ui.h:5
+msgid "Date"
+msgstr "Tarih"
+
+#: ../data/ui/view-menu.ui.h:6
+msgid "Name"
+msgstr "Ad"
+
+#: ../src/application.js:123
+msgid "Show the version of the program"
+msgstr "Programın sürümünü göster"
+
+#: ../src/documents.js:688
+msgid "Failed to print document"
+msgstr "Belge yazdırma başarısız oldu"
+
 #. Translators: this refers to local documents
-#: ../src/documents.js:590 ../src/search.js:416
+#: ../src/documents.js:740 ../src/search.js:535
 msgid "Local"
 msgstr "Yerel"
 
 #. Translators: Documents ships a "Getting Started with Documents"
 #. tutorial PDF. The "GNOME" string below is displayed as the author name
 #. of that document, and doesn't normally need to be translated.
-#: ../src/documents.js:611
+#: ../src/documents.js:782
 msgid "GNOME"
 msgstr "GNOME"
 
-#: ../src/documents.js:612
+#: ../src/documents.js:783
 msgid "Getting Started with Documents"
 msgstr "Belgeler ile Çalışmaya Başlama"
 
-#. overridden
-#: ../src/documents.js:659
-msgid "Google Docs"
-msgstr "Google Belgeleri"
-
-#: ../src/documents.js:660
-msgid "Google"
-msgstr "Google"
-
-#: ../src/documents.js:724 ../src/documents.js:823
-msgid "Spreadsheet"
-msgstr "Hesap Tablosu"
-
-#: ../src/documents.js:726 ../src/documents.js:825 ../src/presentation.js:48
-msgid "Presentation"
-msgstr "Sunum"
-
-#: ../src/documents.js:728 ../src/documents.js:827
+#: ../src/documents.js:799 ../src/documents.js:983 ../src/documents.js:1051
+#: ../src/documents.js:1159
 msgid "Collection"
 msgstr "Koleksiyon"
 
-#: ../src/documents.js:730 ../src/documents.js:829
+#. overridden
+#: ../src/documents.js:861
+msgid "Google Docs"
+msgstr "Google Belgeleri"
+
+#: ../src/documents.js:862
+msgid "Google"
+msgstr "Google"
+
+#: ../src/documents.js:985 ../src/documents.js:1161
+msgid "Spreadsheet"
+msgstr "Hesap Tablosu"
+
+#: ../src/documents.js:987 ../src/documents.js:1163 ../src/presentation.js:44
+msgid "Presentation"
+msgstr "Sunum"
+
+#: ../src/documents.js:989 ../src/documents.js:1165
+msgid "e-Book"
+msgstr "e-kitap"
+
+#: ../src/documents.js:991 ../src/documents.js:1167
 msgid "Document"
 msgstr "Belge"
 
 #. overridden
-#: ../src/documents.js:757 ../src/documents.js:758
-msgid "Skydrive"
-msgstr "Skydrive"
+#: ../src/documents.js:1030
+msgid "ownCloud"
+msgstr "ownCloud"
 
-#: ../src/documents.js:942
+#. overridden
+#: ../src/documents.js:1093 ../src/documents.js:1094
+msgid "OneDrive"
+msgstr "OneDrive"
+
+#: ../src/documents.js:1341
 msgid "Please check the network connection."
 msgstr "Lütfen internet bağlantınızı kontrol edin."
 
-#: ../src/documents.js:945
+#: ../src/documents.js:1344
 msgid "Please check the network proxy settings."
 msgstr "Lütfen vekil sunucu ayarlarınızı kontrol edin."
 
-#: ../src/documents.js:948
+#: ../src/documents.js:1347
 msgid "Unable to sign in to the document service."
 msgstr "Belge servisinde oturum açılamadı."
 
-#: ../src/documents.js:951
+#: ../src/documents.js:1350
 msgid "Unable to locate this document."
 msgstr "Belge bulunamadı."
 
-#: ../src/documents.js:954
-#, c-format
+#: ../src/documents.js:1353
+#, javascript-format
 msgid "Hmm, something is fishy (%d)."
 msgstr "Hmm, şüpheli bir durum var (%d)."
 
+#: ../src/documents.js:1360
+msgid ""
+"You are using a preview of Books. Full viewing capabilities are coming soon!"
+msgstr ""
+"Kitaplar uygulamasının bir önizlemesini kullanıyorsunuz. Tam kapsamlı "
+"görüntüleme yetenekleri yakında geliyor!"
+
+#: ../src/documents.js:1362
+msgid ""
+"LibreOffice support is not available. Please contact your system "
+"administrator."
+msgstr ""
+"LibreOffice desteği kullanılabilir değil. Lütfen sistem yöneticinize "
+"başvurun."
+
 #. Translators: %s is the title of a document
-#: ../src/documents.js:967
-#, c-format
+#: ../src/documents.js:1383
+#, javascript-format
 msgid "Oops! Unable to load “%s”"
 msgstr "Ahh! “%s” yüklenemedi."
 
-#: ../src/edit.js:191
+#: ../src/edit.js:154
 msgid "View"
 msgstr "Görünüm"
 
-#: ../src/embed.js:63 ../src/lib/gd-places-bookmarks.c:382
-#: ../src/lib/gd-places-links.c:257 ../src/view.js:71
-msgid "Loading…"
-msgstr "Yükleniyor..."
+#: ../src/evinceview.js:654 ../src/lib/gd-places-bookmarks.c:656
+msgid "Bookmarks"
+msgstr "Yer İmleri"
 
-#: ../src/embed.js:145
-msgid "No Documents Found"
-msgstr "Hiç Belge Bulunamadı"
+#: ../src/evinceview.js:662
+msgid "Bookmark this page"
+msgstr "Bu sayfayı yer imlerine ekle"
 
-#. Translators: %s here is "System Settings", which is in a separate string
-#. due to markup, and should be translated only in the context of this sentence
-#: ../src/embed.js:166
-#, c-format
-msgid "You can add your online accounts in %s"
-msgstr "Çevrimiçi hesaplarınızı %s'ndan ekleyebilirsiniz"
-
-#. Translators: this should be translated in the context of the
-#. "You can add your online accounts in System Settings" sentence above
-#: ../src/embed.js:170
-msgid "System Settings"
-msgstr "Sistem Ayarları"
-
-#: ../src/lib/gd-nav-bar.c:235
+#: ../src/lib/gd-nav-bar.c:242
 #, c-format
 msgid "Page %u of %u"
 msgstr "Sayfa %u/%u"
 
-#: ../src/lib/gd-pdf-loader.c:226
+#: ../src/lib/gd-pdf-loader.c:247
 msgid "Unable to load the document"
 msgstr "Belge yüklenemedi"
 
-#: ../src/lib/gd-pdf-loader.c:676
+#: ../src/lib/gd-pdf-loader.c:715
 msgid "LibreOffice is required to view this document"
 msgstr "Bu belgeyi görüntülemek için LibreOffice gerekir"
 
 #. Translators: %s is the number of the page, already formatted
 #. * as a string, for example "Page 5".
 #.
-#: ../src/lib/gd-places-bookmarks.c:312
+#: ../src/lib/gd-places-bookmarks.c:321
 #, c-format
 msgid "Page %s"
 msgstr "Sayfa %s"
 
-#: ../src/lib/gd-places-bookmarks.c:375
+#: ../src/lib/gd-places-bookmarks.c:384
 msgid "No bookmarks"
 msgstr "Yer imi yok"
 
-#: ../src/lib/gd-places-bookmarks.c:647
-msgid "Bookmarks"
-msgstr "Yer İmleri"
+#: ../src/lib/gd-places-bookmarks.c:392 ../src/lib/gd-places-links.c:257
+msgid "Loading…"
+msgstr "Yükleniyor..."
 
 #: ../src/lib/gd-places-links.c:342
 msgid "No table of contents"
 msgstr "İçerik tablosu yok"
 
-#: ../src/lib/gd-places-links.c:518
+#: ../src/lib/gd-places-links.c:514
 msgid "Contents"
 msgstr "İçerik"
 
-#: ../src/mainToolbar.js:62
+#: ../src/lib/gd-utils.c:418
+msgid "A document manager application"
+msgstr "Belge yönetimi uygulaması"
+
+#: ../src/lib/gd-utils.c:425
+msgid "An e-books manager application"
+msgstr "Bir e-kitap yönetici uygulaması"
+
+#: ../src/lib/gd-utils.c:433
+msgid "translator-credits"
+msgstr ""
+"Muhammet Kara <muhammetk@gmail.com>\n"
+"GNOME Türkiye Çeviri Takımı <gnome-turk@gnome.org>"
+
+#: ../src/mainToolbar.js:91
+#| msgid "Search"
+msgctxt "toolbar button tooltip"
 msgid "Search"
 msgstr "Ara"
 
-#: ../src/mainToolbar.js:73
+#: ../src/mainToolbar.js:127
 msgid "Back"
 msgstr "Geri"
 
-#: ../src/mainToolbar.js:153
-#, c-format
-msgid "Results for “%s”"
-msgstr "“%s” için sonuçlar"
+#. Translators: this is the menu to change view settings
+#: ../src/mainToolbar.js:185
+msgid "View Menu"
+msgstr "Görünüm Menüsü"
 
-#: ../src/mainToolbar.js:161
+#: ../src/mainToolbar.js:213
 msgid "Click on items to select them"
 msgstr "Seçmek için ögelerin üzerine tıklayın"
 
-#: ../src/mainToolbar.js:163
-#, c-format
+#: ../src/mainToolbar.js:215
+#, javascript-format
 msgid "%d selected"
 msgid_plural "%d selected"
 msgstr[0] "%d seçildi"
 
-#. Label for Done button in Sharing dialog
-#: ../src/mainToolbar.js:192 ../src/properties.js:59 ../src/sharing.js:93
-msgid "Done"
-msgstr "Yapıldı"
-
-#: ../src/mainToolbar.js:233
+#: ../src/mainToolbar.js:299
 msgid "Select Items"
 msgstr "Ögeleri Seç"
 
-#: ../src/mainWindow.js:273
-msgid "translator-credits"
-msgstr "GNOME Türkiye Çeviri Takımı <gnome-turk@gnome.org>"
+#. Translators: only one item has been deleted and %s is its name
+#: ../src/notifications.js:49
+#, javascript-format
+msgid "“%s” deleted"
+msgstr "“%s” silindi"
 
-#: ../src/mainWindow.js:275
-msgid "A document manager application"
-msgstr "Belge yönetimi uygulaması"
+#. Translators: one or more items might have been deleted, and %d
+#. is the count
+#: ../src/notifications.js:53
+#, javascript-format
+msgid "%d item deleted"
+msgid_plural "%d items deleted"
+msgstr[0] "%d öge silindi"
 
-#: ../src/notifications.js:87
-#, c-format
+#: ../src/notifications.js:62 ../src/selections.js:387
+msgid "Undo"
+msgstr "Geri Al"
+
+#: ../src/notifications.js:160
+#, javascript-format
 msgid "Printing “%s”: %s"
 msgstr "“%s” yazdırılıyor: %s"
 
-#: ../src/notifications.js:143
+#: ../src/notifications.js:216
 msgid "Your documents are being indexed"
 msgstr "Belgeleriniz dizine ekleniyor"
 
-#: ../src/notifications.js:144
+#: ../src/notifications.js:217
 msgid "Some documents might not be available during this process"
 msgstr "Bazı belgeler bu işlem sırasında kullanım dışı olabilir"
 
 #. Translators: %s refers to an online account provider, e.g.
 #. "Google", or "Windows Live".
-#: ../src/notifications.js:166
-#, c-format
+#: ../src/notifications.js:239
+#, javascript-format
 msgid "Fetching documents from %s"
 msgstr "Belgeler %s konumundan getiriliyor"
 
-#: ../src/notifications.js:168
+#: ../src/notifications.js:241
 msgid "Fetching documents from online accounts"
 msgstr "Belgeler çevrimiçi hesaplardan getiriliyor"
 
-#: ../src/presentation.js:105
+#: ../src/password.js:42
+msgid "Password Required"
+msgstr "Parola Gerekli"
+
+#: ../src/password.js:45
+msgid "_Unlock"
+msgstr "_Kilidi Aç"
+
+#: ../src/password.js:61
+#, javascript-format
+msgid "Document %s is locked and requires a password to be opened."
+msgstr "%s belgesi kilitli ve açmak için parola gerektiriyor."
+
+#: ../src/password.js:75
+msgid "_Password"
+msgstr "_Parola"
+
+#: ../src/presentation.js:102
 msgid "Running in presentation mode"
 msgstr "Sunum kipinde çalışıyor"
 
-#: ../src/presentation.js:158
+#: ../src/presentation.js:125
 msgid "Present On"
 msgstr "Sunum"
 
-#: ../src/properties.js:57 ../src/resources/preview-menu.ui.h:9
-#: ../src/selections.js:781
-msgid "Properties"
-msgstr "Özellikler"
+#. Translators: "Mirrored" describes when both displays show the same view
+#: ../src/presentation.js:161
+msgid "Mirrored"
+msgstr "Yansılanmış"
+
+#: ../src/presentation.js:163
+msgid "Primary"
+msgstr "Birincil"
+
+#: ../src/presentation.js:165
+msgid "Off"
+msgstr "Kapalı"
+
+#: ../src/presentation.js:167
+msgid "Secondary"
+msgstr "İkincil"
+
+#. Translators: this is the Open action in a context menu
+#: ../src/preview.js:238 ../src/selections.js:983
+#, javascript-format
+msgid "Open with %s"
+msgstr "%s ile Aç"
+
+#: ../src/preview.js:482
+msgid "Find Previous"
+msgstr "Öncekini Bul"
+
+#: ../src/preview.js:488
+msgid "Find Next"
+msgstr "Sonrakini Bul"
 
 #. Title item
 #. Translators: "Title" is the label next to the document title
 #. in the properties dialog
-#. Translators: "Title" refers to "Match Title" when searching
-#: ../src/properties.js:79 ../src/search.js:257
+#: ../src/properties.js:81
+msgctxt "Document Title"
 msgid "Title"
 msgstr "Başlık"
 
 #. Translators: "Author" is the label next to the document author
 #. in the properties dialog
-#. Translators: "Author" refers to "Match Author" when searching
-#: ../src/properties.js:88 ../src/search.js:260
+#: ../src/properties.js:90
+msgctxt "Document Author"
 msgid "Author"
 msgstr "Yazar"
 
 #. Source item
-#: ../src/properties.js:95
+#: ../src/properties.js:97
 msgid "Source"
 msgstr "Kaynak"
 
 #. Date Modified item
-#: ../src/properties.js:101
+#: ../src/properties.js:103
 msgid "Date Modified"
 msgstr "Değiştirilme Tarihi"
 
-#: ../src/properties.js:108
+#: ../src/properties.js:110
 msgid "Date Created"
 msgstr "Oluşturulma Tarihi"
 
 #. Document type item
 #. Translators: "Type" is the label next to the document type
 #. (PDF, spreadsheet, ...) in the properties dialog
-#. Translators: "Type" refers to a search filter on the document type
-#. (PDF, spreadsheet, ...)
-#: ../src/properties.js:117 ../src/search.js:166
+#: ../src/properties.js:119
+msgctxt "Document Type"
 msgid "Type"
 msgstr "Tür"
 
-#: ../src/resources/app-menu.ui.h:2
-msgid "Grid"
-msgstr "Izgara"
-
-#: ../src/resources/app-menu.ui.h:3
-msgid "List"
-msgstr "Liste"
-
-#: ../src/resources/app-menu.ui.h:4
-msgid "Fullscreen"
-msgstr "Tam ekran"
-
-#: ../src/resources/app-menu.ui.h:5
-msgid "About Documents"
-msgstr "Belgeler Hakkında"
-
-#: ../src/resources/app-menu.ui.h:6
-msgid "Help"
-msgstr "Yardım"
-
-#: ../src/resources/app-menu.ui.h:7
-msgid "Quit"
-msgstr "Çıkış"
-
-#. Translators: this is the Open action in a context menu
-#: ../src/resources/preview-menu.ui.h:1 ../src/selections.js:877
-msgid "Open"
-msgstr "Aç"
-
-#: ../src/resources/preview-menu.ui.h:2
-msgid "Edit"
-msgstr "Düzenle"
-
-#: ../src/resources/preview-menu.ui.h:3
-msgid "Print…"
-msgstr "Yazdır..."
-
-#: ../src/resources/preview-menu.ui.h:4
-msgid "Present"
-msgstr "Sunum"
-
-#: ../src/resources/preview-menu.ui.h:5
-msgid "Zoom In"
-msgstr "Yakınlaştır"
-
-#: ../src/resources/preview-menu.ui.h:6
-msgid "Zoom Out"
-msgstr "Uzaklaştır"
-
-#: ../src/resources/preview-menu.ui.h:7
-msgid "Rotate ↶"
-msgstr "↶ döndür"
-
-#: ../src/resources/preview-menu.ui.h:8
-msgid "Rotate ↷"
-msgstr "↷ döndür"
-
-#: ../src/resources/selection-menu.ui.h:1
-msgid "Select All"
-msgstr "Tümünü Seç"
-
-#: ../src/resources/selection-menu.ui.h:2
-msgid "Select None"
-msgstr "Hiçbirini Seçme"
-
-#: ../src/search.js:112
+#: ../src/search.js:125
 msgid "Category"
 msgstr "Kategori"
 
 #. Translators: this refers to new and recent documents
 #. Translators: this refers to documents
-#: ../src/search.js:117 ../src/search.js:169 ../src/search.js:254
-#: ../src/search.js:410
+#: ../src/search.js:130 ../src/search.js:199 ../src/search.js:336
+#: ../src/search.js:529
 msgid "All"
 msgstr "Tümü"
 
 #. Translators: this refers to favorite documents
-#: ../src/search.js:123
+#: ../src/search.js:136
 msgid "Favorites"
 msgstr "Sık Kullanılanlar"
 
 #. Translators: this refers to shared documents
-#: ../src/search.js:128
+#: ../src/search.js:141
 msgid "Shared with you"
 msgstr "Seninle Paylaşılan"
 
-#: ../src/search.js:171
-msgid "Collections"
-msgstr "Koleksiyonlar"
+#. Translators: "Type" refers to a search filter on the document type
+#. (PDF, spreadsheet, ...)
+#: ../src/search.js:196
+msgctxt "Search Filter"
+msgid "Type"
+msgstr "Tür"
 
-#: ../src/search.js:175
+#: ../src/search.js:212
 msgid "PDF Documents"
 msgstr "PDF Belgeleri"
 
-#: ../src/search.js:179
+#: ../src/search.js:219
+msgid "e-Books"
+msgstr "e-Kitaplar"
+
+#: ../src/search.js:223
+msgid "Comics"
+msgstr "Çizgi Romanlar"
+
+#: ../src/search.js:228
 msgid "Presentations"
 msgstr "Sunumlar"
 
-#: ../src/search.js:182
+#: ../src/search.js:231
 msgid "Spreadsheets"
 msgstr "Hesap Tabloları"
 
-#: ../src/search.js:185
+#: ../src/search.js:234
 msgid "Text Documents"
 msgstr "Metin Belgeleri"
 
-#. Translators: this is a verb that refers to "All", "Title" and "Author",
-#. as in "Match All", "Match Title" and "Match Author"
-#: ../src/search.js:251
+#. Translators: this is a verb that refers to "All", "Title", "Author",
+#. and "Content" as in "Match All", "Match Title", "Match Author", and
+#. "Match Content"
+#: ../src/search.js:333
 msgid "Match"
 msgstr "Eşleştir"
 
-#: ../src/search.js:406
+#. Translators: "Title" refers to "Match Title" when searching
+#: ../src/search.js:339
+msgctxt "Search Filter"
+msgid "Title"
+msgstr "Başlık"
+
+#. Translators: "Author" refers to "Match Author" when searching
+#: ../src/search.js:342
+msgctxt "Search Filter"
+msgid "Author"
+msgstr "Yazar"
+
+#. Translators: "Content" refers to "Match Content" when searching
+#: ../src/search.js:345
+msgctxt "Search Filter"
+msgid "Content"
+msgstr "İçerik"
+
+#: ../src/search.js:525
 msgid "Sources"
 msgstr "Kaynaklar"
 
-#. Translators: "Organize" refers to documents in this context
-#: ../src/selections.js:614 ../src/selections.js:773
-msgid "Organize"
-msgstr "Düzenle"
+#: ../src/selections.js:360 ../src/selections.js:362
+msgid "Rename…"
+msgstr "Yeniden Adlandır…"
 
-#: ../src/selections.js:749
-msgid "Print"
-msgstr "Yazdır"
-
-#: ../src/selections.js:756
+#: ../src/selections.js:366 ../src/selections.js:368
 msgid "Delete"
 msgstr "Sil"
 
-#: ../src/selections.js:788
-msgid "Share"
-msgstr "Paylaş"
+#: ../src/selections.js:382
+#, javascript-format
+msgid "“%s” removed"
+msgstr "“%s” kaldırıldı"
 
-#. Translators: this is the Open action in a context menu
-#: ../src/selections.js:874
-#, c-format
-msgid "Open with %s"
-msgstr "%s ile Aç"
+#: ../src/selections.js:779
+msgid "Rename"
+msgstr "Yeniden Adlandır"
 
-#: ../src/sharing.js:89
+#. Translators: "Collections" refers to documents in this context
+#: ../src/selections.js:785
+msgctxt "Dialog Title"
+msgid "Collections"
+msgstr "Koleksiyonlar"
+
+#: ../src/sharing.js:108
 msgid "Sharing Settings"
 msgstr "Paylaşım Ayarları"
 
 #. Label for widget group for changing document permissions
-#: ../src/sharing.js:126
+#: ../src/sharing.js:145
 msgid "Document permissions"
 msgstr "Belge izinleri"
 
 #. Label for permission change in Sharing dialog
-#: ../src/sharing.js:133 ../src/sharing.js:311
+#: ../src/sharing.js:152 ../src/sharing.js:330
 msgid "Change"
 msgstr "Değiştir"
 
 #. Label for radiobutton that sets doc permission to private
-#: ../src/sharing.js:157 ../src/sharing.js:286
+#: ../src/sharing.js:176 ../src/sharing.js:305
 msgid "Private"
 msgstr "Özel"
 
-#: ../src/sharing.js:167 ../src/sharing.js:279
+#: ../src/sharing.js:186 ../src/sharing.js:298
 msgid "Public"
 msgstr "Genel"
 
 #. Label for checkbutton that sets doc permission to Can edit
-#: ../src/sharing.js:171 ../src/sharing.js:281
+#: ../src/sharing.js:190 ../src/sharing.js:300
 msgid "Everyone can edit"
 msgstr "Herkes düzenleyebilir"
 
 #. Label for widget group used for adding new contacts
-#: ../src/sharing.js:178
+#: ../src/sharing.js:197
 msgid "Add people"
 msgstr "Kişi ekle"
 
 #. Editable text in entry field
-#: ../src/sharing.js:185
+#: ../src/sharing.js:204
 msgid "Enter an email address"
 msgstr "E-posta adresi gir"
 
-#: ../src/sharing.js:200 ../src/sharing.js:367
+#: ../src/sharing.js:219 ../src/sharing.js:371
 msgid "Can edit"
 msgstr "Düzenlenebilir"
 
-#: ../src/sharing.js:200 ../src/sharing.js:370
+#: ../src/sharing.js:219 ../src/sharing.js:374
 msgid "Can view"
 msgstr "Görüntülenebilir"
 
-#: ../src/sharing.js:207
-msgid "Add"
-msgstr "Ekle"
-
-#: ../src/sharing.js:283
+#: ../src/sharing.js:302
 msgid "Everyone can read"
 msgstr "Herkes okuyabilir"
 
-#: ../src/sharing.js:298
+#: ../src/sharing.js:317
 msgid "Save"
 msgstr "Kaydet"
 
-#: ../src/sharing.js:364
+#: ../src/sharing.js:368
 msgid "Owner"
 msgstr "Sahip"
 
-#: ../src/sharing.js:433
-#, c-format
+#: ../src/sharing.js:437
+#, javascript-format
 msgid "You can ask %s for access"
 msgstr "Erişim için %s'den izin isteyebilirsiniz"
 
-#: ../src/sharing.js:470 ../src/sharing.js:506 ../src/sharing.js:563
-#: ../src/sharing.js:580 ../src/sharing.js:599
+#: ../src/sharing.js:474 ../src/sharing.js:510 ../src/sharing.js:567
+#: ../src/sharing.js:584 ../src/sharing.js:603
 msgid "The document was not updated"
 msgstr "Belge güncellenmedi"
 
-#: ../src/shellSearchProvider.js:293
+#: ../src/shellSearchProvider.js:286
 msgid "Untitled Document"
 msgstr "Adsız Belge"
 
-#. Translators: "more" refers to documents in this context
-#: ../src/view.js:62 ../src/view.js:93
-msgid "Load More"
-msgstr "Daha Fazla"
+#: ../src/trackerController.js:177
+msgid "Unable to fetch the list of documents"
+msgstr "Belgelerin listesi alınamadı"
 
-#: ../src/view.js:294
+#: ../src/view.js:269
+msgid "No collections found"
+msgstr "Hiç koleksiyon bulunamadı"
+
+#: ../src/view.js:271
+msgid "No books found"
+msgstr "Hiç kitap bulunamadı"
+
+#: ../src/view.js:271
+msgid "No documents found"
+msgstr "Hiç belge bulunamadı"
+
+#: ../src/view.js:280
+msgid "Try a different search"
+msgstr "Farklı bir arama deneyin"
+
+#: ../src/view.js:287
+msgid "You can create collections from the Books view"
+msgstr "Kitaplar görünümünden koleksiyonlar oluşturabilirsiniz"
+
+#: ../src/view.js:289
+msgid "You can create collections from the Documents view"
+msgstr "Belgeler görünümünden koleksiyonlar oluşturabilirsiniz"
+
+#: ../src/view.js:299
+#, javascript-format
+msgid ""
+"Documents from your <a href=\"system-settings\">Online Accounts</a> and <a "
+"href=\"file://%s\">Documents folder</a> will appear here."
+msgstr ""
+"<a href=\"system-settings\">Çevrimiçi Hesaplarınızdaki</a> ve <a href="
+"\"file://%s\">Belgeler klasörünüzdeki</a> belgeler burada görülecek."
+
+#: ../src/view.js:515
 msgid "Yesterday"
 msgstr "Dün"
 
-#: ../src/view.js:296
-#, c-format
+#: ../src/view.js:517
+#, javascript-format
 msgid "%d day ago"
 msgid_plural "%d days ago"
 msgstr[0] "%d gün önce"
 
-#: ../src/view.js:300
+#: ../src/view.js:521
 msgid "Last week"
 msgstr "Geçen hafta"
 
-#: ../src/view.js:302
-#, c-format
+#: ../src/view.js:523
+#, javascript-format
 msgid "%d week ago"
 msgid_plural "%d weeks ago"
 msgstr[0] "%d hafta önce"
 
-#: ../src/view.js:306
+#: ../src/view.js:527
 msgid "Last month"
 msgstr "Geçen ay"
 
-#: ../src/view.js:308
-#, c-format
+#: ../src/view.js:529
+#, javascript-format
 msgid "%d month ago"
 msgid_plural "%d months ago"
 msgstr[0] "%d ay önce"
 
-#: ../src/view.js:312
+#: ../src/view.js:533
 msgid "Last year"
 msgstr "Geçen sene"
 
-#: ../src/view.js:314
-#, c-format
+#: ../src/view.js:535
+#, javascript-format
 msgid "%d year ago"
 msgid_plural "%d years ago"
 msgstr[0] "%d yıl önce"
+
+#~ msgid "You can add your online accounts in %s"
+#~ msgstr "Çevrimiçi hesaplarınızı %s'ndan ekleyebilirsiniz"
+
+#~ msgid "Settings"
+#~ msgstr "Ayarlar"
+
+#~ msgid "Recent"
+#~ msgstr "Son kullanılan"
+
+#~ msgid "Print"
+#~ msgstr "Yazdır"
+
+#~ msgid "Share"
+#~ msgstr "Paylaş"
+
+#~ msgid ""
+#~ "You don't have any collections yet. Enter a new collection name above."
+#~ msgstr ""
+#~ "Henüz bir koleksiyonunuz yok. Yukarıya yeni bir koleksiyon ismi girin."
+
+#~ msgid "Create new collection"
+#~ msgstr "Yeni koleksiyon oluştur"
+
+#~ msgid "Add to Collection"
+#~ msgstr "Koleksiyon'a Ekle"
+
+#~ msgid "Skydrive"
+#~ msgstr "Skydrive"
+
+#~ msgid "Results for “%s”"
+#~ msgstr "“%s” için sonuçlar"
+
+#~ msgid "Grid"
+#~ msgstr "Izgara"
+
+#~ msgid "List"
+#~ msgstr "Liste"
+
+#~ msgid "About Documents"
+#~ msgstr "Belgeler Hakkında"
+
+#~ msgid "Organize"
+#~ msgstr "Düzenle"
+
+#~ msgid "Load More"
+#~ msgstr "Daha Fazla"
 
 #~ msgid "Unable to load \"%s\" for preview"
 #~ msgstr "\"%s\" önizleme için yüklenemedi"
@@ -584,9 +1061,6 @@ msgstr[0] "%d yıl önce"
 #~ msgid "Cannot find \"unoconv\", please check your LibreOffice installation"
 #~ msgstr ""
 #~ "\"unoconv\" bulunamıyor, lütfen LibreOffice kurulumunuzu kontrol edin"
-
-#~ msgid "New and Recent"
-#~ msgstr "Yeni ve Güncel"
 
 #~ msgid "filtered by title"
 #~ msgstr "başlığa göre süzüldü"
@@ -609,9 +1083,6 @@ msgstr[0] "%d yıl önce"
 
 #~ msgid "Add to favorites"
 #~ msgstr "Sık Kullanılanlara Ekle"
-
-#~ msgid "Unable to fetch the list of documents"
-#~ msgstr "Belgelerin listesi alınamadı"
 
 #, fuzzy
 #~| msgid "(%d of %d)"

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011 Red Hat, Inc.
+ * Copyright (c) 2011, 2015 Red Hat, Inc.
  *
  * Gnome Documents is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by the
@@ -20,96 +20,65 @@
  */
 
 const Cairo = imports.gi.cairo;
+const Edit = imports.edit;
+const EvinceView = imports.evinceview;
+const EPUBView = imports.epubview;
 const Gd = imports.gi.Gd;
 const Gdk = imports.gi.Gdk;
 const Gettext = imports.gettext;
+const Gio = imports.gi.Gio;
 const GLib = imports.gi.GLib;
 const GObject = imports.gi.GObject;
 const Gtk = imports.gi.Gtk;
+const LOKView = imports.lokview;
 const _ = imports.gettext.gettext;
 
 const Lang = imports.lang;
 const Mainloop = imports.mainloop;
 
 const Application = imports.application;
-const Documents = imports.documents;
-const TrackerUtils = imports.trackerUtils;
+const ErrorBox = imports.errorBox;
+const MainToolbar = imports.mainToolbar;
+const Search = imports.search;
 const WindowMode = imports.windowMode;
 const Utils = imports.utils;
 
-const LoadMoreButton = new Lang.Class({
-    Name: 'LoadMoreButton',
+const _ICON_SIZE = 32;
 
-    _init: function() {
-        this._block = false;
+function getController(windowMode) {
+    let offsetController;
+    let trackerController;
 
-        this._controller = Application.offsetController;
-        this._controllerId =
-            this._controller.connect('item-count-changed',
-                                     Lang.bind(this, this._onItemCountChanged));
-
-        let child = new Gtk.Grid({ column_spacing: 10,
-                                   hexpand: true,
-                                   halign: Gtk.Align.CENTER,
-                                   visible: true });
-
-        this._spinner = new Gtk.Spinner({ halign: Gtk.Align.CENTER,
-                                          no_show_all: true });
-        this._spinner.set_size_request(16, 16);
-        child.add(this._spinner);
-
-        // Translators: "more" refers to documents in this context
-        this._label = new Gtk.Label({ label: _("Load More"),
-                                      visible: true });
-        child.add(this._label);
-
-        this.widget = new Gtk.Button({ no_show_all: true,
-                                       child: child });
-        this.widget.get_style_context().add_class('documents-load-more');
-        this.widget.connect('clicked', Lang.bind(this,
-            function() {
-                this._label.label = _("Loading…");
-                this._spinner.show();
-                this._spinner.start();
-
-                this._controller.increaseOffset();
-            }));
-
-        this.widget.connect('destroy', Lang.bind(this,
-            function() {
-                this._controller.disconnect(this._controllerId);
-            }));
-
-        this._onItemCountChanged();
-    },
-
-    _onItemCountChanged: function() {
-        let remainingDocs = this._controller.getRemainingDocs();
-        let visible = !(remainingDocs <= 0 || this._block);
-        this.widget.set_visible(visible);
-
-        if (!visible) {
-            // Translators: "more" refers to documents in this context
-            this._label.label = _("Load More");
-            this._spinner.stop();
-            this._spinner.hide();
-        }
-    },
-
-    setBlock: function(block) {
-        if (this._block == block)
-            return;
-
-        this._block = block;
-        this._onItemCountChanged();
+    switch (windowMode) {
+    case WindowMode.WindowMode.COLLECTIONS:
+        offsetController = Application.offsetCollectionsController;
+        trackerController = Application.trackerCollectionsController;
+        break;
+    case WindowMode.WindowMode.DOCUMENTS:
+        offsetController = Application.offsetDocumentsController;
+        trackerController = Application.trackerDocumentsController;
+        break;
+    case WindowMode.WindowMode.SEARCH:
+        offsetController = Application.offsetSearchController;
+        trackerController = Application.trackerSearchController;
+        break;
+    default:
+        throw(new Error('Not handled'));
+        break;
     }
-});
+
+    return [ offsetController, trackerController ];
+}
+
+const _RESET_COUNT_TIMEOUT = 500; // msecs
 
 const ViewModel = new Lang.Class({
     Name: 'ViewModel',
+    Extends: Gtk.ListStore,
 
-    _init: function() {
-        this.model = Gtk.ListStore.new(
+    _init: function(windowMode) {
+        this.parent();
+        this.set_column_types(
             [ GObject.TYPE_STRING,
               GObject.TYPE_STRING,
               GObject.TYPE_STRING,
@@ -118,100 +87,304 @@ const ViewModel = new Lang.Class({
               GObject.TYPE_LONG,
               GObject.TYPE_BOOLEAN,
               GObject.TYPE_UINT ]);
-        this.model.set_sort_column_id(Gd.MainColumns.MTIME,
-                                      Gtk.SortType.DESCENDING);
+
+        this._infoUpdatedIds = {};
+        this._resetCountId = 0;
+
+        this._mode = windowMode;
+        this._rowRefKey = "row-ref-" + this._mode;
 
         Application.documentManager.connect('item-added',
             Lang.bind(this, this._onItemAdded));
         Application.documentManager.connect('item-removed',
             Lang.bind(this, this._onItemRemoved));
-        Application.documentManager.connect('clear',
-            Lang.bind(this, this._onClear));
 
-        // populate with the intial items
+        [ this._offsetController, this._trackerController ] = getController(this._mode);
+        this._trackerController.connect('query-status-changed', Lang.bind(this,
+            function(o, status) {
+                if (!status)
+                    return;
+                this._clear();
+            }));
+
+        // populate with the initial items
         let items = Application.documentManager.getItems();
         for (let idx in items) {
-            this._onItemAdded(null, items[idx]);
+            this._onItemAdded(Application.documentManager, items[idx]);
         }
     },
 
-    _onClear: function() {
-        this.model.clear();
+    _clear: function() {
+        let items = Application.documentManager.getItems();
+        for (let idx in items) {
+            let doc = items[idx];
+            doc.rowRefs[this._rowRefKey] = null;
+        }
+
+        this.clear();
     },
 
-    _onItemAdded: function(source, doc) {
-        let iter = this.model.append();
-        this.model.set(iter,
+    _addItem: function(doc) {
+        // Update the count so that OffsetController has the correct
+        // values. Otherwise things like loading more items and "No
+        // Results" page will not work correctly.
+        this._resetCount();
+
+        let iter = this.append();
+        this.set(iter,
             [ 0, 1, 2, 3, 4, 5 ],
             [ doc.id, doc.uri, doc.name,
               doc.author, doc.surface, doc.mtime ]);
 
-        let treePath = this.model.get_path(iter);
-        let treeRowRef = Gtk.TreeRowReference.new(this.model, treePath);
-
-        doc.connect('info-updated', Lang.bind(this,
-            function() {
-                let objectPath = treeRowRef.get_path();
-                if (!objectPath)
-                    return;
-
-                let objectIter = this.model.get_iter(objectPath)[1];
-                if (objectIter)
-                    this.model.set(objectIter,
-                        [ 0, 1, 2, 3, 4, 5 ],
-                        [ doc.id, doc.uri, doc.name,
-                          doc.author, doc.surface, doc.mtime ]);
-            }));
+        let treePath = this.get_path(iter);
+        let treeRowRef = Gtk.TreeRowReference.new(this, treePath);
+        doc.rowRefs[this._rowRefKey] = treeRowRef;
     },
 
-    _onItemRemoved: function(source, doc) {
-        this.model.foreach(Lang.bind(this,
+    _removeItem: function(doc) {
+        // Update the count so that OffsetController has the correct
+        // values. Otherwise things like loading more items and "No
+        // Results" page will not work correctly.
+        this._resetCount();
+
+        this.foreach(Lang.bind(this,
             function(model, path, iter) {
                 let id = model.get_value(iter, Gd.MainColumns.ID);
 
                 if (id == doc.id) {
-                    this.model.remove(iter);
+                    this.remove(iter);
                     return true;
                 }
 
                 return false;
+            }));
+
+        doc.rowRefs[this._rowRefKey] = null;
+    },
+
+    _onInfoUpdated: function(doc) {
+        let activeCollection = Application.documentManager.getActiveCollection();
+        let treeRowRef = doc.rowRefs[this._rowRefKey];
+
+        if (this._mode == WindowMode.WindowMode.COLLECTIONS) {
+            if (!doc.collection && treeRowRef && !activeCollection) {
+                ;
+            } else if (doc.collection && !treeRowRef && !activeCollection) {
+                this._addItem(doc);
+            }
+        } else if (this._mode == WindowMode.WindowMode.DOCUMENTS) {
+            if (doc.collection && treeRowRef) {
+                ;
+            } else if (!doc.collection && !treeRowRef) {
+                this._addItem(doc);
+            }
+        }
+
+        treeRowRef = doc.rowRefs[this._rowRefKey];
+        if (treeRowRef) {
+            let objectPath = treeRowRef.get_path();
+            if (!objectPath)
+                return;
+
+            let objectIter = this.get_iter(objectPath)[1];
+            if (objectIter)
+                this.set(objectIter,
+                    [ 0, 1, 2, 3, 4, 5 ],
+                    [ doc.id, doc.uri, doc.name,
+                      doc.author, doc.surface, doc.mtime ]);
+        }
+    },
+
+    _onItemAdded: function(source, doc) {
+        if (doc.rowRefs[this._rowRefKey])
+            return;
+
+        let infoUpdatedId = this._infoUpdatedIds[doc.id];
+        if (infoUpdatedId) {
+            doc.disconnect(infoUpdatedId);
+            delete this._infoUpdatedIds[doc.id];
+        }
+
+        let activeCollection = Application.documentManager.getActiveCollection();
+        let windowMode = Application.modeController.getWindowMode();
+
+        if (!activeCollection || this._mode != windowMode) {
+            if (this._mode == WindowMode.WindowMode.COLLECTIONS && !doc.collection
+                || this._mode == WindowMode.WindowMode.DOCUMENTS && doc.collection) {
+                this._infoUpdatedIds[doc.id] = doc.connect('info-updated', Lang.bind(this, this._onInfoUpdated));
+                return;
+            }
+        }
+
+        this._addItem(doc);
+        this._infoUpdatedIds[doc.id] = doc.connect('info-updated', Lang.bind(this, this._onInfoUpdated));
+    },
+
+    _onItemRemoved: function(source, doc) {
+        this._removeItem(doc);
+        doc.disconnect(this._infoUpdatedIds[doc.id]);
+        delete this._infoUpdatedIds[doc.id];
+    },
+
+    _resetCount: function() {
+        if (this._resetCountId == 0) {
+            this._resetCountId = Mainloop.timeout_add(_RESET_COUNT_TIMEOUT, Lang.bind(this,
+                function() {
+                    this._resetCountId = 0;
+                    this._offsetController.resetItemCount();
+                    return false;
+                }));
+        }
+    }
+});
+
+const EmptyResultsBox = new Lang.Class({
+    Name: 'EmptyResultsBox',
+    Extends: Gtk.Grid,
+
+    _init: function(mode) {
+        this._mode = mode;
+        this.parent({ orientation: Gtk.Orientation.VERTICAL,
+                      row_spacing: 12,
+                      hexpand: true,
+                      vexpand: true,
+                      halign: Gtk.Align.CENTER,
+                      valign: Gtk.Align.CENTER });
+        this.get_style_context().add_class('dim-label');
+
+        this._addImage();
+        this._addPrimaryLabel();
+        this._addSecondaryLabel();
+
+        this.show_all();
+    },
+
+    _addImage: function() {
+        let iconName;
+        if (this._mode == WindowMode.WindowMode.SEARCH)
+            iconName = 'system-search-symbolic';
+        else if (this._mode == WindowMode.WindowMode.COLLECTIONS)
+            iconName = 'emblem-documents-symbolic';
+        else
+            iconName = 'x-office-document-symbolic';
+
+        this.add(new Gtk.Image({ pixel_size: 128, icon_name: iconName, margin_bottom: 9 }));
+    },
+
+    _addPrimaryLabel: function() {
+        let text;
+        if (this._mode == WindowMode.WindowMode.COLLECTIONS)
+            text = _("No collections found");
+        else
+            text = Application.application.isBooks ? _("No books found") : _("No documents found");
+
+        this.add(new Gtk.Label({ label: '<b><span size="large">' + text + '</span></b>',
+                                 use_markup: true,
+                                 margin_top: 9 }));
+    },
+
+    _addSecondaryLabel: function() {
+        if (this._mode == WindowMode.WindowMode.SEARCH) {
+            this.add(new Gtk.Label({ label: _("Try a different search") }));
+            return;
+        }
+
+        if (this._mode == WindowMode.WindowMode.COLLECTIONS) {
+            let label;
+            if (Application.application.isBooks)
+                label = _("You can create collections from the Books view");
+            else
+                label = _("You can create collections from the Documents view");
+
+            this.add(new Gtk.Label({ label: label }));
+            return;
+        }
+
+        if (Application.application.isBooks)
+            return;
+
+        let documentsPath = GLib.get_user_special_dir(GLib.UserDirectory.DIRECTORY_DOCUMENTS);
+        let detailsStr = _("Documents from your <a href=\"system-settings\">Online Accounts</a> and " +
+                           "<a href=\"file://%s\">Documents folder</a> will appear here.").format(documentsPath);
+        let details = new Gtk.Label({ label: detailsStr,
+                                      use_markup: true });
+        this.add(details);
+
+        details.connect('activate-link', Lang.bind(this,
+            function(label, uri) {
+                if (uri != 'system-settings')
+                    return false;
+
+                try {
+                    let app = Gio.AppInfo.create_from_commandline(
+                        'gnome-control-center online-accounts', null, 0);
+
+                    let screen = this.get_screen();
+                    let display = screen ? screen.get_display() : Gdk.Display.get_default();
+                    let ctx = display.get_app_launch_context();
+
+                    if (screen)
+                        ctx.set_screen(screen);
+
+                    app.launch([], ctx);
+                } catch(e) {
+                    log('Unable to launch gnome-control-center: ' + e.message);
+                }
+
+                return true;
             }));
     }
 });
 
 const ViewContainer = new Lang.Class({
     Name: 'ViewContainer',
+    Extends: Gtk.Stack,
 
-    _init: function() {
-        this._adjustmentValueId = 0;
-        this._adjustmentChangedId = 0;
-        this._scrollbarVisibleId = 0;
+    _init: function(windowMode) {
+        this._edgeHitId = 0;
+        this._mode = windowMode;
 
-        this._model = new ViewModel();
+        this._model = new ViewModel(this._mode);
 
-        this.widget = new Gtk.Grid({ orientation: Gtk.Orientation.VERTICAL });
+        this.parent({ homogeneous: true,
+                      transition_type: Gtk.StackTransitionType.CROSSFADE });
+
+        let actions = this._getDefaultActions();
+        this.actionGroup = new Gio.SimpleActionGroup();
+        Utils.populateActionGroup(this.actionGroup, actions, 'view');
+
         this.view = new Gd.MainView({ shadow_type: Gtk.ShadowType.NONE });
-        this.widget.add(this.view);
+        this.add_named(this.view, 'view');
 
-        this._loadMore = new LoadMoreButton();
-        this.widget.add(this._loadMore.widget);
+        this._noResults = new EmptyResultsBox(this._mode);
+        this.add_named(this._noResults, 'no-results');
 
-        this.widget.show_all();
+        this._errorBox = new ErrorBox.ErrorBox();
+        this.add_named(this._errorBox, 'error');
+
+        this._spinner = new Gtk.Spinner({ width_request: _ICON_SIZE,
+                                          height_request: _ICON_SIZE,
+                                          halign: Gtk.Align.CENTER,
+                                          valign: Gtk.Align.CENTER });
+        this.add_named(this._spinner, 'spinner');
+
+        this.show_all();
+        this.set_visible_child_full('view', Gtk.StackTransitionType.NONE);
 
         this.view.connect('item-activated',
-                            Lang.bind(this, this._onItemActivated));
+                          Lang.bind(this, this._onItemActivated));
         this.view.connect('selection-mode-request',
-                            Lang.bind(this, this._onSelectionModeRequest));
+                          Lang.bind(this, this._onSelectionModeRequest));
         this.view.connect('view-selection-changed',
-                            Lang.bind(this, this._onViewSelectionChanged));
+                          Lang.bind(this, this._onViewSelectionChanged));
+        this.view.connect('notify::view-type',
+                          Lang.bind(this, this._onViewTypeChanged));
 
-        // connect to settings change for list/grid view
-        this._viewSettingsId = Application.application.connect('action-state-changed::view-as',
-            Lang.bind(this, this._updateTypeForSettings));
         this._updateTypeForSettings();
+        this._updateSortForSettings();
 
         // setup selection controller => view
-        this._selectionModeId = Application.selectionController.connect('selection-mode-changed',
+        Application.selectionController.connect('selection-mode-changed',
             Lang.bind(this, this._onSelectionModeChanged));
         this._onSelectionModeChanged();
 
@@ -219,45 +392,141 @@ const ViewContainer = new Lang.Class({
             Lang.bind(this, this._onWindowModeChanged));
         this._onWindowModeChanged();
 
-        let selectAll = Application.application.lookup_action('select-all');
-        selectAll.connect('activate', Lang.bind(this,
-            function() {
-                this.view.select_all();
+        [ this._offsetController, this._trackerController ] = getController(this._mode);
+
+        this._offsetController.connect('item-count-changed', Lang.bind(this,
+            function(controller, count) {
+                if (count == 0)
+                    this.set_visible_child_name('no-results');
+                else
+                    this.set_visible_child_name('view');
             }));
 
-        let selectNone = Application.application.lookup_action('select-none');
-        selectNone.connect('activate', Lang.bind(this,
-            function() {
-                this.view.unselect_all();
-            }));
-
-        this._queryId = Application.trackerController.connect('query-status-changed',
+        this._trackerController.connect('query-error',
+            Lang.bind(this, this._onQueryError));
+        this._trackerController.connect('query-status-changed',
             Lang.bind(this, this._onQueryStatusChanged));
         // ensure the tracker controller is started
-        Application.trackerController.start();
+        this._trackerController.start();
 
         // this will create the model if we're done querying
         this._onQueryStatusChanged();
     },
 
+    _getDefaultActions: function() {
+        return [
+            { name: 'select-all',
+              callback: Lang.bind(this, this._selectAll),
+              accels: ['<Primary>a'] },
+            { name: 'select-none',
+              callback: Lang.bind(this, this._selectNone) },
+            { settingsKey: 'view-as',
+              stateChanged: Lang.bind(this, this._updateTypeForSettings) },
+            { settingsKey: 'sort-by',
+              stateChanged: Lang.bind(this, this._updateSortForSettings) },
+            { name: 'search-source',
+              parameter_type: 's',
+              state: GLib.Variant.new('s', Search.SearchSourceStock.ALL),
+              stateChanged: Lang.bind(this, this._updateSearchSource),
+              create_hook: Lang.bind(this, this._initSearchSource) },
+            { name: 'search-type',
+              parameter_type: 's',
+              state: GLib.Variant.new('s', Search.SearchTypeStock.ALL),
+              stateChanged: Lang.bind(this, this._updateSearchType),
+              create_hook: Lang.bind(this, this._initSearchType) },
+            { name: 'search-match',
+              parameter_type: 's',
+              state: GLib.Variant.new('s', Search.SearchMatchStock.ALL),
+              stateChanged: Lang.bind(this, this._updateSearchMatch),
+              create_hook: Lang.bind(this, this._initSearchMatch) }
+        ];
+    },
+
+    _selectAll: function() {
+        Application.selectionController.setSelectionMode(true);
+        this.view.select_all();
+    },
+
+    _selectNone: function() {
+        this.view.unselect_all();
+    },
+
     _updateTypeForSettings: function() {
         let viewType = Application.settings.get_enum('view-as');
         this.view.set_view_type(viewType);
-
-        if (viewType == Gd.MainViewType.LIST)
-            this._addListRenderers();
     },
 
-    getFirstDocument: function() {
+    _updateSortForSettings: function() {
+        let sortBy = Application.settings.get_enum('sort-by');
+        let sortType;
+
+        switch (sortBy) {
+        case Gd.MainColumns.PRIMARY_TEXT:
+            sortType = Gtk.SortType.ASCENDING;
+            break;
+        case Gd.MainColumns.SECONDARY_TEXT:
+            sortType = Gtk.SortType.ASCENDING;
+            break;
+        case Gd.MainColumns.MTIME:
+            sortType = Gtk.SortType.DESCENDING;
+            break;
+        default:
+            sortBy = Gd.MainColumns.MTIME;
+            sortType = Gtk.SortType.DESCENDING;
+            break;
+        }
+
+        this._model.set_sort_column_id(sortBy, sortType);
+    },
+
+    _initSearchSource: function(action) {
+        Application.sourceManager.connect('active-changed', Lang.bind(this, function(manager, activeItem) {
+            action.state = GLib.Variant.new('s', activeItem.id);
+        }));
+    },
+
+    _initSearchType: function(action) {
+        Application.searchTypeManager.connect('active-changed', Lang.bind(this, function(manager, activeItem) {
+            action.state = GLib.Variant.new('s', activeItem.id);
+        }));
+    },
+
+    _initSearchMatch: function(action) {
+        Application.searchMatchManager.connect('active-changed', Lang.bind(this, function(manager, activeItem) {
+            action.state = GLib.Variant.new('s', activeItem.id);
+        }));
+    },
+
+    _updateSearchSource: function(action) {
+        let itemId = action.state.get_string()[0];
+        Application.sourceManager.setActiveItemById(itemId);
+    },
+
+    _updateSearchType: function(action) {
+        let itemId = action.state.get_string()[0];
+        Application.searchTypeManager.setActiveItemById(itemId);
+    },
+
+    _updateSearchMatch: function(action) {
+        let itemId = action.state.get_string()[0];
+        Application.searchMatchManager.setActiveItemById(itemId);
+    },
+
+    _getFirstDocument: function() {
         let doc = null;
 
-        let iter = this._model.model.get_iter_first()[1];
-        if (iter) {
-            let id = this._model.model.get_value(iter, Gd.MainColumns.ID);
+        let [success, iter] = this._model.get_iter_first();
+        if (success) {
+            let id = this._model.get_value(iter, Gd.MainColumns.ID);
             doc = Application.documentManager.getItemById(id);
         }
 
         return doc;
+    },
+
+    _onViewTypeChanged: function() {
+        if (this.view.view_type == Gd.MainViewType.LIST)
+            this._addListRenderers();
     },
 
     _addListRenderers: function() {
@@ -339,16 +608,24 @@ const ViewContainer = new Lang.Class({
         Application.documentManager.setActiveItemById(id);
     },
 
+    _onQueryError: function(manager, message, exception) {
+        this._setError(message, exception.message);
+    },
+
     _onQueryStatusChanged: function() {
-        let status = Application.trackerController.getQueryStatus();
+        let status = this._trackerController.getQueryStatus();
 
         if (!status) {
             // setup a model if we're not querying
-            this.view.set_model(this._model.model);
+            this.view.set_model(this._model);
 
             // unfreeze selection
             Application.selectionController.freezeSelection(false);
             this._updateSelection();
+
+            // hide the spinner
+            this._spinner.stop();
+            this.set_visible_child_name('view');
         } else {
             // save the last selection
             Application.selectionController.freezeSelection(true);
@@ -356,7 +633,16 @@ const ViewContainer = new Lang.Class({
             // if we're querying, clear the model from the view,
             // so that we don't uselessly refresh the rows
             this.view.set_model(null);
+
+            // kick off the spinner
+            this._spinner.start();
+            this.set_visible_child_name('spinner');
         }
+    },
+
+    _setError: function(primary, secondary) {
+        this._errorBox.update(primary, secondary);
+        this.set_visible_child_name('error');
     },
 
     _updateSelection: function() {
@@ -368,13 +654,13 @@ const ViewContainer = new Lang.Class({
 
         let generic = this.view.get_generic_view();
         let first = true;
-        this._model.model.foreach(Lang.bind(this,
+        this._model.foreach(Lang.bind(this,
             function(model, path, iter) {
-                let id = this._model.model.get_value(iter, Gd.MainColumns.ID);
+                let id = this._model.get_value(iter, Gd.MainColumns.ID);
                 let idIndex = selected.indexOf(id);
 
                 if (idIndex != -1) {
-                    this._model.model.set_value(iter, Gd.MainColumns.SELECTED, true);
+                    this._model.set_value(iter, Gd.MainColumns.SELECTED, true);
                     newSelection.push(id);
 
                     if (first) {
@@ -398,72 +684,169 @@ const ViewContainer = new Lang.Class({
     },
 
     _onViewSelectionChanged: function() {
+        let mode = Application.modeController.getWindowMode();
+        if (this._mode != mode)
+            return;
+
         // update the selection on the controller when the view signals a change
         let selectedURNs = Utils.getURNsFromPaths(this.view.get_selection(),
-                                                  this._model.model);
+                                                  this._model);
         Application.selectionController.setSelection(selectedURNs);
     },
 
     _onWindowModeChanged: function() {
         let mode = Application.modeController.getWindowMode();
-        if (mode == WindowMode.WindowMode.OVERVIEW)
+        if (mode == this._mode)
             this._connectView();
         else
             this._disconnectView();
     },
 
     _connectView: function() {
-        this._adjustmentValueId =
-            this.view.vadjustment.connect('value-changed',
-                                          Lang.bind(this, this._onScrolledWinChange));
-        this._adjustmentChangedId =
-            this.view.vadjustment.connect('changed',
-                                          Lang.bind(this, this._onScrolledWinChange));
-        this._scrollbarVisibleId =
-            this.view.get_vscrollbar().connect('notify::visible',
-                                               Lang.bind(this, this._onScrolledWinChange));
-        this._onScrolledWinChange();
-    },
-
-    _onScrolledWinChange: function() {
-        let vScrollbar = this.view.get_vscrollbar();
-        let adjustment = this.view.vadjustment;
-        let revealAreaHeight = 32;
-
-        // if there's no vscrollbar, or if it's not visible, hide the button
-        if (!vScrollbar ||
-            !vScrollbar.get_visible()) {
-            this._loadMore.setBlock(true);
-            return;
-        }
-
-        let value = adjustment.value;
-        let upper = adjustment.upper;
-        let page_size = adjustment.page_size;
-
-        let end = false;
-
-        // special case this values which happen at construction
-        if ((value == 0) && (upper == 1) && (page_size == 1))
-            end = false;
-        else
-            end = !(value < (upper - page_size - revealAreaHeight));
-
-        this._loadMore.setBlock(!end);
+        this._edgeHitId = this.view.connect('edge-reached', Lang.bind(this,
+            function (view, pos) {
+                if (pos == Gtk.PositionType.BOTTOM)
+                    this._offsetController.increaseOffset();
+            }));
     },
 
     _disconnectView: function() {
-        if (this._adjustmentValueId != 0) {
-            this.view.vadjustment.disconnect(this._adjustmentValueId);
-            this._adjustmentValueId = 0;
+        if (this._edgeHitId != 0) {
+            this.view.disconnect(this._edgeHitId);
+            this._edgeHitId = 0;
         }
-        if (this._adjustmentChangedId != 0) {
-            this.view.vadjustment.disconnect(this._adjustmentChangedId);
-            this._adjustmentChangedId = 0;
+    },
+
+    activateResult: function() {
+        let doc = this._getFirstDocument();
+        if (doc)
+            Application.documentManager.setActiveItem(doc)
+    },
+
+    createToolbar: function(stack) {
+        return new MainToolbar.OverviewToolbar(stack);
+    }
+});
+
+const View = new Lang.Class({
+    Name: 'View',
+    Extends: Gtk.Overlay,
+
+    _init: function(window) {
+        this._window = window;
+
+        this.parent();
+
+        this._stack = new Gtk.Stack({ visible: true,
+                                      homogeneous: true,
+                                      transition_type: Gtk.StackTransitionType.CROSSFADE });
+        this.add(this._stack);
+
+        // pack the OSD notification widget
+        this.add_overlay(Application.notificationManager);
+
+        // now create the actual content widgets
+        this._documents = new ViewContainer(WindowMode.WindowMode.DOCUMENTS);
+        let label = Application.application.isBooks ? _('Books') : _("Documents");
+        this._stack.add_titled(this._documents, 'documents', label);
+
+        this._collections = new ViewContainer(WindowMode.WindowMode.COLLECTIONS);
+        this._stack.add_titled(this._collections, 'collections', _("Collections"));
+
+        this._search = new ViewContainer(WindowMode.WindowMode.SEARCH);
+        this._stack.add_named(this._search, 'search');
+
+        this._stack.connect('notify::visible-child',
+                            Lang.bind(this, this._onVisibleChildChanged));
+
+        this.show();
+    },
+
+    _onVisibleChildChanged: function() {
+        let visibleChild = this._stack.visible_child;
+        let windowMode;
+
+        if (visibleChild == this._collections)
+            windowMode = WindowMode.WindowMode.COLLECTIONS;
+        else if (visibleChild == this._documents)
+            windowMode = WindowMode.WindowMode.DOCUMENTS;
+        else
+            return;
+
+        Application.modeController.setWindowMode(windowMode);
+    },
+
+    _clearPreview: function() {
+        if (this._preview) {
+            this._preview.destroy();
+            this._preview = null;
         }
-        if (this._scrollbarVisibleId != 0) {
-            this.view.get_vscrollbar().disconnect(this._scrollbarVisibleId);
-            this._scrollbarVisibleId = 0;
+    },
+
+    _createPreview: function(mode) {
+        this._clearPreview();
+
+        let constructor;
+        switch (mode) {
+        case WindowMode.WindowMode.PREVIEW_EV:
+            constructor = EvinceView.EvinceView;
+            break;
+        case WindowMode.WindowMode.PREVIEW_LOK:
+            constructor = LOKView.LOKView;
+            break;
+        case WindowMode.WindowMode.PREVIEW_EPUB:
+            constructor = EPUBView.EPUBView;
+            break;
+        case WindowMode.WindowMode.EDIT:
+            constructor = Edit.EditView;
+            break;
+        default:
+            return;
         }
+
+        this._preview = new constructor(this, this._window);
+        this._stack.add_named(this._preview, 'preview');
+    },
+
+    activateResult: function() {
+        this.view.activateResult();
+    },
+
+    createToolbar: function() {
+        return this.view.createToolbar(this._stack);
+    },
+
+    set windowMode(mode) {
+        this._clearPreview();
+
+        let visibleChild;
+
+        switch (mode) {
+        case WindowMode.WindowMode.COLLECTIONS:
+            visibleChild = this._collections;
+            break;
+        case WindowMode.WindowMode.DOCUMENTS:
+            visibleChild = this._documents;
+            break;
+        case WindowMode.WindowMode.SEARCH:
+            visibleChild = this._search;
+            break;
+        case WindowMode.WindowMode.PREVIEW_EV:
+        case WindowMode.WindowMode.PREVIEW_LOK:
+        case WindowMode.WindowMode.PREVIEW_EPUB:
+        case WindowMode.WindowMode.EDIT:
+            this._createPreview(mode);
+            visibleChild = this._preview;
+            break;
+        default:
+            return;
+        }
+
+        this._stack.set_visible_child(visibleChild);
+        this._window.insert_action_group('view', visibleChild.actionGroup);
+    },
+
+    get view() {
+        return this._stack.visible_child;
     }
 });

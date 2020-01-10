@@ -1,6 +1,6 @@
 dnl -*- mode: m4 -*-
 AC_PREREQ(2.63)
-AC_INIT([gnome-documents],[3.14.3],[],[gnome-documents])
+AC_INIT([gnome-documents],[3.22.2],[],[gnome-documents])
 
 AC_CONFIG_HEADERS([config/config.h])
 AC_CONFIG_SRCDIR([src/main.js])
@@ -50,9 +50,9 @@ AC_CHECK_LIBM
 AC_SUBST(LIBM)
 
 EVINCE_MIN_VERSION=3.13.3
-WEBKITGTK_MIN_VERSION=1.10.0
+WEBKITGTK_MIN_VERSION=2.6.0
 GLIB_MIN_VERSION=2.39.3
-GTK_MIN_VERSION=3.13.2
+GTK_MIN_VERSION=3.19.1
 GOBJECT_INTROSPECTION_MIN_VERSION=1.31.6
 GDATA_MIN_VERSION=0.13.3
 GOA_MIN_VERSION=3.2.0
@@ -75,7 +75,7 @@ AM_CONDITIONAL(BUILD_DOCUMENTATION, test x$enable_documentation = xyes)
 PKG_CHECK_MODULES(DOCUMENTS,
                   evince-document-3.0 >= $EVINCE_MIN_VERSION
                   evince-view-3.0 >= $EVINCE_MIN_VERSION
-                  webkitgtk-3.0 >= $WEBKITGTK_MIN_VERSION
+                  webkit2gtk-4.0 >= $WEBKITGTK_MIN_VERSION
                   gjs-1.0
                   glib-2.0 >= $GLIB_MIN_VERSION
                   gobject-introspection-1.0 >= $GOBJECT_INTROSPECTION_MIN_VERSION
@@ -104,8 +104,26 @@ LIBGD_INIT([
   gir
 ])
 
-GJS_CONSOLE=`$PKG_CONFIG --variable=gjs_console gjs-1.0`
-AC_SUBST(GJS_CONSOLE)
+AX_PROG_GJS
+AX_CHECK_GIRS_GJS([cairo], [1.0])
+AX_CHECK_GIRS_GJS([EvinceDocument], [3.0])
+AX_CHECK_GIRS_GJS([EvinceView], [3.0])
+AX_CHECK_GIRS_GJS([GData], [0.0])
+AX_CHECK_GIRS_GJS([Gdk], [3.0])
+AX_CHECK_GIRS_GJS([GdkPixbuf], [2.0])
+AX_CHECK_GIR_SYMBOLS_GJS([Gio], [2.0], [ActionMap.add_action])
+AX_CHECK_GIRS_GJS([GLib], [2.0])
+AX_CHECK_GIRS_GJS([GnomeDesktop], [3.0])
+AX_CHECK_GIRS_GJS([Goa], [1.0])
+AX_CHECK_GIRS_GJS([GObject], [2.0])
+AX_CHECK_GIR_SYMBOLS_GJS([Gtk], [3.0], [ShortcutsWindow ShortcutsSection
+  ShortcutsGroup ShortcutsShortcut])
+AX_CHECK_GIRS_GJS([Pango], [1.0])
+AX_CHECK_GIRS_GJS([Tracker], [1.0])
+AX_CHECK_GIRS_GJS([TrackerControl], [1.0])
+AX_CHECK_GIRS_GJS([WebKit2], [4.0])
+AX_CHECK_GIRS_GJS([Zpj], [0.0])
+AX_CHECK_GIRS_GJS([Gepub], [0.4])
 
 GLIB_COMPILE_RESOURCES=`$PKG_CONFIG --variable glib_compile_resources gio-2.0`
 AC_SUBST(GLIB_COMPILE_RESOURCES)

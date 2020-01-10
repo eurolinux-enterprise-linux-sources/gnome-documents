@@ -21,6 +21,8 @@
 
 const EvDocument = imports.gi.EvinceDocument;
 const EvView = imports.gi.EvinceView;
+const LOKView = imports.lokview;
+const EPUBView = imports.epubview;
 const GdkPixbuf = imports.gi.GdkPixbuf;
 const Gio = imports.gi.Gio;
 const Gd = imports.gi.Gd;
@@ -39,11 +41,11 @@ const Application = imports.application;
 const ChangeMonitor = imports.changeMonitor;
 const Manager = imports.manager;
 const Notifications = imports.notifications;
-const Path = imports.path;
 const Query = imports.query;
 const Search = imports.search;
 const TrackerUtils = imports.trackerUtils;
 const Utils = imports.utils;
+const WindowMode = imports.windowMode;
 
 const DeleteItemJob = new Lang.Class({
     Name: 'DeleteItemJob',
@@ -232,6 +234,7 @@ const DocCommon = new Lang.Class({
         this.resourceUrn = null;
         this.surface = null;
         this.origPixbuf = null;
+        this.defaultApp = null;
         this.defaultAppName = null;
 
         this.mimeType = null;
@@ -240,6 +243,7 @@ const DocCommon = new Lang.Class({
         this.typeDescription = null;
         this.sourceName = null;
 
+        this.rowRefs = {};
         this.shared = false;
 
         this.collection = false;
@@ -250,11 +254,8 @@ const DocCommon = new Lang.Class({
         this.populateFromCursor(cursor);
 
         this._refreshIconId =
-            Application.application.connect('action-state-changed::view-as',
-                                            Lang.bind(this, this.refreshIcon));
-        this._filterId =
-            Application.searchCategoryManager.connect('active-changed',
-                                                      Lang.bind(this, this.refreshIcon));
+            Application.settings.connect('changed::view-as',
+                                         Lang.bind(this, this.refreshIcon));
     },
 
     refresh: function() {
@@ -330,8 +331,7 @@ const DocCommon = new Lang.Class({
         let iconInfo =
             Gtk.IconTheme.get_default().lookup_by_gicon_for_scale(icon, Utils.getIconSize(),
                                                                   Application.application.getScaleFactor(),
-                                                                  Gtk.IconLookupFlags.FORCE_SIZE |
-                                                                  Gtk.IconLookupFlags.GENERIC_FALLBACK);
+                                                                  Gtk.IconLookupFlags.FORCE_SIZE);
 
         let pixbuf = null;
         if (iconInfo != null) {
@@ -357,6 +357,10 @@ const DocCommon = new Lang.Class({
         }
     },
 
+    load: function() {
+        log('Error: DocCommon implementations must override load');
+    },
+
     canEdit: function() {
         log('Error: DocCommon implementations must override canEdit');
     },
@@ -367,6 +371,13 @@ const DocCommon = new Lang.Class({
 
     canTrash: function() {
         log('Error: DocCommon implementations must override canTrash');
+    },
+
+    canPrint: function(docModel) {
+        if (!docModel)
+            return false;
+
+        return EvView.PrintOperation.exists_for_document(docModel.get_document());
     },
 
     trash: function() {
@@ -524,13 +535,8 @@ const DocCommon = new Lang.Class({
 
         let emblemIcons = [];
         let emblemedPixbuf = this.origPixbuf;
-        let activeItem;
 
-        activeItem = Application.searchCategoryManager.getActiveItem();
-
-        if (this.shared &&
-            (!activeItem ||
-             (activeItem.id != Search.SearchCategoryStock.SHARED)))
+        if (this.shared)
             emblemIcons.push(this._createSymbolicEmblem('emblem-shared'));
 
         if (emblemIcons.length > 0) {
@@ -561,7 +567,7 @@ const DocCommon = new Lang.Class({
         if (this._thumbPath) {
             let [ slice, border ] = Utils.getThumbnailFrameBorder();
             thumbnailedPixbuf = Gd.embed_image_in_frame(emblemedPixbuf,
-                'resource:///org/gnome/documents/thumbnail-frame.png',
+                'resource:///org/gnome/Documents/ui/thumbnail-frame.png',
                 slice, border);
         } else {
             thumbnailedPixbuf = emblemedPixbuf;
@@ -580,13 +586,58 @@ const DocCommon = new Lang.Class({
             this._collectionIconWatcher = null;
         }
 
-        Application.application.disconnect(this._refreshIconId);
-        Application.searchCategoryManager.disconnect(this._filterId);
+        Application.settings.disconnect(this._refreshIconId);
+    },
+
+    loadLocal: function(passwd, cancellable, callback) {
+        if (this.mimeType == 'application/x-mobipocket-ebook' ||
+            this.mimeType == 'application/x-fictionbook+xml' ||
+            this.mimeType == 'application/x-zip-compressed-fb2') {
+            let exception = new GLib.Error(Gio.IOErrorEnum,
+                                           Gio.IOErrorEnum.NOT_SUPPORTED,
+                                           "Internal error: Ebooks preview isn't support yet");
+            callback(this, null, exception);
+            return;
+        }
+
+        if (LOKView.isOpenDocumentFormat(this.mimeType) && !Application.application.isBooks) {
+            let exception = null;
+            if (!LOKView.isAvailable()) {
+                exception = new GLib.Error(Gio.IOErrorEnum,
+                                           Gio.IOErrorEnum.NOT_SUPPORTED,
+                                           "Internal error: LibreOffice isn't available");
+            }
+            callback (this, null, exception);
+            return;
+        }
+
+        if (EPUBView.isEpub(this.mimeType) && Application.application.isBooks) {
+            callback(this, null, null);
+            return;
+        }
+
+        GdPrivate.pdf_loader_load_uri_async(this.uri, passwd, cancellable, Lang.bind(this,
+            function(source, res) {
+                try {
+                    let docModel = GdPrivate.pdf_loader_load_uri_finish(res);
+                    callback(this, docModel, null);
+                } catch (e) {
+                    callback(this, null, e);
+                }
+            }));
     },
 
     open: function(screen, timestamp) {
+        if (!this.defaultAppName)
+            return;
+
+        // Without a defaultApp, launch in the web browser,
+        // otherwise use that system application
         try {
-            Gtk.show_uri(screen, this.uri, timestamp);
+            if (this.defaultApp)
+                this.defaultApp.launch_uris( [ this.uri ], null);
+            else
+                Gtk.show_uri(screen, this.uri, timestamp);
         } catch (e) {
             log('Unable to show URI ' + this.uri + ': ' + e.toString());
         }
@@ -599,6 +650,9 @@ const DocCommon = new Lang.Class({
                     log('Unable to print document ' + this.uri + ': ' + error);
                     return;
                 }
+
+                if (!this.canPrint(docModel))
+                    return;
 
                 let printOp = EvView.PrintOperation.new(docModel.get_document());
 
@@ -635,6 +689,11 @@ const DocCommon = new Lang.Class({
             }));
     },
 
+    getSourceLink: function() {
+        // This should return an array of URI and source name
+        log('Error: DocCommon implementations must override getSourceLink');
+    },
+
     getWhere: function() {
         let retval = '';
 
@@ -642,7 +701,7 @@ const DocCommon = new Lang.Class({
             retval = '{ ?urn nie:isPartOf <' + this.id + '> }';
 
         return retval;
-    }
+    },
 });
 Signals.addSignalMethods(DocCommon.prototype);
 
@@ -657,12 +716,33 @@ const LocalDocument = new Lang.Class({
 
         this.sourceName = _("Local");
 
-        let defaultApp = null;
-        if (this.mimeType)
-            defaultApp = Gio.app_info_get_default_for_type(this.mimeType, true);
+        if (this.mimeType) {
+            let defaultApp = Gio.app_info_get_default_for_type(this.mimeType, true);
+            let recommendedApp = null;
 
-        if (defaultApp)
-            this.defaultAppName = defaultApp.get_name();
+            let apps = Gio.app_info_get_recommended_for_type (this.mimeType);
+            for (let i = 0; i < apps.length; i++) {
+                if (apps[i].supports_uris ()) {
+                    // Never offer to open in an archive handler
+                    if (apps[i].get_id() == 'org.gnome.FileRoller.desktop')
+                        continue;
+                    if (defaultApp && apps[i].equal (defaultApp)) {
+                        // Found the recommended app that's also the default
+                        recommendedApp = apps[i];
+                        break;
+                    }
+                    // Set the first recommendedApp as the default if
+                    // they don't match
+                    if (!recommendedApp)
+                        recommendedApp = apps[i];
+                }
+            }
+
+            this.defaultApp = recommendedApp;
+        }
+
+        if (this.defaultApp)
+            this.defaultAppName = this.defaultApp.get_name();
     },
 
     populateFromCursor: function(cursor) {
@@ -701,19 +781,11 @@ const LocalDocument = new Lang.Class({
     },
 
     load: function(passwd, cancellable, callback) {
-        GdPrivate.pdf_loader_load_uri_async(this.uri, passwd, cancellable, Lang.bind(this,
-            function(source, res) {
-                try {
-                    let docModel = GdPrivate.pdf_loader_load_uri_finish(res);
-                    callback(this, docModel, null);
-                } catch (e) {
-                    callback(this, null, e);
-                }
-            }));
+        this.loadLocal(passwd, cancellable, callback);
     },
 
     canEdit: function() {
-        return false;
+        return this.collection;
     },
 
     canShare: function() {
@@ -737,6 +809,17 @@ const LocalDocument = new Lang.Class({
                     log('Unable to trash ' + this.uri + ': ' + e.message);
                 }
             }));
+    },
+
+    getSourceLink: function() {
+        if (this.collection)
+            return [ null, this.sourceName ];
+
+        let sourceLink = Gio.file_new_for_uri(this.uri).get_parent();
+        let sourcePath = sourceLink.get_path();
+
+        let uri = sourceLink.get_uri();
+        return [ uri, sourcePath ];
     }
 });
 
@@ -756,7 +839,7 @@ const GoogleDocument = new Lang.Class({
         this.sourceName = _("Google");
     },
 
-    _createGDataEntry: function(cancellable, callback) {
+    createGDataEntry: function(cancellable, callback) {
         let source = Application.sourceManager.getItemById(this.resourceUrn);
 
         let authorizer = new GData.GoaAuthorizer({ goa_object: source.object });
@@ -783,7 +866,7 @@ const GoogleDocument = new Lang.Class({
     },
 
     load: function(passwd, cancellable, callback) {
-        this._createGDataEntry(cancellable, Lang.bind(this,
+        this.createGDataEntry(cancellable, Lang.bind(this,
             function(entry, service, exception) {
                 if (exception) {
                     // try loading from the most recent cache, if any
@@ -815,7 +898,7 @@ const GoogleDocument = new Lang.Class({
     },
 
     createThumbnail: function(callback) {
-        this._createGDataEntry(null, Lang.bind(this,
+        this.createGDataEntry(null, Lang.bind(this,
             function(entry, service, exception) {
                 if (exception) {
                     callback(false);
@@ -879,6 +962,8 @@ const GoogleDocument = new Lang.Class({
             description = _("Spreadsheet");
         else if (this.rdfType.indexOf('nfo#Presentation') != -1)
             description = _("Presentation");
+        else if (this.rdfType.indexOf('nfo#EBook') != -1)
+            description = _("e-Book");
         else
             description = _("Document");
 
@@ -892,7 +977,7 @@ const GoogleDocument = new Lang.Class({
     },
 
     canEdit: function() {
-        return true;
+        return !this.collection;
     },
 
     canShare: function() {
@@ -901,6 +986,11 @@ const GoogleDocument = new Lang.Class({
 
     canTrash: function() {
         return false;
+    },
+
+    getSourceLink: function() {
+        let uri = 'http://docs.google.com/';
+        return [ uri, this.sourceName ];
     }
 });
 
@@ -916,12 +1006,11 @@ const OwncloudDocument = new Lang.Class({
         // overridden
         this.sourceName = _("ownCloud");
 
-        let defaultApp = null;
         if (this.mimeType)
-            defaultApp = Gio.app_info_get_default_for_type(this.mimeType, true);
+            this.defaultApp = Gio.app_info_get_default_for_type(this.mimeType, true);
 
-        if (defaultApp)
-            this.defaultAppName = defaultApp.get_name();
+        if (this.defaultApp)
+            this.defaultAppName = this.defaultApp.get_name();
     },
 
     createThumbnail: function(callback) {
@@ -944,15 +1033,7 @@ const OwncloudDocument = new Lang.Class({
     },
 
     load: function(passwd, cancellable, callback) {
-        GdPrivate.pdf_loader_load_uri_async(this.uri, passwd, cancellable, Lang.bind(this,
-            function(source, res) {
-                try {
-                    let docModel = GdPrivate.pdf_loader_load_uri_finish(res);
-                    callback(this, docModel, null);
-                } catch (e) {
-                    callback(this, null, e);
-                }
-            }));
+        this.loadLocal(passwd, cancellable, callback);
     },
 
     canEdit: function() {
@@ -965,6 +1046,14 @@ const OwncloudDocument = new Lang.Class({
 
     canTrash: function() {
         return false;
+    },
+
+    getSourceLink: function() {
+        let source = Application.sourceManager.getItemById(this.resourceUrn);
+        let account = source.object.get_account();
+        let presentationIdentity = account.presentation_identity;
+        let uri ='https://' + presentationIdentity + '/';
+        return [ uri, presentationIdentity ];
     }
 });
 
@@ -1049,6 +1138,8 @@ const SkydriveDocument = new Lang.Class({
             description = _("Spreadsheet");
         else if (this.rdfType.indexOf('nfo#Presentation') != -1)
             description = _("Presentation");
+        else if (this.rdfType.indexOf('nfo#EBook') != -1)
+            description = _("e-Book");
         else
             description = _("Document");
 
@@ -1065,6 +1156,11 @@ const SkydriveDocument = new Lang.Class({
 
     canTrash: function() {
         return false;
+    },
+
+    getSourceLink: function() {
+        let uri = 'https://onedrive.live.com';
+        return [ uri, this.sourceName ];
     }
 });
 
@@ -1075,9 +1171,10 @@ const DocumentManager = new Lang.Class({
     _init: function() {
         this.parent();
 
-        this._activeDocModel = null;
-        this._activeDocModelIds = [];
         this._loaderCancellable = null;
+
+        this._activeCollection = null;
+        this._collections = {};
 
         // a stack containing the collections which were used to
         // navigate to the active document or collection
@@ -1104,9 +1201,6 @@ const DocumentManager = new Lang.Class({
                 if (doc) {
                     doc.destroy();
                     this.removeItemById(changeEvent.urn);
-
-                    if (doc.collection)
-                        Application.collectionManager.removeItemById(changeEvent.urn);
                 }
             }
         }
@@ -1155,22 +1249,65 @@ const DocumentManager = new Lang.Class({
     },
 
     addDocumentFromCursor: function(cursor) {
-        let doc = this.createDocumentFromCursor(cursor);
-        this.addItem(doc);
+        let id = cursor.get_string(Query.QueryColumns.URN)[0];
+        let doc = this.getItemById(id);
 
-        if (doc.collection)
-            Application.collectionManager.addItem(doc);
+        if (doc) {
+            this.emit('item-added', doc);
+        } else {
+            doc = this.createDocumentFromCursor(cursor);
+            this.addItem(doc);
+        }
 
         return doc;
     },
 
+    addItem: function(doc) {
+        if (doc.collection) {
+            let oldCollection = this._collections[doc.id];
+            if (oldCollection)
+                this.removeItem(oldCollection);
+
+            this._collections[doc.id] = doc;
+        }
+
+        this.parent(doc);
+    },
+
     clear: function() {
+        this._collections = {};
+        this._activeCollection = null;
+
         let items = this.getItems();
         for (let idx in items) {
             items[idx].destroy();
         };
 
         this.parent();
+    },
+
+    clearRowRefs: function() {
+        let items = this.getItems();
+        for (let idx in items) {
+            items[idx].rowRefs = {};
+        }
+    },
+
+    getActiveCollection: function() {
+        return this._activeCollection;
+    },
+
+    getCollections: function() {
+        return this._collections;
+    },
+
+    getWhere: function() {
+        let retval = '';
+
+        if (this._activeCollection)
+            retval = this._activeCollection.getWhere();
+
+        return retval;
     },
 
     _humanizeError: function(error) {
@@ -1193,7 +1330,19 @@ const DocumentManager = new Lang.Class({
                 message = _("Hmm, something is fishy (%d).").format(error.code);
                 break;
             }
+        } else if (error.domain == Gio.IOErrorEnum) {
+            switch (error.code) {
+            case Gio.IOErrorEnum.NOT_SUPPORTED:
+                if (Application.application.isBooks)
+                    message = _("You are using a preview of Books. Full viewing capabilities are coming soon!");
+                else
+                    message = _("LibreOffice support is not available. Please contact your system administrator.");
+                break;
+            default:
+                break;
+            }
         }
+
         let exception = new GLib.Error(error.domain, error.code, message);
         return exception;
     },
@@ -1221,14 +1370,20 @@ const DocumentManager = new Lang.Class({
             return;
         }
 
-        // save loaded model and signal
-        this._activeDocModel = docModel;
-        this._activeDocModel.set_continuous(false);
-
-        // load metadata
-        this._connectMetadata(docModel);
-
         this.emit('load-finished', doc, docModel);
+    },
+
+    _requestPreview: function(doc) {
+        let windowMode;
+        if (LOKView.isOpenDocumentFormat(doc.mimeType) && !Application.application.isBooks) {
+            windowMode = WindowMode.WindowMode.PREVIEW_LOK;
+        } else if (EPUBView.isEpub(doc.mimeType) && Application.application.isBooks) {
+            windowMode = WindowMode.WindowMode.PREVIEW_EPUB;
+        } else {
+            windowMode = WindowMode.WindowMode.PREVIEW_EV;
+        }
+
+        Application.modeController.setWindowMode(windowMode);
     },
 
     reloadActiveItem: function(passwd) {
@@ -1244,37 +1399,80 @@ const DocumentManager = new Lang.Class({
         this._clearActiveDocModel();
 
         this._loaderCancellable = new Gio.Cancellable();
-        doc.load(passwd, this._loaderCancellable, Lang.bind(this, this._onDocumentLoaded));
+        this._requestPreview(doc);
         this.emit('load-started', doc);
+        doc.load(passwd, this._loaderCancellable, Lang.bind(this, this._onDocumentLoaded));
+    },
+
+    removeItemById: function(id) {
+        if (this._collections[id]) {
+            delete this._collections[id];
+        }
+
+        this.parent(id);
     },
 
     setActiveItem: function(doc) {
-        if (!this.parent(doc))
-            return;
+        let activeCollectionChanged = false;
+        let activeDoc = this.getActiveItem();
+        let retval = false;
+        let startLoading = false;
+
+        // Passing null is a way to go back to the current collection or
+        // overview from the preview. However, you can't do that when you
+        // are looking at a collection. Use activatePreviousCollection for
+        // unwinding the collection stack.
+        if (!doc) {
+            if (activeDoc != this._activeCollection)
+                doc = this._activeCollection;
+            else
+                return false;
+        }
 
         // cleanup any state we have for previously loaded model
         this._clearActiveDocModel();
 
-        if (!doc)
-            return;
-
-        if (doc.collection) {
-            this._collectionPath.push(Application.collectionManager.getActiveItem());
-            Application.collectionManager.setActiveItem(doc);
-            return;
+        // If doc is null then we are going back to the overview from
+        // the preview.
+        if (doc) {
+            if (doc.collection) {
+                // If doc is the active collection then we are going back to the
+                // collection from the preview.
+                if (doc != this._activeCollection) {
+                    this._collectionPath.push(this._activeCollection);
+                    this._activeCollection = doc;
+                    activeCollectionChanged = true;
+                }
+            } else {
+                startLoading = true;
+            }
         }
 
-        let recentManager = Gtk.RecentManager.get_default();
-        recentManager.add_item(doc.uri);
+        retval = this.parent(doc);
 
-        this._loaderCancellable = new Gio.Cancellable();
-        doc.load(null, this._loaderCancellable, Lang.bind(this, this._onDocumentLoaded));
-        this.emit('load-started', doc);
+        if (retval && activeCollectionChanged)
+            this.emit('active-collection-changed', this._activeCollection);
+
+        if (retval && startLoading) {
+            let recentManager = Gtk.RecentManager.get_default();
+            recentManager.add_item(doc.uri);
+
+            this._loaderCancellable = new Gio.Cancellable();
+            this._requestPreview(doc);
+            this.emit('load-started', doc);
+            doc.load(null, this._loaderCancellable, Lang.bind(this, this._onDocumentLoaded));
+        }
+
+        return retval;
     },
 
     activatePreviousCollection: function() {
         this._clearActiveDocModel();
-        Application.collectionManager.setActiveItem(this._collectionPath.pop());
+
+        let collection = this._collectionPath.pop();
+        this._activeCollection = collection;
+        Manager.BaseManager.prototype.setActiveItem.call(this, collection);
+        this.emit('active-collection-changed', this._activeCollection);
     },
 
     _clearActiveDocModel: function() {
@@ -1283,37 +1481,5 @@ const DocumentManager = new Lang.Class({
             this._loaderCancellable.cancel();
             this._loaderCancellable = null;
         }
-
-        // clear any previously loaded document model
-        if (this._activeDocModel) {
-            this._activeDocModelIds.forEach(Lang.bind(this,
-                function(id) {
-                    this._activeDocModel.disconnect(id);
-                }));
-
-            this.metadata = null;
-            this._activeDocModel = null;
-            this._activeDocModelIds = [];
-        }
-    },
-
-    _connectMetadata: function(docModel) {
-        let evDoc = docModel.get_document();
-        let file = Gio.File.new_for_uri(evDoc.get_uri());
-        if (!GdPrivate.is_metadata_supported_for_file(file))
-            return;
-
-        this.metadata = new GdPrivate.Metadata({ file: file });
-
-        // save current page in metadata
-        let [res, val] = this.metadata.get_int('page');
-        if (res)
-            docModel.set_page(val);
-        this._activeDocModelIds.push(
-            docModel.connect('page-changed', Lang.bind(this,
-                function(source, oldPage, newPage) {
-                    this.metadata.set_int('page', newPage);
-                }))
-        );
     }
 });

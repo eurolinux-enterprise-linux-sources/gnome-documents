@@ -19,13 +19,8 @@
  *
  */
 
-const GdPrivate = imports.gi.GdPrivate;
-const Gdk = imports.gi.Gdk;
 const Gio = imports.gi.Gio;
 const GLib = imports.gi.GLib;
-const GObject = imports.gi.GObject;
-const Gtk = imports.gi.Gtk;
-const Pango = imports.gi.Pango;
 
 const Lang = imports.lang;
 const Signals = imports.signals;
@@ -124,16 +119,8 @@ const BaseManager = new Lang.Class({
         this.emit('clear');
     },
 
-    getFilter: function() {
-        let item = this.getActiveItem();
-        let retval = '';
-
-        if (item.id == 'all')
-            retval = this._getAllFilter();
-        else if (item && item.getFilter)
-            retval = item.getFilter();
-
-        return retval;
+    getFilter: function(flags) {
+        log('Error: BaseManager implementations must override getFilter');
     },
 
     getWhere: function() {
@@ -151,7 +138,7 @@ const BaseManager = new Lang.Class({
             func(this._items[idx]);
     },
 
-    _getAllFilter: function() {
+    getAllFilter: function() {
         let filters = [];
 
         this.forEachItem(function(item) {
@@ -189,35 +176,26 @@ Signals.addSignalMethods(BaseManager.prototype);
 
 const BaseModel = new Lang.Class({
     Name: 'BaseModel',
+    Extends: Gio.Menu,
 
     _init: function(manager) {
-        this.model = new Gio.Menu();
+        this.parent();
         this._manager = manager;
         this._manager.connect('item-added', Lang.bind(this, this._refreshModel));
         this._manager.connect('item-removed', Lang.bind(this, this._refreshModel));
-
-        let application = Gio.Application.get_default();
-        let actionId = this._manager.getActionId();
-        application.connect('action-state-changed::' + actionId, Lang.bind(this, function(actionGroup, actionName, value) {
-            let itemId = value.get_string()[0];
-            this._manager.setActiveItemById(itemId);
-        }));
-        this._manager.connect('active-changed', Lang.bind(this, function(manager, activeItem) {
-            application.change_action_state(actionId, GLib.Variant.new('s', activeItem.id));
-        }));
 
         this._refreshModel();
     },
 
     _refreshModel: function() {
-        this.model.remove_all();
+        this.remove_all();
 
         let menuItem;
         let title = this._manager.getTitle();
         let actionId = this._manager.getActionId();
 
         let section = new Gio.Menu();
-        this.model.append_section(title, section);
+        this.append_section(title, section);
 
         let items = this._manager.getItems();
         for (let idx in items) {

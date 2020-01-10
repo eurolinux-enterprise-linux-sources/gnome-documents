@@ -19,18 +19,18 @@
  *
  */
 
-const Gdk = imports.gi.Gdk;
-
 const Lang = imports.lang;
 const Signals = imports.signals;
 
-const Application = imports.application;
-
 const WindowMode = {
     NONE: 0,
-    OVERVIEW: 1,
-    PREVIEW: 2,
-    EDIT: 3
+    DOCUMENTS: 1,
+    PREVIEW_EV: 2,
+    PREVIEW_LOK: 3,
+    PREVIEW_EPUB: 4,
+    EDIT: 5,
+    COLLECTIONS: 6,
+    SEARCH: 7,
 };
 
 const ModeController = new Lang.Class({
@@ -39,7 +39,37 @@ const ModeController = new Lang.Class({
     _init: function() {
         this._mode = WindowMode.NONE;
         this._fullscreen = false;
-        this._canFullscreen = false;
+        this._history = [];
+    },
+
+    goBack: function(steps) {
+        if (!steps)
+            steps = 1;
+
+        if (this._history.length < steps)
+            return;
+
+        let oldMode;
+        for (let i = 0; i < steps; i++)
+            oldMode = this._history.pop();
+
+        /* Always go back to the documents view when activated from the search
+         * provider. It is easier to special case it here instead of all
+         * over the code.
+         */
+        if (this._mode == WindowMode.PREVIEW_EV && oldMode == WindowMode.NONE && steps == 1)
+          oldMode = WindowMode.DOCUMENTS;
+
+        if (oldMode == WindowMode.NONE)
+            return;
+
+        // Swap the old and current modes.
+        let tmp = oldMode;
+        oldMode = this._mode;
+        this._mode = tmp;
+
+        this._updateFullscreen();
+        this.emit('window-mode-changed', this._mode, oldMode);
     },
 
     setWindowMode: function(mode) {
@@ -48,15 +78,10 @@ const ModeController = new Lang.Class({
         if (oldMode == mode)
             return;
 
-        if (mode == WindowMode.PREVIEW
-            || mode == WindowMode.EDIT) {
-            this.setCanFullscreen(true);
-        } else {
-            this.setCanFullscreen(false);
-        }
-
+        this._history.push(oldMode);
         this._mode = mode;
 
+        this._updateFullscreen();
         this.emit('window-mode-changed', this._mode, oldMode);
     },
 
@@ -64,32 +89,19 @@ const ModeController = new Lang.Class({
         return this._mode;
     },
 
-    setCanFullscreen: function(canFullscreen) {
-        this._canFullscreen = canFullscreen;
-
-        if (!this._canFullscreen && this._fullscreen)
+    _updateFullscreen: function() {
+        if (!this.getCanFullscreen() && this._fullscreen)
             this.setFullscreen(false);
 
         this.emit('can-fullscreen-changed');
     },
 
     setFullscreen: function(fullscreen) {
-        if (this._mode != WindowMode.PREVIEW
-            && this._mode != WindowMode.EDIT)
-            return;
-
         if (this._fullscreen == fullscreen)
-            return;
-
-        if (fullscreen && !this._canFullscreen)
             return;
 
         this._fullscreen = fullscreen;
         this.emit('fullscreen-changed', this._fullscreen);
-    },
-
-    toggleFullscreen: function() {
-        this.setFullscreen(!this._fullscreen);
     },
 
     getFullscreen: function() {
@@ -97,7 +109,7 @@ const ModeController = new Lang.Class({
     },
 
     getCanFullscreen: function() {
-        return this._canFullscreen;
+        return (this._mode == WindowMode.PREVIEW_EV || this._mode == WindowMode.EDIT);
     }
 });
 Signals.addSignalMethods(ModeController.prototype);

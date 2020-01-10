@@ -24,48 +24,49 @@
 
     <include xmlns="http://www.w3.org/2001/XInclude" href="legal.xml"/>
 
-    <desc>Open documents that are stored locally or online.</desc>
+    <desc>Abra documentos que estão armazenados localmente ou on-line.</desc>
   
     <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
       <mal:name>Rodolfo Ribeiro Gomes</mal:name>
       <mal:email>rodolforg@gmail.com</mal:email>
-      <mal:years>2011, 2012.</mal:years>
+      <mal:years>2011, 2012</mal:years>
     </mal:credit>
   
     <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
       <mal:name>Rafael Ferreira</mal:name>
       <mal:email>rafael.f.f1@gmail.com</mal:email>
-      <mal:years>2012, 2013, 2014.</mal:years>
+      <mal:years>2012, 2013, 2014</mal:years>
     </mal:credit>
   
     <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
       <mal:name>Enrico Nicoletto</mal:name>
       <mal:email>liverig@gmail.com</mal:email>
-      <mal:years>2013.</mal:years>
+      <mal:years>2013, 2016</mal:years>
     </mal:credit>
   
     <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
       <mal:name>João Santana</mal:name>
       <mal:email>joaosantana@outlook.com</mal:email>
-      <mal:years>2013.</mal:years>
+      <mal:years>2013</mal:years>
+    </mal:credit>
+  
+    <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
+      <mal:name>Felipe Braga</mal:name>
+      <mal:email>fbobraga@gmail.com</mal:email>
+      <mal:years>2015</mal:years>
     </mal:credit>
   </info>
 
-  <title>View your documents</title>
+  <title>Visualizando seus documentos</title>
 
-  <p>When you open <app>Documents</app>, documents which are stored locally in
-  one of the standard folders such as <file>Documents</file> or
-  <file>Downloads</file> and in one of your online accounts, are displayed as
-  thumbnails.</p>
+  <p>Quando você abre o <app>Documentos</app>, seus documentos, tanto aqueles armazenados localmente quanto on-line, são exibidos como miniaturas de pré-visualização.</p>
 
   <note style="tip">
-    <p>To see documents from your online accounts, it is necessary to
-    <link href="help:gnome-help/accounts-add">set up the accounts</link>.</p>
+    <p>Para ver documentos de suas contas on-line, é necessário primeiro <link href="help:gnome-help/accounts-add">configurá-las</link>.</p>
   </note>
 
-  <p>To view the contents of a document, press on the thumbnail.</p>
+  <p>Para visualizar o conteúdo de um documento, clique em sua miniatura.</p>
 
-  <p>To exit the document, click the back arrow button in the top-left of the
-  window.</p>
+  <p>Para sair do documento, clique no botão de seta para trás (na parte superior esquerda da janela).</p>
 
 </page>

@@ -24,33 +24,35 @@
 
     <include xmlns="http://www.w3.org/2001/XInclude" href="legal.xml"/>
 
-    <desc>Change the way documents are displayed.</desc>
+    <desc>Ändra sättet på vilket dokument visas.</desc>
   
     <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
       <mal:name>Daniel Nylander</mal:name>
       <mal:email>po@danielnylander.se</mal:email>
       <mal:years>2012</mal:years>
     </mal:credit>
+  
+    <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
+      <mal:name>Sebastian Rasmussen</mal:name>
+      <mal:email>sebras@gmail.com</mal:email>
+      <mal:years>2015</mal:years>
+    </mal:credit>
   </info>
 
-  <title>View files in a list or grid</title>
+  <title>Visa filer i en lista eller ett rutnät</title>
 
-  <p>Documents and collections are presented in <gui>Grid</gui> format by
-  default. To view in <gui>List</gui> format:</p>
+  <p>Dokument och samlingar presenteras i ett <gui>Rutnät</gui> som standard. För att visa dem i en <gui>Lista</gui>:</p>
 
   <steps>
     <item>
-      <p>Press the list button in the top-right corner of the window.</p>
+      <p>Tryck på listknappen i övre högra hörnet av fönstret.</p>
     </item>
   </steps>
 
   <note style="info">
-    <p>List view has columns displaying the document type and date modified,
-    and whether it's stored locally or remotely in one of your online
-    accounts.</p>
+    <p>Listvyn har kolumner som visar dokumenttypen, ändringsdatum och huruvida lokal- eller fjärrlagring via ett av dina nätkonton används.</p>
   </note>
 
-  <p>Click the grid button in the top-right corner of the window to return to
-  the grid view.</p>
+  <p>Klicka på rutnätsknappen i övre högra hörnet av fönstret för att återgå till rutnätsvyn.</p>
 
 </page>

@@ -18,34 +18,38 @@
 
     <include xmlns="http://www.w3.org/2001/XInclude" href="legal.xml"/>
 
-    <desc>Print documents that are stored locally or online.</desc>
+    <desc>Skriv ut dokument som är lagrade lokalt eller på nätet.</desc>
   
     <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
       <mal:name>Daniel Nylander</mal:name>
       <mal:email>po@danielnylander.se</mal:email>
       <mal:years>2012</mal:years>
     </mal:credit>
+  
+    <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
+      <mal:name>Sebastian Rasmussen</mal:name>
+      <mal:email>sebras@gmail.com</mal:email>
+      <mal:years>2015</mal:years>
+    </mal:credit>
   </info>
 
   <title>Skriv ut ett dokument</title>
 
   <steps>
-    <title>To print a document:</title>
+    <title>För att skriva ut ett dokument:</title>
     <item>
-      <p>Press the <gui>✓</gui> button.</p>
+      <p>Tryck på <gui>✓</gui>-knappen.</p>
     </item>
     <item>
-      <p>In selection mode, check the document to be printed.</p>
+      <p>I markeringsläget, kontrollera dokumentet som ska skrivas ut.</p>
     </item>
     <item>
-      <p>Click the Print button in the button bar. The <gui>Print</gui> dialog
-      opens.</p>
+      <p>Klicka på Skriv ut-knappen i knappfältet. Dialogen <gui>Skriv ut</gui> öppnas.</p>
     </item>
   </steps>
 
   <note>
-    <p>Printing is not available when more than one document is selected, or
-    when a collection is selected.</p>
+    <p>Utskrift är inte möjligt när mer än ett dokument är markerat, eller när en samling är markerad.</p>
   </note>
 
 </page>

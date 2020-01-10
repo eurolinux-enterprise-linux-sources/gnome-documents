@@ -19,38 +19,42 @@
 
     <include xmlns="http://www.w3.org/2001/XInclude" href="legal.xml"/>
 
-    <desc><app>Documentos</app> pode exibir diversos de tipos de documentos populares.</desc>
+    <desc>O aplicativo <app>Documentos</app> exibe diversos tipos populares de documentos.</desc>
   
     <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
       <mal:name>Rodolfo Ribeiro Gomes</mal:name>
       <mal:email>rodolforg@gmail.com</mal:email>
-      <mal:years>2011, 2012.</mal:years>
+      <mal:years>2011, 2012</mal:years>
     </mal:credit>
   
     <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
       <mal:name>Rafael Ferreira</mal:name>
       <mal:email>rafael.f.f1@gmail.com</mal:email>
-      <mal:years>2012, 2013, 2014.</mal:years>
+      <mal:years>2012, 2013, 2014</mal:years>
     </mal:credit>
   
     <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
       <mal:name>Enrico Nicoletto</mal:name>
       <mal:email>liverig@gmail.com</mal:email>
-      <mal:years>2013.</mal:years>
+      <mal:years>2013, 2016</mal:years>
     </mal:credit>
   
     <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
       <mal:name>João Santana</mal:name>
       <mal:email>joaosantana@outlook.com</mal:email>
-      <mal:years>2013.</mal:years>
+      <mal:years>2013</mal:years>
+    </mal:credit>
+  
+    <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
+      <mal:name>Felipe Braga</mal:name>
+      <mal:email>fbobraga@gmail.com</mal:email>
+      <mal:years>2015</mal:years>
     </mal:credit>
   </info>
 
-  <title>Supported formats</title>
+  <title>Formatos com suporte</title>
 
   <!-- TODO: check which formats are considered to be documents by tracker. -->
-  <p><app>Documents</app> displays PDF, DVI, XPS, PostScript and the formats
-  supported by <app href="help:evince">Document Viewer</app>, <app>Microsoft
-  Office</app>, <app>LibreOffice</app> and <app>Google Docs</app>.</p>
+  <p>O <app>Documentos</app> exibe arquivos PDF, DVI, XPS, PostScript e os arquivos suportados pelo <app href="help:evince">Visualizador de documentos</app>, pelo <app>Microsoft Office</app>, pelo <app>LibreOffice</app> e no <app>Google Docs</app>.</p>
 
 </page>

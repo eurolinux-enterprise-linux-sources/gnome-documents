@@ -21,14 +21,11 @@
 
 const Gd = imports.gi.Gd;
 const Gettext = imports.gettext;
-const Gio = imports.gi.Gio;
-const GLib = imports.gi.GLib;
 const Gtk = imports.gi.Gtk;
 const TrackerControl = imports.gi.TrackerControl;
 const _ = imports.gettext.gettext;
 
 const Application = imports.application;
-const Utils = imports.utils;
 const WindowMode = imports.windowMode;
 
 const Lang = imports.lang;
@@ -43,13 +40,21 @@ const DeleteNotification = new Lang.Class({
     _init: function(docs) {
         this._docs = docs;
         this.widget = new Gtk.Grid({ orientation: Gtk.Orientation.HORIZONTAL,
-                                     column_spacing: 12,
-                                     margin_start: 12,
-                                     margin_end: 12 });
+                                     column_spacing: 12 });
 
-        let msg = Gettext.ngettext("Selected item has been deleted",
-                                   "Selected items have been deleted",
-                                   this._docs.length);
+        let msg;
+
+        if (this._docs.length == 1 && this._docs[0].name) {
+            // Translators: only one item has been deleted and %s is its name
+            msg = (_("“%s” deleted")).format(this._docs[0].name);
+        } else {
+            // Translators: one or more items might have been deleted, and %d
+            // is the count
+            msg = Gettext.ngettext("%d item deleted",
+                                   "%d items deleted",
+                                   this._docs.length).format(this._docs.length);
+        }
+
         let label = new Gtk.Label({ label: msg,
                                     halign: Gtk.Align.START });
         this.widget.add(label);
@@ -121,9 +126,7 @@ const PrintNotification = new Lang.Class({
 
     _onPrintBegin: function() {
         this.widget = new Gtk.Grid({ orientation: Gtk.Orientation.VERTICAL,
-                                     row_spacing: 6,
-                                     margin_start: 12,
-                                     margin_end: 12});
+                                     row_spacing: 6 });
 
         this._statusLabel = new Gtk.Label();
         this.widget.add(this._statusLabel);
@@ -154,7 +157,7 @@ const PrintNotification = new Lang.Class({
 
         let status = this._printOp.get_status();
         let fraction = this._printOp.get_progress();
-	status = _("Printing “%s”: %s").format(this._doc.name, status);
+        status = _("Printing “%s”: %s").format(this._doc.name, status);
 
         this._statusLabel.set_text(status);
         this._progressBar.fraction = fraction;
@@ -188,7 +191,7 @@ const IndexingNotification = new Lang.Class({
     },
 
     _checkNotification: function() {
-        if (Application.modeController.getWindowMode() == WindowMode.WindowMode.PREVIEW) {
+        if (Application.modeController.getWindowMode() == WindowMode.WindowMode.PREVIEW_EV) {
             this._destroy(false);
             return;
         }
@@ -252,8 +255,6 @@ const IndexingNotification = new Lang.Class({
 
     _buildWidget: function() {
         this.widget = new Gtk.Grid({ orientation: Gtk.Orientation.HORIZONTAL,
-                                     margin_start: 12,
-                                     margin_end: 12,
                                      column_spacing: 12 });
 
         let spinner = new Gtk.Spinner({ width_request: 16,
@@ -326,16 +327,17 @@ const IndexingNotification = new Lang.Class({
 
 const NotificationManager = new Lang.Class({
     Name: 'NotificationManager',
+    Extends: Gd.Notification,
 
     _init: function() {
-        this.widget = new Gd.Notification({ timeout: -1,
-                                            show_close_button: false,
-                                            halign: Gtk.Align.CENTER,
-                                            valign: Gtk.Align.START });
+        this.parent({ timeout: -1,
+                      show_close_button: false,
+                      halign: Gtk.Align.CENTER,
+                      valign: Gtk.Align.START });
         this._grid = new Gtk.Grid({ orientation: Gtk.Orientation.VERTICAL,
                                     row_spacing: 6 });
 
-        this.widget.add(this._grid);
+        this.add(this._grid);
 
         // add indexing monitor notification
         this._indexingNotification = new IndexingNotification();
@@ -345,14 +347,14 @@ const NotificationManager = new Lang.Class({
         this._grid.add(notification.widget);
         notification.widget.connect('destroy', Lang.bind(this, this._onWidgetDestroy));
 
-        this.widget.show_all();
+        this.show_all();
     },
 
     _onWidgetDestroy: function() {
         let children = this._grid.get_children();
 
         if (children.length == 0)
-            this.widget.hide();
+            this.hide();
     }
 });
 Signals.addSignalMethods(NotificationManager.prototype);

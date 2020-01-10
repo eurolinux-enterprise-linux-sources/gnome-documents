@@ -1,5 +1,6 @@
 /*
- * Copyright (c) 2011, 2013 Red Hat, Inc.
+ * Copyright (c) 2015 Alessandro Bono
+ * Copyright (c) 2011, 2013, 2015 Red Hat, Inc.
  *
  * Gnome Documents is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by the
@@ -20,46 +21,57 @@
  */
 
 const Gd = imports.gi.Gd;
-const Gio = imports.gi.Gio;
 const GLib = imports.gi.GLib;
 const Gtk = imports.gi.Gtk;
-const Pango = imports.gi.Pango;
 
 const Gettext = imports.gettext;
 const _ = imports.gettext.gettext;
 
 const Lang = imports.lang;
-const Mainloop = imports.mainloop;
 
 const Application = imports.application;
 const Searchbar = imports.searchbar;
 
 const MainToolbar = new Lang.Class({
     Name: 'MainToolbar',
+    Extends: Gtk.Box,
 
     _init: function() {
         this._model = null;
         this._handleEvent = true;
 
-        this.widget = new Gtk.Box({ orientation: Gtk.Orientation.VERTICAL });
-        this.widget.show();
+        this.parent({ orientation: Gtk.Orientation.VERTICAL });
+        this.show();
 
         this.toolbar = new Gtk.HeaderBar({ hexpand: true });
         this.toolbar.get_style_context().add_class('titlebar');
-        this.widget.add(this.toolbar);
+        this.add(this.toolbar);
         this.toolbar.show();
 
         this.searchbar = this.createSearchbar();
         if (this.searchbar)
-            this.widget.add(this.searchbar.widget);
+            this.add(this.searchbar);
 
-        Application.documentManager.connect('load-started', Lang.bind(this,
+        let loadStartedId = Application.documentManager.connect('load-started', Lang.bind(this,
             function() {
                 this._handleEvent = true;
             }));
 
-        Application.documentManager.connect('load-error', Lang.bind(this, this._onLoadErrorOrPassword));
-        Application.documentManager.connect('password-needed', Lang.bind(this, this._onLoadErrorOrPassword));
+        let loadErrorId = Application.documentManager.connect('load-error',
+            Lang.bind(this, this._onLoadErrorOrPassword));
+        let passwordNeededId = Application.documentManager.connect('password-needed',
+            Lang.bind(this, this._onLoadErrorOrPassword));
+
+        this.connect('destroy', Lang.bind(this,
+            function() {
+                Application.documentManager.disconnect(loadStartedId);
+                Application.documentManager.disconnect(loadErrorId);
+                Application.documentManager.disconnect(passwordNeededId);
+            }));
+    },
+
+    createSearchbar: function() {
+        return null;
     },
 
     _onLoadErrorOrPassword: function() {
@@ -76,10 +88,38 @@ const MainToolbar = new Lang.Class({
 
     addSearchButton: function() {
         let searchButton = new Gtk.ToggleButton({ image: new Gtk.Image ({ icon_name: 'edit-find-symbolic' }),
-                                                  tooltip_text: _("Search"),
+                                                  tooltip_text: Gettext.pgettext("toolbar button tooltip", "Search"),
                                                   action_name: 'app.search' });
         this.toolbar.pack_end(searchButton);
         return searchButton;
+    },
+
+    _onFullscreenStateChanged: function() {
+        let state = Application.application.get_action_state('fullscreen');
+        if (state.get_boolean())
+            this._fullscreenButton.image.icon_name ='view-restore-symbolic';
+        else
+            this._fullscreenButton.image.icon_name ='view-fullscreen-symbolic';
+    },
+
+    addFullscreenButton: function() {
+        let fullscreenButton = new Gtk.Button({ image: new Gtk.Image ({ icon_name: 'view-fullscreen-symbolic' }),
+                                                tooltip_text: _("Fullscreen"),
+                                                action_name: 'app.fullscreen' });
+        this.toolbar.pack_end(fullscreenButton);
+        Application.application.connect('action-state-changed::fullscreen',
+            Lang.bind(this, this._onFullscreenStateChanged));
+        this._fullscreenButton = fullscreenButton;
+        this._onFullscreenStateChanged();
+        return fullscreenButton;
+    },
+
+    addNightmodeButton: function() {
+        let nightmodeButton = new Gtk.ToggleButton({ image: new Gtk.Image ({ icon_name: 'display-brightness-symbolic' }),
+                                                     tooltip_text: _("Night Mode"),
+                                                     action_name: 'app.night-mode' });
+        this.toolbar.pack_end(nightmodeButton);
+        return nightmodeButton;
     },
 
     addBackButton: function() {
@@ -94,67 +134,71 @@ const OverviewToolbar = new Lang.Class({
     Name: 'OverviewToolbar',
     Extends: MainToolbar,
 
-    _init: function(overlay) {
-        this._overlay = overlay;
+    _init: function(stack) {
         this._collBackButton = null;
         this._collectionId = 0;
         this._selectionChangedId = 0;
-        this._selectionMenu = null;
-        this._viewGridButton = null;
-        this._viewListButton = null;
+        this._viewMenuButton = null;
         this._viewSettingsId = 0;
+        this._activeCollection = null;
+        this._infoUpdatedId = 0;
+        this._countChangedId = 0;
 
         this.parent();
 
+        let builder = new Gtk.Builder();
+        builder.add_from_resource('/org/gnome/Documents/ui/selection-menu.ui');
+        let selectionMenu = builder.get_object('selection-menu');
+        this._selectionMenu = new Gtk.MenuButton({ menu_model: selectionMenu });
+        this._selectionMenu.get_style_context().add_class('selection-menu');
+
+        this._stackSwitcher = new Gtk.StackSwitcher({ no_show_all: true,
+                                                      stack: stack });
+        this._stackSwitcher.show();
+
         // setup listeners to mode changes that affect the toolbar layout
-        this._selectionModeId = Application.selectionController.connect('selection-mode-changed',
+        let selectionModeId = Application.selectionController.connect('selection-mode-changed',
             Lang.bind(this, this._resetToolbarMode));
         this._resetToolbarMode();
 
-        this.widget.connect('destroy', Lang.bind(this,
-            function() {
-                this._clearStateData();
+        this._activeCollection = Application.documentManager.getActiveCollection();
+        if (this._activeCollection)
+            this._activeCollection.connect('info-updated', Lang.bind(this, this._setToolbarTitle));
 
-                if (this._selectionModeId != 0) {
-                    Application.selectionController.disconnect(this._selectionModeId);
-                    this._selectionModeId = 0;
-                }
+        this.connect('destroy', Lang.bind(this,
+            function() {
+                if (this._infoUpdatedId != 0)
+                    this._activeCollection.disconnect(this._infoUpdatedId);
+
+                this._clearStateData();
+                Application.selectionController.disconnect(selectionModeId);
             }));
     },
 
-    _addViewAsButtons: function() {
-        let viewAsBox = new Gtk.Box({ orientation: Gtk.Orientation.HORIZONTAL,
-                                      spacing: 0 });
-        viewAsBox.get_style_context().add_class('linked');
-        this.toolbar.pack_end(viewAsBox);
+    _addViewMenuButton: function() {
+        let builder = new Gtk.Builder();
+        builder.add_from_resource('/org/gnome/Documents/ui/view-menu.ui');
+        let viewMenu = builder.get_object('viewMenu');
 
-        this._viewListButton = new Gtk.Button({ image: new Gtk.Image ({ icon_name: 'view-list-symbolic' }),
-                                                tooltip_text: _("View items as a list"),
-                                                no_show_all: true,
-                                                action_name: 'app.view-as',
-                                                action_target: GLib.Variant.new('s', 'list') });
-        viewAsBox.add(this._viewListButton);
-        this._viewGridButton = new Gtk.Button({ image: new Gtk.Image ({ icon_name: 'view-grid-symbolic' }),
-                                                tooltip_text: _("View items as a grid of icons"),
-                                                no_show_all: true,
-                                                action_name: 'app.view-as',
-                                                action_target: GLib.Variant.new('s', 'icon') });
-        viewAsBox.add(this._viewGridButton);
+        // Translators: this is the menu to change view settings
+        this._viewMenuButton = new Gtk.MenuButton({ tooltip_text: _("View Menu"),
+                                                    popover: viewMenu });
+        this.toolbar.pack_end(this._viewMenuButton);
 
         this._viewSettingsId = Application.settings.connect('changed::view-as',
-            Lang.bind(this, this._updateViewAsButtons));
-        this._updateViewAsButtons();
+            Lang.bind(this, this._updateViewMenuButton));
+        this._updateViewMenuButton();
     },
 
-    _updateViewAsButtons: function() {
+    _updateViewMenuButton: function() {
         let viewType = Application.settings.get_enum('view-as');
-        this._viewGridButton.visible = (viewType != Gd.MainViewType.ICON);
-        this._viewListButton.visible = (viewType != Gd.MainViewType.LIST);
+        let iconName = viewType == Gd.MainViewType.ICON ? 'view-grid-symbolic' : 'view-list-symbolic';
+        this._viewMenuButton.image = new Gtk.Image({ icon_name: iconName, pixel_size: 16 })
     },
 
     _setToolbarTitle: function() {
         let selectionMode = Application.selectionController.getSelectionMode();
-        let activeCollection = Application.collectionManager.getActiveItem();
+        let activeCollection = Application.documentManager.getActiveCollection();
         let primary = null;
 
         if (!selectionMode) {
@@ -177,7 +221,7 @@ const OverviewToolbar = new Lang.Class({
                 primary = label;
         }
 
-        if (this._selectionMenu) {
+        if (selectionMode) {
             if (primary) {
                 this._selectionMenu.set_label(primary);
                 this._selectionMenu.get_child().use_markup = true;
@@ -189,12 +233,6 @@ const OverviewToolbar = new Lang.Class({
 
     _populateForSelectionMode: function() {
         this.toolbar.get_style_context().add_class('selection-mode');
-
-        let builder = new Gtk.Builder();
-        builder.add_from_resource('/org/gnome/documents/selection-menu.ui');
-        let selectionMenu = builder.get_object('selection-menu');
-        this._selectionMenu = new Gtk.MenuButton({ menu_model: selectionMenu });
-        this._selectionMenu.get_style_context().add_class('selection-menu');
         this.toolbar.set_custom_title(this._selectionMenu);
 
         let selectionButton = new Gtk.Button({ label: _("Cancel") });
@@ -212,31 +250,49 @@ const OverviewToolbar = new Lang.Class({
         this.addSearchButton();
     },
 
-    _checkCollectionBackButton: function() {
-        let item = Application.collectionManager.getActiveItem();
+    _checkCollectionWidgets: function() {
+        let customTitle;
+        let item = Application.documentManager.getActiveCollection();
 
-        if (item && !this._collBackButton) {
-            this._collBackButton = this.addBackButton();
-            this._collBackButton.show();
-            this._collBackButton.connect('clicked', Lang.bind(this,
-                function() {
-                    Application.documentManager.activatePreviousCollection();
-                }));
-        } else if (!item && this._collBackButton) {
-            this._collBackButton.destroy();
-            this._collBackButton = null;
+        if (item) {
+            customTitle = null;
+            if (!this._collBackButton) {
+                this._collBackButton = this.addBackButton();
+                this._collBackButton.show();
+                this._collBackButton.connect('clicked', Lang.bind(this,
+                    function() {
+                        Application.documentManager.activatePreviousCollection();
+                    }));
+            }
+        } else {
+            customTitle = this._stackSwitcher;
+            if (this._collBackButton) {
+                this._collBackButton.destroy();
+                this._collBackButton = null;
+            }
         }
+
+        this.toolbar.set_custom_title(customTitle);
     },
 
-    _onActiveCollectionChanged: function() {
-        this._checkCollectionBackButton();
+    _onActiveCollectionChanged: function(manager, activeCollection) {
+        if (activeCollection) {
+            this._infoUpdatedId = activeCollection.connect('info-updated', Lang.bind(this, this._setToolbarTitle));
+        } else {
+            if (this._infoUpdatedId != 0) {
+                this._activeCollection.disconnect(this._infoUpdatedId);
+                this._infoUpdatedId = 0;
+            }
+        }
+        this._activeCollection = activeCollection;
+        this._checkCollectionWidgets();
         this._setToolbarTitle();
-        Application.application.change_action_state('search', GLib.Variant.new('b', false));
     },
 
     _populateForOverview: function() {
         this.toolbar.set_show_close_button(true);
-        this._checkCollectionBackButton();
+        this.toolbar.set_custom_title(this._stackSwitcher);
+        this._checkCollectionWidgets();
 
         let selectionButton = new Gtk.Button({ image: new Gtk.Image ({ icon_name: 'object-select-symbolic' }),
                                                tooltip_text: _("Select Items") });
@@ -246,24 +302,27 @@ const OverviewToolbar = new Lang.Class({
                 Application.selectionController.setSelectionMode(true);
             }));
 
-        this._addViewAsButtons();
+        this._addViewMenuButton();
         this.addSearchButton();
 
         // connect to active collection changes while in this mode
         this._collectionId =
-            Application.collectionManager.connect('active-changed',
+            Application.documentManager.connect('active-collection-changed',
                                              Lang.bind(this, this._onActiveCollectionChanged));
     },
 
     _clearStateData: function() {
         this._collBackButton = null;
-        this._selectionMenu = null;
-        this._viewGridButton = null;
-        this._viewListButton = null;
+        this._viewMenuButton = null;
         this.toolbar.set_custom_title(null);
 
+        if (this._countChangedId != 0) {
+            Application.offsetDocumentsController.disconnect(this._countChangedId);
+            this._countChangedId = 0;
+        }
+
         if (this._collectionId != 0) {
-            Application.collectionManager.disconnect(this._collectionId);
+            Application.documentManager.disconnect(this._collectionId);
             this._collectionId = 0;
         }
 
@@ -298,6 +357,14 @@ const OverviewToolbar = new Lang.Class({
 
         this._setToolbarTitle();
         this.toolbar.show_all();
+
+        this._countChangedId = Application.offsetDocumentsController.connect('item-count-changed', Lang.bind(this,
+            function(controller, count) {
+                this.toolbar.foreach(Lang.bind(this,
+                    function(child) {
+                        child.set_sensitive(count != 0);
+                    }));
+            }));
 
         if (Application.searchController.getString() != '')
             Application.application.change_action_state('search', GLib.Variant.new('b', true));

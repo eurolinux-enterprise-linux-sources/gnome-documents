@@ -1,23 +1,157 @@
-3.14.3 - "Siamese African"
-==========================
+3.22.2 - "Worthington 1000"
+===========================
 
-- Fixed partially visible text in collections dialog (Muhammet Kara)
-- Use the trash while deleting (Bastien Nocera)
-- Add placeholder text for PostScript files when the no TOC is available
-- Adapt to changes in nao:identifier syntax for Google items
-- Unbreak loading Google and SkyDrive items from the cache
+- Use LOKDocView for pre-OOXML MS Office formats (Pranav Kant)
+- Fix scrubbar preview positioning under Wayland
+- Reload the active item when viewing edits
+
+3.22.1 - "Saint Alicia"
+=======================
+
+- Don't steal space keypress in preview
+- Only add list renderers when view type is notified
 - Translation updates
 
-3.14.2 - "Candy"
-================
+3.22.0
+==================
 
-- Disable SSLv3 to prevent POODLE attacks
+- Translation updates
 
-3.14.1 - "Boardwalk"
+3.21.92 - "Paper"
+==================
+
+- Some refactoring (Cosimo Cecchi)
+- Translation updates
+
+3.21.90 - "Don't"
+==================
+
+- Add initial epub support in Books (Cosimo Cecchi, Daniel Garcia Moreno)
+- Fix bookmarking (Alessandro Bono)
+- Fix continuous mode never being disabled (Bastien Nocera)
+- Don't offer to open in file-roller (Bastien Nocera)
+- Add fullscreen and nightmode to toolbar (Bastien Nocera)
+- Hide the "Present" menu item in Books (Bastien Nocera)
+- Don't select when focusing the search entry (Dimitrios Christidis)
+- Use GtkMenuButton in OverviewSearchbar (Alessandro Bono)
+- Don't show documents in the collection dialog (Alessandro Bono)
+- Translation updates
+
+3.20.0 - "Tickets"
+==================
+
+- Better empty states (Alessandro Bono)
+- Fix LOKDocView crashes during start-up (Pranav Kant)
+- Rename icons so that xdg-app bundles can be created
+- Theme fixes
+- Translation updates
+
+3.19.4 - "Walk the Dog"
+=======================
+
+- Add full-text search (Rafael Fonseca)
+- Use LOKDocView for handling ODF, OOXML, etc. files (Bastien Nocera, Pranav
+  Kant)
+- Try not to open PDFs in GIMP (Bastien Nocera)
+- Translation updates
+
+3.19.3 - "Merge Cowboy"
+=======================
+
+- Change to selection mode when pressing ctrl+a (Alessandro Bono)
+- Don't hide navigation controls when hovering (Alessandro Bono)
+- Don't invert the content of Books in night-mode (Bastien Nocera)
+- Show a spinner while creating the first collection (Alessandro Bono)
+- Rename "Recent" view to "Documents" or "Books" (Alessandro Bono)
+- Restore separate collections for Books and Documents (Alessandro Bono)
+- Add the ability to change the sort order of the view (Alessandro Bono,  Arnel
+  A. Borja)
+- Disable Print menu item when unsupported (Bastien Nocera)
+- Update the layout of the selection toolbar (Alessandro Bono)
+- Link preview searchbar with next and previous buttons (Alessandro Bono)
+- Add screenshots to AppData (Alessandro Bono, Bastien Nocera)
+- Show DjVu files as being eBooks (Bastien Nocera)
+- Fix lost keypresses when searching in fullscreen (Bastien Nocera)
+- Fix possible warnings exiting fullscreen (Bastien Nocera)
+- Fix installation on some systems (Bastien Nocera)
+- Fix the background of tagged entries
+- Don't show an extra menu when the app menu is disabled
+- Add a help overlay
+- Translation updates
+
+3.18.0.1 - "Jadavpur"
+=====================
+
+- Fix syntax error in desktop file translation
+
+3.18.0 - "No name"
+==================
+
+- Update title if active collection is renamed (Alessandro Bono)
+- Fix tagged entry theming (Debarshi Ray)
+- Prevent nested collections (Alessandro)
+- Align the source label (Alessandro)
+- Translation updates
+
+3.17.90 - "Triple"
+==================
+
+- New collections dialog (Alessandro Bono)
+- Don't show the places dialog if there is only one page (Alessandro Bono)
+- Port to package.js (Alessandro Bono)
+- Unbreak activating documents from the search provider
+- Adapt the sharing dialog to work with latest Google Drive changes
+- Translation updates
+
+3.17.2 - "Blansko"
+==================
+
+- Handle inability to load unsupported e-book formats (Bastien Nocera)
+- Use the trash while deleting (Bastien Nocera)
+- Fixed partially visible text in collections dialog (Muhammet Kara)
+- Hide "Contents" tab when no TOC is available (Muhammet Kara)
+- Prevent multiple about dialogs from opening (Alessandro Bono)
+- Implement night mode in the content (Alessandro Bono)
+- Make the overlaid preview controls work nicely on touchscreens
+- Stop search provider from spawning miners and setting the tracker priority
+- Fixed bugs and regressions caused by having separate views for documents
+  and collections
+- Restore the search criteria when we move back from the preview or collection
+  view to the search results
+- Adapt to changes in nao:identifier syntax for Google items
+- Unbreak loading Google and SkyDrive items from the cache
+- Prevent WebKit2 from blowing away our cache
+- Translation updates
+
+3.15.90 - "Keyboard"
 ====================
 
+- Separate views for documents and collections
+- Fix edge hit detection to use edge-reached instead of edge-overshot
+- Add man page and AppData for Books
+- Documentation updates (Ekaterina Gerasimova)
+- Translation updates
+
+3.15.2 - "Gaston"
+=================
+
+- Add support for "Night mode"
+- Add new "Books" applications
+  (Note that viewing ePub and Mobi formats isn't implemented yet)
+- Port to WebKit2
+- Fix some documents getting opened in the Archive Manager
+- Fix a number of interaction problems related to fullscreen and controls
+- Use GTK+' search bar widget instead of our own
+
+3.15.1 - "Pandemonium"
+======================
+
 - Pass the correct arguments to pdf_loader_load_uri_async (Pranav Kant)
+- Let the back button cancel an ongoing load operation (Pranav Kant)
+- Replace "Load more" button with edge hit detection (Carlos Garnacho)
 - Fix crash in places and bookmarks dialog
+- Polish the presentation output chooser
+- Use symbolics for high contrast icons
 - Translation updates
 
 3.14.0 - "Rajhrad"

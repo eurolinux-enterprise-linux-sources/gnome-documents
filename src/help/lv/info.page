@@ -29,8 +29,7 @@
 
   <title>Atrast informāciju par dokumentiem</title>
 
-  <p>When a document is created, it contains <em>metadata</em>.
-  <app>Documents</app> displays the following metadata for each document:</p>
+  <p>Kad dokuments ir izveidots, tas satur <em>metadatus</em>. <app>Dokumenti</app> katram dokumentam attēlo šos metadatus:</p>
 
   <list>
     <item>

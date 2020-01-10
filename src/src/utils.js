@@ -21,12 +21,10 @@
 
 const Gd = imports.gi.Gd;
 const GdPrivate = imports.gi.GdPrivate;
-const Gdk = imports.gi.Gdk;
 const Gio = imports.gi.Gio;
 const GLib = imports.gi.GLib;
 const Gtk = imports.gi.Gtk;
 
-const Documents = imports.documents;
 const Application = imports.application;
 
 const Lang = imports.lang;
@@ -77,6 +75,8 @@ function iconFromRdfType(type) {
         iconName = 'x-office-spreadsheet';
     else if (type.indexOf('nfo#Presentation') != -1)
         iconName = 'x-office-presentation';
+    else if (type.indexOf('nfo#EBook') != -1)
+        iconName = 'x-office-document'; //FIXME should be a real icon
     else if (type.indexOf('nfo#DataContainer') != -1)
         return GdPrivate.create_collection_icon(
             getIconSize() * Application.application.getScaleFactor(),
@@ -119,4 +119,44 @@ function addJSSignalMethods(proto) {
     proto.disconnectJS = Signals._disconnect;
     proto.emitJS = Signals._emit;
     proto.disconnectAllJS = Signals._disconnectAll;
+}
+
+function actionToggleCallback(action) {
+    let state = action.get_state();
+    action.change_state(GLib.Variant.new('b', !state.get_boolean()));
+}
+
+function populateActionGroup(actionGroup, actionEntries, prefix) {
+    actionEntries.forEach(function(actionEntry) {
+        let settingsKey = actionEntry.settingsKey;
+        let state = actionEntry.state;
+        let parameterType = actionEntry.parameter_type ?
+            GLib.VariantType.new(actionEntry.parameter_type) : null;
+        let action;
+
+        if (settingsKey) {
+            action = Application.settings.create_action(settingsKey);
+        } else {
+            if (state)
+                action = Gio.SimpleAction.new_stateful(actionEntry.name,
+                                                       parameterType, actionEntry.state);
+            else
+                action = new Gio.SimpleAction({ name: actionEntry.name,
+                                                parameter_type: parameterType });
+        }
+
+        if (actionEntry.create_hook)
+            actionEntry.create_hook(action);
+
+        if (actionEntry.callback)
+            action.connect('activate', actionEntry.callback);
+
+        if (actionEntry.stateChanged)
+            action.connect('notify::state', actionEntry.stateChanged);
+
+        if (actionEntry.accels)
+            Application.application.set_accels_for_action(prefix + '.' + action.name, actionEntry.accels);
+
+        actionGroup.add_action(action);
+    });
 }

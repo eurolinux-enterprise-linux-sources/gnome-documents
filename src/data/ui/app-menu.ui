@@ -5,8 +5,16 @@
         <attribute name="action">app.fullscreen</attribute>
         <attribute name="label" translatable="yes">Fullscreen</attribute>
       </item>
+      <item>
+        <attribute name="action">app.night-mode</attribute>
+        <attribute name="label" translatable="yes">Night Mode</attribute>
+      </item>
     </section>
     <section>
+      <item>
+        <attribute name="action">win.show-help-overlay</attribute>
+        <attribute name="label" translatable="yes">Keyboard Shortcuts</attribute>
+      </item>
       <item>
         <attribute name="action">app.help</attribute>
         <attribute name="label" translatable="yes">Help</attribute>
@@ -17,7 +25,7 @@
       </item>
       <item>
         <attribute name="action">app.quit</attribute>
-        <attribute name="label" translatable="yes">Quit</attribute>
+        <attribute name="label" translatable="yes" context="app menu">Quit</attribute>
       </item>
     </section>
   </menu>

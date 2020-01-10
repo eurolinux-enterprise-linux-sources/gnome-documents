@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Red Hat, Inc.
+ * Copyright (c) 2013, 2014 Red Hat, Inc.
  *
  * Gnome Documents is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by the
@@ -17,44 +17,41 @@
  *
  */
 
-const EvDocument = imports.gi.EvinceDocument;
 const EvView = imports.gi.EvinceView;
 const GnomeDesktop = imports.gi.GnomeDesktop;
 const GdPrivate = imports.gi.GdPrivate;
 const Gdk = imports.gi.Gdk;
-const Gio = imports.gi.Gio;
-const GLib = imports.gi.GLib;
 const Gtk = imports.gi.Gtk;
 const _ = imports.gettext.gettext;
 
 const Lang = imports.lang;
-const Mainloop = imports.mainloop;
-const Signals = imports.signals;
+const Utils = imports.utils;
 
 const Application = imports.application;
 
 const PresentationWindow = new Lang.Class({
     Name: 'PresentationWindow',
+    Extends: Gtk.Window,
 
     _init: function(model) {
         this._model = model;
         this._inhibitId = 0;
 
         let toplevel = Application.application.get_windows()[0];
-        this.window = new Gtk.Window ({ type: Gtk.WindowType.TOPLEVEL,
-                                        transient_for: toplevel,
-                                        destroy_with_parent: true,
-                                        title: _("Presentation"),
-                                        hexpand: true });
-        this.window.connect('key-press-event',
-                            Lang.bind(this, this._onKeyPressEvent));
+        this.parent({ type: Gtk.WindowType.TOPLEVEL,
+                      transient_for: toplevel,
+                      destroy_with_parent: true,
+                      title: _("Presentation"),
+                      hexpand: true });
+        this.connect('key-press-event',
+                     Lang.bind(this, this._onKeyPressEvent));
 
         this._model.connect('page-changed',
                             Lang.bind(this, this._onPageChanged));
 
         this._createView();
-        this.window.fullscreen();
-        this.window.show_all();
+        this.fullscreen();
+        this.show_all();
     },
 
     _onPageChanged: function() {
@@ -72,7 +69,8 @@ const PresentationWindow = new Lang.Class({
     },
 
     setOutput: function(output) {
-        this.window.move(output.x, output.y);
+        let [x, y, width, height] = output.get_geometry();
+        this.move(x, y);
     },
 
     _createView: function() {
@@ -87,7 +85,7 @@ const PresentationWindow = new Lang.Class({
         this.view.connect('finished', Lang.bind(this, this.close));
         this.view.connect('notify::current-page', Lang.bind(this, this._onPresentationPageChanged));
 
-        this.window.add(this.view);
+        this.add(this.view);
         this.view.show();
 
         this._inhibitIdle();
@@ -95,7 +93,7 @@ const PresentationWindow = new Lang.Class({
 
     close: function() {
         this._uninhibitIdle();
-        this.window.destroy();
+        this.destroy();
     },
 
     _inhibitIdle: function() {
@@ -115,73 +113,117 @@ const PresentationWindow = new Lang.Class({
 
 const PresentationOutputChooser = new Lang.Class({
     Name: 'PresentationOutputChooser',
+    Extends: Gtk.Dialog,
 
     _init: function(outputs) {
+        let toplevel = Application.application.get_windows()[0];
+        this.parent({ resizable: false,
+                      modal: true,
+                      transient_for: toplevel,
+                      destroy_with_parent: true,
+                      use_header_bar: true,
+                      title: _("Present On"),
+                      default_width: 300,
+                      default_height: 150,
+                      border_width: 5,
+                      hexpand: true });
         this.output = null;
         this._outputs = outputs;
         this._createWindow();
         this._populateList();
-        this.window.show_all();
+        this.show_all();
     },
 
     _populateList: function() {
+        let sizeGroup = new Gtk.SizeGroup({ mode: Gtk.SizeGroupMode.HORIZONTAL });
+
         for (let i = 0; i < this._outputs.list.length; i++) {
+            let row = new Gtk.Grid({ orientation: Gtk.Orientation.HORIZONTAL,
+                                     column_spacing: 12,
+                                     border_width: 12});
+            this._box.add(row);
+
             let output = this._outputs.list[i];
-            let markup = '<b>' + output.display_name + '</b>';
-            let label = new Gtk.Label({ label: markup,
-                                        use_markup: true,
-                                        margin_top: 5,
-                                        margin_bottom: 5 });
-            label.show();
-            label.output = output;
-            this._box.add(label);
+            row.output = output;
+
+            let preview = new GdPrivate.DisplayPreview({ info: output, clone: this._outputs.clone });
+            sizeGroup.add_widget(preview);
+            row.add(preview);
+
+            let label = new Gtk.Label({ label: output.get_display_name() });
+            row.add(label);
+
+            if (this._outputs.list.length > 1) {
+                let status;
+
+                if (this._outputs.clone)
+                    // Translators: "Mirrored" describes when both displays show the same view
+                    status = _("Mirrored");
+                else if (output.get_primary())
+                    status = _("Primary");
+                else if (!output.is_active())
+                    status = _("Off");
+                else
+                    status = _("Secondary");
+
+                label = new Gtk.Label({ label: status,
+                                        halign: Gtk.Align.END,
+                                        hexpand: true });
+                row.add(label);
+
+                this._box.show_all();
+            }
+
+            if (!output.is_active())
+                row.sensitive = false;
         }
     },
 
     _onActivated: function(box, row) {
-        this.output = row.get_child().output;
-        this.emit('output-activated', this.output);
+        let output = row.get_child().output;
+        if (!output.is_active())
+            return;
+
+        this.output = output;
+        this.emitJS('output-activated', this.output);
         this.close();
     },
 
     close: function() {
-        this.window.destroy();
+        this.destroy();
     },
 
     _createWindow: function() {
-        let toplevel = Application.application.get_windows()[0];
-        this.window = new Gtk.Dialog ({ resizable: true,
-                                        modal: true,
-                                        transient_for: toplevel,
-                                        destroy_with_parent: true,
-                                        title: _("Present On"),
-                                        default_width: 300,
-                                        default_height: 150,
-                                        hexpand: true });
-        this.window.connect('response', Lang.bind(this,
+        this.connect('response', Lang.bind(this,
             function(widget, response) {
-                this.emit('output-activated', null);
+                this.emitJS('output-activated', null);
             }));
 
-        this._box = new Gtk.ListBox({ valign: Gtk.Align.CENTER });
-        this._box.connect('row-activated', Lang.bind(this, this._onActivated));
-        let contentArea = this.window.get_content_area();
-        contentArea.pack_start(this._box, true, false, 0);
-    }
-});
-Signals.addSignalMethods(PresentationOutputChooser.prototype);
+        let frame = new Gtk.Frame({ shadow_type: Gtk.ShadowType.IN });
 
-const PresentationOutput = new Lang.Class({
-    Name: 'PresentationOutput',
-    _init: function() {
-        this.id = null;
-        this.name = null;
-        this.display_name = null;
-        this.is_primary = false;
-        this.x = 0;
-        this.y = 0;
+        this._box = new Gtk.ListBox({ hexpand: true,
+                                      valign: Gtk.Align.CENTER,
+                                      selection_mode: Gtk.SelectionMode.NONE });
+        frame.add(this._box);
+        this._box.connect('row-activated', Lang.bind(this, this._onActivated));
+        this._box.set_header_func(Lang.bind(this,
+            function(row, before) {
+                if (!before)
+                    return;
+
+                let current = row.get_header();
+                if (!current) {
+                    current = new Gtk.Separator({ orientation: Gtk.Orientation.HORIZONTAL });
+                    current.show();
+                    row.set_header(current);
+                }
+            }));
+
+        let contentArea = this.get_content_area();
+        contentArea.pack_start(frame, true, false, 0);
     }
 });
+Utils.addJSSignalMethods(PresentationOutputChooser.prototype);
 
 const PresentationOutputs = new Lang.Class({
     Name: 'PresentationOutputs',
@@ -193,6 +235,10 @@ const PresentationOutputs = new Lang.Class({
         this._screen = GnomeDesktop.RRScreen.new(gdkscreen, null);
         this._screen.connect('changed', Lang.bind(this, this._onScreenChanged));
 
+        this._config = GnomeDesktop.RRConfig.new_current(this._screen);
+        this.clone = this._config.get_clone();
+        this._infos = this._config.get_outputs();
+
         this.load();
     },
 
@@ -201,20 +247,16 @@ const PresentationOutputs = new Lang.Class({
     },
 
     load: function() {
-        this._outputs = this._screen.list_outputs();
         this.list = [];
-        for (let idx in this._outputs) {
-            let output = this._outputs[idx];
+        for (let idx in this._infos) {
+            let info = this._infos[idx];
+            let name = info.get_name();
+            let output = this._screen.get_output_by_name(name);
 
-            let out = new PresentationOutput();
-            out.name = output.get_name();
-            out.display_name = output.get_display_name();
-            out.is_primary = output.get_is_primary();
-            let [x, y] = output.get_position();
-            out.x = x;
-            out.y = y;
-
-            this.list.push(out);
+            if (output.is_builtin_display())
+                this.list.unshift(info);
+            else
+                this.list.push(info);
         }
     }
 });

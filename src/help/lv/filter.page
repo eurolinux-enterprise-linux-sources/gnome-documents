@@ -24,15 +24,16 @@
 
   <title>Filtrēt dokumentu</title>
 
-  <p><link xref="search">Open the search</link> and click the
-  <media type="image" src="media/go-down.png" its:translate="no">
-  <span its:translate="yes">down</span></media> button next to the
-  search bar to limit the scope of the search in these categories:</p>
+  <p><link xref="search">Atveriet meklēšanu</link> un spiediet <media type="image" src="media/go-down.png" its:translate="no">
+  <span its:translate="yes">lejup</span></media> pogu pie meklēšanas joslas, lai ierobežotu meklēšanas tvērumu uz šīm kategorijām:</p>
 
   <terms>
     <item>
       <title>Avoti</title>
-      <p>Izvēlieties meklēt dokumentus, kas ir <gui>Lokāli</gui>, pieejami caur<link href="help:gnome-help/online-accounts">tiešsaistes kontiem</link> ar <gui>Google</gui>, <gui>OneDrive</gui>, <gui>ownCloud</gui> vai <gui>All</gui>.</p>
+      <p>Choose to search documents that are <gui>Local</gui>, accessed through
+      <link href="help:gnome-help/online-accounts">online accounts</link> with
+      <gui>Google</gui>, <gui>OneDrive</gui>, <gui>ownCloud</gui>, or
+      <gui>All</gui>.</p>
     </item>
     <item>
       <title>Tips</title>

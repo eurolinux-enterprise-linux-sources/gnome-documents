@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, 2012 Red Hat, Inc.
+ * Copyright (c) 2011, 2012, 2014, 2015 Red Hat, Inc.
  *
  * Gnome Documents is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by the
@@ -20,6 +20,7 @@
  */
 
 const Application = imports.application;
+const Documents = imports.documents;
 const Manager = imports.manager;
 const Query = imports.query;
 
@@ -33,15 +34,24 @@ const _ = imports.gettext.gettext;
 const C_ = imports.gettext.pgettext;
 
 function initSearch(context) {
-    context.collectionManager = new Manager.BaseManager(context);
+    context.documentManager = new Documents.DocumentManager();
     context.sourceManager = new SourceManager(context);
-    context.searchCategoryManager = new SearchCategoryManager(context);
     context.searchMatchManager = new SearchMatchManager(context);
     context.searchTypeManager = new SearchTypeManager(context);
     context.searchController = new SearchController(context);
-    context.offsetController = new OffsetController(context);
     context.queryBuilder = new Query.QueryBuilder(context);
 };
+
+const SearchState = new Lang.Class({
+    Name: 'SearchState',
+
+    _init: function(searchMatch, searchType, source, str) {
+        this.searchMatch = searchMatch;
+        this.searchType = searchType;
+        this.source = source;
+        this.str = str;
+    }
+});
 
 const SearchController = new Lang.Class({
     Name: 'SearchController',
@@ -63,81 +73,12 @@ const SearchController = new Lang.Class({
     },
 
     getTerms: function() {
-        let escaped_str = Tracker.sparql_escape_string(this._string);
-        let str = GLib.utf8_casefold(escaped_str, -1);
-        return str.replace(/ +/g, ' ').split(' ');
+        let escapedStr = Tracker.sparql_escape_string(this._string);
+        let [tokens, ] = GLib.str_tokenize_and_fold(escapedStr, null);
+        return tokens;
     }
 });
 Signals.addSignalMethods(SearchController.prototype);
-
-const SearchCategoryStock = {
-    ALL: 'all',
-    FAVORITES: 'favorites',
-    SHARED: 'shared',
-    PRIVATE: 'private'
-};
-
-const SearchCategory = new Lang.Class({
-    Name: 'SearchCategory',
-
-    _init: function(params) {
-        this.id = params.id;
-        this.name = params.name;
-        this.icon = params.icon;
-    },
-
-    getWhere: function() {
-        if (this.id == SearchCategoryStock.FAVORITES)
-            return '{ ?urn nao:hasTag nao:predefined-tag-favorite }';
-
-        // require to have a contributor, and creator, and they should be different
-        if (this.id == SearchCategoryStock.SHARED)
-            return '{ ?urn nco:contributor ?contributor . ?urn nco:creator ?creator FILTER (?contributor != ?creator ) }';
-
-        return '';
-    },
-
-    getFilter: function() {
-        // require to be not local
-        if (this.id == SearchCategoryStock.SHARED)
-            return this._manager.context.sourceManager.getFilterNotLocal();
-
-        return '(true)';
-    }
-});
-
-const SearchCategoryManager = new Lang.Class({
-    Name: 'SearchCategoryManager',
-    Extends: Manager.BaseManager,
-
-    _init: function(context) {
-        this.parent(_("Category"), 'search-category', context);
-
-        let category, recent;
-        recent = new SearchCategory({ id: SearchCategoryStock.ALL,
-        // Translators: this refers to new and recent documents
-                                      name: _("All"),
-                                      icon: '' });
-        this.addItem(recent);
-
-        category = new SearchCategory({ id: SearchCategoryStock.FAVORITES,
-        // Translators: this refers to favorite documents
-                                        name: _("Favorites"),
-                                        icon: 'emblem-favorite-symbolic' });
-        this.addItem(category);
-        category = new SearchCategory({ id: SearchCategoryStock.SHARED,
-        // Translators: this refers to shared documents
-                                        name: _("Shared with you"),
-                                        icon: 'emblem-shared-symbolic' });
-        this.addItem(category);
-
-        // Private category: currently unimplemented
-        // category = new SearchCategory(SearchCategoryStock.PRIVATE, _("Private"), 'channel-secure-symbolic');
-        // this._categories[category.id] = category;
-
-        this.setActiveItem(recent);
-    }
-});
 
 const SearchType = new Lang.Class({
     Name: 'SearchType',
@@ -164,7 +105,9 @@ const SearchTypeStock = {
     PDF: 'pdf',
     PRESENTATIONS: 'presentations',
     SPREADSHEETS: 'spreadsheets',
-    TEXTDOCS: 'textdocs'
+    TEXTDOCS: 'textdocs',
+    EBOOKS: 'ebooks',
+    COMICS: 'comics'
 };
 
 const SearchTypeManager = new Lang.Class({
@@ -178,23 +121,45 @@ const SearchTypeManager = new Lang.Class({
 
         this.addItem(new SearchType({ id: SearchTypeStock.ALL,
                                       name: _("All") }));
-        this.addItem(new SearchType({ id: SearchTypeStock.COLLECTIONS,
-                                      name: _("Collections"),
-                                      filter: 'fn:starts-with(nao:identifier(?urn), \"gd:collection\")',
-                                      where: '?urn rdf:type nfo:DataContainer .' }));
-        this.addItem(new SearchType({ id: SearchTypeStock.PDF,
-                                      name: _("PDF Documents"),
-                                      filter: 'fn:contains(nie:mimeType(?urn), \"application/pdf\")',
-                                      where: '?urn rdf:type nfo:PaginatedTextDocument .' }));
-        this.addItem(new SearchType({ id: SearchTypeStock.PRESENTATIONS,
-                                      name: _("Presentations"),
-                                      where: '?urn rdf:type nfo:Presentation .' }));
-        this.addItem(new SearchType({ id: SearchTypeStock.SPREADSHEETS,
-                                      name: _("Spreadsheets"),
-                                      where: '?urn rdf:type nfo:Spreadsheet .' }));
-        this.addItem(new SearchType({ id: SearchTypeStock.TEXTDOCS,
-                                      name: _("Text Documents"),
-                                      where: '?urn rdf:type nfo:PaginatedTextDocument .' }));
+        if (Application.application.isBooks) {
+            this.addItem(new SearchType({ id: SearchTypeStock.COLLECTIONS,
+                                          name: _("Collections"),
+                                          filter: 'fn:starts-with(nao:identifier(?urn), \"gb:collection\")',
+                                          where: '?urn rdf:type nfo:DataContainer .' }));
+            //FIXME we need to remove all the non-Comics PDFs here
+        } else {
+            this.addItem(new SearchType({ id: SearchTypeStock.COLLECTIONS,
+                                          name: _("Collections"),
+                                          filter: 'fn:starts-with(nao:identifier(?urn), \"gd:collection\")',
+                                          where: '?urn rdf:type nfo:DataContainer .' }));
+            this.addItem(new SearchType({ id: SearchTypeStock.PDF,
+                                          name: _("PDF Documents"),
+                                          filter: 'fn:contains(nie:mimeType(?urn), \"application/pdf\")',
+                                          where: '?urn rdf:type nfo:PaginatedTextDocument .' }));
+        }
+
+        if (Application.application.isBooks) {
+          this.addItem(new SearchType({ id: SearchTypeStock.EBOOKS,
+                                        name: _("e-Books"),
+                                        filter: '(nie:mimeType(?urn) IN (\"application/epub+zip\", \"application/x-mobipocket-ebook\", \"application/x-fictionbook+xml\", \"application/x-zip-compressed-fb2\", \"image/vnd.djvu+multipage\"))',
+                                        where: '?urn rdf:type nfo:EBook .' }));
+          this.addItem(new SearchType({ id: SearchTypeStock.COMICS,
+                                        name: _("Comics"),
+                                        filter: '(nie:mimeType(?urn) IN (\"application/x-cbr\", \"application/x-cbz\", \"application/x-cbt\", \"application/x-cb7\"))',
+                                        where: '?urn rdf:type nfo:EBook .' }));
+        } else {
+            this.addItem(new SearchType({ id: SearchTypeStock.PRESENTATIONS,
+                                          name: _("Presentations"),
+                                          where: '?urn rdf:type nfo:Presentation .' }));
+            this.addItem(new SearchType({ id: SearchTypeStock.SPREADSHEETS,
+                                          name: _("Spreadsheets"),
+                                          where: '?urn rdf:type nfo:Spreadsheet .' }));
+            this.addItem(new SearchType({ id: SearchTypeStock.TEXTDOCS,
+                                          name: _("Text Documents"),
+                                          filter: 'NOT EXISTS { ?urn a nfo:EBook }',
+                                          where: '?urn rdf:type nfo:PaginatedTextDocument .' }));
+        }
+
 
         this.setActiveItemById(SearchTypeStock.ALL);
     },
@@ -206,6 +171,22 @@ const SearchTypeManager = new Lang.Class({
             return this.getAllTypes();
 
         return [ activeItem ];
+    },
+
+    getDocumentTypes: function() {
+        let types = [];
+
+        if (Application.application.isBooks) {
+            types.push(this.getItemById(SearchTypeStock.EBOOKS));
+            types.push(this.getItemById(SearchTypeStock.COMICS));
+        } else {
+            types.push(this.getItemById(SearchTypeStock.PDF));
+            types.push(this.getItemById(SearchTypeStock.PRESENTATIONS));
+            types.push(this.getItemById(SearchTypeStock.SPREADSHEETS));
+            types.push(this.getItemById(SearchTypeStock.TEXTDOCS));
+        }
+
+        return types;
     },
 
     getAllTypes: function() {
@@ -223,7 +204,8 @@ const SearchTypeManager = new Lang.Class({
 const SearchMatchStock = {
     ALL: 'all',
     TITLE: 'title',
-    AUTHOR: 'author'
+    AUTHOR: 'author',
+    CONTENT: 'content'
 };
 
 const SearchMatch = new Lang.Class({
@@ -242,12 +224,24 @@ const SearchMatch = new Lang.Class({
     getFilter: function() {
         if (this.id == SearchMatchStock.TITLE)
             return ('fn:contains ' +
-                    '(tracker:case-fold(tracker:coalesce(nie:title(?urn), nfo:fileName(?urn))), ' +
-                    '"%s")').format(this._term);
+                    '(tracker:unaccent(tracker:case-fold' +
+                    '(tracker:coalesce(nie:title(?urn), nfo:fileName(?urn)))), ' +
+                    '"%s") || ' +
+                    'fn:contains ' +
+                    '(tracker:case-fold' +
+                    '(tracker:coalesce(nie:title(?urn), nfo:fileName(?urn))), ' +
+                    '"%s")').format(this._term, this._term);
         if (this.id == SearchMatchStock.AUTHOR)
             return ('fn:contains ' +
-                    '(tracker:case-fold(tracker:coalesce(nco:fullname(?creator), nco:fullname(?publisher))), ' +
-                    '"%s")').format(this._term);
+                    '(tracker:unaccent(tracker:case-fold' +
+                    '(tracker:coalesce(nco:fullname(?creator), nco:fullname(?publisher)))), ' +
+                    '"%s") || ' +
+                    'fn:contains ' +
+                    '(tracker:case-fold' +
+                    '(tracker:coalesce(nco:fullname(?creator), nco:fullname(?publisher))), ' +
+                    '"%s")').format(this._term, this._term);
+        if (this.id == SearchMatchStock.CONTENT)
+            return '(false)';
         return '';
     }
 });
@@ -257,8 +251,9 @@ const SearchMatchManager = new Lang.Class({
     Extends: Manager.BaseManager,
 
     _init: function(context) {
-        // Translators: this is a verb that refers to "All", "Title" and "Author",
-        // as in "Match All", "Match Title" and "Match Author"
+        // Translators: this is a verb that refers to "All", "Title", "Author",
+        // and "Content" as in "Match All", "Match Title", "Match Author", and
+        // "Match Content"
         this.parent(_("Match"), 'search-match', context);
 
         this.addItem(new SearchMatch({ id: SearchMatchStock.ALL,
@@ -269,11 +264,36 @@ const SearchMatchManager = new Lang.Class({
         this.addItem(new SearchMatch({ id: SearchMatchStock.AUTHOR,
         //Translators: "Author" refers to "Match Author" when searching
                                        name: C_("Search Filter", "Author") }));
+        this.addItem(new SearchMatch({ id: SearchMatchStock.CONTENT,
+        //Translators: "Content" refers to "Match Content" when searching
+                                       name: C_("Search Filter", "Content") }));
 
         this.setActiveItemById(SearchMatchStock.ALL);
     },
 
-    getFilter: function() {
+    getWhere: function() {
+        let item = this.getActiveItem();
+        if (item.id != SearchMatchStock.ALL &&
+            item.id != SearchMatchStock.CONTENT)
+            return '';
+
+        let terms = this.context.searchController.getTerms();
+        if (!terms.length)
+            return '';
+
+        let ftsterms = [];
+        for (let i = 0; i < terms.length; i++) {
+            if (terms[i].length > 0)
+                ftsterms.push(terms[i] + '*');
+        }
+
+        return '?urn fts:match \'%s\' . '.format(ftsterms.join(' '));
+    },
+
+    getFilter: function(flags) {
+        if ((flags & Query.QueryFlags.SEARCH) == 0)
+            return '(true)';
+
         let terms = this.context.searchController.getTerms();
         let filters = [];
 
@@ -281,9 +301,18 @@ const SearchMatchManager = new Lang.Class({
             this.forEachItem(function(item) {
                 item.setFilterTerm(terms[i]);
             });
-            filters.push(this.parent());
+
+            let filter;
+            let item = this.getActiveItem();
+
+            if (item.id == SearchMatchStock.ALL)
+                filter = this.getAllFilter();
+            else
+                filter = item.getFilter();
+
+            filters.push(filter);
         }
-        return filters.length ? '( ' + filters.join(' && ') + ')' : '';
+        return filters.length ? '( ' + filters.join(' && ') + ')' : '(true)';
     }
 });
 
@@ -379,7 +408,10 @@ const Source = new Lang.Class({
                 filters.push('(fn:contains (nie:url(?urn), "%s"))'.format(location.get_uri()));
             }));
 
-        filters.push('(fn:starts-with (nao:identifier(?urn), "gd:collection:local:"))');
+        if (Application.application.isBooks)
+            filters.push('(fn:starts-with (nao:identifier(?urn), "gb:collection:local:"))');
+        else
+            filters.push('(fn:starts-with (nao:identifier(?urn), "gd:collection:local:"))');
 
         return '(' + filters.join(' || ') + ')';
     },
@@ -428,11 +460,14 @@ const SourceManager = new Lang.Class({
                               builtin: true });
         this.addItem(source);
 
-        Application.goaClient.connect('account-added', Lang.bind(this, this._refreshGoaAccounts));
-        Application.goaClient.connect('account-changed', Lang.bind(this, this._refreshGoaAccounts));
-        Application.goaClient.connect('account-removed', Lang.bind(this, this._refreshGoaAccounts));
+        if (!Application.application.isBooks) {
+            Application.goaClient.connect('account-added', Lang.bind(this, this._refreshGoaAccounts));
+            Application.goaClient.connect('account-changed', Lang.bind(this, this._refreshGoaAccounts));
+            Application.goaClient.connect('account-removed', Lang.bind(this, this._refreshGoaAccounts));
 
-        this._refreshGoaAccounts();
+            this._refreshGoaAccounts();
+        }
+
         this.setActiveItemById(SearchSourceStock.ALL);
     },
 
@@ -453,6 +488,24 @@ const SourceManager = new Lang.Class({
             }));
 
         this.processNewItems(newItems);
+    },
+
+    getFilter: function(flags) {
+        let item;
+
+        if (flags & Query.QueryFlags.SEARCH)
+            item = this.getActiveItem();
+        else
+            item = this.getItemById(SearchSourceStock.ALL);
+
+        let filter;
+
+        if (item.id == SearchSourceStock.ALL)
+            filter = this.getAllFilter();
+        else
+            filter = item.getFilter();
+
+        return filter;
     },
 
     getFilterNotLocal: function() {
@@ -503,26 +556,25 @@ const SourceManager = new Lang.Class({
     }
 });
 
-const _OFFSET_STEP = 50;
+const OFFSET_STEP = 50;
 
 const OffsetController = new Lang.Class({
     Name: 'OffsetController',
 
-    _init: function(context) {
+    _init: function() {
         this._offset = 0;
         this._itemCount = 0;
-        this._context = context;
     },
 
     // to be called by the view
     increaseOffset: function() {
-        this._offset += _OFFSET_STEP;
+        this._offset += OFFSET_STEP;
         this.emit('offset-changed', this._offset);
     },
 
     // to be called by the model
     resetItemCount: function() {
-        let query = this._context.queryBuilder.buildCountQuery();
+        let query = this.getQuery();
 
         Application.connectionQueue.add
             (query.sparql, null, Lang.bind(this,
@@ -549,6 +601,10 @@ const OffsetController = new Lang.Class({
                 }));
     },
 
+    getQuery: function() {
+        log('Error: OffsetController implementations must override getQuery');
+    },
+
     // to be called by the model
     resetOffset: function() {
         this._offset = 0;
@@ -559,11 +615,11 @@ const OffsetController = new Lang.Class({
     },
 
     getRemainingDocs: function() {
-        return (this._itemCount - (this._offset + _OFFSET_STEP));
+        return (this._itemCount - (this._offset + OFFSET_STEP));
     },
 
     getOffsetStep: function() {
-        return _OFFSET_STEP;
+        return OFFSET_STEP;
     },
 
     getOffset: function() {
@@ -571,3 +627,50 @@ const OffsetController = new Lang.Class({
     }
 });
 Signals.addSignalMethods(OffsetController.prototype);
+
+const OffsetCollectionsController = new Lang.Class({
+    Name: 'OffsetCollectionsController',
+    Extends: OffsetController,
+
+    _init: function() {
+        this.parent();
+    },
+
+    getQuery: function() {
+        let activeCollection = Application.documentManager.getActiveCollection();
+        let flags;
+
+        if (activeCollection)
+            flags = Query.QueryFlags.NONE;
+        else
+            flags = Query.QueryFlags.COLLECTIONS;
+
+        return Application.queryBuilder.buildCountQuery(flags);
+    }
+});
+
+const OffsetDocumentsController = new Lang.Class({
+    Name: 'OffsetDocumentsController',
+    Extends: OffsetController,
+
+    _init: function() {
+        this.parent();
+    },
+
+    getQuery: function() {
+        return Application.queryBuilder.buildCountQuery(Query.QueryFlags.DOCUMENTS);
+    }
+});
+
+const OffsetSearchController = new Lang.Class({
+    Name: 'OffsetSearchController',
+    Extends: OffsetController,
+
+    _init: function() {
+        this.parent();
+    },
+
+    getQuery: function() {
+        return Application.queryBuilder.buildCountQuery(Query.QueryFlags.SEARCH);
+    }
+});

@@ -19,10 +19,12 @@
  *
  */
 
+const Gd = imports.gi.Gd;
 const GdPrivate = imports.gi.GdPrivate;
 const Gio = imports.gi.Gio;
 const GLib = imports.gi.GLib;
 const Lang = imports.lang;
+const Search = imports.search;
 
 const QueryColumns = {
     URN: 0,
@@ -41,10 +43,14 @@ const QueryColumns = {
 
 const QueryFlags = {
     NONE: 0,
-    UNFILTERED: 1 << 0
+    UNFILTERED: 1 << 0,
+    COLLECTIONS: 1 << 1,
+    DOCUMENTS: 1 << 2,
+    SEARCH: 1 << 3
 };
 
-const LOCAL_COLLECTIONS_IDENTIFIER = 'gd:collection:local:';
+const LOCAL_BOOKS_COLLECTIONS_IDENTIFIER = 'gb:collection:local:';
+const LOCAL_DOCUMENTS_COLLECTIONS_IDENTIFIER = 'gd:collection:local:';
 
 const QueryBuilder = new Lang.Class({
     Name: 'QueryBuilder',
@@ -58,12 +64,12 @@ const QueryBuilder = new Lang.Class({
                  activeSource: this._context.sourceManager.getActiveItem() };
     },
 
-    _buildFilterString: function(currentType) {
+    _buildFilterString: function(currentType, flags, isFtsEnabled) {
         let filters = [];
 
-        filters.push(this._context.searchMatchManager.getFilter());
-        filters.push(this._context.sourceManager.getFilter());
-        filters.push(this._context.searchCategoryManager.getFilter());
+        if (!isFtsEnabled)
+            filters.push(this._context.searchMatchManager.getFilter(flags));
+        filters.push(this._context.sourceManager.getFilter(flags));
 
         if (currentType) {
             filters.push(currentType.getFilter());
@@ -80,33 +86,57 @@ const QueryBuilder = new Lang.Class({
         return sparql;
     },
 
+    _addWhereClauses: function(partsList, global, flags, searchTypes, ftsQuery) {
+        // build an array of WHERE clauses; each clause maps to one
+        // type of resource we're looking for.
+        searchTypes.forEach(Lang.bind(this,
+            function(currentType) {
+                let part = '{ ' + currentType.getWhere() + ftsQuery;
+                part += this._buildOptional();
+
+                if ((flags & QueryFlags.UNFILTERED) == 0) {
+                    if (global)
+                        part += this._context.documentManager.getWhere();
+
+                    part += this._buildFilterString(currentType, flags, ftsQuery.length > 0);
+                }
+
+                part += ' }';
+                partsList.push(part);
+            }));
+    },
+
     _buildWhere: function(global, flags) {
         let whereSparql = 'WHERE { ';
         let whereParts = [];
         let searchTypes = [];
 
-        if (flags & QueryFlags.UNFILTERED)
-            searchTypes = this._context.searchTypeManager.getAllTypes();
-        else
+        if (flags & QueryFlags.COLLECTIONS)
+            searchTypes = [this._context.searchTypeManager.getItemById(Search.SearchTypeStock.COLLECTIONS)];
+        else if (flags & QueryFlags.DOCUMENTS)
+            searchTypes = this._context.searchTypeManager.getDocumentTypes();
+        else if (flags & QueryFlags.SEARCH)
             searchTypes = this._context.searchTypeManager.getCurrentTypes();
+        else
+            searchTypes = this._context.searchTypeManager.getAllTypes();
 
-        // build an array of WHERE clauses; each clause maps to one
-        // type of resource we're looking for.
-        searchTypes.forEach(Lang.bind(this,
-            function(currentType) {
-                let part = '{ ' + currentType.getWhere() + this._buildOptional();
+        let matchItem = this._context.searchMatchManager.getActiveItem();
 
-                if ((flags & QueryFlags.UNFILTERED) == 0) {
-                    if (global)
-                        part += this._context.searchCategoryManager.getWhere() +
-                                this._context.collectionManager.getWhere();
+        // Skip matchTypes when only doing fts
+        if (matchItem.id != Search.SearchMatchStock.CONTENT) {
+            this._addWhereClauses(whereParts, global, flags, searchTypes, '');
+        }
 
-                    part += this._buildFilterString(currentType);
-                }
+        if (flags & QueryFlags.SEARCH) {
+            let ftsWhere = this._context.searchMatchManager.getWhere();
 
-                part += ' }';
-                whereParts.push(part);
-            }));
+            // Need to repeat the searchTypes part to also include fts
+            // Note that the filter string needs to be slightly different for the
+            // fts to work properly
+            if (ftsWhere.length || matchItem.id == Search.SearchMatchStock.CONTENT) {
+                this._addWhereClauses(whereParts, global, flags, searchTypes, ftsWhere);
+            }
+        }
 
         // put all the clauses in an UNION
         whereSparql += whereParts.join(' UNION ');
@@ -115,25 +145,47 @@ const QueryBuilder = new Lang.Class({
         return whereSparql;
     },
 
-    _buildQueryInternal: function(global, flags) {
+    _buildQueryInternal: function(global, flags, offsetController, sortBy) {
         let whereSparql = this._buildWhere(global, flags);
         let tailSparql = '';
 
-        // order results by mtime
+        // order results depending on sortBy
         if (global) {
-            tailSparql +=
-                'ORDER BY DESC (?mtime)' +
-                ('LIMIT %d OFFSET %d').format(this._context.offsetController.getOffsetStep(),
-                                              this._context.offsetController.getOffset());
+            let offset = 0;
+            let step = Search.OFFSET_STEP;
+
+            tailSparql += 'ORDER BY DESC(fts:rank(?urn)) ';
+
+            if (offsetController) {
+                offset = offsetController.getOffset();
+                step = offsetController.getOffsetStep();
+            }
+
+            switch (sortBy) {
+            case Gd.MainColumns.PRIMARY_TEXT:
+                tailSparql += 'ASC(?title) ASC(?filename)';
+                break;
+            case Gd.MainColumns.SECONDARY_TEXT:
+                tailSparql += 'ASC(?author)';
+                break;
+            case Gd.MainColumns.MTIME:
+                tailSparql += 'DESC(?mtime)';
+                break;
+            default:
+                tailSparql += 'DESC(?mtime)';
+                break;
+            }
+
+            tailSparql += ('LIMIT %d OFFSET %d').format(step, offset);
         }
 
         let sparql =
             'SELECT DISTINCT ?urn ' + // urn
             'nie:url(?urn) ' + // uri
-            'nfo:fileName(?urn)' + // filename
+            'nfo:fileName(?urn) AS ?filename ' + // filename
             'nie:mimeType(?urn)' + // mimetype
-            'nie:title(?urn) ' + // title
-            'tracker:coalesce(nco:fullname(?creator), nco:fullname(?publisher), \'\') ' + // author
+            'nie:title(?urn) AS ?title ' + // title
+            'tracker:coalesce(nco:fullname(?creator), nco:fullname(?publisher), \'\') AS ?author ' + // author
             'tracker:coalesce(nfo:fileLastModified(?urn), nie:contentLastModified(?urn)) AS ?mtime ' + // mtime
             'nao:identifier(?urn) ' + // identifier
             'rdf:type(?urn) ' + // type
@@ -146,19 +198,19 @@ const QueryBuilder = new Lang.Class({
     },
 
     buildSingleQuery: function(flags, resource) {
-        let sparql = this._buildQueryInternal(false, flags);
+        let sparql = this._buildQueryInternal(false, flags, null);
         sparql = sparql.replace('?urn', '<' + resource + '>', 'g');
 
         return this._createQuery(sparql);
     },
 
-    buildGlobalQuery: function() {
-        return this._createQuery(this._buildQueryInternal(true, QueryFlags.NONE));
+    buildGlobalQuery: function(flags, offsetController, sortBy) {
+        return this._createQuery(this._buildQueryInternal(true, flags, offsetController, sortBy));
     },
 
-    buildCountQuery: function() {
+    buildCountQuery: function(flags) {
         let sparql = 'SELECT DISTINCT COUNT(?urn) ' +
-            this._buildWhere(true, QueryFlags.NONE);
+            this._buildWhere(true, flags);
 
         return this._createQuery(sparql);
     },
@@ -204,11 +256,18 @@ const QueryBuilder = new Lang.Class({
     },
 
     buildCreateCollectionQuery: function(name) {
+        let application = Gio.Application.get_default();
+        let collectionsIdentifier;
+        if (application.isBooks)
+            collectionsIdentifier = LOCAL_BOOKS_COLLECTIONS_IDENTIFIER;
+        else
+            collectionsIdentifier = LOCAL_DOCUMENTS_COLLECTIONS_IDENTIFIER;
+
         let time = GdPrivate.iso8601_from_timestamp(GLib.get_real_time() / GLib.USEC_PER_SEC);
         let sparql = ('INSERT { _:res a nfo:DataContainer ; a nie:DataObject ; ' +
                       'nie:contentLastModified \"' + time + '\" ; ' +
                       'nie:title \"' + name + '\" ; ' +
-                      'nao:identifier \"' + LOCAL_COLLECTIONS_IDENTIFIER + name + '\" }');
+                      'nao:identifier \"' + collectionsIdentifier + name + '\" }');
 
         return this._createQuery(sparql);
     },

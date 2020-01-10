@@ -94,8 +94,11 @@ gd_tagged_entry_tag_get_margin (GdTaggedEntryTag *tag,
   GtkStyleContext *context;
 
   context = gd_tagged_entry_tag_get_context (tag, entry);
-  gtk_style_context_get_margin (context, 0, margin);
-  g_object_unref (context);
+  gtk_style_context_set_state (context, GTK_STATE_FLAG_NORMAL);
+  gtk_style_context_get_margin (context,
+                                gtk_style_context_get_state (context),
+                                margin);
+  gtk_style_context_restore (context);
 }
 
 static void
@@ -238,19 +241,17 @@ gd_tagged_entry_tag_get_context (GdTaggedEntryTag *tag,
                                  GdTaggedEntry    *entry)
 {
   GtkWidget *widget = GTK_WIDGET (entry);
-  GtkWidgetPath *path;
-  gint pos;
   GtkStyleContext *retval;
+  GList *l, *list;
 
-  retval = gtk_style_context_new ();
-  path = gtk_widget_path_copy (gtk_widget_get_path (widget));
+  retval = gtk_widget_get_style_context (widget);
+  gtk_style_context_save (retval);
 
-  pos = gtk_widget_path_append_type (path, GD_TYPE_TAGGED_ENTRY);
-  gtk_widget_path_iter_add_class (path, pos, tag->priv->style);
-
-  gtk_style_context_set_path (retval, path);
-
-  gtk_widget_path_unref (path);
+  list = gtk_style_context_list_classes (retval);
+  for (l = list; l; l = l->next)
+    gtk_style_context_remove_class (retval, l->data);
+  g_list_free (list);
+  gtk_style_context_add_class (retval, tag->priv->style);
 
   return retval;
 }
@@ -272,13 +273,20 @@ gd_tagged_entry_tag_get_width (GdTaggedEntryTag *tag,
   context = gd_tagged_entry_tag_get_context (tag, entry);
   state = gd_tagged_entry_tag_get_state (tag, entry);
 
-  gtk_style_context_get_padding (context, state, &button_padding);
-  gtk_style_context_get_border (context, state, &button_border);
-  gtk_style_context_get_margin (context, state, &button_margin);
+  gtk_style_context_set_state (context, state);
+  gtk_style_context_get_padding (context,
+                                 gtk_style_context_get_state (context),
+                                 &button_padding);
+  gtk_style_context_get_border (context,
+                                gtk_style_context_get_state (context),
+                                &button_border);
+  gtk_style_context_get_margin (context,
+                                gtk_style_context_get_state (context),
+                                &button_margin);
 
   gd_tagged_entry_tag_ensure_close_surface (tag, context);
 
-  g_object_unref (context);
+  gtk_style_context_restore (context);
 
   button_width = 0;
   if (entry->priv->button_visible && tag->priv->has_close_button)
@@ -331,7 +339,12 @@ gd_tagged_entry_tag_get_relative_allocations (GdTaggedEntryTag *tag,
   scale_factor = gdk_window_get_scale_factor (tag->priv->window);
 
   state = gd_tagged_entry_tag_get_state (tag, entry);
-  gtk_style_context_get_margin (context, state, &padding);
+  gtk_style_context_save (context);
+  gtk_style_context_set_state (context, state);
+  gtk_style_context_get_margin (context,
+                                gtk_style_context_get_state (context),
+                                &padding);
+  gtk_style_context_restore (context);
 
   width -= padding.left + padding.right;
   height -= padding.top + padding.bottom;
@@ -345,8 +358,15 @@ gd_tagged_entry_tag_get_relative_allocations (GdTaggedEntryTag *tag,
 
   layout_allocation = button_allocation = background_allocation;
 
-  gtk_style_context_get_padding (context, state, &padding);
-  gtk_style_context_get_border (context, state, &border);  
+  gtk_style_context_save (context);
+  gtk_style_context_set_state (context, state);
+  gtk_style_context_get_padding (context,
+                                 gtk_style_context_get_state (context),
+                                 &padding);
+  gtk_style_context_get_border (context,
+                                gtk_style_context_get_state (context),
+                                &border);
+  gtk_style_context_restore (context);
 
   gd_tagged_entry_tag_ensure_layout (tag, entry);
   pango_layout_get_pixel_size (tag->priv->layout, &layout_width, &layout_height);
@@ -393,7 +413,7 @@ gd_tagged_entry_tag_event_is_button (GdTaggedEntryTag *tag,
   context = gd_tagged_entry_tag_get_context (tag, entry);
   gd_tagged_entry_tag_get_relative_allocations (tag, entry, context, NULL, NULL, &button_allocation);
 
-  g_object_unref (context);
+  gtk_style_context_restore (context);
 
   /* see if the event falls into the button allocation */
   if ((event_x >= button_allocation.x && 
@@ -423,6 +443,7 @@ gd_tagged_entry_tag_get_area (GdTaggedEntryTag      *tag,
   gd_tagged_entry_tag_get_relative_allocations (tag, tag->priv->entry, context,
                                                 &background_allocation,
                                                 NULL, NULL);
+  gtk_style_context_restore (context);
 
   rect->x = window_x - alloc.x + background_allocation.x;
   rect->y = window_y - alloc.y + background_allocation.y;
@@ -497,9 +518,9 @@ gd_tagged_entry_tag_draw (GdTaggedEntryTag *tag,
                            button_allocation.x, button_allocation.y);
 
 done:
-  cairo_restore (cr);
+  gtk_style_context_restore (context);
 
-  g_object_unref (context);
+  cairo_restore (cr);
 }
 
 static void
@@ -891,6 +912,22 @@ gd_tagged_entry_set_property (GObject      *object,
 }
 
 static void
+gd_tagged_entry_add_default_style (void)
+{
+  GtkCssProvider *provider;
+
+  provider = gtk_css_provider_new ();
+  gtk_css_provider_load_from_resource
+    (provider, "/org/gnome/libgd/tagged-entry/default.css");
+
+  gtk_style_context_add_provider_for_screen (gdk_screen_get_default (),
+                                             GTK_STYLE_PROVIDER (provider),
+                                             GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+
+  g_object_unref (provider);
+}
+
+static void
 gd_tagged_entry_class_init (GdTaggedEntryClass *klass)
 {
   GtkWidgetClass *wclass = GTK_WIDGET_CLASS (klass);
@@ -935,6 +972,8 @@ gd_tagged_entry_class_init (GdTaggedEntryClass *klass)
     g_param_spec_boolean ("tag-close-visible", "Tag close icon visibility",
                           "Whether the close button should be shown in tags.", TRUE,
                           G_PARAM_WRITABLE | G_PARAM_STATIC_STRINGS);
+
+  gd_tagged_entry_add_default_style ();
 
   g_type_class_add_private (klass, sizeof (GdTaggedEntryPrivate));
   g_object_class_install_properties (oclass, NUM_PROPERTIES, properties);

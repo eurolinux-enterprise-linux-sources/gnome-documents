@@ -214,14 +214,18 @@ gd_notification_realize (GtkWidget *widget)
   window = gdk_window_new (gtk_widget_get_parent_window (widget),
                            &attributes, attributes_mask);
   gtk_widget_set_window (widget, window);
-  gdk_window_set_user_data (window, notification);
+  gtk_widget_register_window (widget, window);
 
   attributes.x = 0;
   attributes.y = attributes.height + priv->animate_y;
-  attributes.event_mask = gtk_widget_get_events (widget) | GDK_EXPOSURE_MASK | GDK_VISIBILITY_NOTIFY_MASK;
+  attributes.event_mask = gtk_widget_get_events (widget) |
+                          GDK_EXPOSURE_MASK |
+                          GDK_VISIBILITY_NOTIFY_MASK |
+                          GDK_ENTER_NOTIFY_MASK |
+                          GDK_LEAVE_NOTIFY_MASK;
 
   priv->bin_window = gdk_window_new (window, &attributes, attributes_mask);
-  gdk_window_set_user_data (priv->bin_window, notification);
+  gtk_widget_register_window (widget, priv->bin_window);
 
   child = gtk_bin_get_child (bin);
   if (child)
@@ -237,7 +241,7 @@ gd_notification_unrealize (GtkWidget *widget)
   GdNotification *notification = GD_NOTIFICATION (widget);
   GdNotificationPrivate *priv = notification->priv;
 
-  gdk_window_set_user_data (priv->bin_window, NULL);
+  gtk_widget_unregister_window (widget, priv->bin_window);
   gdk_window_destroy (priv->bin_window);
   priv->bin_window = NULL;
 
@@ -284,14 +288,14 @@ animation_timeout_cb (gpointer user_data)
       gdk_window_move (priv->bin_window,
                        0,
                        -allocation.height + priv->animate_y);
-    return TRUE;
+    return G_SOURCE_CONTINUE;
   }
 
   if (priv->dismissed && priv->animate_y == 0)
     gtk_widget_destroy (GTK_WIDGET (notification));
 
   priv->animate_timeout = 0;
-  return FALSE;
+  return G_SOURCE_REMOVE;
 }
 
 static void
@@ -394,6 +398,31 @@ gd_notification_forall (GtkContainer *container,
     (* callback) (priv->close_button, callback_data);
 }
 
+static void
+unqueue_autohide (GdNotification *notification)
+{
+  GdNotificationPrivate *priv = notification->priv;
+
+  if (priv->timeout_source_id)
+    {
+      g_source_remove (priv->timeout_source_id);
+      priv->timeout_source_id = 0;
+    }
+}
+
+static void
+queue_autohide (GdNotification *notification)
+{
+  GdNotificationPrivate *priv = notification->priv;
+
+  if (priv->timeout_source_id == 0 &&
+      priv->timeout != -1)
+    priv->timeout_source_id =
+      gdk_threads_add_timeout (priv->timeout * 1000,
+                               gd_notification_timeout_cb,
+                               notification);
+}
+
 static gboolean
 gd_notification_visibility_notify_event (GtkWidget          *widget,
                                           GdkEventVisibility  *event)
@@ -410,12 +439,39 @@ gd_notification_visibility_notify_event (GtkWidget          *widget,
       priv->waiting_for_viewable = FALSE;
     }
 
-  if (notification->priv->timeout_source_id == 0 &&
-      notification->priv->timeout != -1)
-    notification->priv->timeout_source_id =
-      gdk_threads_add_timeout (notification->priv->timeout * 1000,
-                               gd_notification_timeout_cb,
-                               widget);
+  queue_autohide (notification);
+
+  return FALSE;
+}
+
+static gboolean
+gd_notification_enter_notify (GtkWidget        *widget,
+                              GdkEventCrossing *event)
+{
+  GdNotification *notification = GD_NOTIFICATION (widget);
+  GdNotificationPrivate *priv = notification->priv;
+
+  if ((event->window == priv->bin_window) &&
+      (event->detail != GDK_NOTIFY_INFERIOR))
+    {
+      unqueue_autohide (notification);
+    }
+
+  return FALSE;
+}
+
+static gboolean
+gd_notification_leave_notify (GtkWidget        *widget,
+                              GdkEventCrossing *event)
+{
+  GdNotification *notification = GD_NOTIFICATION (widget);
+  GdNotificationPrivate *priv = notification->priv;
+
+  if ((event->window == priv->bin_window) &&
+      (event->detail != GDK_NOTIFY_INFERIOR))
+    {
+      queue_autohide (notification);
+    }
 
   return FALSE;
 }
@@ -443,6 +499,8 @@ gd_notification_class_init (GdNotificationClass *klass)
   widget_class->realize = gd_notification_realize;
   widget_class->unrealize = gd_notification_unrealize;
   widget_class->visibility_notify_event = gd_notification_visibility_notify_event;
+  widget_class->enter_notify_event = gd_notification_enter_notify;
+  widget_class->leave_notify_event = gd_notification_leave_notify;
 
   container_class->add = gd_notification_add;
   container_class->forall = gd_notification_forall;
@@ -765,7 +823,7 @@ gd_notification_timeout_cb (gpointer user_data)
 
   gd_notification_dismiss (notification);
 
-  return FALSE;
+  return G_SOURCE_REMOVE;
 }
 
 void
@@ -795,11 +853,7 @@ gd_notification_dismiss (GdNotification *notification)
 {
   GdNotificationPrivate *priv = notification->priv;
 
-  if (notification->priv->timeout_source_id)
-    {
-      g_source_remove (notification->priv->timeout_source_id);
-      notification->priv->timeout_source_id = 0;
-    }
+  unqueue_autohide (notification);
 
   priv->dismissed = TRUE;
   priv->revealed = FALSE;

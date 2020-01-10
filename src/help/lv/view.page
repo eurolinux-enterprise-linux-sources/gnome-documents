@@ -29,10 +29,7 @@
 
   <title>Skatīt savus dokumentu</title>
 
-  <p>When you open <app>Documents</app>, documents which are stored locally in
-  one of the standard folders such as <file>Documents</file> or
-  <file>Downloads</file> and in one of your online accounts, are displayed as
-  thumbnails.</p>
+  <p>Atverot <app>Dokumentus</app>, lokāli saglabātie dokumenti kādā no standarta mapēm, piemēram <file>Dokumenti</file> vai <file>Lejupielādes</file>, un tiešsaistes kontos esošie, tiks attēloti kā sīktēli.</p>
 
   <note style="tip">
     <p>Lai skatītu dokumentus no saviem tiešsaistes kontiem, <link href="help:gnome-help/accounts-add">tie ir jāiestata</link>.</p>

@@ -24,30 +24,27 @@
 
     <include xmlns="http://www.w3.org/2001/XInclude" href="legal.xml"/>
 
-    <desc>Your local documents do not appear in <gui>Documents</gui>.</desc>
+    <desc>Dina lokala dokument visas inte i <gui>Dokument</gui>.</desc>
   
     <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
       <mal:name>Daniel Nylander</mal:name>
       <mal:email>po@danielnylander.se</mal:email>
       <mal:years>2012</mal:years>
     </mal:credit>
+  
+    <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
+      <mal:name>Sebastian Rasmussen</mal:name>
+      <mal:email>sebras@gmail.com</mal:email>
+      <mal:years>2015</mal:years>
+    </mal:credit>
   </info>
 
-  <title>My documents are not shown</title>
+  <title>Mina dokument visas inte</title>
 
-  <p><app>Documents</app> supports only certain types of documents such as
-  PDFs and office suite documents such as spreadsheets and word processor
-  documents. It will not show text documents and photos.</p>
+  <p><app>Dokument</app> har bara stöd för vissa typer av dokument, så som PDF:er och dokument från kontorspaket, så som kalkylark och ordbehandlingsdokument. Det kommer inte att visa textdokument och foton.</p>
 
-  <p>For your local documents to appear in <app>Documents</app>, they must be
-  inside your <file>Documents</file> or <file>Downloads</file> folders, or
-  inside folders that are in those directories. Documents that are in other places
-  on your computer will not be shown.</p>
+  <p>För att dina lokala dokument ska dyka upp i <app>Dokument</app> måste de finnas i mapparna <file>Dokument</file> eller <file>Hämtningar</file> eller i mappar som finns i de katalogerna. Dokument som finns på andra platser på din dator kommer inte att visas.</p>
 
-  <p>If your documents fail to display in <app>Documents</app>,
-  <app>Tracker</app> may not be running or properly configured. Make sure
-  <app>Tracker</app> is running in your session. The default configuration, set
-  to index files in your home directory (non-recursively) and XDG folders
-  (recursively), should be adequate.</p>
+  <p>Om dina dokument inte visas i <app>Dokument</app>, kör kanske <app>Tracker</app> inte eller är inte korrekt konfigurerat. Säkerställ att <app>Tracker</app> kör i din session. Standardkonfigurationen, som är inställd på att indexera filer i din hemkatalog (icke-rekursivt) och XDG-mappar (rekursivt), bör vara tillräcklig.</p>
 
 </page>

@@ -759,6 +759,66 @@ gd_nav_bar_draw (GtkWidget *widget,
 }
 
 static void
+create_preview_window (GdNavBar *self)
+{
+        GtkStyleContext *context;
+        GtkWidget *box, *toplevel;
+        GdkScreen *screen;
+        GdkVisual *visual;
+
+        toplevel = gtk_widget_get_toplevel (GTK_WIDGET (self));
+        if (!toplevel) {
+                return;
+        }
+
+        self->priv->preview_window = gtk_window_new (GTK_WINDOW_POPUP);
+        screen = gtk_widget_get_screen (self->priv->preview_window);
+        visual = gdk_screen_get_rgba_visual (screen);
+
+        if (visual != NULL) {
+                gtk_widget_set_visual (self->priv->preview_window, visual);
+        }
+
+        gtk_window_set_type_hint (GTK_WINDOW (self->priv->preview_window), GDK_WINDOW_TYPE_HINT_TOOLTIP);
+        gtk_window_set_resizable (GTK_WINDOW (self->priv->preview_window), FALSE);
+        gtk_window_set_transient_for (GTK_WINDOW (self->priv->preview_window),
+                                      GTK_WINDOW (toplevel));
+
+        context = gtk_widget_get_style_context (self->priv->preview_window);
+        gtk_style_context_add_class (context, GTK_STYLE_CLASS_TOOLTIP);
+
+        box = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
+        gtk_widget_set_margin_start (box, 6);
+        gtk_widget_set_margin_end (box, 6);
+        gtk_widget_set_margin_top (box, 6);
+        gtk_widget_set_margin_bottom (box, 6);
+        gtk_container_add (GTK_CONTAINER (self->priv->preview_window), box);
+        gtk_widget_show (box);
+
+        self->priv->preview_image = gtk_image_new ();
+        gtk_widget_set_size_request (self->priv->preview_image, PREVIEW_WIDTH, -1);
+        gtk_box_pack_start (GTK_BOX (box), self->priv->preview_image, FALSE, FALSE, 0);
+
+        self->priv->preview_label = gtk_label_new ("");
+        gtk_label_set_line_wrap (GTK_LABEL (self->priv->preview_label), TRUE);
+        gtk_box_pack_start (GTK_BOX (box), self->priv->preview_label, FALSE, FALSE, 0);
+
+        gtk_widget_show_all (box);
+}
+
+static void
+gd_nav_bar_hierarchy_changed (GtkWidget *widget,
+                              GtkWidget *previous_toplevel)
+{
+        GdNavBar *self = GD_NAV_BAR (widget);
+
+        /* Initialize preview window when in a toplevel */
+        if (previous_toplevel == NULL) {
+                create_preview_window (self);
+        }
+}
+
+static void
 gd_nav_bar_class_init (GdNavBarClass *class)
 {
         GObjectClass *oclass = G_OBJECT_CLASS (class);
@@ -773,6 +833,7 @@ gd_nav_bar_class_init (GdNavBarClass *class)
         wclass->enter_notify_event = gd_nav_bar_enter_notify;
         wclass->leave_notify_event = gd_nav_bar_leave_notify;
         wclass->size_allocate = gd_nav_bar_size_allocate;
+        wclass->hierarchy_changed = gd_nav_bar_hierarchy_changed;
 
         g_object_class_install_property (oclass,
                                          PROP_DOCUMENT_MODEL,
@@ -793,6 +854,7 @@ gd_nav_bar_class_init (GdNavBarClass *class)
                                                                G_PARAM_STATIC_STRINGS));
 
         g_type_class_add_private (oclass, sizeof (GdNavBarPrivate));
+        gtk_widget_class_set_css_name (wclass, "toolbar");
 }
 
 static void
@@ -966,47 +1028,6 @@ scale_motion_notify_cb (GtkWidget *widget,
         return FALSE;
 }
 
-static void
-create_preview_window (GdNavBar *self)
-{
-        GtkStyleContext *context;
-        GtkWidget *box;
-        GdkScreen *screen;
-        GdkVisual *visual;
-
-        self->priv->preview_window = gtk_window_new (GTK_WINDOW_POPUP);
-        screen = gtk_widget_get_screen (self->priv->preview_window);
-        visual = gdk_screen_get_rgba_visual (screen);
-
-        if (visual != NULL) {
-                gtk_widget_set_visual (self->priv->preview_window, visual);
-        }
-
-        gtk_window_set_type_hint (GTK_WINDOW (self->priv->preview_window), GDK_WINDOW_TYPE_HINT_TOOLTIP);
-        gtk_window_set_resizable (GTK_WINDOW (self->priv->preview_window), FALSE);
-
-        context = gtk_widget_get_style_context (self->priv->preview_window);
-        gtk_style_context_add_class (context, GTK_STYLE_CLASS_TOOLTIP);
-
-        box = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
-        gtk_widget_set_margin_start (box, 6);
-        gtk_widget_set_margin_end (box, 6);
-        gtk_widget_set_margin_top (box, 6);
-        gtk_widget_set_margin_bottom (box, 6);
-        gtk_container_add (GTK_CONTAINER (self->priv->preview_window), box);
-        gtk_widget_show (box);
-
-        self->priv->preview_image = gtk_image_new ();
-        gtk_widget_set_size_request (self->priv->preview_image, PREVIEW_WIDTH, -1);
-        gtk_box_pack_start (GTK_BOX (box), self->priv->preview_image, FALSE, FALSE, 0);
-
-        self->priv->preview_label = gtk_label_new ("");
-        gtk_label_set_line_wrap (GTK_LABEL (self->priv->preview_label), TRUE);
-        gtk_box_pack_start (GTK_BOX (box), self->priv->preview_label, FALSE, FALSE, 0);
-
-        gtk_widget_show_all (box);
-}
-
 /**
  * gd_nav_bar_get_button_area:
  * @bar: a #GdNavBar
@@ -1041,15 +1062,14 @@ gd_nav_bar_init (GdNavBar *self)
                                                      (GDestroyNotify)cairo_surface_destroy);
 
         inner_box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 5);
-        gtk_container_set_border_width (GTK_CONTAINER (inner_box), 10);
         gtk_box_set_spacing (GTK_BOX (inner_box), 10);
         gtk_widget_show (inner_box);
         gtk_widget_set_hexpand (GTK_WIDGET (inner_box), TRUE);
         gtk_container_add (GTK_CONTAINER (self), inner_box);
 
         priv->button_area = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
-        gtk_widget_set_margin_start (priv->button_area, 5);
-        gtk_widget_set_margin_end (priv->button_area, 5);
+        gtk_style_context_add_class (gtk_widget_get_style_context (GTK_WIDGET (priv->button_area)),
+                                     GTK_STYLE_CLASS_LINKED);
         gtk_widget_show (priv->button_area);
         gtk_box_pack_start (GTK_BOX (inner_box), priv->button_area, FALSE, FALSE, 0);
 
@@ -1087,8 +1107,6 @@ gd_nav_bar_init (GdNavBar *self)
         g_signal_connect (priv->scale, "motion-notify-event",
                           G_CALLBACK (scale_motion_notify_cb),
                           self);
-
-        create_preview_window (self);
 }
 
 gboolean

@@ -23,25 +23,31 @@
     <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
       <mal:name>Rodolfo Ribeiro Gomes</mal:name>
       <mal:email>rodolforg@gmail.com</mal:email>
-      <mal:years>2011, 2012.</mal:years>
+      <mal:years>2011, 2012</mal:years>
     </mal:credit>
   
     <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
       <mal:name>Rafael Ferreira</mal:name>
       <mal:email>rafael.f.f1@gmail.com</mal:email>
-      <mal:years>2012, 2013, 2014.</mal:years>
+      <mal:years>2012, 2013, 2014</mal:years>
     </mal:credit>
   
     <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
       <mal:name>Enrico Nicoletto</mal:name>
       <mal:email>liverig@gmail.com</mal:email>
-      <mal:years>2013.</mal:years>
+      <mal:years>2013, 2016</mal:years>
     </mal:credit>
   
     <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
       <mal:name>João Santana</mal:name>
       <mal:email>joaosantana@outlook.com</mal:email>
-      <mal:years>2013.</mal:years>
+      <mal:years>2013</mal:years>
+    </mal:credit>
+  
+    <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
+      <mal:name>Felipe Braga</mal:name>
+      <mal:email>fbobraga@gmail.com</mal:email>
+      <mal:years>2015</mal:years>
     </mal:credit>
   </info>
 
@@ -50,13 +56,13 @@
   <steps>
     <title>Para imprimir um documento:</title>
     <item>
-      <p>Press the <gui>✓</gui> button.</p>
+      <p>Clique no botão <gui>✓</gui>.</p>
     </item>
     <item>
       <p>No modo de seleção, marque o documento a ser impresso.</p>
     </item>
     <item>
-      <p>Clique no botão Imprimir na barra de botões e o diálogo <gui>Imprimir</gui> abrirá.</p>
+      <p>Clique no botão Imprimir na barra de botões. A janela de diálogo <gui>Imprimir</gui> será aberta.</p>
     </item>
   </steps>
 

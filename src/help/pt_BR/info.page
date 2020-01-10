@@ -29,58 +29,63 @@
     <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
       <mal:name>Rodolfo Ribeiro Gomes</mal:name>
       <mal:email>rodolforg@gmail.com</mal:email>
-      <mal:years>2011, 2012.</mal:years>
+      <mal:years>2011, 2012</mal:years>
     </mal:credit>
   
     <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
       <mal:name>Rafael Ferreira</mal:name>
       <mal:email>rafael.f.f1@gmail.com</mal:email>
-      <mal:years>2012, 2013, 2014.</mal:years>
+      <mal:years>2012, 2013, 2014</mal:years>
     </mal:credit>
   
     <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
       <mal:name>Enrico Nicoletto</mal:name>
       <mal:email>liverig@gmail.com</mal:email>
-      <mal:years>2013.</mal:years>
+      <mal:years>2013, 2016</mal:years>
     </mal:credit>
   
     <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
       <mal:name>João Santana</mal:name>
       <mal:email>joaosantana@outlook.com</mal:email>
-      <mal:years>2013.</mal:years>
+      <mal:years>2013</mal:years>
+    </mal:credit>
+  
+    <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
+      <mal:name>Felipe Braga</mal:name>
+      <mal:email>fbobraga@gmail.com</mal:email>
+      <mal:years>2015</mal:years>
     </mal:credit>
   </info>
 
   <title>Encontrando informações sobre documentos</title>
 
-  <p>When a document is created, it contains <em>metadata</em>.
-  <app>Documents</app> displays the following metadata for each document:</p>
+  <p>Quando um documento é criado, ele tem <em>metadados</em>. O <app>Documentos</app> exibe os seguintes metadados para cada documento:</p>
 
   <list>
     <item>
       <p>Título: o nome do documento, o qual pode ser editado;</p>
     </item>
     <item>
-      <p>Source: the path to the folder containing the document;</p>
+      <p>Fonte: o caminho da pasta contendo o documento;</p>
     </item>
     <item>
       <p>Data de modificação;</p>
     </item>
     <item>
-      <p>Type: the <link xref="formats">file format</link> of the document.</p>
+      <p>Tipo: o <link xref="documents-formats">formato do arquivo</link> do documento.</p>
     </item>
   </list>
     
   <p>Para ver as propriedades do documento:</p>
   <steps>
     <item>
-      <p>Click the check button to switch to selection mode.</p>
+      <p>Clique no botão "selecionar itens" para alterar para o modo de seleção.</p>
     </item>
     <item>
       <p>Selecione um documento.</p>
     </item>
     <item>
-      <p>Clique no botão <gui>Prioridades</gui> no canto direito da barra de botões.</p>
+      <p>Clique no botão <gui>Propriedades</gui> na parte inferior direita da barra de botões.</p>
     </item>
   </steps>
 

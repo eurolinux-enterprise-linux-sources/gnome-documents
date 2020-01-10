@@ -41,7 +41,7 @@
     <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
       <mal:name>Christian Kirbach</mal:name>
       <mal:email>christian.kirbach@gmail.com</mal:email>
-      <mal:years>2011-2014.</mal:years>
+      <mal:years>2011-2016.</mal:years>
     </mal:credit>
   
     <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
@@ -73,7 +73,7 @@
       <p>Klicken Sie auf <gui>Zur Auswahl hinzufügen</gui>.</p>
     </item>
     <item>
-      <p>Klicken Sie in der Liste der Sammlungen zwei mal auf <gui>Neue Sammlung erstellen</gui> und geben Sie einen neuen Sammlungsnamen ein, oder wählen Sie eine vorhandene Sammlung. Die ausgewählten Dokumente werden zu dieser Sammlung hinzugefügt.</p>
+      <p>Klicken Sie in der Liste der Sammlungen zweimal auf <gui>Neue Sammlung erstellen</gui> und geben Sie einen neuen Sammlungsnamen ein, oder wählen Sie eine vorhandene Sammlung. Die ausgewählten Dokumente werden zu dieser Sammlung hinzugefügt.</p>
     </item>
   </steps>
 

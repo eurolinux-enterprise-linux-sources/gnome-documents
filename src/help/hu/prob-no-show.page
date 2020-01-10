@@ -65,7 +65,7 @@
 
   <title>A dokumentumaim nem jelennek meg</title>
 
-  <p>A <app>Dokumentumok</app> csak bizonyos dokumentumtípusokat támogat, mint például a PDF és az irodai csomagok táblázatai és szöveges dokumentumai. Az egyszerű szöveges dokumentumokat és fényképeket nem jeleníti meg.</p>
+  <p>A <app>Dokumentumok</app> csak bizonyos dokumentumtípusokat támogat, mint például a PDF és az irodai programcsomagok táblázatai és szöveges dokumentumai. Az egyszerű szöveges dokumentumokat és a fényképeket nem jeleníti meg.</p>
 
   <p>A helyi dokumentumok akkor jelennek meg a <app>Dokumentumokban</app>, ha a <file>Dokumentumok</file> vagy <file>Letöltések</file> mappákban vagy ezek almappáiban vannak. A számítógép más mappáiban lévő dokumentumok nem jelennek meg.</p>
 

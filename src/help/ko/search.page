@@ -21,9 +21,9 @@
     <desc>제목 또는 저자로 문서를 찾습니다.</desc>
   
     <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
-      <mal:name>Seong-ho Cho</mal:name>
+      <mal:name>조성호</mal:name>
       <mal:email>shcho@gnome.org</mal:email>
-      <mal:years>2014.</mal:years>
+      <mal:years>2014, 2016.</mal:years>
     </mal:credit>
   </info>
 

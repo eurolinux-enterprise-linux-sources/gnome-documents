@@ -5,10 +5,12 @@
     <link type="guide" xref="index#view"/>
     <link type="seealso" xref="view"/>
     <revision pkgversion="3.12" date="2014-03-28" status="review"/>
+    <revision pkgversion="3.15" date="2015-02-16" status="review"/>
 
     <credit type="author">
       <name>Ekaterina Gerasimova</name>
       <email its:translate="no">kittykat3756@gmail.com</email>
+      <years>2014–2015</years>
     </credit>
 
     <include xmlns="http://www.w3.org/2001/XInclude" href="legal.xml"/>
@@ -65,7 +67,7 @@
       <p>Κάντε κλικ στην <gui>Αναζήτηση</gui> για να ανοίξει το πλαίσιο</p>
     </item>
     <item>
-      <p>Πατήστε το κουμπί κάτω αριστερά του παραθύρου για να ανοίξουν οι <gui>Τοποθεσίες αναζήτησης</gui>.</p>
+      <p>Πατήστε το κουμπί κάτω δεξιά του παραθύρου για να ανοίξουν οι <gui>Τοποθεσίες αναζήτησης</gui>.</p>
     </item>
     <item>
       <p>Επιλέξτε <gui style="button">+</gui> για την προσθήκη μιας νέας θέσης αναζήτησης.</p>

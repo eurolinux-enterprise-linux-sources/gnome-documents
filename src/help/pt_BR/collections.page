@@ -24,71 +24,69 @@
 
     <include xmlns="http://www.w3.org/2001/XInclude" href="legal.xml"/>
 
-    <desc>Group related documents together to help sort them.</desc>
+    <desc>Agrupe documentos relacionados para organizá-los ou mantê-los organizados.</desc>
   
     <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
       <mal:name>Rodolfo Ribeiro Gomes</mal:name>
       <mal:email>rodolforg@gmail.com</mal:email>
-      <mal:years>2011, 2012.</mal:years>
+      <mal:years>2011, 2012</mal:years>
     </mal:credit>
   
     <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
       <mal:name>Rafael Ferreira</mal:name>
       <mal:email>rafael.f.f1@gmail.com</mal:email>
-      <mal:years>2012, 2013, 2014.</mal:years>
+      <mal:years>2012, 2013, 2014</mal:years>
     </mal:credit>
   
     <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
       <mal:name>Enrico Nicoletto</mal:name>
       <mal:email>liverig@gmail.com</mal:email>
-      <mal:years>2013.</mal:years>
+      <mal:years>2013, 2016</mal:years>
     </mal:credit>
   
     <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
       <mal:name>João Santana</mal:name>
       <mal:email>joaosantana@outlook.com</mal:email>
-      <mal:years>2013.</mal:years>
+      <mal:years>2013</mal:years>
+    </mal:credit>
+  
+    <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
+      <mal:name>Felipe Braga</mal:name>
+      <mal:email>fbobraga@gmail.com</mal:email>
+      <mal:years>2015</mal:years>
     </mal:credit>
   </info>
 
   <title>Fazer coleções de documentos</title>
 
-  <p>You can put together documents of different types in one place which is
-  called a <em>collection</em>. If you have documents that are related, you can
-  group them to make them easier to find. For example, if you had a business
-  trip where you made a presentation, your slides, a PDF of your flight
-  itinerary, your budget spreadsheet, and other word processor and PDF
-  documents can be grouped in one collection.</p>
+  <p>O <app>Documentos</app> permite que você junte documentos de diferentes tipos em um só lugar chamado de <em>coleção</em>. Se você tem documentos relacionados, você pode agrupá-los para tornar mais fácil encontrá-los. Por exemplo, se você fez uma viagem de negócios na qual você fez uma apresentação, seus slides, um arquivo PDF com o itinerário de sua viagem, sua planilha de orçamento e outros documentos de PDF e processadores de texto, podem ser agrupados em uma coleção.</p>
 
   <steps>
     <title>Para criar ou adicionar uma coleção:</title>
     <item>
-      <p>Press the <gui>✓</gui> button.</p>
+      <p>Clique no botão <gui>✓</gui>.</p>
     </item>
     <item>
-      <p>In selection mode, select related documents.</p>
+      <p>No modo de seleção, marque os documentos relacionados.</p>
     </item>
     <item>
-      <p>Press <gui>Add to Collection</gui>.</p>
+      <p>Pressione <gui>Adicionar a coleção</gui>.</p>
     </item>
     <item>
-      <p>In the collection list, press on <gui>Create new collection</gui>
-      twice and type a new collection name, or select an existing collection.
-      The selected documents will be added to the collection.</p>
+      <p>Na lista de coleções, clique duas vezes em <gui>Criar nova coleção</gui> e digite um novo nome de coleção, ou selecione uma coleção existente. Os documentos selecionados serão adicionados à coleção.</p>
     </item>
   </steps>
 
   <steps>
     <title>Para excluir uma coleção:</title>
     <item>
-      <p>Press the <gui>✓</gui> button.</p>
+      <p>Clique no botão <gui>✓</gui>.</p>
     </item>
     <item>
-      <p>In selection mode, select the collection that you want to delete.</p>
+      <p>No modo de seleção, marque a coleção a ser excluída.</p>
     </item>
     <item>
-      <p>Press <gui style="button">Delete</gui>. The collection will be
-      deleted, leaving the original documents as they are.</p>
+      <p>Clique no botão <gui style="button">Excluir</gui> na barra inferior. A coleção vai ser excluída, mantendo os documentos originais.</p>
     </item>
   </steps>
 

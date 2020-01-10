@@ -24,30 +24,29 @@
 
     <include xmlns="http://www.w3.org/2001/XInclude" href="legal.xml"/>
 
-    <desc>You can only preview files stored locally, on Google Drive or
-    ownCloud.</desc>
+    <desc>Du kan bara förhandsgranska filer som är lagrade lokalt, i Google Drive eller ownCloud.</desc>
   
     <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
       <mal:name>Daniel Nylander</mal:name>
       <mal:email>po@danielnylander.se</mal:email>
       <mal:years>2012</mal:years>
     </mal:credit>
+  
+    <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
+      <mal:name>Sebastian Rasmussen</mal:name>
+      <mal:email>sebras@gmail.com</mal:email>
+      <mal:years>2015</mal:years>
+    </mal:credit>
   </info>
 
-  <title>Why do some files not have previews?</title>
+  <title>Varför saknar vissa filer förhandsgranskningar?</title>
 
-  <p>When you open <app>Documents</app>, a preview thumbnail is displayed for
-  documents that are stored locally, on <em>Google Drive</em> or
-  <em>ownCloud</em>. Those stored in <em>OneDrive</em> show as missing (or
-  blank) preview thumbnails.</p>
+  <p>När du öppnar <app>Dokument</app> kommer en förhandsgranskningsbild att visas för dokument som är lagrade lokalt, på <em>Google Drive</em> eller <em>ownCloud</em>. De som lagras i <em>OneDrive</em> visas som saknade (eller tomma) förhandsgranskningar.</p>
 
-  <p>If you download a <em>OneDrive</em> document to local storage through the
-  web interface, a thumbnail will be generated.</p>
+  <p>Om du hämtar ner ett <em>OneDrive</em>-dokument till lokal lagring via webbgränssnittet kommer en miniatyrbild att genereras.</p>
 
   <note style="important">
-    <p>The local copy of a document downloaded from an online account will lose
-    its ability to be updated online. If you want to continue to edit it
-    online, it is better not to download it.</p>
+    <p>Den lokala kopian av ett dokument som hämtats ner från ett nätkonto kommer att förlora sin möjlighet att uppdateras på nätet. Om du vill fortsätta att redigera det på nätet är det bättre att inte hämta ner det.</p>
   </note>
 
 </page>

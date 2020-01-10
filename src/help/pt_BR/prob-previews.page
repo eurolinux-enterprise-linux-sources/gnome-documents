@@ -24,48 +24,47 @@
 
     <include xmlns="http://www.w3.org/2001/XInclude" href="legal.xml"/>
 
-    <desc>You can only preview files stored locally, on Google Drive or
-    ownCloud.</desc>
+    <desc>Você só conseguirá pré-visualizar arquivos armazenados localmente, no Google Drive ou através do ownCloud.</desc>
   
     <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
       <mal:name>Rodolfo Ribeiro Gomes</mal:name>
       <mal:email>rodolforg@gmail.com</mal:email>
-      <mal:years>2011, 2012.</mal:years>
+      <mal:years>2011, 2012</mal:years>
     </mal:credit>
   
     <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
       <mal:name>Rafael Ferreira</mal:name>
       <mal:email>rafael.f.f1@gmail.com</mal:email>
-      <mal:years>2012, 2013, 2014.</mal:years>
+      <mal:years>2012, 2013, 2014</mal:years>
     </mal:credit>
   
     <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
       <mal:name>Enrico Nicoletto</mal:name>
       <mal:email>liverig@gmail.com</mal:email>
-      <mal:years>2013.</mal:years>
+      <mal:years>2013, 2016</mal:years>
     </mal:credit>
   
     <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
       <mal:name>João Santana</mal:name>
       <mal:email>joaosantana@outlook.com</mal:email>
-      <mal:years>2013.</mal:years>
+      <mal:years>2013</mal:years>
+    </mal:credit>
+  
+    <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
+      <mal:name>Felipe Braga</mal:name>
+      <mal:email>fbobraga@gmail.com</mal:email>
+      <mal:years>2015</mal:years>
     </mal:credit>
   </info>
 
-  <title>Why do some files not have previews?</title>
+  <title>Porque alguns arquivos não têm pré-visualização?</title>
 
-  <p>When you open <app>Documents</app>, a preview thumbnail is displayed for
-  documents that are stored locally, on <em>Google Drive</em> or
-  <em>ownCloud</em>. Those stored in <em>OneDrive</em> show as missing (or
-  blank) preview thumbnails.</p>
+  <p>Quando você abre o <app>Documentos</app>, uma miniatura de pré-visualização é exibida para cada documento que está armazenado localmente, no <em>Google Drive</em> ou no <em>ownCloud</em>. Os armazenados no <em>OneDrive/SkyDrive</em> não mostram miniaturas de pré-visualização, ou as mostram em branco.</p>
 
-  <p>If you download a <em>OneDrive</em> document to local storage through the
-  web interface, a thumbnail will be generated.</p>
+  <p>Se você baixar um documento do <em>OneDrive/SkyDrive</em> para o armazenamento local através da interface web, uma miniatura de pré-visualização será gerada para ele.</p>
 
   <note style="important">
-    <p>The local copy of a document downloaded from an online account will lose
-    its ability to be updated online. If you want to continue to edit it
-    online, it is better not to download it.</p>
+    <p>A cópia local de um arquivo baixado de uma conta online irá perder sua capacidade de ser atualizado automaticamente. Se você quiser continuar editando-o on-line, é melhor não baixá-lo.</p>
   </note>
 
 </page>

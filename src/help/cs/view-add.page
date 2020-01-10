@@ -5,10 +5,12 @@
     <link type="guide" xref="index#view"/>
     <link type="seealso" xref="view"/>
     <revision pkgversion="3.12" date="2014-03-28" status="review"/>
+    <revision pkgversion="3.15" date="2015-02-16" status="review"/>
 
     <credit type="author">
       <name>Ekaterina Gerasimova</name>
       <email its:translate="no">kittykat3756@gmail.com</email>
+      <years>2014 – 2015</years>
     </credit>
 
     <include xmlns="http://www.w3.org/2001/XInclude" href="legal.xml"/>
@@ -41,7 +43,7 @@
       <p>Kliknutím na <gui>Hledání</gui> otevřete příslušný panel.</p>
     </item>
     <item>
-      <p>Zmáčkněte tlačítko ozubeného kola v pravém dolním rohu okna a otevřou se <gui>Prohledávaná umístění</gui>.</p>
+      <p>Zmáčkněte tlačítko v pravém dolním rohu okna, které otevře <gui>Prohledávaná umístění</gui>.</p>
     </item>
     <item>
       <p>Pro přidání nového prohledávaného umístění zmáčkněte <gui style="button">+</gui>.</p>

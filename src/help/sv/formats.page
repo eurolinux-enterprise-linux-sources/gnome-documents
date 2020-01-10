@@ -19,21 +19,24 @@
 
     <include xmlns="http://www.w3.org/2001/XInclude" href="legal.xml"/>
 
-    <desc><app>Documents</app> displays a number of popular document
-    types.</desc>
+    <desc><app>Dokument</app> visar ett antal populära dokumenttyper.</desc>
   
     <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
       <mal:name>Daniel Nylander</mal:name>
       <mal:email>po@danielnylander.se</mal:email>
       <mal:years>2012</mal:years>
     </mal:credit>
+  
+    <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
+      <mal:name>Sebastian Rasmussen</mal:name>
+      <mal:email>sebras@gmail.com</mal:email>
+      <mal:years>2015</mal:years>
+    </mal:credit>
   </info>
 
-  <title>Supported formats</title>
+  <title>Format som stöds</title>
 
   <!-- TODO: check which formats are considered to be documents by tracker. -->
-  <p><app>Documents</app> displays PDF, DVI, XPS, PostScript and the formats
-  supported by <app href="help:evince">Document Viewer</app>, <app>Microsoft
-  Office</app>, <app>LibreOffice</app> and <app>Google Docs</app>.</p>
+  <p><app>Dokument</app> visar PDF, DVI, XPS, PostScript samt de format som stöds av <app href="help:evince">Dokumentvisare</app>, <app>Microsoft Office</app>, <app>LibreOffice</app> och <app>Google Docs</app>.</p>
 
 </page>

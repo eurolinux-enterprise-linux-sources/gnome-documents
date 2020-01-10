@@ -1,34 +1,42 @@
 %define evince_version 3.13.3
-%define gtk3_version 3.13.2
+%define gnome_online_miners_version 3.22.0-2
+%define gtk3_version 3.19.1
 
 Name:           gnome-documents
-Version:        3.14.3
-Release:        3%{?dist}
+Version:        3.22.2
+Release:        5%{?dist}
 Summary:        A document manager application for GNOME
 
 License:        GPLv2+
-URL:            https://live.gnome.org/Design/Apps/Documents
-Source0:        http://download.gnome.org/sources/%{name}/3.14/%{name}-%{version}.tar.xz
+URL:            https://wiki.gnome.org/Apps/Documents
+Source0:        https://download.gnome.org/sources/%{name}/3.22/%{name}-%{version}.tar.xz
 
-# https://bugzilla.redhat.com/show_bug.cgi?id=1057160
-Patch0:         gnome-documents-show-a-back-button-while-loading.patch
-# https://bugzilla.redhat.com/show_bug.cgi?id=958690
-Patch1:         gnome-documents-prevent-nested-collections.patch
+# https://bugzilla.redhat.com/show_bug.cgi?id=985887
+# https://bugzilla.redhat.com/show_bug.cgi?id=1436566
+# https://bugzilla.redhat.com/show_bug.cgi?id=1436682
+# https://bugzilla.redhat.com/show_bug.cgi?id=1438362
+# https://bugzilla.redhat.com/show_bug.cgi?id=1444437
+Patch0:         gnome-documents-skydrive-printing-and-lok-fixes.patch
 
-Patch100:       translations.patch
-
-BuildRequires:  evince-devel >= %{evince_version}
-BuildRequires:  gtk3-devel >= %{gtk3_version}
+BuildRequires:  autoconf automake libtool
+BuildRequires:  gnome-common
+BuildRequires:  yelp-tools
+BuildRequires:  pkgconfig(evince-document-3.0) >= %{evince_version}
+BuildRequires:  pkgconfig(evince-view-3.0) >= %{evince_version}
+BuildRequires:  pkgconfig(webkit2gtk-4.0)
+BuildRequires:  pkgconfig(gtk+-3.0) >= %{gtk3_version}
+BuildRequires:  pkgconfig(gjs-1.0)
+BuildRequires:  pkgconfig(tracker-control-1.0) >= 0.17.0
+BuildRequires:  pkgconfig(tracker-sparql-1.0) >= 0.17.0
+BuildRequires:  pkgconfig(goa-1.0)
+BuildRequires:  pkgconfig(gnome-desktop-3.0)
+BuildRequires:  pkgconfig(libgdata)
+BuildRequires:  pkgconfig(libgepub)
+BuildRequires:  pkgconfig(zapojit-0.0)
+BuildRequires:  pkgconfig(libsoup-2.4)
 BuildRequires:  intltool
-BuildRequires:  libgdata-devel
-BuildRequires:  gnome-desktop3-devel
 BuildRequires:  liboauth-devel
-BuildRequires:  gnome-online-accounts-devel
-BuildRequires:  tracker-devel >= 0.17.0
 BuildRequires:  desktop-file-utils
-BuildRequires:  gjs-devel
-BuildRequires:  libzapojit-devel
-BuildRequires:  webkitgtk3-devel
 BuildRequires:  itstool
 BuildRequires:  inkscape
 BuildRequires:  poppler-utils
@@ -36,34 +44,50 @@ BuildRequires:  docbook-style-xsl
 
 Requires:       evince-libs%{?_isa} >= %{evince_version}
 Requires:       gtk3%{?_isa} >= %{gtk3_version}
-Requires:       gnome-online-miners
+Requires:       gnome-online-miners >= %{gnome_online_miners_version}
+Requires:       libgepub%{?_isa}
+Requires:       libreofficekit
+Requires:       %{name}-libs%{?_isa} = %{version}-%{release}
 
 %description
 gnome-documents is a document manager application for GNOME,
 aiming to be a simple and elegant replacement for using Files to show
 the Documents directory.
 
+%package libs
+Summary: Common libraries and data files for %{name}
+%description libs
+%{summary}.
+
 %prep
 %setup -q
-%patch0 -p1 -b .back-button-loading
-%patch1 -p1 -b .nested-collections
-%patch100 -p1 -b .translations
+%patch0 -p1
 
 %build
+autoreconf --force --install
 %configure --disable-static --enable-getting-started
 make %{?_smp_mflags}
 
 %install
-make install DESTDIR=$RPM_BUILD_ROOT
+%make_install
 find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
+
+# Disable gnome-books
+rm -f $RPM_BUILD_ROOT/%{_bindir}/gnome-books
+rm -f $RPM_BUILD_ROOT/%{_datadir}/dbus-1/services/org.gnome.Books.service
+rm -f $RPM_BUILD_ROOT/%{_datadir}/glib-2.0/schemas/org.gnome.books.gschema.xml
+rm -f $RPM_BUILD_ROOT/%{_datadir}/applications/org.gnome.Books.desktop
+rm -f $RPM_BUILD_ROOT/%{_datadir}/icons/hicolor/*/apps/org.gnome.Books.png
+rm -f $RPM_BUILD_ROOT/%{_datadir}/icons/hicolor/scalable/apps/org.gnome.Books-symbolic.svg
+rm -f $RPM_BUILD_ROOT/%{_mandir}/man1/gnome-books.1*
+rm -f $RPM_BUILD_ROOT/%{_datadir}/appdata/org.gnome.Books.appdata.xml
+
 desktop-file-validate $RPM_BUILD_ROOT/%{_datadir}/applications/org.gnome.Documents.desktop
 %find_lang %{name} --with-gnome
-
 
 %post
 /sbin/ldconfig
 touch --no-create %{_datadir}/icons/hicolor >&/dev/null || :
-
 
 %postun
 /sbin/ldconfig
@@ -78,22 +102,57 @@ gtk-update-icon-cache %{_datadir}/icons/hicolor >&/dev/null || :
 /usr/bin/glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 
 %files -f %{name}.lang
-%doc README AUTHORS NEWS TODO COPYING
-%{_datadir}/%{name}
+%license COPYING
+%doc README AUTHORS NEWS TODO
 %{_bindir}/%{name}
 %{_datadir}/appdata/org.gnome.Documents.appdata.xml
-%{_datadir}/dbus-1/services/*
-%{_datadir}/glib-2.0/schemas/*
-%{_datadir}/applications/*
-%{_datadir}/icons/hicolor/*/apps/gnome-documents.png
-%{_libdir}/gnome-documents/
-%{_mandir}/man1/%{name}.1.gz
+%{_datadir}/dbus-1/services/org.gnome.Documents.service
+%{_datadir}/glib-2.0/schemas/org.gnome.documents.gschema.xml
+%{_datadir}/applications/org.gnome.Documents.desktop
+%{_datadir}/icons/hicolor/*/apps/org.gnome.Documents.png
+%{_datadir}/icons/hicolor/scalable/apps/org.gnome.Documents-symbolic.svg
+%{_mandir}/man1/gnome-documents.1*
 # co-own these directories
 %dir %{_datadir}/gnome-shell
 %dir %{_datadir}/gnome-shell/search-providers
 %{_datadir}/gnome-shell/search-providers/org.gnome.Documents.search-provider.ini
 
+%files libs
+%{_datadir}/%{name}
+%{_datadir}/glib-2.0/schemas/org.gnome.Documents.enums.xml
+%{_libdir}/gnome-documents/
+
 %changelog
+* Fri Jun 09 2017 Debarshi Ray <rishi@fedoraproject.org> - 3.22.2-5
+- Fix CRITICALs on invoking the application when a primary instance is present
+  Resolves: #1436566
+
+* Thu May 11 2017 Debarshi Ray <rishi@fedoraproject.org> - 3.22.2-4
+- Fix crash on repeated opening of presentations
+  Resolves: #1444437
+
+* Fri Apr 21 2017 Debarshi Ray <rishi@fedoraproject.org> - 3.22.2-3
+- Disable the print button in the selection toolbar when printing isn't
+  supported
+  Resolves: #1438362
+
+* Tue Apr 04 2017 Debarshi Ray <rishi@fedoraproject.org> - 3.22.2-2
+- Unable to preview LOKDocView-supported documents from OneDrive
+  Resolves: #1436682
+
+* Mon Mar 27 2017 Debarshi Ray <rishi@fedoraproject.org> - 3.22.2-1
+- Update to 3.22.2
+- Thumbnail OneDrive entries once they are loaded
+  Resolves: #985887, #1386892
+
+* Wed Mar 22 2017 Debarshi Ray <rishi@fedoraproject.org> - 3.22.1-2
+- Drop gnome-books due to unavailability of gnome-epub-thumbnailer
+  Resolves: #1433418
+
+* Sun Mar 12 2017 Debarshi Ray <rishi@fedoraproject.org> - 3.22.1-1
+- Update to 3.22.1
+  Resolves: #1386892
+
 * Wed Jun 15 2016 Debarshi Ray <rishi@fedoraproject.org> - 3.14.3-3
 - Prevent nested collections
   Resolves: #958690

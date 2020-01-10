@@ -5,10 +5,12 @@
     <link type="guide" xref="index#view"/>
     <link type="seealso" xref="view"/>
     <revision pkgversion="3.12" date="2014-03-28" status="review"/>
+    <revision pkgversion="3.15" date="2015-02-16" status="review"/>
 
     <credit type="author">
       <name>Ekaterina Gerasimova</name>
       <email its:translate="no">kittykat3756@gmail.com</email>
+      <years>2014–2015</years>
     </credit>
 
     <include xmlns="http://www.w3.org/2001/XInclude" href="legal.xml"/>
@@ -30,7 +32,7 @@
     <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
       <mal:name>Christian Kirbach</mal:name>
       <mal:email>christian.kirbach@gmail.com</mal:email>
-      <mal:years>2011-2014.</mal:years>
+      <mal:years>2011-2016.</mal:years>
     </mal:credit>
   
     <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
@@ -59,7 +61,7 @@
       <p>Klicken Sie auf <gui>Suchen</gui>, um die Leiste zu öffnen.</p>
     </item>
     <item>
-      <p>Daraufhin öffnet sich ein Fenster <gui>Suchen</gui>. Klicken Sie auf das Zahnradsymbol unten rechts. Das Fenster <gui>Orte durchsuchen</gui> öffnet sich.</p>
+      <p>Klicken Sie auf den Knopf unten rechts im Fenster. Daraufhin öffnet sich das Fenster <gui>Suchorte</gui>.</p>
     </item>
     <item>
       <p>Klicken Sie auf den Knopf <gui style="button">+</gui>, um einen neuen Suchort hinzuzufügen.</p>

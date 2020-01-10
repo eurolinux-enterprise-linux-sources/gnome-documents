@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, 2012 Red Hat, Inc.
+ * Copyright (c) 2011, 2012, 2014, 2015 Red Hat, Inc.
  *
  * Gnome Documents is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by the
@@ -21,39 +21,23 @@
 
 const Lang = imports.lang;
 const Mainloop = imports.mainloop;
-const Signals = imports.signals;
-const Gettext = imports.gettext;
 const _ = imports.gettext.gettext;
 
-// Import versions go here
-imports.gi.versions.GdPrivate = '1.0';
-imports.gi.versions.Gd = '1.0';
-imports.gi.versions.Tracker = '1.0';
-imports.gi.versions.TrackerControl = '1.0';
-imports.gi.versions.EvinceDocument = '3.0';
-imports.gi.versions.Goa = '1.0';
-imports.gi.versions.WebKit = '3.0';
-
 const EvDoc = imports.gi.EvinceDocument;
-const GdPrivate = imports.gi.GdPrivate;
 const Gdk = imports.gi.Gdk;
 const Gio = imports.gi.Gio;
 const Goa = imports.gi.Goa;
 const Gtk = imports.gi.Gtk;
 const GLib = imports.gi.GLib;
+const GObject = imports.gi.GObject;
 const Tracker = imports.gi.Tracker;
 const TrackerControl = imports.gi.TrackerControl;
 
 const ChangeMonitor = imports.changeMonitor;
-const Documents = imports.documents;
 const Format = imports.format;
-const Main = imports.main;
 const MainWindow = imports.mainWindow;
-const MainToolbar = imports.mainToolbar;
-const Manager = imports.manager;
 const Miners = imports.miners;
 const Notifications = imports.notifications;
-const Path = imports.path;
 const Properties = imports.properties;
 const Query = imports.query;
 const Search = imports.search;
@@ -73,20 +57,22 @@ let settings = null;
 
 // used by the application, but not by the search provider
 let changeMonitor = null;
-let collectionManager = null;
 let cssProvider = null;
 let documentManager = null;
 let modeController = null;
 let notificationManager = null;
-let offsetController = null;
+let offsetCollectionsController = null;
+let offsetDocumentsController = null;
+let offsetSearchController = null;
 let queryBuilder = null;
-let searchCategoryManager = null;
 let searchController = null;
 let searchMatchManager = null;
 let searchTypeManager = null;
 let selectionController = null;
 let sourceManager = null;
-let trackerController = null;
+let trackerCollectionsController = null;
+let trackerDocumentsController = null;
+let trackerSearchController = null;
 
 const TrackerExtractPriorityIface = '<node> \
 <interface name="org.freedesktop.Tracker1.Extract.Priority"> \
@@ -110,18 +96,30 @@ const Application = new Lang.Class({
     Name: 'Application',
     Extends: Gtk.Application,
 
-    _init: function() {
+    _init: function(isBooks) {
         this.minersRunning = [];
         this._activationTimestamp = Gdk.CURRENT_TIME;
         this._extractPriority = null;
 
-        Gettext.bindtextdomain('gnome-documents', Path.LOCALE_DIR);
-        Gettext.textdomain('gnome-documents');
-        GLib.set_prgname('gnome-documents');
-        GLib.set_application_name(_("Documents"));
+        this.isBooks = isBooks;
 
-        this.parent({ application_id: 'org.gnome.Documents',
+        let appid;
+        if (this.isBooks) {
+            GLib.set_application_name(_("Books"));
+            appid = 'org.gnome.Books';
+        } else {
+            GLib.set_application_name(_("Documents"));
+            appid = 'org.gnome.Documents';
+        }
+
+        // needed by data/ui/view-menu.ui
+        GObject.type_ensure(Gio.ThemedIcon);
+
+        this.parent({ application_id: appid,
                       inactivity_timeout: 12000 });
+
+        this.add_main_option('version', 'v'.charCodeAt(0), GLib.OptionFlags.NONE, GLib.OptionArg.NONE,
+                             _("Show the version of the program"), null);
 
         this._searchProvider = new ShellSearchProvider.ShellSearchProvider();
         this._searchProvider.connect('activate-result', Lang.bind(this, this._onActivateResult));
@@ -134,7 +132,7 @@ const Application = new Lang.Class({
         let languages = GLib.get_language_names();
         let files = languages.map(
             function(language) {
-                return Gio.File.new_for_path(Path.RESOURCE_DIR + '/getting-started/' + language +
+                return Gio.File.new_for_path(pkg.pkgdatadir + '/getting-started/' + language +
                     '/gnome-documents-getting-started.pdf');
             });
 
@@ -183,21 +181,46 @@ const Application = new Lang.Class({
             function() {
                 let state = settings.get_value('view-as');
                 if (state.get_string()[0] != action.state.get_string()[0])
-                    action.state = state;
+                    action.change_state(state);
+            }));
+    },
+
+    _nightModeCreateHook: function(action) {
+        settings.connect('changed::night-mode', Lang.bind(this,
+            function() {
+                let state = settings.get_value('night-mode');
+                if (state.get_boolean() != action.state.get_boolean())
+                    action.change_state(state);
+
+                let gtkSettings = Gtk.Settings.get_default();
+                gtkSettings.gtk_application_prefer_dark_theme = state.get_boolean();
+            }));
+
+        let state = settings.get_value('night-mode');
+        let gtkSettings = Gtk.Settings.get_default();
+        gtkSettings.gtk_application_prefer_dark_theme = state.get_boolean();
+    },
+
+    _sortByCreateHook: function(action) {
+        settings.connect('changed::sort-by', Lang.bind(this,
+            function() {
+                let state = settings.get_value('sort-by');
+                if (state.get_string()[0] != action.state.get_string()[0])
+                    action.change_state(state);
             }));
     },
 
     _onActionQuit: function() {
-        this._mainWindow.window.destroy();
+        this._mainWindow.destroy();
     },
 
     _onActionAbout: function() {
-        this._mainWindow.showAbout();
+        this._mainWindow.showAbout(this.isBooks);
     },
 
     _onActionHelp: function() {
         try {
-            Gtk.show_uri(this._mainWindow.window.get_screen(),
+            Gtk.show_uri(this._mainWindow.get_screen(),
                          'help:gnome-documents',
                          Gtk.get_current_event_time());
         } catch (e) {
@@ -205,8 +228,16 @@ const Application = new Lang.Class({
         }
     },
 
-    _onActionFullscreen: function() {
-        modeController.toggleFullscreen();
+    _onActionNightMode: function(action) {
+        let state = action.get_state();
+        settings.set_value('night-mode', GLib.Variant.new('b', !state.get_boolean()));
+    },
+
+    _onActionFullscreen: function(action) {
+        let state = action.get_state();
+        let newState = !state.get_boolean();
+        action.change_state(GLib.Variant.new('b', newState));
+        modeController.setFullscreen(newState);
     },
 
     _onActionViewAs: function(action, parameter) {
@@ -214,63 +245,9 @@ const Application = new Lang.Class({
             settings.set_value('view-as', parameter);
     },
 
-    _onActionOpenCurrent: function() {
-        let doc = documentManager.getActiveItem();
-        if (doc)
-            doc.open(this._mainWindow.window.get_screen(), Gtk.get_current_event_time());
-    },
-
-    _onActionPrintCurrent: function() {
-        let doc = documentManager.getActiveItem();
-        if (doc)
-            doc.print(this._mainWindow.window);
-    },
-
-    _onActionToggle: function(action) {
-        let state = action.get_state();
-        action.change_state(GLib.Variant.new('b', !state.get_boolean()));
-    },
-
-    _onActionProperties: function() {
-        let doc = documentManager.getActiveItem();
-        if (!doc)
-            return;
-
-        let dialog = new Properties.PropertiesDialog(doc.id);
-        dialog.widget.connect('response', Lang.bind(this,
-            function(widget, response) {
-                widget.destroy();
-            }));
-    },
-
-    _initActions: function() {
-        this._actionEntries.forEach(Lang.bind(this,
-            function(actionEntry) {
-                let state = actionEntry.state;
-                let parameterType = actionEntry.parameter_type ?
-                    GLib.VariantType.new(actionEntry.parameter_type) : null;
-                let action;
-
-                if (state)
-                    action = Gio.SimpleAction.new_stateful(actionEntry.name,
-                        parameterType, actionEntry.state);
-                else
-                    action = new Gio.SimpleAction({ name: actionEntry.name });
-
-                if (actionEntry.create_hook)
-                    actionEntry.create_hook.apply(this, [action]);
-
-                if (actionEntry.callback)
-                    action.connect('activate', Lang.bind(this, actionEntry.callback));
-
-                if (actionEntry.accel)
-                    this.add_accelerator(actionEntry.accel, 'app.' + actionEntry.name, null);
-
-                if (actionEntry.accels)
-                    this.set_accels_for_action('app.' + actionEntry.name, actionEntry.accels);
-
-                this.add_action(action);
-            }));
+    _onActionSortBy: function(action, parameter) {
+        if (parameter.get_string()[0] != action.state.get_string()[0])
+            settings.set_value('sort-by', parameter);
     },
 
     _connectActionsToMode: function() {
@@ -283,21 +260,49 @@ const Application = new Lang.Class({
                             let action = this.lookup_action(actionEntry.name);
                             action.set_enabled(mode == actionEntry.window_mode);
                         }));
+                } else if (actionEntry.window_modes) {
+                    modeController.connect('window-mode-changed', Lang.bind(this,
+                        function() {
+                            let mode = modeController.getWindowMode();
+                            let enable = actionEntry.window_modes.indexOf(mode) != -1;
+                            let action = this.lookup_action(actionEntry.name);
+                            action.set_enabled(enable);
+                        }));
                 }
             }));
     },
 
-    _initAppMenu: function() {
-        let builder = new Gtk.Builder();
-        builder.add_from_resource('/org/gnome/documents/app-menu.ui');
+    _createMiners: function(callback) {
+        let count = 3;
 
-        let menu = builder.get_object('app-menu');
-        this.set_app_menu(menu);
+        this.gdataMiner = new Miners.GDataMiner(Lang.bind(this,
+            function() {
+                count--;
+                if (count == 0)
+                    callback();
+            }));
+
+        this.owncloudMiner = new Miners.OwncloudMiner(Lang.bind(this,
+            function() {
+                count--;
+                if (count == 0)
+                    callback();
+            }));
+
+        this.zpjMiner = new Miners.ZpjMiner(Lang.bind(this,
+            function() {
+                count--;
+                if (count == 0)
+                    callback();
+            }));
     },
 
     _refreshMinerNow: function(miner) {
         let env = GLib.getenv('DOCUMENTS_DISABLE_MINERS');
         if (env)
+            return false;
+
+        if (!miner)
             return false;
 
         this.minersRunning.push(miner);
@@ -358,10 +363,15 @@ const Application = new Lang.Class({
     },
 
     _startMiners: function() {
-        this._refreshMiners();
+        this._createMiners(Lang.bind(this,
+            function() {
+                this._refreshMiners();
 
-        this._sourceAddedId = sourceManager.connect('item-added', Lang.bind(this, this._refreshMiners));
-        this._sourceRemovedId = sourceManager.connect('item-removed', Lang.bind(this, this._refreshMiners));
+                this._sourceAddedId = sourceManager.connect('item-added',
+                                                            Lang.bind(this, this._refreshMiners));
+                this._sourceRemovedId = sourceManager.connect('item-removed',
+                                                              Lang.bind(this, this._refreshMiners));
+            }));
     },
 
     _stopMiners: function() {
@@ -379,6 +389,10 @@ const Application = new Lang.Class({
             function(miner) {
                 miner._cancellable.cancel();
             }));
+
+        this.gdataMiner = null;
+        this.owncloudMiner = null;
+        this.zpjMiner = null;
     },
 
     _themeChanged: function(gtkSettings) {
@@ -387,7 +401,7 @@ const Application = new Lang.Class({
         if (gtkSettings.gtk_theme_name == 'Adwaita') {
             if (cssProvider == null) {
                 cssProvider = new Gtk.CssProvider();
-                let file = Gio.File.new_for_uri("resource:///org/gnome/documents/Adwaita.css");
+                let file = Gio.File.new_for_uri("resource:///org/gnome/Documents/application.css");
                 cssProvider.load_from_file(file);
             }
 
@@ -405,11 +419,11 @@ const Application = new Lang.Class({
 
         EvDoc.init();
 
-        let resource = Gio.Resource.load(Path.RESOURCE_DIR + '/gnome-documents.gresource');
-        resource._register();
-
         application = this;
-        settings = new Gio.Settings({ schema_id: 'org.gnome.documents' });
+        if (application.isBooks)
+            settings = new Gio.Settings({ schema_id: 'org.gnome.books' });
+        else
+            settings = new Gio.Settings({ schema_id: 'org.gnome.documents' });
 
         let gtkSettings = Gtk.Settings.get_default();
         gtkSettings.connect('notify::gtk-theme-name', Lang.bind(this, this._themeChanged));
@@ -423,132 +437,60 @@ const Application = new Lang.Class({
             return;
         }
 
-        try {
-            this._extractPriority = TrackerExtractPriority();
-            this._extractPriority.SetRdfTypesRemote(['nfo:Document']);
-        } catch (e) {
-            log('Unable to connect to the tracker extractor: ' + e.toString());
-            return;
-        }
-
-        try {
-            goaClient = Goa.Client.new_sync(null);
-        } catch (e) {
-            log('Unable to create the GOA client: ' + e.toString());
-            return;
+        if (!application.isBooks) {
+            try {
+                goaClient = Goa.Client.new_sync(null);
+            } catch (e) {
+                log('Unable to create the GOA client: ' + e.toString());
+                return;
+            }
         }
 
         connectionQueue = new TrackerController.TrackerConnectionQueue();
+        changeMonitor = new ChangeMonitor.TrackerChangeMonitor();
 
         // now init application components
         Search.initSearch(imports.application);
         Search.initSearch(imports.shellSearchProvider);
 
-        changeMonitor = new ChangeMonitor.TrackerChangeMonitor();
-        documentManager = new Documents.DocumentManager();
         modeController = new WindowMode.ModeController();
-        trackerController = new TrackerController.TrackerController();
+        offsetCollectionsController = new Search.OffsetCollectionsController();
+        offsetDocumentsController = new Search.OffsetDocumentsController();
+        offsetSearchController = new Search.OffsetSearchController();
+        trackerCollectionsController = new TrackerController.TrackerCollectionsController();
+        trackerDocumentsController = new TrackerController.TrackerDocumentsController();
+        trackerSearchController = new TrackerController.TrackerSearchController();
         selectionController = new Selections.SelectionController();
 
         this._actionEntries = [
             { name: 'quit',
-              callback: this._onActionQuit,
-              accel: '<Primary>q' },
+              callback: Lang.bind(this, this._onActionQuit),
+              accels: ['<Primary>q'] },
             { name: 'about',
-              callback: this._onActionAbout },
+              callback: Lang.bind(this, this._onActionAbout) },
             { name: 'help',
-              callback: this._onActionHelp,
-              accel: 'F1' },
+              callback: Lang.bind(this, this._onActionHelp),
+              accels: ['F1'] },
             { name: 'fullscreen',
-              callback: this._onActionFullscreen,
-              create_hook: this._fullscreenCreateHook,
-              accel: 'F11',
-              window_mode: WindowMode.WindowMode.PREVIEW },
-            { name: 'gear-menu',
-              callback: this._onActionToggle,
+              callback: Lang.bind(this, this._onActionFullscreen),
               state: GLib.Variant.new('b', false),
-              accel: 'F10',
-              window_mode: WindowMode.WindowMode.PREVIEW },
-            { name: 'view-as',
-              callback: this._onActionViewAs,
-              create_hook: this._viewAsCreateHook,
-              parameter_type: 's',
-              state: settings.get_value('view-as'),
-              window_mode: WindowMode.WindowMode.OVERVIEW },
-            { name: 'open-current',
-              callback: this._onActionOpenCurrent,
-              window_mode: WindowMode.WindowMode.PREVIEW },
-            { name: 'edit-current' },
-            { name: 'view-current',
-              window_mode: WindowMode.WindowMode.EDIT },
-            { name: 'present-current',
-              window_mode: WindowMode.WindowMode.PREVIEW,
-              callback: this._onActionToggle,
-              state: GLib.Variant.new('b', false),
-              accel: 'F5' },
-            { name: 'print-current', accel: '<Primary>p',
-              callback: this._onActionPrintCurrent,
-              window_mode: WindowMode.WindowMode.PREVIEW },
+              create_hook: Lang.bind(this, this._fullscreenCreateHook),
+              accels: ['F11'],
+              window_mode: WindowMode.WindowMode.PREVIEW_EV },
+            { name: 'night-mode',
+              callback: Lang.bind(this, this._onActionNightMode),
+              create_hook: Lang.bind(this, this._nightModeCreateHook),
+              state: settings.get_value('night-mode') },
             { name: 'search',
-              callback: this._onActionToggle,
+              callback: Utils.actionToggleCallback,
               state: GLib.Variant.new('b', false),
-              accel: '<Primary>f' },
-            { name: 'find-next', accel: '<Primary>g',
-              window_mode: WindowMode.WindowMode.PREVIEW },
-            { name: 'find-prev', accel: '<Shift><Primary>g',
-              window_mode: WindowMode.WindowMode.PREVIEW },
-            { name: 'zoom-in', accels: ['<Primary>plus', '<Primary>equal'],
-              window_mode: WindowMode.WindowMode.PREVIEW },
-            { name: 'zoom-out', accel: '<Primary>minus',
-              window_mode: WindowMode.WindowMode.PREVIEW },
-            { name: 'rotate-left', accel: '<Primary>Left',
-              window_mode: WindowMode.WindowMode.PREVIEW },
-            { name: 'rotate-right', accel: '<Primary>Right',
-              window_mode: WindowMode.WindowMode.PREVIEW },
-            { name: 'select-all', accel: '<Primary>a',
-              window_mode: WindowMode.WindowMode.OVERVIEW },
-            { name: 'select-none',
-              window_mode: WindowMode.WindowMode.OVERVIEW },
-            { name: 'properties',
-              callback: this._onActionProperties,
-              window_mode: WindowMode.WindowMode.PREVIEW },
-            { name: 'bookmark-page',
-              callback: this._onActionToggle,
-              state: GLib.Variant.new('b', false),
-              accel: '<Primary>d',
-              window_mode: WindowMode.WindowMode.PREVIEW },
-            { name: 'places',
-              accel: '<Primary>b',
-              window_mode: WindowMode.WindowMode.PREVIEW },
-            { name: 'copy',
-              accel: '<Primary>c',
-              window_mode: WindowMode.WindowMode.PREVIEW },
-            { name: 'search-source',
-              parameter_type: 's',
-              state: GLib.Variant.new('s', Search.SearchSourceStock.ALL),
-              window_mode: WindowMode.WindowMode.OVERVIEW },
-            { name: 'search-type',
-              parameter_type: 's',
-              state: GLib.Variant.new('s', Search.SearchTypeStock.ALL),
-              window_mode: WindowMode.WindowMode.OVERVIEW },
-            { name: 'search-match',
-              parameter_type: 's',
-              state: GLib.Variant.new('s', Search.SearchMatchStock.ALL),
-              window_mode: WindowMode.WindowMode.OVERVIEW }
+              accels: ['<Primary>f'] }
         ];
 
-        this.gdataMiner = new Miners.GDataMiner();
-        this.owncloudMiner = new Miners.OwncloudMiner();
-        this.zpjMiner = new Miners.ZpjMiner();
+        if (!this.isBooks)
+            this._initGettingStarted();
 
-        this._initActions();
-        this._initAppMenu();
-        this._initGettingStarted();
-    },
-
-    vfunc_shutdown: function() {
-        this._extractPriority.ClearRdfTypesRemote();
-        this.parent();
+        Utils.populateActionGroup(this, this._actionEntries, 'app');
     },
 
     _createWindow: function() {
@@ -558,7 +500,14 @@ const Application = new Lang.Class({
         notificationManager = new Notifications.NotificationManager();
         this._connectActionsToMode();
         this._mainWindow = new MainWindow.MainWindow(this);
-        this._mainWindow.window.connect('destroy', Lang.bind(this, this._onWindowDestroy));
+        this._mainWindow.connect('destroy', Lang.bind(this, this._onWindowDestroy));
+
+        try {
+            this._extractPriority = TrackerExtractPriority();
+            this._extractPriority.SetRdfTypesRemote(['nfo:Document']);
+        } catch (e) {
+            log('Unable to connect to the tracker extractor: ' + e.toString());
+        }
 
         // start miners
         this._startMiners();
@@ -577,13 +526,22 @@ const Application = new Lang.Class({
         this.parent(connection, path);
     },
 
+    vfunc_handle_local_options: function(options) {
+        if (options.contains('version')) {
+            print(pkg.version);
+            return 0;
+        }
+
+        return -1;
+    },
+
     vfunc_activate: function() {
         if (!this._mainWindow) {
             this._createWindow();
-            modeController.setWindowMode(WindowMode.WindowMode.OVERVIEW);
+            modeController.setWindowMode(WindowMode.WindowMode.DOCUMENTS);
         }
 
-        this._mainWindow.window.present_with_time(this._activationTimestamp);
+        this._mainWindow.present_with_time(this._activationTimestamp);
         this._activationTimestamp = Gdk.CURRENT_TIME;
     },
 
@@ -591,13 +549,18 @@ const Application = new Lang.Class({
         // clean up signals
         changeMonitor.disconnectAll();
         documentManager.disconnectAll();
-        offsetController.disconnectAll();
-        trackerController.disconnectAll();
+        offsetCollectionsController.disconnectAll();
+        offsetDocumentsController.disconnectAll();
+        offsetSearchController.disconnectAll();
+        trackerCollectionsController.disconnectAll();
+        trackerDocumentsController.disconnectAll();
+        trackerSearchController.disconnectAll();
         selectionController.disconnectAll();
         modeController.disconnectAll();
         this.disconnectAllJS();
 
         // reset state
+        documentManager.clearRowRefs();
         documentManager.setActiveItem(null);
         modeController.setWindowMode(WindowMode.WindowMode.NONE);
         selectionController.setSelection(null);
@@ -605,6 +568,9 @@ const Application = new Lang.Class({
 
         // stop miners
         this._stopMiners();
+
+        if (this._extractPriority)
+            this._extractPriority.ClearRdfTypesRemote();
     },
 
     _onWindowDestroy: function(window) {
@@ -617,7 +583,7 @@ const Application = new Lang.Class({
 
     _onActivateResult: function(provider, urn, terms, timestamp) {
         this._createWindow();
-        modeController.setWindowMode(WindowMode.WindowMode.PREVIEW);
+        modeController.setWindowMode(WindowMode.WindowMode.PREVIEW_EV);
 
         let doc = documentManager.getItemById(urn);
         if (doc) {
@@ -642,7 +608,8 @@ const Application = new Lang.Class({
             // forward the search terms next time we enter the overview
             let modeChangeId = modeController.connect('window-mode-changed', Lang.bind(this,
                 function(object, newMode) {
-                    if (newMode != WindowMode.WindowMode.OVERVIEW)
+                    if (newMode == WindowMode.WindowMode.EDIT
+                        || newMode == WindowMode.WindowMode.PREVIEW_EV)
                         return;
 
                     modeController.disconnect(modeChangeId);
@@ -655,7 +622,7 @@ const Application = new Lang.Class({
 
     _onLaunchSearch: function(provider, terms, timestamp) {
         this._createWindow();
-        modeController.setWindowMode(WindowMode.WindowMode.OVERVIEW);
+        modeController.setWindowMode(WindowMode.WindowMode.DOCUMENTS);
         searchController.setString(terms.join(' '));
         this.change_action_state('search', GLib.Variant.new('b', true));
 
@@ -664,11 +631,19 @@ const Application = new Lang.Class({
     },
 
     getScaleFactor: function() {
-        return this._mainWindow.window.get_scale_factor();
+        let scaleFactor = 1;
+        if (this._mainWindow)
+            scaleFactor = this._mainWindow.get_scale_factor();
+
+        return scaleFactor;
     },
 
     getGdkWindow: function() {
-        return this._mainWindow.window.get_window();
+        let window = null;
+        if (this._mainWindow)
+            window = this._mainWindow.get_window();
+
+        return window;
     }
 });
 Utils.addJSSignalMethods(Application.prototype);

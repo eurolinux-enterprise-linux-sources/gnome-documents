@@ -25,23 +25,16 @@ const Signals = imports.signals;
 const GdPrivate = imports.gi.GdPrivate;
 const GdkPixbuf = imports.gi.GdkPixbuf;
 const Gio = imports.gi.Gio;
-const Goa = imports.gi.Goa;
 const Gtk = imports.gi.Gtk;
 const GLib = imports.gi.GLib;
-const Tracker = imports.gi.Tracker;
 
 const Application = imports.application;
-const Format = imports.format;
-const Path = imports.path;
 const Query = imports.query;
-const Search = imports.search;
 const TrackerUtils = imports.trackerUtils;
 const Utils = imports.utils;
 
-let collectionManager = null;
-let offsetController = null;
+let documentManager = null;
 let queryBuilder = null;
-let searchCategoryManager = null;
 let searchMatchManager = null;
 let searchTypeManager = null;
 let searchController = null;
@@ -160,9 +153,7 @@ const CreateCollectionIconJob = new Lang.Class({
 
         if (icon instanceof Gio.ThemedIcon) {
             let theme = Gtk.IconTheme.get_default();
-            let flags =
-                Gtk.IconLookupFlags.FORCE_SIZE |
-                Gtk.IconLookupFlags.GENERIC_FALLBACK;
+            let flags = Gtk.IconLookupFlags.FORCE_SIZE;
             let info =
                 theme.lookup_by_gicon(icon, _SHELL_SEARCH_ICON_SIZE,
                                       flags);
@@ -319,7 +310,8 @@ const FetchIdsJob = new Lang.Class({
         this._cancellable = cancellable;
         searchController.setString(this._terms.join(' '));
 
-        let query = queryBuilder.buildGlobalQuery();
+        let sortBy = Application.settings.get_enum('sort-by');
+        let query = queryBuilder.buildGlobalQuery(Query.QueryFlags.SEARCH, null, sortBy);
         Application.connectionQueue.add(query.sparql, this._cancellable, Lang.bind(this,
             function(object, res) {
                 let cursor = null;

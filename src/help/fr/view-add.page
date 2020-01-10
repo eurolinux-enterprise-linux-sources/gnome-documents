@@ -5,10 +5,12 @@
     <link type="guide" xref="index#view"/>
     <link type="seealso" xref="view"/>
     <revision pkgversion="3.12" date="2014-03-28" status="review"/>
+    <revision pkgversion="3.15" date="2015-02-16" status="review"/>
 
     <credit type="author">
       <name>Ekaterina Gerasimova</name>
       <email its:translate="no">kittykat3756@gmail.com</email>
+      <years>2014–2015</years>
     </credit>
 
     <include xmlns="http://www.w3.org/2001/XInclude" href="legal.xml"/>
@@ -83,7 +85,7 @@
       <p>Cliquez sur le bouton <gui>Rechercher</gui> pour ouvrir le panneau.</p>
     </item>
     <item>
-      <p>Appuyez sur le boutton en bas à gauche de la fenêtre pour ouvrir <gui>Emplacements de la recherche</gui>.</p>
+      <p>Appuyez sur le boutton en bas à droite de la fenêtre pour ouvrir <gui>Emplacements de la recherche</gui>.</p>
     </item>
     <item>
       <p>Cliquez sur <gui style="button">+</gui> pour ajouter un nouvel emplacement de recherche.</p>

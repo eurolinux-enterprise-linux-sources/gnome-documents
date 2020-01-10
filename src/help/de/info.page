@@ -41,7 +41,7 @@
     <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
       <mal:name>Christian Kirbach</mal:name>
       <mal:email>christian.kirbach@gmail.com</mal:email>
-      <mal:years>2011-2014.</mal:years>
+      <mal:years>2011-2016.</mal:years>
     </mal:credit>
   
     <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
@@ -94,7 +94,7 @@
   </note>
 
   <note style="info">
-    <p><app>Documents</app> bietet derzeit keine Möglichkeit, die Privatsphäre eines Dokuments zu schützen. Sie können dies in der Anwendung tun, mit der Sie das Dokument erstellt haben (z.B. <app>LibreOffice</app> oder <app>Adobe Acrobat</app>).</p>
+    <p><app>Dokumentverwaltung</app> bietet derzeit keine Möglichkeit, die Privatsphäre eines Dokuments zu schützen. Sie können dies in der Anwendung tun, mit der Sie das Dokument erstellt haben (z.B. <app>LibreOffice</app> oder <app>Adobe Acrobat</app>).</p>
   </note>
 
 </page>

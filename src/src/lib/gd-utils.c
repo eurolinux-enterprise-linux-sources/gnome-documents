@@ -19,9 +19,11 @@
  *
  */
 
+#include "config.h"
 #include "gd-utils.h"
 
 #include <gdk-pixbuf/gdk-pixbuf.h>
+#include <glib/gi18n.h>
 #include <string.h>
 #include <math.h>
 
@@ -124,6 +126,7 @@ gd_filename_get_extension_offset (const char *filename)
 		if (strcmp (end, ".gz") == 0 ||
 		    strcmp (end, ".bz2") == 0 ||
 		    strcmp (end, ".sit") == 0 ||
+		    strcmp (end, ".zip") == 0 ||
 		    strcmp (end, ".Z") == 0) {
 			end2 = end - 1;
 			while (end2 > filename &&
@@ -182,6 +185,28 @@ gd_filename_to_mime_type (const gchar *filename_with_extension)
 
   if (g_strcmp0 (extension, ".pdf") == 0)
     type = "application/pdf";
+  else if (g_strcmp0 (extension, ".djv") == 0)
+    type = "image/vnd.djvu+multipage";
+  else if (g_strcmp0 (extension, ".djvu") == 0)
+    type = "image/vnd.djvu+multipage";
+  else if (g_strcmp0 (extension, ".epub") == 0)
+    type = "application/epub+zip";
+  else if (g_strcmp0 (extension, ".cbr") == 0)
+    type = "application/x-cbr";
+  else if (g_strcmp0 (extension, ".cbz") == 0)
+    type = "application/x-cbz";
+  else if (g_strcmp0 (extension, ".cbt") == 0)
+    type = "application/x-cbt";
+  else if (g_strcmp0 (extension, ".cb7") == 0)
+    type = "application/x-cb7";
+  else if (g_strcmp0 (extension, ".fb2.zip") == 0)
+    type = "application/x-zip-compressed-fb2";
+  else if (g_strcmp0 (extension, ".fb2") == 0)
+    type = "application/x-fictionbook+xml";
+  else if (g_strcmp0 (extension, ".mobi") == 0)
+    type = "application/x-mobipocket-ebook";
+  else if (g_strcmp0 (extension, ".prc") == 0)
+    type = "application/x-mobipocket-ebook";
 
   return type;
 }
@@ -210,9 +235,21 @@ gd_filename_to_rdf_type (const gchar *filename_with_extension)
       || g_strcmp0 (extension, ".docx") == 0
       || g_strcmp0 (extension, ".dot") == 0
       || g_strcmp0 (extension, ".dotx") == 0
-      || g_strcmp0 (extension, ".epub") == 0
       || g_strcmp0 (extension, ".pdf") == 0)
     type = "nfo:PaginatedTextDocument";
+
+  else if (g_strcmp0 (extension, ".epub") == 0
+           || g_strcmp0 (extension, ".djv") == 0
+           || g_strcmp0 (extension, ".djvu") == 0
+           || g_strcmp0 (extension, ".cbr") == 0
+           || g_strcmp0 (extension, ".cbz") == 0
+           || g_strcmp0 (extension, ".cbt") == 0
+           || g_strcmp0 (extension, ".cb7") == 0
+           || g_strcmp0 (extension, ".fb2") == 0
+           || g_strcmp0 (extension, ".fb2.zip") == 0
+           || g_strcmp0 (extension, ".mobi") == 0
+           || g_strcmp0 (extension, ".prc") == 0)
+    type = "nfo:EBook";
 
   else if (g_strcmp0 (extension, ".pot") == 0
            || g_strcmp0 (extension, ".potm") == 0
@@ -354,4 +391,53 @@ gd_ev_view_find_changed (EvView *view,
   ev_view_find_changed (view,
                         ev_job_find_get_results (job),
                         page);
+}
+
+void
+gd_show_about_dialog (GtkWindow *parent,
+                      gboolean is_books)
+{
+  const char *artists[] = {
+    "Jakub Steiner <jimmac@gmail.com>",
+    NULL
+  };
+
+  const char *authors[] = {
+    "Cosimo Cecchi <cosimoc@gnome.org>",
+    "Florian Müllner <fmuellner@gnome.org>",
+    "William Jon McCann <william.jon.mccann@gmail.com>",
+    "Bastien Nocera <hadess@hadess.net>",
+    NULL
+  };
+
+  const char *program_name, *comments, *logo_icon_name, *website;
+
+  if(!is_books)
+    {
+      program_name = _("Documents");
+      comments = _("A document manager application");
+      logo_icon_name = "org.gnome.Documents";
+      website = "https://wiki.gnome.org/Apps/Documents";
+    }
+  else
+    {
+      program_name = _("Books");
+      comments = _("An e-books manager application");
+      logo_icon_name = "org.gnome.Books";
+      website = "https://wiki.gnome.org/Apps/Books";
+    }
+
+  gtk_show_about_dialog (parent,
+                         "artists", artists,
+                         "authors", authors,
+                         "translator-credits", _("translator-credits"),
+                         "program-name", program_name,
+                         "comments", comments,
+                         "logo-icon-name", logo_icon_name,
+                         "website", website,
+                         "copyright", "Copyright © 2011-2014 Red Hat, Inc.",
+                         "license-type", GTK_LICENSE_GPL_2_0,
+                         "version", PACKAGE_VERSION,
+                         "wrap-license", TRUE,
+                         NULL);
 }

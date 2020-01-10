@@ -24,30 +24,31 @@
 
     <include xmlns="http://www.w3.org/2001/XInclude" href="legal.xml"/>
 
-    <desc>Open documents that are stored locally or online.</desc>
+    <desc>Öppna dokument som är lagrade lokalt eller på nätet.</desc>
   
     <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
       <mal:name>Daniel Nylander</mal:name>
       <mal:email>po@danielnylander.se</mal:email>
       <mal:years>2012</mal:years>
     </mal:credit>
+  
+    <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
+      <mal:name>Sebastian Rasmussen</mal:name>
+      <mal:email>sebras@gmail.com</mal:email>
+      <mal:years>2015</mal:years>
+    </mal:credit>
   </info>
 
-  <title>View your documents</title>
+  <title>Visa dina dokument</title>
 
-  <p>When you open <app>Documents</app>, documents which are stored locally in
-  one of the standard folders such as <file>Documents</file> or
-  <file>Downloads</file> and in one of your online accounts, are displayed as
-  thumbnails.</p>
+  <p>När du öppnar <app>Dokument</app>, kommer dokument som är lagrade lokalt i en av standardmapparna så som <file>Dokument</file> eller <file>Hämtningar</file> och i något av dina nätkonton att visas som miniatyrbilder.</p>
 
   <note style="tip">
-    <p>To see documents from your online accounts, it is necessary to
-    <link href="help:gnome-help/accounts-add">set up the accounts</link>.</p>
+    <p>För att se dokument från dina nätkonton är det nödvändigt att <link href="help:gnome-help/accounts-add">ställa in kontona</link>.</p>
   </note>
 
-  <p>To view the contents of a document, press on the thumbnail.</p>
+  <p>För att visa innehållet i ett dokument, tryck på miniatyrbilden.</p>
 
-  <p>To exit the document, click the back arrow button in the top-left of the
-  window.</p>
+  <p>För att lämna dokumentet, klicka på knappen med en bakåtpil i övre vänstra hörnet av fönstret.</p>
 
 </page>

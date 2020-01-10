@@ -36,7 +36,7 @@
     <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
       <mal:name>Christian Kirbach</mal:name>
       <mal:email>christian.kirbach@gmail.com</mal:email>
-      <mal:years>2011-2014.</mal:years>
+      <mal:years>2011-2016.</mal:years>
     </mal:credit>
   
     <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
@@ -60,7 +60,7 @@
   <terms>
     <item>
       <title>Quellen</title>
-      <p>Wählen Sie, um nach <gui>lokalen</gui> Dokumenten, oder Dokumenten von <link href="help:gnome-help/online-accounts">Online-Konten</link> bei <gui>Google</gui>, <gui>OneDrive</gui>, <gui>ownCloud</gui> oder <gui>Allen</gui> zu suchen.</p>
+      <p>Wählen Sie, ob Sie nach <gui>lokalen</gui> Dokumenten, oder Dokumenten von <link href="help:gnome-help/online-accounts">Online-Konten</link> bei <gui>Google</gui>, <gui>OneDrive</gui>, <gui>ownCloud</gui> oder <gui>Allen</gui> zu suchen.</p>
     </item>
     <item>
       <title>Typ</title>

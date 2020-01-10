@@ -4,8 +4,6 @@
 @define-color theme_bg_color #ededed;
 @define-color theme_selected_bg_color #4a90d9;
 @define-color borders #a7aba7;
-@define-color entry_tag_bg #3465a4;
-@define-color entry_tag_fg @theme_base_color;
 
 GdMainIconView.content-view {
     -GdMainIconView-icon-size: 40;
@@ -43,11 +41,11 @@ GdMainIconView.content-view.cell:active {
 }
 
 .documents-counter {
-    background-image: url("dnd-counter.svg");
+    background-image: url("ui/dnd-counter.svg");
     background-size: contain;
     background-color: transparent;
     color: @theme_base_color;
-    font: bold;
+    font-weight: bold;
 }
 
 .documents-favorite.button:active,
@@ -55,41 +53,10 @@ GdMainIconView.content-view.cell:active {
     color: shade(@theme_selected_bg_color, 1.20);
 }
 
-.documents-entry-tag {
-    background-color: @entry_tag_bg;
-    color: @entry_tag_fg;
-
-    border-radius: 4px;
-    border-width: 0;
-
-    margin: 2px;
-    padding: 4px;
-}
-
-.documents-entry-tag:hover {
-    background-color: shade(@entry_tag_bg, 1.10);
-    color: @entry_tag_fg;
-}
-
-.documents-entry-tag.button,
-.documents-entry-tag.button:hover,
-.documents-entry-tag.button:active,
-.documents-entry-tag.button:active:hover {
-    background-color: transparent;
-    background-image: none;
-    box-shadow: none;
-    border-image: none;
-    border-width: 0;
-}
-
-.documents-entry-tag.button:hover {
-    color: shade(@entry_tag_bg, 2.10);
-}
-
 .content-view.document-page {
     border-style: solid;
     border-width: 3px 3px 6px 4px;
-    border-image: url("thumbnail-frame.png") 3 3 6 4;
+    border-image: url("ui/thumbnail-frame.png") 3 3 6 4;
 }
 
 .osd .page-thumbnail {
@@ -99,4 +66,17 @@ GdMainIconView.content-view.cell:active {
 
     /* when there's no pixbuf yet */
     background-color: @osd_bg;
+}
+
+.collection-dialog .frame { border-style: solid none none none; }
+
+.collection-dialog .delete-row { background-color: @theme_bg_color }
+
+.collection-dialog .frame GtkEntry {
+  padding: 12px 8px 13px;
+  border-left: none;
+  border-right: none;
+  border-top: none;
+  border-bottom: none;
+  border-radius: 0px;
 }

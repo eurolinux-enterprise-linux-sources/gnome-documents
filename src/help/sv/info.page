@@ -24,59 +24,59 @@
 
     <include xmlns="http://www.w3.org/2001/XInclude" href="legal.xml"/>
 
-    <desc>See a document's name, location, date modified, or type.</desc>
+    <desc>Se ett dokuments namn, plats, ändringsdatum eller typ.</desc>
   
     <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
       <mal:name>Daniel Nylander</mal:name>
       <mal:email>po@danielnylander.se</mal:email>
       <mal:years>2012</mal:years>
     </mal:credit>
+  
+    <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
+      <mal:name>Sebastian Rasmussen</mal:name>
+      <mal:email>sebras@gmail.com</mal:email>
+      <mal:years>2015</mal:years>
+    </mal:credit>
   </info>
 
-  <title>Find information about documents</title>
+  <title>Hitta information om dokument</title>
 
-  <p>When a document is created, it contains <em>metadata</em>.
-  <app>Documents</app> displays the following metadata for each document:</p>
+  <p>När ett dokument skapas innehåller det <em>metadata</em>. <app>Dokument</app> visar följande metadata för varje dokument:</p>
 
   <list>
     <item>
-      <p>Title: the name of the document, which can be edited;</p>
+      <p>Titel: namnet på dokumentet, vilken kan redigeras;</p>
     </item>
     <item>
-      <p>Source: the path to the folder containing the document;</p>
+      <p>Källa: sökvägen till mappen som innehåller dokumentet;</p>
     </item>
     <item>
-      <p>Date Modified;</p>
+      <p>Ändringsdatum;</p>
     </item>
     <item>
-      <p>Type: the <link xref="formats">file format</link> of the document.</p>
+      <p>Typ: dokumentets <link xref="formats">filformat</link>.</p>
     </item>
   </list>
     
-  <p>To see a document's properties:</p>
+  <p>För att se ett dokuments egenskaper:</p>
   <steps>
     <item>
-      <p>Click the check button to switch to selection mode.</p>
+      <p>Klicka på bockknappen för att växla till markeringsläge.</p>
     </item>
     <item>
-      <p>Select a document.</p>
+      <p>Markera ett dokument.</p>
     </item>
     <item>
-      <p>Click the <gui>Properties</gui> button at the right end of the button
-      bar.</p>
+      <p>Klicka på knappen <gui>Egenskaper</gui> längst till höger i knappfältet.</p>
     </item>
   </steps>
 
   <note style="tip">
-    <p>Some types of documents (e.g. PDF files) can be password protected,
-    preventing access to their metadata or content.</p>
+    <p>Vissa typer av dokument (t.ex. PDF-filer) kan vara lösenordsskyddade vilket förhindrar tillgång till deras metadata och innehåll.</p>
   </note>
 
   <note style="info">
-    <p><app>Documents</app> does not currently offer any mechanism to add
-    privacy to a document. You may be able to do this from the application you
-    used to create the document (e.g. <app>LibreOffice</app> or <app>Adobe
-    Acrobat</app>).</p>
+    <p><app>Dokument</app> erbjuder för närvarande inte någon mekanism för att lägga till sekretess till ett dokument. Det kan vara möjligt för dig att göra detta från programmet du använde för att skapa dokumentet (t.ex. <app>LibreOffice</app> eller <app>Adobe Acrobat</app>).</p>
   </note>
 
 </page>
