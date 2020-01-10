@@ -30,11 +30,13 @@ const GdPrivate = imports.gi.GdPrivate;
 const Gdk = imports.gi.Gdk;
 const GData = imports.gi.GData;
 const GLib = imports.gi.GLib;
+const GnomeDesktop = imports.gi.GnomeDesktop;
 const Gtk = imports.gi.Gtk;
 const Zpj = imports.gi.Zpj;
 const _ = imports.gettext.gettext;
 
 const Lang = imports.lang;
+const Mainloop = imports.mainloop;
 const Signals = imports.signals;
 
 const Application = imports.application;
@@ -64,7 +66,7 @@ const DeleteItemJob = new Lang.Class({
                 try {
                     object.update_finish(res);
                 } catch (e) {
-                    log(e);
+                    logError(e, 'Failed to delete resource ' + this._urn);
                 }
 
                 if (this._callback)
@@ -100,7 +102,7 @@ const CollectionIconWatcher = new Lang.Class({
                 try {
                     cursor = object.query_finish(res);
                 } catch (e) {
-                    log('Unable to query collection items ' + e.toString());
+                    logError(e, 'Unable to query collection items');
                     return;
                 }
 
@@ -114,7 +116,7 @@ const CollectionIconWatcher = new Lang.Class({
         try {
             valid = cursor.next_finish(res);
         } catch (e) {
-            log('Unable to query collection items ' + e.toString());
+            logError(e, 'Unable to query collection items');
             cursor.close();
             return;
         }
@@ -194,8 +196,13 @@ const CollectionIconWatcher = new Lang.Class({
 
         this._docs.forEach(
             function(doc) {
-                if (doc.origPixbuf)
+                if (doc.origPixbuf) {
+                    if (doc._thumbPath && !doc._failedThumbnailing)
+                        doc.origPixbuf.set_option('-documents-has-thumb', 'true');
+                    else
+                        doc.origPixbuf.remove_option('-documents-has-thumb');
                     pixbufs.push(doc.origPixbuf);
+                }
             });
 
         this._pixbuf = GdPrivate.create_collection_icon(
@@ -228,6 +235,8 @@ const DocCommon = new Lang.Class({
     _init: function(cursor) {
         this.id = null;
         this.uri = null;
+        this.uriToLoad = null;
+        this.filename = null;
         this.name = null;
         this.author = null;
         this.mtime = null;
@@ -270,7 +279,7 @@ const DocCommon = new Lang.Class({
     },
 
     _sanitizeTitle: function() {
-        this.name = this.name.replace('Microsoft Word - ', '', 'g');
+        this.name = this.name.replace(/Microsoft Word - /g, '');
     },
 
     populateFromCursor: function(cursor) {
@@ -305,12 +314,12 @@ const DocCommon = new Lang.Class({
             this.uri = '';
 
         let title = cursor.get_string(Query.QueryColumns.TITLE)[0];
-        let filename = cursor.get_string(Query.QueryColumns.FILENAME)[0];
+        this.filename = cursor.get_string(Query.QueryColumns.FILENAME)[0];
 
         if (title && title != '')
             this.name = title;
-        else if (filename)
-            this.name = GdPrivate.filename_strip_extension(filename);
+        else if (this.filename)
+            this.name = GdPrivate.filename_strip_extension(this.filename);
         else
             this.name = '';
 
@@ -339,7 +348,7 @@ const DocCommon = new Lang.Class({
                 pixbuf = iconInfo.load_icon();
                 this._setOrigPixbuf(pixbuf);
             } catch (e) {
-                log('Unable to load pixbuf: ' + e.toString());
+                logError(e, 'Unable to load pixbuf');
             }
         }
     },
@@ -357,23 +366,117 @@ const DocCommon = new Lang.Class({
         }
     },
 
-    load: function() {
-        log('Error: DocCommon implementations must override load');
+    download: function(useCache, cancellable, callback) {
+        let localFile = Gio.File.new_for_uri(this.uriToLoad);
+        let localPath = localFile.get_path();
+        let localDir = GLib.path_get_dirname(localPath);
+        GLib.mkdir_with_parents(localDir, 448);
+
+        if (!useCache) {
+            Utils.debug('Downloading ' + this.__name__ + ' ' + this.id + ' to ' + this.uriToLoad +
+                        ': bypass cache ');
+            this.downloadImpl(localFile, cancellable, callback);
+            return;
+        }
+
+        localFile.query_info_async(Gio.FILE_ATTRIBUTE_TIME_MODIFIED,
+                                   Gio.FileQueryInfoFlags.NONE,
+                                   GLib.PRIORITY_DEFAULT,
+                                   cancellable,
+                                   Lang.bind(this,
+            function(object, res) {
+                let info;
+
+                try {
+                    info = object.query_info_finish(res);
+                } catch (e) {
+                    Utils.debug('Downloading ' + this.__name__ + ' ' + this.id + ' to ' + this.uriToLoad +
+                                ': cache miss');
+                    this.downloadImpl(localFile, cancellable, callback);
+                    return;
+                }
+
+                let cacheMtime = info.get_attribute_uint64(Gio.FILE_ATTRIBUTE_TIME_MODIFIED);
+                if (this.mtime <= cacheMtime) {
+                    callback(true, null);
+                    return;
+                }
+
+                Utils.debug('Downloading ' + this.__name__ + ' ' + this.id + ' to ' + this.uriToLoad +
+                            ': cache stale (' + this.mtime + ' > ' + cacheMtime + ')');
+                this.downloadImpl(localFile, cancellable, callback);
+            }));
+    },
+
+    downloadImpl: function(localFile, cancellable, callback) {
+        throw(new Error('DocCommon implementations must override downloadImpl'));
+    },
+
+    load: function(passwd, cancellable, callback) {
+        Utils.debug('Loading ' + this.__name__ + ' ' + this.id);
+
+        if (this.collection) {
+            Mainloop.idle_add(Lang.bind(this,
+                function() {
+                    let error = new GLib.Error(Gio.IOErrorEnum,
+                                               Gio.IOErrorEnum.NOT_SUPPORTED,
+                                               "Collections can't be loaded");
+                    callback(this, null, error);
+                    return GLib.SOURCE_REMOVE;
+                }));
+
+            return;
+        }
+
+        this.download(true, cancellable, Lang.bind(this,
+            function(fromCache, error) {
+                if (error) {
+                    callback(this, null, error);
+                    return;
+                }
+
+                this.loadLocal(passwd, cancellable, Lang.bind(this,
+                    function(doc, docModel, error) {
+                        if (error) {
+                            if (fromCache &&
+                                !error.matches(EvDocument.DocumentError, EvDocument.DocumentError.ENCRYPTED)) {
+                                this.download(false, cancellable, Lang.bind(this,
+                                    function(fromCache, error) {
+                                        if (error) {
+                                            callback(this, null, error);
+                                            return;
+                                        }
+
+                                        this.loadLocal(passwd, cancellable, callback);
+                                    }));
+                            } else {
+                                callback(this, null, error);
+                            }
+
+                            return;
+                        }
+
+                        callback(this, docModel, null);
+                    }));
+            }));
     },
 
     canEdit: function() {
-        log('Error: DocCommon implementations must override canEdit');
+        throw(new Error('DocCommon implementations must override canEdit'));
     },
 
     canShare: function() {
-        log('Error: DocCommon implementations must override canShare');
+        throw(new Error('DocCommon implementations must override canShare'));
     },
 
     canTrash: function() {
-        log('Error: DocCommon implementations must override canTrash');
+        throw(new Error('DocCommon implementations must override canTrash'));
     },
 
     canPrint: function(docModel) {
+        if (this.collection)
+            return false;
+
         if (!docModel)
             return false;
 
@@ -391,11 +494,11 @@ const DocCommon = new Lang.Class({
     },
 
     trashImpl: function() {
-        log('Error: DocCommon implementations must override trashImpl');
+        throw(new Error('DocCommon implementations must override trashImpl'));
     },
 
     createThumbnail: function(callback) {
-        log('Error: DocCommon implementations must override createThumbnail');
+        throw(new Error('DocCommon implementations must override createThumbnail'));
     },
 
     refreshIcon: function() {
@@ -416,7 +519,9 @@ const DocCommon = new Lang.Class({
 
         this._file = Gio.file_new_for_uri(this.uri);
         this._file.query_info_async(Gio.FILE_ATTRIBUTE_THUMBNAIL_PATH,
-                                    0, 0, null,
+                                    Gio.FileQueryInfoFlags.NONE,
+                                    GLib.PRIORITY_DEFAULT,
+                                    null,
                                     Lang.bind(this, this._onFileQueryInfo));
     },
 
@@ -427,7 +532,7 @@ const DocCommon = new Lang.Class({
         try {
             info = object.query_info_finish(res);
         } catch (e) {
-            log('Unable to query info for file at ' + this.uri + ': ' + e.toString());
+            logError(e, 'Unable to query info for file at ' + this.uri);
             this._failedThumbnailing = true;
             return;
         }
@@ -448,7 +553,9 @@ const DocCommon = new Lang.Class({
 
         // get the new thumbnail path
         this._file.query_info_async(Gio.FILE_ATTRIBUTE_THUMBNAIL_PATH,
-                                    0, 0, null,
+                                    Gio.FileQueryInfoFlags.NONE,
+                                    GLib.PRIORITY_DEFAULT,
+                                    null,
                                     Lang.bind(this, this._onThumbnailPathInfo));
     },
 
@@ -458,7 +565,7 @@ const DocCommon = new Lang.Class({
         try {
             info = object.query_info_finish(res);
         } catch (e) {
-            log('Unable to query info for file at ' + this.uri + ': ' + e.toString());
+            logError(e, 'Unable to query info for file at ' + this.uri);
             this._failedThumbnailing = true;
             return;
         }
@@ -475,32 +582,42 @@ const DocCommon = new Lang.Class({
 
         thumbFile.read_async(GLib.PRIORITY_DEFAULT, null, Lang.bind(this,
             function(object, res) {
-                try {
-                    let stream = object.read_finish(res);
-                    let scale = Application.application.getScaleFactor();
-                    GdkPixbuf.Pixbuf.new_from_stream_at_scale_async(stream,
-                        Utils.getIconSize() * scale, Utils.getIconSize() * scale,
-                        true, null, Lang.bind(this,
-                            function(object, res) {
-                                try {
-                                    let pixbuf = GdkPixbuf.Pixbuf.new_from_stream_finish(res);
-                                    this._setOrigPixbuf(pixbuf);
-                                } catch (e) {
-                                    log('Unable to create pixbuf from ' + thumbFile.get_uri() + ': ' + e.toString());
-                                    this._failedThumbnailing = true;
-                                    this._thumbPath = null;
-                                    thumbFile.delete_async(GLib.PRIORITY_DEFAULT, null, null);
-                                }
+                let stream;
 
-                                // close the underlying stream immediately
-                                stream.close_async(0, null, null);
-                            }));
+                try {
+                    stream = object.read_finish(res);
                 } catch (e) {
-                    log('Unable to read file at ' + thumbFile.get_uri() + ': ' + e.toString());
+                    logError(e, 'Unable to read file at ' + thumbFile.get_uri());
                     this._failedThumbnailing = true;
                     this._thumbPath = null;
                     thumbFile.delete_async(GLib.PRIORITY_DEFAULT, null, null);
+                    return;
                 }
+
+                let scale = Application.application.getScaleFactor();
+                GdkPixbuf.Pixbuf.new_from_stream_at_scale_async(stream,
+                    Utils.getIconSize() * scale, Utils.getIconSize() * scale,
+                    true, null, Lang.bind(this,
+                        function(object, res) {
+                            // close the underlying stream immediately
+                            stream.close_async(0, null, null);
+
+                            let pixbuf;
+
+                            try {
+                                pixbuf = GdkPixbuf.Pixbuf.new_from_stream_finish(res);
+                            } catch (e) {
+                                if (!e.matches(GdkPixbuf.PixbufError, GdkPixbuf.PixbufError.UNKNOWN_TYPE))
+                                    logError(e, 'Unable to create pixbuf from ' + thumbFile.get_uri());
+
+                                this._failedThumbnailing = true;
+                                this._thumbPath = null;
+                                thumbFile.delete_async(GLib.PRIORITY_DEFAULT, null, null);
+                                return;
+                            }
+
+                            this._setOrigPixbuf(pixbuf);
+                        }));
             }));
     },
 
@@ -558,7 +675,7 @@ const DocCommon = new Lang.Class({
 
                 emblemedPixbuf = iconInfo.load_icon();
             } catch (e) {
-                log('Unable to render the emblem: ' + e.toString());
+                logError(e, 'Unable to render the emblem');
             }
         }
 
@@ -590,6 +707,8 @@ const DocCommon = new Lang.Class({
     },
 
     loadLocal: function(passwd, cancellable, callback) {
+        Utils.debug('Loading ' + this.__name__ + ' ' + this.id + ' from ' + this.uriToLoad);
+
         if (this.mimeType == 'application/x-mobipocket-ebook' ||
             this.mimeType == 'application/x-fictionbook+xml' ||
             this.mimeType == 'application/x-zip-compressed-fb2') {
@@ -616,7 +735,7 @@ const DocCommon = new Lang.Class({
             return;
         }
 
-        GdPrivate.pdf_loader_load_uri_async(this.uri, passwd, cancellable, Lang.bind(this,
+        GdPrivate.pdf_loader_load_uri_async(this.uriToLoad, passwd, cancellable, Lang.bind(this,
             function(source, res) {
                 try {
                     let docModel = GdPrivate.pdf_loader_load_uri_finish(res);
@@ -627,7 +746,7 @@ const DocCommon = new Lang.Class({
             }));
     },
 
-    open: function(screen, timestamp) {
+    open: function(parent, timestamp) {
         if (!this.defaultAppName)
             return;
 
@@ -637,9 +756,9 @@ const DocCommon = new Lang.Class({
             if (this.defaultApp)
                 this.defaultApp.launch_uris( [ this.uri ], null);
             else
-                Gtk.show_uri(screen, this.uri, timestamp);
+                Gtk.show_uri_on_window(parent, this.uri, timestamp);
         } catch (e) {
-            log('Unable to show URI ' + this.uri + ': ' + e.toString());
+            logError(e, 'Unable to show URI ' + this.uri);
         }
     },
 
@@ -647,7 +766,7 @@ const DocCommon = new Lang.Class({
         this.load(null, null, Lang.bind(this,
             function(doc, docModel, error) {
                 if (error) {
-                    log('Unable to print document ' + this.uri + ': ' + error);
+                    logError(error, 'Unable to print document ' + this.uri);
                     return;
                 }
 
@@ -658,7 +777,7 @@ const DocCommon = new Lang.Class({
 
                 printOp.connect('begin-print', Lang.bind(this,
                     function() {
-                        Application.selectionController.setSelectionMode(false);
+                        this.emit('begin-print');
                     }));
 
                 printOp.connect('done', Lang.bind(this,
@@ -705,7 +824,7 @@ const DocCommon = new Lang.Class({
 });
 Signals.addSignalMethods(DocCommon.prototype);
 
-const LocalDocument = new Lang.Class({
+var LocalDocument = new Lang.Class({
     Name: 'LocalDocument',
     Extends: DocCommon,
 
@@ -747,6 +866,7 @@ const LocalDocument = new Lang.Class({
 
     populateFromCursor: function(cursor) {
         this.parent(cursor);
+        this.uriToLoad = this.uri;
 
         if (!Application.application.gettingStartedLocation)
             return;
@@ -764,7 +884,16 @@ const LocalDocument = new Lang.Class({
     createThumbnail: function(callback) {
         GdPrivate.queue_thumbnail_job_for_file_async(this._file, Lang.bind(this,
             function(object, res) {
-                let thumbnailed = GdPrivate.queue_thumbnail_job_for_file_finish(res);
+                let thumbnailed = false;
+
+                try {
+                    thumbnailed = GdPrivate.queue_thumbnail_job_for_file_finish(res);
+                } catch (e) {
+                    /* We don't care about reporting errors here, just fail the
+                     * thumbnail.
+                     */
+                }
+
                 callback(thumbnailed);
             }));
     },
@@ -780,7 +909,12 @@ const LocalDocument = new Lang.Class({
         this.typeDescription = description;
     },
 
+    downloadImpl: function(localFile, cancellable, callback) {
+        throw(new Error('LocalDocuments need not be downloaded'));
+    },
+
     load: function(passwd, cancellable, callback) {
+        Utils.debug('Loading ' + this.__name__ + ' ' + this.id);
         this.loadLocal(passwd, cancellable, callback);
     },
 
@@ -806,7 +940,7 @@ const LocalDocument = new Lang.Class({
                 try {
                     file.trash_finish(res);
                 } catch(e) {
-                    log('Unable to trash ' + this.uri + ': ' + e.message);
+                    logError(e, 'Unable to trash ' + this.uri);
                 }
             }));
     },
@@ -865,36 +999,59 @@ const GoogleDocument = new Lang.Class({
                  }));
     },
 
-    load: function(passwd, cancellable, callback) {
+    downloadImpl: function(localFile, cancellable, callback) {
         this.createGDataEntry(cancellable, Lang.bind(this,
-            function(entry, service, exception) {
-                if (exception) {
-                    // try loading from the most recent cache, if any
-                    GdPrivate.pdf_loader_load_uri_async(this.identifier, passwd, cancellable, Lang.bind(this,
-                        function(source, res) {
-                            try {
-                                let docModel = GdPrivate.pdf_loader_load_uri_finish(res);
-                                callback(this, docModel, null);
-                            } catch (e) {
-                                // report the outmost error only
-                                callback(this, null, exception);
-                            }
-                        }));
-
+            function(entry, service, error) {
+                if (error) {
+                    callback(false, error);
                     return;
                 }
 
-                GdPrivate.pdf_loader_load_gdata_entry_async
-                    (entry, service, cancellable, Lang.bind(this,
-                        function(source, res) {
-                            try {
-                                let docModel = GdPrivate.pdf_loader_load_uri_finish(res);
-                                callback(this, docModel, null);
-                            } catch (e) {
-                                callback(this, null, e);
-                            }
-                        }));
-            }));
+                Utils.debug('Created GDataEntry for ' + this.id);
+
+                let inputStream;
+
+                try {
+                    inputStream = entry.download(service, 'pdf', cancellable);
+                } catch(e) {
+                    callback(false, e);
+                    return;
+                }
+
+                localFile.replace_async(null,
+                                        false,
+                                        Gio.FileCreateFlags.PRIVATE,
+                                        GLib.PRIORITY_DEFAULT,
+                                        cancellable,
+                                        Lang.bind(this,
+                    function(object, res) {
+                        let outputStream;
+
+                        try {
+                            outputStream = object.replace_finish(res);
+                        } catch (e) {
+                            callback(false, e);
+                            return;
+                        }
+
+                        outputStream.splice_async(inputStream,
+                                                  Gio.OutputStreamSpliceFlags.CLOSE_SOURCE |
+                                                  Gio.OutputStreamSpliceFlags.CLOSE_TARGET,
+                                                  GLib.PRIORITY_DEFAULT,
+                                                  cancellable,
+                                                  Lang.bind(this,
+                            function(object, res) {
+                                try {
+                                    object.splice_finish(res);
+                                } catch (e) {
+                                    callback(false, e);
+                                    return;
+                                }
+
+                                callback(false, null);
+                            }));
+                    }));
+            }))
     },
 
     createThumbnail: function(callback) {
@@ -916,12 +1073,10 @@ const GoogleDocument = new Lang.Class({
                                                              authorization_domain: authorizationDomain,
                                                              download_uri: uri });
 
-                let checksum = new GLib.Checksum(GLib.ChecksumType.MD5);
-                checksum.update(this.uri, -1);
-                let dirPath = GLib.build_filenamev([GLib.get_user_cache_dir(), "thumbnails", "normal"]);
+                let path = GnomeDesktop.desktop_thumbnail_path_for_uri (this.uri,
+                                                                        GnomeDesktop.DesktopThumbnailSize.NORMAL);
+                let dirPath = GLib.path_get_dirname(path);
                 GLib.mkdir_with_parents(dirPath, 448);
-                let basename = checksum.get_string() + '.png';
-                let path = GLib.build_filenamev([dirPath, basename])
 
                 let downloadFile = Gio.File.new_for_path(path);
                 downloadFile.replace_async
@@ -974,6 +1129,15 @@ const GoogleDocument = new Lang.Class({
         this.shared = cursor.get_boolean(Query.QueryColumns.SHARED);
 
         this.parent(cursor);
+
+        let localDir = GLib.build_filenamev([GLib.get_user_cache_dir(), "gnome-documents", "google"]);
+
+        let identifierHash = GLib.compute_checksum_for_string(GLib.ChecksumType.SHA1, this.identifier, -1);
+        let localFilename = identifierHash + ".pdf";
+
+        let localPath = GLib.build_filenamev([localDir, localFilename]);
+        let localFile = Gio.File.new_for_path(localPath);
+        this.uriToLoad = localFile.get_uri();
     },
 
     canEdit: function() {
@@ -994,6 +1158,8 @@ const GoogleDocument = new Lang.Class({
     }
 });
 
+const OWNCLOUD_PREFIX = 'owncloud:';
+
 const OwncloudDocument = new Lang.Class({
     Name: 'OwncloudDocument',
     Extends: DocCommon,
@@ -1013,10 +1179,34 @@ const OwncloudDocument = new Lang.Class({
             this.defaultAppName = this.defaultApp.get_name();
     },
 
+    populateFromCursor: function(cursor) {
+        this.parent(cursor);
+
+        let localDir = GLib.build_filenamev([GLib.get_user_cache_dir(), "gnome-documents", "owncloud"]);
+
+        let identifierHash = this.identifier.substring(OWNCLOUD_PREFIX.length);
+        let filenameStripped = GdPrivate.filename_strip_extension(this.filename);
+        let extension = this.filename.substring(filenameStripped.length);
+        let localFilename = identifierHash + extension;
+
+        let localPath = GLib.build_filenamev([localDir, localFilename]);
+        let localFile = Gio.File.new_for_path(localPath);
+        this.uriToLoad = localFile.get_uri();
+    },
+
     createThumbnail: function(callback) {
         GdPrivate.queue_thumbnail_job_for_file_async(this._file, Lang.bind(this,
             function(object, res) {
-                let thumbnailed = GdPrivate.queue_thumbnail_job_for_file_finish(res);
+                let thumbnailed = false;
+
+                try {
+                    thumbnailed = GdPrivate.queue_thumbnail_job_for_file_finish(res);
+                } catch (e) {
+                    /* We don't care about reporting errors here, just fail the
+                     * thumbnail.
+                     */
+                }
+
                 callback(thumbnailed);
             }));
     },
@@ -1032,8 +1222,53 @@ const OwncloudDocument = new Lang.Class({
         this.typeDescription = description;
     },
 
-    load: function(passwd, cancellable, callback) {
-        this.loadLocal(passwd, cancellable, callback);
+    downloadImpl: function(localFile, cancellable, callback) {
+        let remoteFile = Gio.File.new_for_uri(this.uri);
+        remoteFile.read_async(GLib.PRIORITY_DEFAULT, cancellable, Lang.bind(this,
+            function(object, res) {
+                let inputStream;
+
+                try {
+                    inputStream = object.read_finish(res);
+                } catch (e) {
+                    callback(false, e);
+                    return;
+                }
+
+                localFile.replace_async(null,
+                                        false,
+                                        Gio.FileCreateFlags.PRIVATE,
+                                        GLib.PRIORITY_DEFAULT,
+                                        cancellable,
+                                        Lang.bind(this,
+                    function(object, res) {
+                        let outputStream;
+
+                        try {
+                            outputStream = object.replace_finish(res);
+                        } catch (e) {
+                            callback(false, e);
+                            return;
+                        }
+
+                        outputStream.splice_async(inputStream,
+                                                  Gio.OutputStreamSpliceFlags.CLOSE_SOURCE |
+                                                  Gio.OutputStreamSpliceFlags.CLOSE_TARGET,
+                                                  GLib.PRIORITY_DEFAULT,
+                                                  cancellable,
+                                                  Lang.bind(this,
+                            function(object, res) {
+                                try {
+                                    object.splice_finish(res);
+                                } catch (e) {
+                                    callback(false, e);
+                                    return;
+                                }
+
+                                callback(false, null);
+                            }));
+                    }));
+            }));
     },
 
     canEdit: function() {
@@ -1057,6 +1292,8 @@ const OwncloudDocument = new Lang.Class({
     }
 });
 
+const SKYDRIVE_PREFIX = 'windows-live:skydrive:';
+
 const SkydriveDocument = new Lang.Class({
     Name: 'SkydriveDocument',
     Extends: DocCommon,
@@ -1071,14 +1308,27 @@ const SkydriveDocument = new Lang.Class({
         this.sourceName = _("OneDrive");
     },
 
+    populateFromCursor: function(cursor) {
+        this.parent(cursor);
+
+        let localDir = GLib.build_filenamev([GLib.get_user_cache_dir(), "gnome-documents", "skydrive"]);
+
+        let identifierHash = GLib.compute_checksum_for_string(GLib.ChecksumType.SHA1, this.identifier, -1);
+        let filenameStripped = GdPrivate.filename_strip_extension(this.filename);
+        let extension = this.filename.substring(filenameStripped.length);
+        let localFilename = identifierHash + extension;
+
+        let localPath = GLib.build_filenamev([localDir, localFilename]);
+        let localFile = Gio.File.new_for_path(localPath);
+        this.uriToLoad = localFile.get_uri();
+    },
+
     _createZpjEntry: function(cancellable, callback) {
         let source = Application.sourceManager.getItemById(this.resourceUrn);
 
         let authorizer = new Zpj.GoaAuthorizer({ goa_object: source.object });
         let service = new Zpj.Skydrive({ authorizer: authorizer });
-
-        const zpj_prefix = "windows-live:skydrive:";
-        let zpj_id = this.identifier.substring(zpj_prefix.length);
+        let zpj_id = this.identifier.substring(SKYDRIVE_PREFIX.length);
 
         service.query_info_from_id_async
             (zpj_id, cancellable,
@@ -1097,35 +1347,61 @@ const SkydriveDocument = new Lang.Class({
                  }));
     },
 
-    load: function(passwd, cancellable, callback) {
+    downloadImpl: function(localFile, cancellable, callback) {
         this._createZpjEntry(cancellable, Lang.bind(this,
-            function(entry, service, exception) {
-                if (exception) {
-                    // try loading from the most recent cache, if any
-                    GdPrivate.pdf_loader_load_uri_async(this.identifier, passwd, cancellable, Lang.bind(this,
-                        function(source, res) {
-                            try {
-                                let docModel = GdPrivate.pdf_loader_load_uri_finish(res);
-                                callback(this, docModel, null);
-                            } catch (e) {
-                                // report the outmost error only
-                                callback(this, null, exception);
-                            }
-                        }));
-
+            function(entry, service, error) {
+                if (error) {
+                    callback(false, error);
                     return;
                 }
 
-                GdPrivate.pdf_loader_load_zpj_entry_async
-                    (entry, service, cancellable, Lang.bind(this,
-                        function(source, res) {
-                            try {
-                                let docModel = GdPrivate.pdf_loader_load_zpj_entry_finish(res);
-                                callback(this, docModel, null);
-                            } catch (e) {
-                                callback(this, null, e);
-                            }
-                        }));
+                Utils.debug('Created ZpjEntry for ' + this.id);
+
+                service.download_file_to_stream_async(entry, cancellable, Lang.bind(this,
+                    function(object, res) {
+                        let inputStream;
+
+                        try {
+                            inputStream = object.download_file_to_stream_finish(res);
+                        } catch (e) {
+                            callback(false, e);
+                            return;
+                        }
+
+                        localFile.replace_async(null,
+                                                false,
+                                                Gio.FileCreateFlags.PRIVATE,
+                                                GLib.PRIORITY_DEFAULT,
+                                                cancellable,
+                                                Lang.bind(this,
+                            function(object, res) {
+                                let outputStream;
+
+                                try {
+                                    outputStream = object.replace_finish(res);
+                                } catch (e) {
+                                    callback(false, e);
+                                    return;
+                                }
+
+                                outputStream.splice_async(inputStream,
+                                                          Gio.OutputStreamSpliceFlags.CLOSE_SOURCE |
+                                                          Gio.OutputStreamSpliceFlags.CLOSE_TARGET,
+                                                          GLib.PRIORITY_DEFAULT,
+                                                          cancellable,
+                                                          Lang.bind(this,
+                                    function(object, res) {
+                                        try {
+                                            object.splice_finish(res);
+                                        } catch (e) {
+                                            callback(false, e);
+                                            return;
+                                        }
+
+                                        callback(false, null);
+                                    }));
+                            }));
+                    }));
             }));
     },
 
@@ -1164,7 +1440,7 @@ const SkydriveDocument = new Lang.Class({
     }
 });
 
-const DocumentManager = new Lang.Class({
+var DocumentManager = new Lang.Class({
     Name: 'DocumentManager',
     Extends: Manager.BaseManager,
 
@@ -1224,12 +1500,12 @@ const DocumentManager = new Lang.Class({
 
     _identifierIsOwncloud: function(identifier) {
         return (identifier &&
-                (identifier.indexOf('owncloud:') != -1));
+                (identifier.indexOf(OWNCLOUD_PREFIX) != -1));
     },
 
     _identifierIsSkydrive: function(identifier) {
         return (identifier &&
-                (identifier.indexOf('windows-live:skydrive:') != -1));
+                (identifier.indexOf(SKYDRIVE_PREFIX) != -1));
     },
 
     createDocumentFromCursor: function(cursor) {
@@ -1356,6 +1632,8 @@ const DocumentManager = new Lang.Class({
             return;
         }
 
+        logError(error, 'Unable to load document');
+
         // Translators: %s is the title of a document
         let message = _("Oops! Unable to load “%s”").format(doc.name);
         let exception = this._humanizeError(error);
@@ -1386,6 +1664,15 @@ const DocumentManager = new Lang.Class({
         Application.modeController.setWindowMode(windowMode);
     },
 
+    _loadActiveItem: function(passwd) {
+        let doc = this.getActiveItem();
+
+        this._loaderCancellable = new Gio.Cancellable();
+        this._requestPreview(doc);
+        this.emit('load-started', doc);
+        doc.load(passwd, this._loaderCancellable, Lang.bind(this, this._onDocumentLoaded));
+    },
+
     reloadActiveItem: function(passwd) {
         let doc = this.getActiveItem();
 
@@ -1398,10 +1685,7 @@ const DocumentManager = new Lang.Class({
         // cleanup any state we have for previously loaded model
         this._clearActiveDocModel();
 
-        this._loaderCancellable = new Gio.Cancellable();
-        this._requestPreview(doc);
-        this.emit('load-started', doc);
-        doc.load(passwd, this._loaderCancellable, Lang.bind(this, this._onDocumentLoaded));
+        this._loadActiveItem(passwd);
     },
 
     removeItemById: function(id) {
@@ -1457,10 +1741,7 @@ const DocumentManager = new Lang.Class({
             let recentManager = Gtk.RecentManager.get_default();
             recentManager.add_item(doc.uri);
 
-            this._loaderCancellable = new Gio.Cancellable();
-            this._requestPreview(doc);
-            this.emit('load-started', doc);
-            doc.load(null, this._loaderCancellable, Lang.bind(this, this._onDocumentLoaded));
+            this._loadActiveItem(null);
         }
 
         return retval;

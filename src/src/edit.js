@@ -28,11 +28,10 @@ const Mainloop = imports.mainloop;
 const Application = imports.application;
 const MainToolbar = imports.mainToolbar;
 const Preview = imports.preview;
-const WindowMode = imports.windowMode;
 
 const _BLANK_URI = "about:blank";
 
-const EditView = new Lang.Class({
+var EditView = new Lang.Class({
     Name: 'EditView',
     Extends: Preview.Preview,
 
@@ -77,7 +76,7 @@ const EditView = new Lang.Class({
     },
 
     createToolbar: function() {
-        return new EditToolbar();
+        return new EditToolbar(this);
     },
 
     onLoadStarted: function() {
@@ -87,6 +86,11 @@ const EditView = new Lang.Class({
     onLoadFinished: function(manager, doc) {
         if (doc.uri)
             this.getAction('view-current').enabled = true;
+    },
+
+    goBack: function() {
+        Application.documentManager.setActiveItem(null);
+        Application.modeController.goBack(2);
     },
 
     _viewCurrent: function() {
@@ -126,43 +130,24 @@ const EditView = new Lang.Class({
 
 const EditToolbar = new Lang.Class({
     Name: 'EditToolbar',
-    Extends: MainToolbar.MainToolbar,
+    Extends: Preview.PreviewToolbar,
 
-    _init: function() {
-        this.parent();
-        this.toolbar.set_show_close_button(true);
+    _init: function(preview) {
+        this.parent(preview);
 
-        // back button, on the left of the toolbar
-        let backButton = this.addBackButton();
-        backButton.connect('clicked', Lang.bind(this,
-            function() {
-                Application.documentManager.setActiveItem(null);
-                Application.modeController.goBack(2);
-            }));
-
+        // view button, on the right of the toolbar
         let viewButton = new Gtk.Button({ label: _("View"),
-                                          action_name: 'view.view-current' });
+                                          action_name: 'view.view-current',
+                                          visible: true });
         viewButton.get_style_context().add_class('suggested-action');
         this.toolbar.pack_end(viewButton);
-
-        this._setToolbarTitle();
-        this.show_all();
     },
 
     createSearchbar: function() {
+        return null;
     },
 
     handleEvent: function(event) {
         return false;
-    },
-
-    _setToolbarTitle: function() {
-        let primary = null;
-        let doc = Application.documentManager.getActiveItem();
-
-        if (doc)
-            primary = doc.name;
-
-        this.toolbar.set_title(primary);
     }
 });

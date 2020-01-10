@@ -19,8 +19,10 @@
  *
  */
 
+let LOKDocView;
+
 try {
-    const LOKDocView = imports.gi.LOKDocView;
+    LOKDocView = imports.gi.LOKDocView;
 } catch(e) {
     // LOKDocView will be undefined, and we'll
     // use this to warn when LO files can't be opened
@@ -95,7 +97,7 @@ function isOpenDocumentFormat(mimeType) {
     return false;
 }
 
-const LOKView = new Lang.Class({
+var LOKView = new Lang.Class({
     Name: 'LOKView',
     Extends: Preview.Preview,
 
@@ -128,7 +130,7 @@ const LOKView = new Lang.Class({
         sw.get_style_context().add_class('documents-scrolledwin');
 
         if (isAvailable()) {
-            this._lokview = LOKDocView.View.new(null, null, null);
+            this._lokview = LOKDocView.View.new(null, null);
             sw.add(this._lokview);
 
             this._lokview.show();
@@ -148,7 +150,7 @@ const LOKView = new Lang.Class({
         if (!isAvailable())
             return;
         this._doc = doc;
-        this._lokview.open_document(doc.uri, '{}', null, Lang.bind(this, this._onDocumentOpened));
+        this._lokview.open_document(doc.uriToLoad, '{}', null, Lang.bind(this, this._onDocumentOpened));
         this._progressBar.show();
     },
 

@@ -25,11 +25,10 @@ const Gtk = imports.gi.Gtk;
 const _ = imports.gettext.gettext;
 
 const Lang = imports.lang;
-const Utils = imports.utils;
 
 const Application = imports.application;
 
-const PresentationWindow = new Lang.Class({
+var PresentationWindow = new Lang.Class({
     Name: 'PresentationWindow',
     Extends: Gtk.Window,
 
@@ -111,9 +110,14 @@ const PresentationWindow = new Lang.Class({
     }
 });
 
-const PresentationOutputChooser = new Lang.Class({
+var PresentationOutputChooser = new Lang.Class({
     Name: 'PresentationOutputChooser',
     Extends: Gtk.Dialog,
+    Signals: {
+        'output-activated': {
+            param_types: [GnomeDesktop.RROutputInfo.$gtype]
+        }
+    },
 
     _init: function(outputs) {
         let toplevel = Application.application.get_windows()[0];
@@ -185,7 +189,7 @@ const PresentationOutputChooser = new Lang.Class({
             return;
 
         this.output = output;
-        this.emitJS('output-activated', this.output);
+        this.emit('output-activated', this.output);
         this.close();
     },
 
@@ -196,7 +200,7 @@ const PresentationOutputChooser = new Lang.Class({
     _createWindow: function() {
         this.connect('response', Lang.bind(this,
             function(widget, response) {
-                this.emitJS('output-activated', null);
+                this.emit('output-activated', null);
             }));
 
         let frame = new Gtk.Frame({ shadow_type: Gtk.ShadowType.IN });
@@ -223,9 +227,8 @@ const PresentationOutputChooser = new Lang.Class({
         contentArea.pack_start(frame, true, false, 0);
     }
 });
-Utils.addJSSignalMethods(PresentationOutputChooser.prototype);
 
-const PresentationOutputs = new Lang.Class({
+var PresentationOutputs = new Lang.Class({
     Name: 'PresentationOutputs',
 
     _init: function() {

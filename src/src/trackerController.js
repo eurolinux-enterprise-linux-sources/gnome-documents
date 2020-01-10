@@ -37,7 +37,7 @@ const QueryType = {
     UPDATE_BLANK: 2
 };
 
-const TrackerConnectionQueue = new Lang.Class({
+var TrackerConnectionQueue = new Lang.Class({
     Name: 'TrackerConnectionQueue',
 
     _init: function() {
@@ -234,7 +234,8 @@ const TrackerController = new Lang.Class({
     },
 
     _refreshInternal: function(flags) {
-        this._isStarted = true;
+        if (!this._isStarted)
+            throw(new Error('!this._isStarted'));
 
         if (flags & RefreshFlags.RESET_OFFSET)
             this._offsetController.resetOffset();
@@ -283,6 +284,10 @@ const TrackerController = new Lang.Class({
             return;
 
         this.sortBy = sortBy;
+
+        if (!this._isStarted)
+            return;
+
         this._refreshInternal(RefreshFlags.RESET_OFFSET);
     },
 
@@ -290,12 +295,13 @@ const TrackerController = new Lang.Class({
         if (this._isStarted)
             return;
 
+        this._isStarted = true;
         this._refreshInternal(RefreshFlags.NONE);
     }
 });
 Signals.addSignalMethods(TrackerController.prototype);
 
-const TrackerCollectionsController = new Lang.Class({
+var TrackerCollectionsController = new Lang.Class({
     Name: 'TrackerCollectionsController',
     Extends: TrackerController,
 
@@ -329,7 +335,7 @@ const TrackerCollectionsController = new Lang.Class({
     },
 });
 
-const TrackerDocumentsController = new Lang.Class({
+var TrackerDocumentsController = new Lang.Class({
     Name: 'TrackerDocumentsController',
     Extends: TrackerController,
 
@@ -348,7 +354,7 @@ const TrackerDocumentsController = new Lang.Class({
     },
 });
 
-const TrackerSearchController = new Lang.Class({
+var TrackerSearchController = new Lang.Class({
     Name: 'TrackerSearchController',
     Extends: TrackerController,
 

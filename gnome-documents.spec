@@ -1,60 +1,60 @@
 %define evince_version 3.13.3
-%define gjs_version 1.50.2-3
-%define gnome_online_miners_version 3.22.0-2
-%define gtk3_version 3.19.1
+%define gettext_version 0.19.8
+%define gjs_version 1.48.0
+%define gtk3_version 3.22.15
+%define tracker_version 0.17.3
+%define libgepub_version 0.6
 
 Name:           gnome-documents
-Version:        3.22.2
-Release:        8%{?dist}
+Version:        3.28.2
+Release:        1%{?dist}
 Summary:        A document manager application for GNOME
 
 License:        GPLv2+
 URL:            https://wiki.gnome.org/Apps/Documents
-Source0:        https://download.gnome.org/sources/%{name}/3.22/%{name}-%{version}.tar.xz
+Source0:        https://download.gnome.org/sources/%{name}/3.28/%{name}-%{version}.tar.xz
+
+# Fix the build with Python 2
+Patch1:         gnome-documents-python2.patch
 
 # https://bugzilla.redhat.com/show_bug.cgi?id=985887
-# https://bugzilla.redhat.com/show_bug.cgi?id=1436566
-# https://bugzilla.redhat.com/show_bug.cgi?id=1436682
-# https://bugzilla.redhat.com/show_bug.cgi?id=1438362
 # https://bugzilla.redhat.com/show_bug.cgi?id=1444437
-Patch0:         gnome-documents-skydrive-printing-and-lok-fixes.patch
+Patch2:         gnome-documents-skydrive-and-lok-fixes.patch
 
-# https://bugzilla.redhat.com/show_bug.cgi?id=1517770
-# https://bugzilla.redhat.com/show_bug.cgi?id=1517704
-Patch1:         gnome-documents-new-gjs-gtk.patch
+# https://bugzilla.redhat.com/show_bug.cgi?id=1569793
+Patch3:         gnome-documents-tracker.patch
 
-# https://bugzilla.redhat.com/show_bug.cgi?id=1517770
-Patch2:         gnome-documents-getting-started.patch
+# https://bugzilla.redhat.com/show_bug.cgi?id=1611565
+Patch4:         gnome-documents-dont-attempt-to-load-collections.patch
 
-BuildRequires:  autoconf automake libtool
-BuildRequires:  gnome-common
-BuildRequires:  yelp-tools
 BuildRequires:  pkgconfig(evince-document-3.0) >= %{evince_version}
 BuildRequires:  pkgconfig(evince-view-3.0) >= %{evince_version}
 BuildRequires:  pkgconfig(webkit2gtk-4.0)
 BuildRequires:  pkgconfig(gtk+-3.0) >= %{gtk3_version}
 BuildRequires:  pkgconfig(gjs-1.0) >= %{gjs_version}
-BuildRequires:  pkgconfig(tracker-control-1.0) >= 0.17.0
-BuildRequires:  pkgconfig(tracker-sparql-1.0) >= 0.17.0
+BuildRequires:  pkgconfig(tracker-control-1.0) >= %{tracker_version}
+BuildRequires:  pkgconfig(tracker-sparql-1.0) >= %{tracker_version}
 BuildRequires:  pkgconfig(goa-1.0)
 BuildRequires:  pkgconfig(gnome-desktop-3.0)
 BuildRequires:  pkgconfig(libgdata)
-BuildRequires:  pkgconfig(libgepub)
+BuildRequires:  pkgconfig(libgepub-0.6) >= %{libgepub_version}
 BuildRequires:  pkgconfig(zapojit-0.0)
 BuildRequires:  pkgconfig(libsoup-2.4)
-BuildRequires:  intltool
 BuildRequires:  liboauth-devel
 BuildRequires:  desktop-file-utils
+BuildRequires:  gettext >= %{gettext_version}
 BuildRequires:  itstool
 BuildRequires:  inkscape
+BuildRequires:  meson
 BuildRequires:  poppler-utils
 BuildRequires:  docbook-style-xsl
 
 Requires:       evince-libs%{?_isa} >= %{evince_version}
-Requires:       gjs >= %{gjs_version}
+Requires:       gettext%{?isa} >= %{gettext_version}
+Requires:       gjs%{?_isa} >= %{gjs_version}
 Requires:       gtk3%{?_isa} >= %{gtk3_version}
-Requires:       gnome-online-miners >= %{gnome_online_miners_version}
-Requires:       libgepub%{?_isa}
+Requires:       gnome-online-miners
+Requires:       libgepub%{?_isa} >= %{libgepub_version}
 Requires:       libreofficekit
 Requires:       %{name}-libs%{?_isa} = %{version}-%{release}
 
@@ -70,18 +70,17 @@ Summary: Common libraries and data files for %{name}
 
 %prep
 %setup -q
-%patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
+%patch4 -p1
 
 %build
-autoreconf --force --install
-%configure --disable-static --enable-getting-started
-make %{?_smp_mflags}
+%meson -Dgetting_started=true
+%meson_build
 
 %install
-%make_install
-find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
+%meson_install
 
 # Disable gnome-books
 rm -f $RPM_BUILD_ROOT/%{_bindir}/gnome-books
@@ -91,10 +90,12 @@ rm -f $RPM_BUILD_ROOT/%{_datadir}/applications/org.gnome.Books.desktop
 rm -f $RPM_BUILD_ROOT/%{_datadir}/icons/hicolor/*/apps/org.gnome.Books.png
 rm -f $RPM_BUILD_ROOT/%{_datadir}/icons/hicolor/scalable/apps/org.gnome.Books-symbolic.svg
 rm -f $RPM_BUILD_ROOT/%{_mandir}/man1/gnome-books.1*
-rm -f $RPM_BUILD_ROOT/%{_datadir}/appdata/org.gnome.Books.appdata.xml
+rm -f $RPM_BUILD_ROOT/%{_datadir}/metainfo/org.gnome.Books.appdata.xml
 
-desktop-file-validate $RPM_BUILD_ROOT/%{_datadir}/applications/org.gnome.Documents.desktop
 %find_lang %{name} --with-gnome
+
+%check
+desktop-file-validate $RPM_BUILD_ROOT%{_datadir}/applications/org.gnome.Documents.desktop
 
 %post
 /sbin/ldconfig
@@ -116,7 +117,6 @@ gtk-update-icon-cache %{_datadir}/icons/hicolor >&/dev/null || :
 %license COPYING
 %doc README AUTHORS NEWS TODO
 %{_bindir}/%{name}
-%{_datadir}/appdata/org.gnome.Documents.appdata.xml
 %{_datadir}/dbus-1/services/org.gnome.Documents.service
 %{_datadir}/glib-2.0/schemas/org.gnome.documents.gschema.xml
 %{_datadir}/applications/org.gnome.Documents.desktop
@@ -127,6 +127,7 @@ gtk-update-icon-cache %{_datadir}/icons/hicolor >&/dev/null || :
 %dir %{_datadir}/gnome-shell
 %dir %{_datadir}/gnome-shell/search-providers
 %{_datadir}/gnome-shell/search-providers/org.gnome.Documents.search-provider.ini
+%{_datadir}/metainfo/org.gnome.Documents.appdata.xml
 
 %files libs
 %{_datadir}/%{name}
@@ -134,6 +135,22 @@ gtk-update-icon-cache %{_datadir}/icons/hicolor >&/dev/null || :
 %{_libdir}/gnome-documents/
 
 %changelog
+* Fri Aug 24 2018 Debarshi Ray <rishi@fedoraproject.org> - 3.28.2-1
+- Update to 3.28.2
+- Rebased downstream patches
+- Fix crash on right-click on local collection
+  Resolves: #1611565
+
+* Tue Aug 14 2018 Debarshi Ray <rishi@fedoraproject.org> - 3.28.1-2
+- Stop the garbage collector from complaining during shutdown
+  Resolves: #1608936
+
+* Wed Jun 06 2018 Debarshi Ray <rishi@fedoraproject.org> - 3.28.1-1
+- Update to 3.28.1
+- Rebased downstream patches
+- Revert to using Python 2 and Tracker 1.0
+- Resolves: #1568171
+
 * Tue Dec 12 2017 Debarshi Ray <rishi@fedoraproject.org> - 3.22.2-8
 - Initialize the getting started PDF only when presenting a UI, and before any
   SPARQL has been submitted

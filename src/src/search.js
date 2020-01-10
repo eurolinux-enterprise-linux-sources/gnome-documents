@@ -99,7 +99,7 @@ const SearchType = new Lang.Class({
     }
 });
 
-const SearchTypeStock = {
+var SearchTypeStock = {
     ALL: 'all',
     COLLECTIONS: 'collections',
     PDF: 'pdf',
@@ -145,7 +145,7 @@ const SearchTypeManager = new Lang.Class({
                                         where: '?urn rdf:type nfo:EBook .' }));
           this.addItem(new SearchType({ id: SearchTypeStock.COMICS,
                                         name: _("Comics"),
-                                        filter: '(nie:mimeType(?urn) IN (\"application/x-cbr\", \"application/x-cbz\", \"application/x-cbt\", \"application/x-cb7\"))',
+                                        filter: '(nie:mimeType(?urn) IN (\"application/x-cbr\", \"application/x-cbz\", \"application/vnd.comicbook+zip\", \"application/x-cbt\", \"application/x-cb7\"))',
                                         where: '?urn rdf:type nfo:EBook .' }));
         } else {
             this.addItem(new SearchType({ id: SearchTypeStock.PRESENTATIONS,
@@ -201,7 +201,7 @@ const SearchTypeManager = new Lang.Class({
     }
 });
 
-const SearchMatchStock = {
+var SearchMatchStock = {
     ALL: 'all',
     TITLE: 'title',
     AUTHOR: 'author',
@@ -316,7 +316,7 @@ const SearchMatchManager = new Lang.Class({
     }
 });
 
-const SearchSourceStock = {
+var SearchSourceStock = {
     ALL: 'all',
     LOCAL: 'local'
 };
@@ -473,6 +473,7 @@ const SourceManager = new Lang.Class({
 
     _refreshGoaAccounts: function() {
         let newItems = {};
+        let newSources = new Map();
         let accounts = Application.goaClient.get_accounts();
 
         accounts.forEach(Lang.bind(this,
@@ -484,8 +485,30 @@ const SourceManager = new Lang.Class({
                     return;
 
                 let source = new Source({ object: object });
+
+                let otherSources = newSources.get(source.name);
+                if (!otherSources)
+                    otherSources = [];
+
+                otherSources.push(source);
+                newSources.set(source.name, otherSources);
                 newItems[source.id] = source;
             }));
+
+        // Ensure an unique name for GOA accounts from the same provider
+        newSources.forEach(function(sources, name) {
+            if (sources.length == 1)
+                return;
+
+            sources.forEach(function(source) {
+                let account = source.object.get_account();
+                // Translators: the first %s is an online account provider name,
+                // e.g. "Google". The second %s is the identity used to log in,
+                // e.g. "foo@gmail.com".
+                source.name = _("%s (%s)").format(account.provider_name,
+                                                  account.presentation_identity);
+            });
+        });
 
         this.processNewItems(newItems);
     },
@@ -556,7 +579,7 @@ const SourceManager = new Lang.Class({
     }
 });
 
-const OFFSET_STEP = 50;
+var OFFSET_STEP = 50;
 
 const OffsetController = new Lang.Class({
     Name: 'OffsetController',
@@ -583,7 +606,7 @@ const OffsetController = new Lang.Class({
                     try {
                         cursor = object.query_finish(res);
                     } catch (e) {
-                        log('Unable to execute count query: ' + e.toString());
+                        logError(e, 'Unable to execute count query');
                         return;
                     }
 
@@ -628,7 +651,7 @@ const OffsetController = new Lang.Class({
 });
 Signals.addSignalMethods(OffsetController.prototype);
 
-const OffsetCollectionsController = new Lang.Class({
+var OffsetCollectionsController = new Lang.Class({
     Name: 'OffsetCollectionsController',
     Extends: OffsetController,
 
@@ -649,7 +672,7 @@ const OffsetCollectionsController = new Lang.Class({
     }
 });
 
-const OffsetDocumentsController = new Lang.Class({
+var OffsetDocumentsController = new Lang.Class({
     Name: 'OffsetDocumentsController',
     Extends: OffsetController,
 
@@ -662,7 +685,7 @@ const OffsetDocumentsController = new Lang.Class({
     }
 });
 
-const OffsetSearchController = new Lang.Class({
+var OffsetSearchController = new Lang.Class({
     Name: 'OffsetSearchController',
     Extends: OffsetController,
 

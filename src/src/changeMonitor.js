@@ -43,7 +43,7 @@ function TrackerResourcesService() {
                                             '/org/freedesktop/Tracker1/Resources');
 }
 
-const ChangeEventType = {
+var ChangeEventType = {
     CHANGED: 0,
     CREATED: 1,
     DELETED: 2
@@ -84,7 +84,7 @@ const ChangeEvent = new Lang.Class({
 const CHANGE_MONITOR_TIMEOUT = 500; // msecs
 const CHANGE_MONITOR_MAX_ITEMS = 500; // items
 
-const TrackerChangeMonitor = new Lang.Class({
+var TrackerChangeMonitor = new Lang.Class({
     Name: 'TrackerChangeMonitor',
 
     _init: function() {
@@ -151,7 +151,7 @@ const TrackerChangeMonitor = new Lang.Class({
                         try {
                             valid = cursor.next_finish(res);
                         } catch(e) {
-                            log('Unable to resolve item URNs for graph changes ' + e.message);
+                            logError(e, 'Unable to resolve item URNs for graph changes');
                         }
 
                         if (valid) {

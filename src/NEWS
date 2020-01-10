@@ -1,16 +1,98 @@
-3.22.2 - "Worthington 1000"
-===========================
+3.28.2 - "Diogenes"
+===================
 
-- Use LOKDocView for pre-OOXML MS Office formats (Pranav Kant)
-- Fix scrubbar preview positioning under Wayland
-- Reload the active item when viewing edits
+- Insert the getting started PDF only when showing a window
+- Be nice to the garbage collector during shutdown
 
-3.22.1 - "Saint Alicia"
+3.28.1 - "Magadha"
+==================
+
+- Avoid premature queries during startup
+- Translation updates
+
+3.28.0 - "La Corrida"
+=====================
+
+- Make the Meson build require libgepub-0.6 (Iñigo Martínez)
+- Translation updates
+
+3.27.92 - "Pink Cadillac"
+=========================
+
+- Port to Meson (Iñigo Martínez)
+- Use 'var' for symbols that are exported
+- Use the standard dialect of String.prototype.replace
+- Explicitly specify the Gepub API version
+- Vertically centre text in the list view
+- Translation updates
+
+3.26.0 - "For Amateurs"
 =======================
 
-- Don't steal space keypress in preview
-- Only add list renderers when view type is notified
 - Translation updates
+
+3.25.91 - "Tasov"
+=================
+
+- Modernize the Autotools build and move away from Intltool
+- Translation updates
+
+3.25.90 - "Roman Square"
+========================
+
+- Use Gepub 0.5 (Jeremy Bicha)
+- Use Tracker 2.0 (Jeremy Bicha)
+- Use 'var' for classes that are exported (Jeremy Bicha & Cosimo Cecchi)
+- Translation updates
+
+3.25.4 - "Dentists"
+===================
+
+- Use Tracker 2.0 (Carlos Garnacho)
+- Translation updates
+
+3.25.3 - "53"
+=============
+
+- Show more info in epub preview, like number of chapters (Daniel Garcia)
+- Restore the accelerators for going back
+- Exit selection mode only after printing has begun
+- Use GtkRevealers for faders instead of Tweener
+- Enable printing only for documents that support it
+- Avoid CRITICALs if a primary instance is already present
+- Translation updates
+
+3.25.1 - "Le Zanzibar"
+======================
+
+- Use LOKDocView for pre-OOXML MS Office formats (Pranav Kant)
+- Unbreak opening in external application
+- Fix regression that prevented comics from being previewed
+- Make sure that load jobs are cancelled
+- Fix double menus in fullscreened evince view
+- Support fullscreening the e-pub view
+- Distinguish multiple online sources from the same provider
+- Don't leak the URI when thumbnailing
+- Unbreak previews of LOKDocView-supported documents from OneDrive
+- Unbreak caching of LOKDocView-supported documents from ownCloud
+- Support previews of encrypted PDFs from Google
+- Pass the right number of arguments to LOKDocView.View.new
+- Translation updates
+
+3.24.0 - "Must be the V"
+========================
+
+- Translation updates
+
+3.23.91 - "White Moth"
+======================
+
+- Port user interactions and keybindings to GAction
+- Update theming for collection icons
+- Rewrite fullscreen controller code
+- Fix scrubbar preview positioning under Wayland
+- Stop using GdNotification
+- Add support for IANA-registered comicbook mime types
 
 3.22.0
 ==================

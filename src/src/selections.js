@@ -61,7 +61,7 @@ const FetchCollectionsJob = new Lang.Class({
                     cursor = object.query_finish(res);
                     cursor.next_async(null, Lang.bind(this, this._onCursorNext));
                 } catch (e) {
-                    log('Unable to run FetchCollectionsJob: ' + e.message);
+                    logError(e, 'Unable to run FetchCollectionsJob');
                     this._emitCallback();
                 }
             }));
@@ -73,7 +73,7 @@ const FetchCollectionsJob = new Lang.Class({
         try {
             valid = cursor.next_finish(res);
         } catch (e) {
-            log('Unable to read results of FetchCollectionsJob: ' + e.message);
+            logError(e, 'Unable to read results of FetchCollectionsJob');
         }
 
         if (!valid) {
@@ -214,7 +214,7 @@ const UpdateMtimeJob = new Lang.Class({
                 try {
                     object.update_finish(res);
                 } catch (e) {
-                    log('Unable to run UpdateMtimeJob: ' + e.message);
+                    logError(e, 'Unable to run UpdateMtimeJob');
                 }
 
                 if (this._callback)
@@ -252,7 +252,7 @@ const SetCollectionForSelectionJob = new Lang.Class({
                         try {
                             object.update_finish(res);
                         } catch (e) {
-                            log('Unable to run SetCollectionForSelectionJob: ' + e.message);
+                            logError(e, 'Unable to run SetCollectionForSelectionJob');
                         }
 
                         this._jobCollector();
@@ -294,7 +294,7 @@ const CreateCollectionJob = new Lang.Class({
                 try {
                     variant = object.update_blank_finish(res); // variant is aaa{ss}
                 } catch (e) {
-                    log('Unable to run CreateCollectionJob: ' + e.message);
+                    logError(e, 'Unable to run CreateCollectionJob');
                 }
 
                 variant = variant.get_child_value(0); // variant is now aa{ss}
@@ -793,12 +793,11 @@ const OrganizeCollectionDialog = new Lang.Class({
     }
 });
 
-const SelectionController = new Lang.Class({
+var SelectionController = new Lang.Class({
     Name: 'SelectionController',
 
     _init: function() {
         this._selection = [];
-        this._selectionMode = false;
 
         Application.documentManager.connect('item-removed',
             Lang.bind(this, this._onDocumentRemoved));
@@ -840,25 +839,13 @@ const SelectionController = new Lang.Class({
             return;
 
         this._isFrozen = freeze;
-    },
-
-    setSelectionMode: function(setting) {
-        if (this._selectionMode == setting)
-            return;
-
-        this._selectionMode = setting;
-        this.emit('selection-mode-changed', this._selectionMode);
-    },
-
-    getSelectionMode: function() {
-        return this._selectionMode;
     }
 });
 Signals.addSignalMethods(SelectionController.prototype);
 
 const _SELECTION_TOOLBAR_DEFAULT_WIDTH = 500;
 
-const SelectionToolbar = new Lang.Class({
+var SelectionToolbar = new Lang.Class({
     Name: 'SelectionToolbar',
     Extends: Gtk.ActionBar,
     Template: 'resource:///org/gnome/Documents/ui/selection-toolbar.ui',
@@ -869,12 +856,15 @@ const SelectionToolbar = new Lang.Class({
                         'toolbarProperties',
                         'toolbarCollection' ],
 
-    _init: function() {
+    _init: function(overview) {
+        this._docToPrint = null;
+        this._docBeginPrintId = 0;
         this._itemListeners = {};
         this._insideRefresh = false;
 
         this.parent();
 
+        this._selectionModeAction = overview.getAction('selection-mode');
 
         this._toolbarOpen.connect('clicked', Lang.bind(this, this._onToolbarOpen));
         this._toolbarPrint.connect('clicked', Lang.bind(this, this._onToolbarPrint));
@@ -892,10 +882,27 @@ const SelectionToolbar = new Lang.Class({
         Application.documentManager.connect('active-collection-changed',
             Lang.bind(this, this._updateCollectionsButton));
 
-        Application.selectionController.connect('selection-mode-changed',
-            Lang.bind(this, this._onSelectionModeChanged));
         Application.selectionController.connect('selection-changed',
             Lang.bind(this, this._onSelectionChanged));
+        this._onSelectionChanged();
+
+        this.connect('destroy', Lang.bind(this,
+            function() {
+                this._disconnectDocToPrint();
+            }));
+    },
+
+    vfunc_hide: function() {
+        this._disconnectDocToPrint();
+        this.parent();
+    },
+
+    _disconnectDocToPrint: function() {
+        if (this._docToPrint != null && this._docBeginPrintId != 0) {
+            this._docToPrint.disconnect(this._docBeginPrintId);
+            this._docToPrint = null;
+            this._docBeginPrintId = 0;
+        }
     },
 
     _updateCollectionsButton: function() {
@@ -907,22 +914,11 @@ const SelectionToolbar = new Lang.Class({
             this._toolbarCollection.show();
     },
 
-    _onSelectionModeChanged: function(controller, mode) {
-        if (mode)
-            this._onSelectionChanged();
-        else
-            this.hide();
-    },
-
     _onSelectionChanged: function() {
-        if (!Application.selectionController.getSelectionMode())
-            return;
-
         let selection = Application.selectionController.getSelection();
         this._setItemListeners(selection);
 
         this._setItemVisibility();
-        this.show();
     },
 
     _setItemListeners: function(selection) {
@@ -946,7 +942,7 @@ const SelectionToolbar = new Lang.Class({
         let hasSelection = (selection.length > 0);
 
         let showTrash = hasSelection;
-        let showPrint = hasSelection;
+        let showPrint = false;
         let showProperties = hasSelection;
         let showOpen = hasSelection;
         let showShare = hasSelection;
@@ -967,15 +963,21 @@ const SelectionToolbar = new Lang.Class({
                     showShare = false;
 
                 showTrash &= doc.canTrash();
-                showPrint &= !doc.collection;
             }));
 
         showOpen = (apps.length > 0);
 
-        if (selection.length > 1) {
-            showPrint = false;
-            showProperties = false;
+        if (selection.length == 1) {
+            let doc = Application.documentManager.getItemById(selection[0]);
+            doc.load(null, null, Lang.bind(this,
+                function(doc, docModel, error) {
+                    showPrint = doc.canPrint(docModel);
+                    this._toolbarPrint.set_sensitive(showPrint);
+                }));
         }
+
+        if (selection.length > 1)
+            showProperties = false;
 
         let openLabel = null;
         if (apps.length == 1) {
@@ -1001,23 +1003,26 @@ const SelectionToolbar = new Lang.Class({
     _onToolbarCollection: function() {
         let toplevel = this.get_toplevel();
         if (!toplevel.is_toplevel())
-            return;
+            throw(new Error('Code should not be reached'));
 
         let dialog = new OrganizeCollectionDialog(toplevel);
-        dialog.connect('destroy', Lang.bind(this,
-            function() {
-                Application.selectionController.setSelectionMode(false);
-            }));
+        dialog.connect('destroy', Lang.bind(this, function() {
+            this._selectionModeAction.change_state(GLib.Variant.new('b', false));
+        }));
     },
 
     _onToolbarOpen: function(widget) {
         let selection = Application.selectionController.getSelection();
-        Application.selectionController.setSelectionMode(false);
+        this._selectionModeAction.change_state(GLib.Variant.new('b', false));
 
         selection.forEach(Lang.bind(this,
             function(urn) {
                 let doc = Application.documentManager.getItemById(urn);
-                doc.open(widget.get_screen(), Gtk.get_current_event_time());
+                let toplevel = this.get_toplevel();
+                if (!toplevel.is_toplevel())
+                    throw(new Error('Code should not be reached'));
+
+                doc.open(toplevel, Gtk.get_current_event_time());
             }));
     },
 
@@ -1039,7 +1044,7 @@ const SelectionToolbar = new Lang.Class({
             }));
 
         let deleteNotification = new Notifications.DeleteNotification(docs);
-        Application.selectionController.setSelectionMode(false);
+        this._selectionModeAction.change_state(GLib.Variant.new('b', false));
     },
 
     _onToolbarProperties: function(widget) {
@@ -1049,7 +1054,7 @@ const SelectionToolbar = new Lang.Class({
         dialog.connect('response', Lang.bind(this,
             function(widget, response) {
                 dialog.destroy();
-                Application.selectionController.setSelectionMode(false);
+                this._selectionModeAction.change_state(GLib.Variant.new('b', false));
             }));
     },
 
@@ -1059,7 +1064,7 @@ const SelectionToolbar = new Lang.Class({
        dialog.connect('response', Lang.bind(this,
            function(widget, response) {
                dialog.destroy();
-               Application.selectionController.setSelectionMode(false);
+               this._selectionModeAction.change_state(GLib.Variant.new('b', false));
            }));
     },
 
@@ -1069,7 +1074,14 @@ const SelectionToolbar = new Lang.Class({
         if (selection.length != 1)
             return;
 
-        let doc = Application.documentManager.getItemById(selection[0]);
-        doc.print(this.get_toplevel());
+        this._disconnectDocToPrint();
+
+        this._docToPrint = Application.documentManager.getItemById(selection[0]);
+        this._docBeginPrintId = this._docToPrint.connect('begin-print', Lang.bind(this,
+            function(doc) {
+                this._selectionModeAction.change_state(GLib.Variant.new('b', false));
+            }));
+
+        this._docToPrint.print(this.get_toplevel());
     },
 });

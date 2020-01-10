@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Copyright 2013 Red Hat, Inc. -->
-<application>
-  <id type="desktop">org.gnome.Documents.desktop</id>
+<component type="desktop">
+  <id>org.gnome.Documents.desktop</id>
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>GPL-2.0+</project_license>
-  <_name>Documents</_name>
-  <_summary>A document manager application for GNOME</_summary>
+  <name>Documents</name>
+  <summary>A document manager application for GNOME</summary>
   <description>
-    <_p>
+    <p>
       A simple application to access, organize and share your documents on
       GNOME. It is meant to be a simple and elegant replacement for using a
       file manager to deal with documents. Seamless cloud integration is
       offered through GNOME Online Accounts.
-    </_p>
-    <_p>It lets you:</_p>
+    </p>
+    <p>It lets you:</p>
     <ul>
-      <_li>View recent local and online documents</_li>
-      <_li>Access your Google, ownCloud or OneDrive content</_li>
-      <_li>Search through documents</_li>
-      <_li>See new documents shared by friends</_li>
-      <_li>View documents fullscreen</_li>
-      <_li>Print documents</_li>
-      <_li>Select favorites</_li>
-      <_li>Allow opening full featured editor for non-trivial changes</_li>
+      <li>View recent local and online documents</li>
+      <li>Access your Google, ownCloud or OneDrive content</li>
+      <li>Search through documents</li>
+      <li>See new documents shared by friends</li>
+      <li>View documents fullscreen</li>
+      <li>Print documents</li>
+      <li>Select favorites</li>
+      <li>Allow opening full featured editor for non-trivial changes</li>
     </ul>
   </description>
   <kudos>
@@ -32,8 +32,11 @@
     <kudo>SearchProvider</kudo>
     <kudo>UserDocs</kudo>
   </kudos>
+  <url type="bugtracker">https://bugzilla.gnome.org/enter_bug.cgi?product=gnome-documents</url>
+  <url type="donation">http://www.gnome.org/friends</url>
   <url type="homepage">https://wiki.gnome.org/Apps/Documents</url>
-  <updatecontact>debarshir_at_gnome.org</updatecontact>
+  <url type="translate">https://wiki.gnome.org/TranslationProject</url>
+  <developer_name>The GNOME Project</developer_name>
   <screenshots>
     <screenshot type="default">
       <image type="source">https://git.gnome.org/browse/gnome-documents/plain/data/screenshots/gnome-documents-1.png</image>
@@ -46,5 +49,6 @@
     </screenshot>
   </screenshots>
   <project_group>GNOME</project_group>
+  <update_contact>debarshir_at_gnome.org</update_contact>
   <translation type="gettext">gnome-documents</translation>
-</application>
+</component>

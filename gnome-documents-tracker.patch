@@ -1,0 +1,87 @@
+From bb0927856f1b5afac23f8658ff439cd37a1fe8e5 Mon Sep 17 00:00:00 2001
+From: Debarshi Ray <debarshir@gnome.org>
+Date: Thu, 7 Jun 2018 11:00:19 +0200
+Subject: [PATCH] Revert to using Tracker 1.0.x
+
+RHEL 7.6 doesn't have Tracker 2.0.x.
+
+https://bugzilla.redhat.com/show_bug.cgi?id=1569793
+---
+ configure.ac       | 8 ++++----
+ meson.build        | 4 ++--
+ src/application.js | 2 +-
+ src/main.js        | 4 ++--
+ 4 files changed, 9 insertions(+), 9 deletions(-)
+
+diff --git a/configure.ac b/configure.ac
+index 8f2004b6f9fe..f66d372ca849 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -92,8 +92,8 @@ PKG_CHECK_MODULES(DOCUMENTS,
+                   gtk+-3.0 >= $GTK_MIN_VERSION
+                   libsoup-2.4 >= $SOUP_MIN_VERSION
+                   gnome-desktop-3.0
+-                  tracker-control-2.0 >= $TRACKER_MIN_VERSION
+-                  tracker-sparql-2.0 >= $TRACKER_MIN_VERSION)
++                  tracker-control-1.0 >= $TRACKER_MIN_VERSION
++                  tracker-sparql-1.0 >= $TRACKER_MIN_VERSION)
+ 
+ # Although GTK+ 3.10 includes hi-dpi functionality, it does not require a cairo with
+ # cairo_surface_set_device_scale(), which we also need if we're to support hi-dpi,
+@@ -126,8 +126,8 @@ AX_CHECK_GIRS_GJS([GObject], [2.0])
+ AX_CHECK_GIR_SYMBOLS_GJS([Gtk], [3.0], [ShortcutsWindow ShortcutsSection
+   ShortcutsGroup ShortcutsShortcut])
+ AX_CHECK_GIRS_GJS([Pango], [1.0])
+-AX_CHECK_GIRS_GJS([Tracker], [2.0])
+-AX_CHECK_GIRS_GJS([TrackerControl], [2.0])
++AX_CHECK_GIRS_GJS([Tracker], [1.0])
++AX_CHECK_GIRS_GJS([TrackerControl], [1.0])
+ AX_CHECK_GIRS_GJS([WebKit2], [4.0])
+ AX_CHECK_GIRS_GJS([Zpj], [0.0])
+ AX_CHECK_GIRS_GJS([Gepub], [0.6])
+diff --git a/meson.build b/meson.build
+index 5447fa980687..8e2b1043e21d 100644
+--- a/meson.build
++++ b/meson.build
+@@ -60,8 +60,8 @@ documents_deps = [
+   dependency('gobject-introspection-1.0', version: '>= 1.31.6'),
+   dependency('gtk+-3.0', version: '>= 3.22.15'),
+   dependency('libsoup-2.4', version: '>= 2.41.3'),
+-  dependency('tracker-control-2.0', version: tracker_req_version),
+-  dependency('tracker-sparql-2.0', version: tracker_req_version),
++  dependency('tracker-control-1.0', version: tracker_req_version),
++  dependency('tracker-sparql-1.0', version: tracker_req_version),
+   dependency('webkit2gtk-4.0', version: '>= 2.6.0'),
+   cc.find_library('m')
+ ]
+diff --git a/src/application.js b/src/application.js
+index e3b286cb4240..136afa03f022 100644
+--- a/src/application.js
++++ b/src/application.js
+@@ -150,7 +150,7 @@ var Application = new Lang.Class({
+             this.gettingStartedLocation = files[i].get_parent();
+ 
+             try {
+-                manager.index_file(files[i], null);
++                manager.index_file(files[i]);
+             } catch (e) {
+                 logError(e, 'Error indexing the getting started PDF');
+             }
+diff --git a/src/main.js b/src/main.js
+index 2aceb54e063c..18cd4fa8d02a 100644
+--- a/src/main.js
++++ b/src/main.js
+@@ -34,8 +34,8 @@ pkg.require({ 'EvinceDocument': '3.0',
+               'Goa': '1.0',
+               'Gtk': '3.0',
+               'GObject': '2.0',
+-              'Tracker': '2.0',
+-              'TrackerControl': '2.0',
++              'Tracker': '1.0',
++              'TrackerControl': '1.0',
+               'WebKit2': '4.0' });
+ 
+ const Application = imports.application;
+-- 
+2.14.4
+

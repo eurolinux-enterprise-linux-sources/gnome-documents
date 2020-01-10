@@ -1,6 +1,6 @@
-ACLOCAL_AMFLAGS = -I m4 -I libgd ${ACLOCAL_FLAGS}
+ACLOCAL_AMFLAGS = -I m4 -I subprojects/libgd ${ACLOCAL_FLAGS}
 
-SUBDIRS = help libgd src data po
+SUBDIRS = help subprojects/libgd src data po
 if BUILD_DOCUMENTATION
 SUBDIRS += man
 endif
@@ -21,7 +21,11 @@ DISTCHECK_CONFIGURE_FLAGS = --enable-getting-started
 EXTRA_DIST = \
     autogen.sh \
     COPYING \
-    NEWS
+    NEWS \
+    meson.build \
+    meson_options.txt \
+    meson_post_install.py \
+    po/meson.build
 
 stale-files-clean-local:
 	-$(RM) $(abs_top_builddir)/*.la $(abs_top_builddir)/*.gir $(abs_top_builddir)/*.typelib

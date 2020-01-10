@@ -33,12 +33,12 @@ const Query = imports.query;
 const TrackerUtils = imports.trackerUtils;
 const Utils = imports.utils;
 
-let documentManager = null;
-let queryBuilder = null;
-let searchMatchManager = null;
-let searchTypeManager = null;
-let searchController = null;
-let sourceManager = null;
+var documentManager = null;
+var queryBuilder = null;
+var searchMatchManager = null;
+var searchTypeManager = null;
+var searchController = null;
+var sourceManager = null;
 
 const SEARCH_PROVIDER_IFACE = 'org.gnome.Shell.SearchProvider2';
 const SEARCH_PROVIDER_PATH  = '/org/gnome/Documents/SearchProvider';
@@ -77,12 +77,12 @@ function _createThumbnailIcon(uri) {
 
     try {
         let info = file.query_info(Gio.FILE_ATTRIBUTE_THUMBNAIL_PATH,
-                                   0, null);
+                                   Gio.FileQueryInfoFlags.NONE, null);
         let path = info.get_attribute_byte_string(Gio.FILE_ATTRIBUTE_THUMBNAIL_PATH);
         if (path)
             return new Gio.FileIcon({ file: Gio.file_new_for_path(path) });
     } catch(e) {
-        log('Unable to create thumbnail icon: ' + e.message);
+        logError(e, 'Unable to create thumbnail icon');
     }
     return null;
 }
@@ -141,7 +141,7 @@ const CreateCollectionIconJob = new Lang.Class({
                     cursor = object.query_finish(res);
                     cursor.next_async(null, Lang.bind(this, this._onCursorNext));
                 } catch (e) {
-                    log('Unable to run CreateCollectionIconJob: ' + e.message);
+                    logError(e, 'Unable to run CreateCollectionIconJob');
                     this._hasItemIds();
                 }
             }));
@@ -161,7 +161,7 @@ const CreateCollectionIconJob = new Lang.Class({
             try {
                 pixbuf = info.load_icon();
             } catch(e) {
-                log("Unable to load pixbuf: " + e.message);
+                logError(e, 'Unable to load pixbuf');
             }
         } else if (icon instanceof Gio.FileIcon) {
             try {
@@ -169,7 +169,7 @@ const CreateCollectionIconJob = new Lang.Class({
                 pixbuf = GdkPixbuf.Pixbuf.new_from_stream(stream,
                                                           null);
             } catch(e) {
-                log("Unable to load pixbuf: " + e.message);
+                logError(e, 'Unable to load pixbuf');
             }
         }
 
@@ -183,7 +183,7 @@ const CreateCollectionIconJob = new Lang.Class({
             valid = cursor.next_finish(res);
         } catch (e) {
             cursor.close();
-            log('Unable to read results of CreateCollectionIconJob: ' + e.message);
+            logError(e, 'Unable to read results of CreateCollectionIconJob');
 
             this._hasItemIds();
         }
@@ -320,7 +320,7 @@ const FetchIdsJob = new Lang.Class({
                     cursor = object.query_finish(res);
                     cursor.next_async(this._cancellable, Lang.bind(this, this._onCursorNext));
                 } catch (e) {
-                    log('Unable to run FetchIdsJob: ' + e.message);
+                    logError(e, 'Unable to run FetchIdsJob');
                     callback(this._ids);
                 }
             }));
@@ -333,7 +333,7 @@ const FetchIdsJob = new Lang.Class({
             valid = cursor.next_finish(res);
         } catch (e) {
             cursor.close();
-            log('Unable to read results of FetchIdsJob: ' + e.message);
+            logError(e, 'Unable to read results of FetchIdsJob');
 
             this._callback(this._ids);
         }
@@ -348,7 +348,7 @@ const FetchIdsJob = new Lang.Class({
     }
 });
 
-const ShellSearchProvider = new Lang.Class({
+var ShellSearchProvider = new Lang.Class({
     Name: 'ShellSearchProvider',
 
     _init: function() {

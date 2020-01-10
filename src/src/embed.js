@@ -23,42 +23,151 @@ const Lang = imports.lang;
 const Mainloop = imports.mainloop;
 
 const Application = imports.application;
+const EPUBView = imports.epubview;
+const Edit = imports.edit;
+const EvinceView = imports.evinceview;
+const LOKView = imports.lokview;
 const Search = imports.search;
-const Selections = imports.selections;
-const View = imports.view;
+const Overview = imports.overview;
 const WindowMode = imports.windowMode;
 
 const GLib = imports.gi.GLib;
 const Gtk = imports.gi.Gtk;
 const _ = imports.gettext.gettext;
 
-const Embed = new Lang.Class({
+const View = new Lang.Class({
+    Name: 'View',
+    Extends: Gtk.Overlay,
+
+    _init: function(window) {
+        this._toolbar = null;
+        this._window = window;
+
+        this.parent();
+
+        this._stack = new Gtk.Stack({ visible: true,
+                                      homogeneous: true,
+                                      transition_type: Gtk.StackTransitionType.CROSSFADE });
+        this.add(this._stack);
+
+        // pack the OSD notification widget
+        this.add_overlay(Application.notificationManager);
+
+        this.show();
+    },
+
+    _clearPreview: function() {
+        if (this._preview) {
+            this._preview.destroy();
+            this._preview = null;
+        }
+    },
+
+    _createPreview: function(mode) {
+        let constructor;
+        switch (mode) {
+        case WindowMode.WindowMode.PREVIEW_EV:
+            constructor = EvinceView.EvinceView;
+            break;
+        case WindowMode.WindowMode.PREVIEW_LOK:
+            constructor = LOKView.LOKView;
+            break;
+        case WindowMode.WindowMode.PREVIEW_EPUB:
+            constructor = EPUBView.EPUBView;
+            break;
+        case WindowMode.WindowMode.EDIT:
+            constructor = Edit.EditView;
+            break;
+        default:
+            return;
+        }
+
+        this._preview = new constructor(this, this._window);
+        this._stack.add_named(this._preview, 'preview');
+    },
+
+    _ensureOverview: function(mode) {
+        if (!this._overview) {
+            this._overview = new Overview.OverviewStack();
+            this._stack.add_named(this._overview, 'overview');
+        }
+
+        this._overview.windowMode = mode;
+    },
+
+    _onActivateResult: function() {
+        this.view.activateResult();
+    },
+
+    set windowMode(mode) {
+        let fromPreview = !!this._preview;
+        this._clearPreview();
+
+        switch (mode) {
+        case WindowMode.WindowMode.COLLECTIONS:
+        case WindowMode.WindowMode.DOCUMENTS:
+        case WindowMode.WindowMode.SEARCH:
+            this._ensureOverview(mode);
+            this._stack.visible_child = this._overview;
+            break;
+        case WindowMode.WindowMode.PREVIEW_EV:
+        case WindowMode.WindowMode.PREVIEW_LOK:
+        case WindowMode.WindowMode.PREVIEW_EPUB:
+        case WindowMode.WindowMode.EDIT:
+            this._createPreview(mode);
+            this._stack.visible_child = this._preview;
+            break;
+        default:
+            return;
+        }
+
+        this._window.insert_action_group('view', this.view.actionGroup);
+
+        let createToolbar = true;
+        if (!this._preview)
+            createToolbar = fromPreview || !this._toolbar;
+
+        if (createToolbar) {
+            if (this._toolbar)
+                this._toolbar.destroy();
+
+            if (this._preview)
+                this._toolbar = this._preview.toolbar;
+            else
+                this._toolbar = this.view.createToolbar(this._stack);
+
+            if (this._toolbar.searchbar)
+                this._toolbar.searchbar.connect('activate-result',
+                                                Lang.bind(this, this._onActivateResult));
+            this._window.get_titlebar().add(this._toolbar);
+        }
+    },
+
+    get toolbar() {
+        return this._toolbar;
+    },
+
+    get view() {
+        return this._stack.visible_child;
+    }
+});
+
+var Embed = new Lang.Class({
     Name: 'Embed',
     Extends: Gtk.Box,
 
     _init: function(mainWindow) {
-        this._searchState = null;
-
         this.parent({ orientation: Gtk.Orientation.VERTICAL,
                       visible: true });
 
-        this._titlebar = new Gtk.Grid({ visible: true });
-        mainWindow.set_titlebar(this._titlebar);
+        let titlebar = new Gtk.Grid({ visible: true });
+        mainWindow.set_titlebar(titlebar);
 
-        // create the toolbar for selected items, it's hidden by default
-        this._selectionToolbar = new Selections.SelectionToolbar();
-        this.pack_end(this._selectionToolbar, false, false, 0);
-
-        this._view = new View.View(mainWindow);
+        this._view = new View(mainWindow);
         this.pack_end(this._view, true, true, 0);
 
         Application.modeController.connect('window-mode-changed',
                                            Lang.bind(this, this._onWindowModeChanged));
-        Application.modeController.connect('fullscreen-changed',
-                                           Lang.bind(this, this._onFullscreenChanged));
-
-        Application.documentManager.connect('active-changed',
-                                            Lang.bind(this, this._onActiveItemChanged));
 
         Application.searchTypeManager.connect('active-changed',
                                               Lang.bind(this, this._onSearchChanged));
@@ -68,14 +177,7 @@ const Embed = new Lang.Class({
         Application.searchController.connect('search-string-changed',
                                              Lang.bind(this, this._onSearchChanged));
 
-        let windowMode = Application.modeController.getWindowMode();
-        if (windowMode != WindowMode.WindowMode.NONE)
-            this._onWindowModeChanged(Application.modeController, windowMode, WindowMode.WindowMode.NONE);
-    },
-
-    _onFullscreenChanged: function(controller, fullscreen) {
-        this._toolbar.visible = !fullscreen;
-        this._toolbar.sensitive = !fullscreen;
+        this._view.windowMode = Application.modeController.getWindowMode();
     },
 
     _onSearchChanged: function() {
@@ -86,14 +188,10 @@ const Embed = new Lang.Class({
         //
         // However there are some exceptions, which are taken care of
         // elsewhere:
-        //  - when moving from search to preview or collection view
-        //  - when in preview or coming out of it
-
+        //  - when moving from search to collection view
         let doc = Application.documentManager.getActiveItem();
         let windowMode = Application.modeController.getWindowMode();
         if (windowMode == WindowMode.WindowMode.SEARCH && doc)
-            return;
-        if (windowMode == WindowMode.WindowMode.PREVIEW_EV)
             return;
 
         let searchType = Application.searchTypeManager.getActiveItem();
@@ -106,84 +204,24 @@ const Embed = new Lang.Class({
             Application.modeController.goBack();
         } else {
             Application.modeController.setWindowMode(WindowMode.WindowMode.SEARCH);
+            let searchAction = this._view.view.getAction('search');
+            searchAction.change_state(GLib.Variant.new('b', true));
         }
     },
 
     _onWindowModeChanged: function(object, newMode, oldMode) {
-        let createToolbar = true;
-
-        if (newMode == WindowMode.WindowMode.COLLECTIONS ||
-            newMode == WindowMode.WindowMode.DOCUMENTS ||
-            newMode == WindowMode.WindowMode.SEARCH) {
-            createToolbar = (oldMode != WindowMode.WindowMode.COLLECTIONS &&
-                             oldMode != WindowMode.WindowMode.DOCUMENTS &&
-                             oldMode != WindowMode.WindowMode.SEARCH);
-        }
-
         this._view.windowMode = newMode;
-
-        if (createToolbar) {
-            if (this._toolbar)
-                this._toolbar.destroy();
-
-            // pack the toolbar
-            this._toolbar = this._view.createToolbar();
-            if (this._toolbar.searchbar)
-                this._toolbar.searchbar.connectJS('activate-result',
-                                                  Lang.bind(this, this._onActivateResult));
-            this._titlebar.add(this._toolbar);
-        }
-    },
-
-    _onActivateResult: function() {
-        this._view.activateResult();
-    },
-
-    _restoreSearch: function() {
-        if (!this._searchState)
-            return;
-
-        Application.searchMatchManager.setActiveItem(this._searchState.searchMatch);
-        Application.searchTypeManager.setActiveItem(this._searchState.searchType);
-        Application.sourceManager.setActiveItem(this._searchState.source);
-        Application.searchController.setString(this._searchState.str);
-        this._searchState = null;
-    },
-
-    _saveSearch: function() {
-        if (this._searchState)
-            return;
-
-        this._searchState = new Search.SearchState(Application.searchMatchManager.getActiveItem(),
-                                                   Application.searchTypeManager.getActiveItem(),
-                                                   Application.sourceManager.getActiveItem(),
-                                                   Application.searchController.getString());
-    },
-
-    _onActiveItemChanged: function(manager, doc) {
-        let windowMode = Application.modeController.getWindowMode();
-        let showSearch = (windowMode == WindowMode.WindowMode.PREVIEW_EV && !doc
-                          || windowMode == WindowMode.WindowMode.SEARCH && !doc);
-
-        if (showSearch)
-            this._restoreSearch();
-        else
-            this._saveSearch();
-
-        Application.application.change_action_state('search', GLib.Variant.new('b', showSearch));
     },
 
     getMainToolbar: function() {
-        let windowMode = Application.modeController.getWindowMode();
-        let fullscreen = Application.modeController.getFullscreen();
+        if (this._view.view.canFullscreen &&
+            this._view.view.fullscreen)
+            return this._view.view.getFullscreenToolbar();
 
-        if (fullscreen && (windowMode == WindowMode.WindowMode.PREVIEW_EV))
-            return this.getPreview().getFullscreenToolbar();
-        else
-            return this._toolbar;
+        return this._view.toolbar;
     },
 
-    getPreview: function() {
-        return this._view.view;
+    get view() {
+        return this._view;
     }
 });

@@ -1,0 +1,233 @@
+From 777c70d64c13e3a362a7f5516a9c1408a96999a8 Mon Sep 17 00:00:00 2001
+From: Debarshi Ray <debarshir@gnome.org>
+Date: Wed, 6 Jun 2018 13:04:47 +0200
+Subject: [PATCH 1/2] documents: Thumbnail PDF SkydriveDocuments once loaded
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Historically, unlike GoogleDocuments, we were unable to fetch
+server-side thumbnails for SkydriveDocuments due to limitations of
+OneDrive's REST API. Newer versions of the REST API do support it [1],
+but it is not implemented in libzapojit.
+
+To work around those limitations, we try to use a cached copy of the
+document as source for the thumbnail. Since a cached copy is likely to
+be present right after a document has been loaded, we retry the
+thumbnailing if we hadn't succeeded before.
+
+Even if we can fetch thumbnails from the server in future, these would
+still be nice optimizations to have — reduces network consumption and
+offers a cheap way to jump ahead in the thumbnailing queue.
+
+[1] https://dev.onedrive.com/items/thumbnails.htm
+
+https://bugzilla.gnome.org/show_bug.cgi?id=780613
+---
+ src/documents.js | 104 +++++++++++++++++++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 102 insertions(+), 2 deletions(-)
+
+diff --git a/src/documents.js b/src/documents.js
+index a4a580f39d63..823cfabd74c3 100644
+--- a/src/documents.js
++++ b/src/documents.js
+@@ -447,7 +447,16 @@ const DocCommon = new Lang.Class({
+                                             return;
+                                         }
+ 
+-                                        this.loadLocal(passwd, cancellable, callback);
++                                        this.loadLocal(passwd, cancellable, Lang.bind(this,
++                                            function(doc, docModel, error) {
++                                                if (error) {
++                                                    callback(this, null, error);
++                                                    return;
++                                                }
++
++                                                callback(this, docModel, null);
++                                                this.postLoad(docModel);
++                                            }));
+                                     }));
+                             } else {
+                                 callback(this, null, error);
+@@ -457,10 +466,14 @@ const DocCommon = new Lang.Class({
+                         }
+ 
+                         callback(this, docModel, null);
++                        this.postLoad(docModel);
+                     }));
+             }));
+     },
+ 
++    postLoad: function(docModel) {
++    },
++
+     canEdit: function() {
+         throw(new Error('DocCommon implementations must override canEdit'));
+     },
+@@ -1299,7 +1312,7 @@ const SkydriveDocument = new Lang.Class({
+     Extends: DocCommon,
+ 
+     _init: function(cursor) {
+-        this._failedThumbnailing = true;
++        this._failedThumbnailing = false;
+ 
+         this.parent(cursor);
+ 
+@@ -1323,6 +1336,54 @@ const SkydriveDocument = new Lang.Class({
+         this.uriToLoad = localFile.get_uri();
+     },
+ 
++    _createThumbnailFromEvDocument: function(evDoc, cancellable, callback) {
++        let thumbnailPath = GnomeDesktop.desktop_thumbnail_path_for_uri (this.uri,
++                                                                         GnomeDesktop.DesktopThumbnailSize.LARGE);
++        let thumbnailFile = Gio.File.new_for_path(thumbnailPath);
++
++        let thumbnailDir = GLib.path_get_dirname(thumbnailPath);
++        GLib.mkdir_with_parents(thumbnailDir, 448);
++
++        thumbnailFile.replace_async(null,
++                                    false,
++                                    Gio.FileCreateFlags.PRIVATE,
++                                    GLib.PRIORITY_DEFAULT,
++                                    cancellable,
++                                    Lang.bind(this,
++            function(source, res) {
++                let outputStream;
++
++                try {
++                    outputStream = thumbnailFile.replace_finish(res);
++                } catch (e) {
++                    callback(e);
++                    return;
++                }
++
++                let [width, height] = evDoc.get_page_size(0);
++                let maxDimension = Math.max(width, height);
++                let scale = Application.application.getScaleFactor();
++                let size = 128 * scale;
++                let zoom = size / maxDimension;
++
++                let page = evDoc.get_page(0);
++
++                let rc = EvDocument.RenderContext.new(page, 0, zoom);
++                let pixbuf = evDoc.get_thumbnail(rc);
++                pixbuf.save_to_streamv_async(outputStream, "png", [], [], cancellable, Lang.bind(this,
++                    function(source, res) {
++                        try {
++                            GdkPixbuf.Pixbuf.save_to_stream_finish(res);
++                        } catch (e) {
++                            callback(e);
++                            return;
++                        }
++
++                        callback(null);
++                    }));
++            }));
++    },
++
+     _createZpjEntry: function(cancellable, callback) {
+         let source = Application.sourceManager.getItemById(this.resourceUrn);
+ 
+@@ -1405,6 +1466,45 @@ const SkydriveDocument = new Lang.Class({
+             }));
+     },
+ 
++    postLoad: function(docModel) {
++        if (this._thumbPath)
++            return;
++
++        this._failedThumbnailing = false;
++        this.refreshIcon();
++    },
++
++    createThumbnail: function(callback) {
++        // try loading from the most recent cache, if any
++        this.loadLocal(null, null, Lang.bind(this,
++            function(doc, docModel, error) {
++                if (error) {
++                    if (!error.matches(Gio.IOErrorEnum, Gio.IOErrorEnum.NOT_FOUND) &&
++                        !error.matches(EvDocument.DocumentError, EvDocument.DocumentError.ENCRYPTED)) {
++                        logError(error, 'Unable to load document from the cache');
++                        callback(false);
++                        return;
++                    }
++                }
++
++                if (!docModel) {
++                    callback(false);
++                    return;
++                }
++
++                this._createThumbnailFromEvDocument(docModel.document, null, Lang.bind(this,
++                    function(error) {
++                        if (error) {
++                            logError(error, 'Unable to create thumbnail from EvDocument');
++                            callback(false);
++                            return;
++                        }
++
++                        callback(true);
++                    }));
++            }));
++    },
++
+     updateTypeDescription: function() {
+         let description;
+ 
+-- 
+2.14.4
+
+
+From 8591dcde011558c26c789c010f5b78cd806cf34b Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Caol=C3=A1n=20McNamara?= <caolanm@redhat.com>
+Date: Mon, 8 May 2017 16:44:32 +0100
+Subject: [PATCH 2/2] lokview: Fix crash on repeated open of presentations
+
+Ensure prompt destruction of the LOKDocView widget when the view is
+destroyed. This gives LOK a chance to shutdown at the right time.
+
+https://bugzilla.gnome.org/show_bug.cgi?id=782508
+---
+ src/lokview.js | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
+
+diff --git a/src/lokview.js b/src/lokview.js
+index dfa0b9628735..49bacabd28e7 100644
+--- a/src/lokview.js
++++ b/src/lokview.js
+@@ -139,11 +139,19 @@ var LOKView = new Lang.Class({
+             this._lokview.connect('text-selection', Lang.bind(this, this._onTextSelection));
+             this._lokview.connect('notify::can-zoom-in', Lang.bind(this, this._onCanZoomInChanged));
+             this._lokview.connect('notify::can-zoom-out', Lang.bind(this, this._onCanZoomOutChanged));
++            this.connect('destroy', Lang.bind(this, this._destroyView));
+         }
+ 
+         return sw;
+     },
+ 
++    _destroyView: function() {
++	if (this._lokview) {
++	    this._lokview.destroy();
++	    this._lokview = null;
++	}
++    },
++
+     onLoadFinished: function(manager, doc) {
+         this.parent(manager, doc);
+ 
+@@ -239,10 +247,10 @@ var LOKView = new Lang.Class({
+     },
+ 
+     get page() {
+-        return this._lokview.get_part();
++        return this._lokview ? this._lokview.get_part() : 0;
+     },
+ 
+     get numPages() {
+-        return this._lokview.get_parts();
++        return this._lokview ? this._lokview.get_parts() : 0;
+     }
+ });
+-- 
+2.14.4
+

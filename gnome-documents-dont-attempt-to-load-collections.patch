@@ -1,0 +1,98 @@
+From b94e146d30e112ba2b86946f648fb57a2f91293c Mon Sep 17 00:00:00 2001
+From: Debarshi Ray <debarshir@gnome.org>
+Date: Fri, 24 Aug 2018 14:39:57 +0200
+Subject: [PATCH 1/2] documents: Error out if an attempt was made to load a
+ local collection
+
+Local collections don't have an URI (ie. this.uriToLoad is empty).
+Since commit 70381b8723dc491f, whenever a single item is selected, it
+is loaded to check if it can be printed. Doing this load for local
+collections with an empty URI leads to an assertion inside the PDF
+loader.
+
+Attempting to load a collection is a programming error. Ideally, that
+would lead to an exception being thrown, but since the base DocCommon
+class passes a GError to the callback, it is better to stick to that
+for consistency.
+
+This should have been included in commit 87a04ee157a84795, which
+introduced the same check in the base class.
+
+https://gitlab.gnome.org/GNOME/gnome-documents/issues/7
+---
+ src/documents.js | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
+
+diff --git a/src/documents.js b/src/documents.js
+index 823cfabd74c3..40462ac99120 100644
+--- a/src/documents.js
++++ b/src/documents.js
+@@ -928,6 +928,20 @@ var LocalDocument = new Lang.Class({
+ 
+     load: function(passwd, cancellable, callback) {
+         Utils.debug('Loading ' + this.__name__ + ' ' + this.id);
++
++        if (this.collection) {
++            Mainloop.idle_add(Lang.bind(this,
++                function() {
++                    let error = new GLib.Error(Gio.IOErrorEnum,
++                                               Gio.IOErrorEnum.NOT_SUPPORTED,
++                                               "Collections can't be loaded");
++                    callback(this, null, error);
++                    return GLib.SOURCE_REMOVE;
++                }));
++
++            return;
++        }
++
+         this.loadLocal(passwd, cancellable, callback);
+     },
+ 
+-- 
+2.14.4
+
+
+From 7dd613b087bd1afef336166e7662e68d8b32e997 Mon Sep 17 00:00:00 2001
+From: Debarshi Ray <debarshir@gnome.org>
+Date: Fri, 24 Aug 2018 15:15:03 +0200
+Subject: [PATCH 2/2] selections: Don't attempt to load collections
+
+Attempting to load a collection is a programming error. Currently, that
+leads to a GError and a NULL EvDocument pointer being passed to the
+callback, which ends up getting handled properly. It's better to avoid
+even attempting the load, in case such programming errors are dealt
+with more strictly in the future.
+
+Fallout from 70381b8723dc491f3267fc804178b9d64beedd2d
+
+https://gitlab.gnome.org/GNOME/gnome-documents/issues/7
+---
+ src/selections.js | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
+
+diff --git a/src/selections.js b/src/selections.js
+index b18132116a09..bf45d23bfe57 100644
+--- a/src/selections.js
++++ b/src/selections.js
+@@ -969,11 +969,13 @@ var SelectionToolbar = new Lang.Class({
+ 
+         if (selection.length == 1) {
+             let doc = Application.documentManager.getItemById(selection[0]);
+-            doc.load(null, null, Lang.bind(this,
+-                function(doc, docModel, error) {
+-                    showPrint = doc.canPrint(docModel);
+-                    this._toolbarPrint.set_sensitive(showPrint);
+-                }));
++            if (!doc.collection) {
++                doc.load(null, null, Lang.bind(this,
++                    function(doc, docModel, error) {
++                        showPrint = doc.canPrint(docModel);
++                        this._toolbarPrint.set_sensitive(showPrint);
++                    }));
++            }
+         }
+ 
+         if (selection.length > 1)
+-- 
+2.14.4
+

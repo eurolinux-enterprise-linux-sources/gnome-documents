@@ -26,7 +26,7 @@ const GLib = imports.gi.GLib;
 const Lang = imports.lang;
 const Search = imports.search;
 
-const QueryColumns = {
+var QueryColumns = {
     URN: 0,
     URI: 1,
     FILENAME: 2,
@@ -41,7 +41,7 @@ const QueryColumns = {
     DATE_CREATED: 11
 };
 
-const QueryFlags = {
+var QueryFlags = {
     NONE: 0,
     UNFILTERED: 1 << 0,
     COLLECTIONS: 1 << 1,
@@ -49,10 +49,10 @@ const QueryFlags = {
     SEARCH: 1 << 3
 };
 
-const LOCAL_BOOKS_COLLECTIONS_IDENTIFIER = 'gb:collection:local:';
-const LOCAL_DOCUMENTS_COLLECTIONS_IDENTIFIER = 'gd:collection:local:';
+var LOCAL_BOOKS_COLLECTIONS_IDENTIFIER = 'gb:collection:local:';
+var LOCAL_DOCUMENTS_COLLECTIONS_IDENTIFIER = 'gd:collection:local:';
 
-const QueryBuilder = new Lang.Class({
+var QueryBuilder = new Lang.Class({
     Name: 'QueryBuilder',
 
     _init: function(context) {
@@ -199,7 +199,7 @@ const QueryBuilder = new Lang.Class({
 
     buildSingleQuery: function(flags, resource) {
         let sparql = this._buildQueryInternal(false, flags, null);
-        sparql = sparql.replace('?urn', '<' + resource + '>', 'g');
+        sparql = sparql.replace(/\?urn/g, '<' + resource + '>');
 
         return this._createQuery(sparql);
     },
@@ -223,7 +223,7 @@ const QueryBuilder = new Lang.Class({
              'tracker:coalesce(nfo:fileLastModified(?urn), nie:contentLastModified(?urn)) AS ?mtime ' +
              'WHERE { ?urn nie:isPartOf ?collUrn } ' +
              'ORDER BY DESC (?mtime)' +
-             'LIMIT 4').replace('?collUrn', '<' + resource + '>');
+             'LIMIT 4').replace(/\?collUrn/, '<' + resource + '>');
 
         return this._createQuery(sparql);
     },
@@ -234,7 +234,7 @@ const QueryBuilder = new Lang.Class({
             ('SELECT ' +
              '?urn ' +
              'WHERE { ?urn a nfo:DataContainer . ?docUrn nie:isPartOf ?urn }'
-            ).replace('?docUrn', '<' + resource + '>');
+            ).replace(/\?docUrn/, '<' + resource + '>');
 
         return this._createQuery(sparql);
     },

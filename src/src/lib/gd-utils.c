@@ -23,6 +23,7 @@
 #include "gd-utils.h"
 
 #include <gdk-pixbuf/gdk-pixbuf.h>
+#include <gio/gio.h>
 #include <glib/gi18n.h>
 #include <string.h>
 #include <math.h>
@@ -34,30 +35,29 @@
   G_FILE_ATTRIBUTE_STANDARD_CONTENT_TYPE"," \
   G_FILE_ATTRIBUTE_TIME_MODIFIED
 
-static gboolean
-create_thumbnail (GIOSchedulerJob *job,
-                  GCancellable *cancellable,
-                  gpointer user_data)
+static void
+create_thumbnail (GTask *task,
+                  gpointer source_object,
+                  gpointer task_data,
+                  GCancellable *cancellable)
 {
-  GSimpleAsyncResult *result = user_data;
-  GFile *file = G_FILE (g_async_result_get_source_object (G_ASYNC_RESULT (result)));
-  GnomeDesktopThumbnailFactory *factory;
-  GFileInfo *info;
-  gchar *uri;
-  GdkPixbuf *pixbuf;
+  GFile *file = G_FILE (source_object);
+  GnomeDesktopThumbnailFactory *factory = NULL;
+  GError *error = NULL;
+  GFileInfo *info = NULL;
+  gchar *uri = NULL;
+  GdkPixbuf *pixbuf = NULL;
   guint64 mtime;
 
   uri = g_file_get_uri (file);
+
   info = g_file_query_info (file, ATTRIBUTES_FOR_THUMBNAIL,
                             G_FILE_QUERY_INFO_NONE,
-                            NULL, NULL);
+                            NULL, &error);
 
-  /* we don't care about reporting errors here, just fail the
-   * thumbnail.
-   */
   if (info == NULL)
     {
-      g_simple_async_result_set_op_res_gboolean (result, FALSE);
+      g_task_return_error (task, error);
       goto out;
     }
 
@@ -68,27 +68,20 @@ create_thumbnail (GIOSchedulerJob *job,
     (factory, 
      uri, g_file_info_get_content_type (info));
 
-  if (pixbuf != NULL)
+  if (pixbuf == NULL)
     {
-      gnome_desktop_thumbnail_factory_save_thumbnail (factory, pixbuf,
-                                                      uri, (time_t) mtime);
-      g_simple_async_result_set_op_res_gboolean (result, TRUE);
-    }
-  else
-    {
-      g_simple_async_result_set_op_res_gboolean (result, FALSE);
+      g_task_return_new_error (task, G_IO_ERROR, G_IO_ERROR_FAILED, "GnomeDesktopThumbnailFactory failed");
+      goto out;
     }
 
-  g_object_unref (info);
-  g_object_unref (file);
-  g_object_unref (factory);
-  g_clear_object (&pixbuf);
+  gnome_desktop_thumbnail_factory_save_thumbnail (factory, pixbuf, uri, (time_t) mtime);
+  g_task_return_boolean (task, TRUE);
 
  out:
-  g_simple_async_result_complete_in_idle (result);
-  g_object_unref (result);
-
-  return FALSE;
+  g_clear_object (&info);
+  g_clear_object (&factory);
+  g_clear_object (&pixbuf);
+  g_free (uri);
 }
 
 void
@@ -96,23 +89,20 @@ gd_queue_thumbnail_job_for_file_async (GFile *file,
                                        GAsyncReadyCallback callback,
                                        gpointer user_data)
 {
-  GSimpleAsyncResult *result;
+  GTask *task;
 
-  result = g_simple_async_result_new (G_OBJECT (file),
-                                      callback, user_data, 
-                                      gd_queue_thumbnail_job_for_file_async);
+  task = g_task_new (file, NULL, callback, user_data);
+  g_task_set_source_tag (task, gd_queue_thumbnail_job_for_file_async);
+  g_task_run_in_thread (task, create_thumbnail);
 
-  g_io_scheduler_push_job (create_thumbnail,
-                           result, NULL,
-                           G_PRIORITY_DEFAULT, NULL);
+  g_object_unref (task);
 }
 
 gboolean
-gd_queue_thumbnail_job_for_file_finish (GAsyncResult *res)
+gd_queue_thumbnail_job_for_file_finish (GAsyncResult *res, GError **error)
 {
-  GSimpleAsyncResult *simple = G_SIMPLE_ASYNC_RESULT (res);
-
-  return g_simple_async_result_get_op_res_gboolean (simple);
+  GTask *task = G_TASK (res);
+  return g_task_propagate_boolean (task, error);
 }
 
 const char *
@@ -168,113 +158,6 @@ gd_filename_strip_extension (const char * filename_with_extension)
 }
 
 /**
- * gd_filename_to_mime_type:
- * @filename_with_extension:
- *
- * Returns: (transfer none):
- */
-const char *
-gd_filename_to_mime_type (const gchar *filename_with_extension)
-{
-  const gchar *extension;
-  const gchar *type = NULL;
-
-  g_return_val_if_fail (filename_with_extension != NULL, NULL);
-
-  extension = gd_filename_get_extension_offset (filename_with_extension);
-
-  if (g_strcmp0 (extension, ".pdf") == 0)
-    type = "application/pdf";
-  else if (g_strcmp0 (extension, ".djv") == 0)
-    type = "image/vnd.djvu+multipage";
-  else if (g_strcmp0 (extension, ".djvu") == 0)
-    type = "image/vnd.djvu+multipage";
-  else if (g_strcmp0 (extension, ".epub") == 0)
-    type = "application/epub+zip";
-  else if (g_strcmp0 (extension, ".cbr") == 0)
-    type = "application/x-cbr";
-  else if (g_strcmp0 (extension, ".cbz") == 0)
-    type = "application/x-cbz";
-  else if (g_strcmp0 (extension, ".cbt") == 0)
-    type = "application/x-cbt";
-  else if (g_strcmp0 (extension, ".cb7") == 0)
-    type = "application/x-cb7";
-  else if (g_strcmp0 (extension, ".fb2.zip") == 0)
-    type = "application/x-zip-compressed-fb2";
-  else if (g_strcmp0 (extension, ".fb2") == 0)
-    type = "application/x-fictionbook+xml";
-  else if (g_strcmp0 (extension, ".mobi") == 0)
-    type = "application/x-mobipocket-ebook";
-  else if (g_strcmp0 (extension, ".prc") == 0)
-    type = "application/x-mobipocket-ebook";
-
-  return type;
-}
-
-/**
- * gd_filename_to_rdf_type:
- * @filename_with_extension:
- *
- * Returns: (transfer none):
- */
-const char *
-gd_filename_to_rdf_type (const gchar *filename_with_extension)
-{
-  const gchar *extension;
-  const gchar *type = NULL;
-
-  g_return_val_if_fail (filename_with_extension != NULL, NULL);
-
-  extension = gd_filename_get_extension_offset (filename_with_extension);
-
-  if (g_strcmp0 (extension, ".html") == 0)
-    type = "nfo:HtmlDocument";
-
-  else if (g_strcmp0 (extension, ".doc") == 0
-      || g_strcmp0 (extension, ".docm") == 0
-      || g_strcmp0 (extension, ".docx") == 0
-      || g_strcmp0 (extension, ".dot") == 0
-      || g_strcmp0 (extension, ".dotx") == 0
-      || g_strcmp0 (extension, ".pdf") == 0)
-    type = "nfo:PaginatedTextDocument";
-
-  else if (g_strcmp0 (extension, ".epub") == 0
-           || g_strcmp0 (extension, ".djv") == 0
-           || g_strcmp0 (extension, ".djvu") == 0
-           || g_strcmp0 (extension, ".cbr") == 0
-           || g_strcmp0 (extension, ".cbz") == 0
-           || g_strcmp0 (extension, ".cbt") == 0
-           || g_strcmp0 (extension, ".cb7") == 0
-           || g_strcmp0 (extension, ".fb2") == 0
-           || g_strcmp0 (extension, ".fb2.zip") == 0
-           || g_strcmp0 (extension, ".mobi") == 0
-           || g_strcmp0 (extension, ".prc") == 0)
-    type = "nfo:EBook";
-
-  else if (g_strcmp0 (extension, ".pot") == 0
-           || g_strcmp0 (extension, ".potm") == 0
-           || g_strcmp0 (extension, ".potx") == 0
-           || g_strcmp0 (extension, ".pps") == 0
-           || g_strcmp0 (extension, ".ppsm") == 0
-           || g_strcmp0 (extension, ".ppsx") == 0
-           || g_strcmp0 (extension, ".ppt") == 0
-           || g_strcmp0 (extension, ".pptm") == 0
-           || g_strcmp0 (extension, ".pptx") == 0)
-    type = "nfo:Presentation";
-
-  else if (g_strcmp0 (extension, ".txt") == 0)
-    type = "nfo:PlainTextDocument";
-
-  else if (g_strcmp0 (extension, ".xls") == 0
-           || g_strcmp0 (extension, ".xlsb") == 0
-           || g_strcmp0 (extension, ".xlsm") == 0
-           || g_strcmp0 (extension, ".xlsx") == 0)
-    type = "nfo:Spreadsheet";
-
-  return type;
-}
-
-/**
  * gd_iso8601_from_timestamp:
  * @timestamp:
  *
@@ -306,18 +189,10 @@ gd_create_collection_icon (gint base_size,
   cairo_t *cr;
   GtkStyleContext *context;
   GtkWidgetPath *path;
-  gint padding, tile_size, scale_size;
-  gint pix_width, pix_height;
+  GtkBorder tile_border;
+  gint padding, tile_size;
   gint idx, cur_x, cur_y;
   GList *l;
-  GdkPixbuf *pix;
-
-  /* TODO: do not hardcode 4, but scale to another layout if more
-   * pixbufs are provided.
-   */
-
-  padding = MAX (floor (base_size / 10), 4);
-  tile_size = (base_size - (3 * padding)) / 2;
 
   context = gtk_style_context_new ();
   gtk_style_context_add_class (context, "documents-collection-icon");
@@ -330,8 +205,23 @@ gd_create_collection_icon (gint base_size,
   surface = cairo_image_surface_create (CAIRO_FORMAT_ARGB32, base_size, base_size);
   cr = cairo_create (surface);
 
+  /* Render the thumbnail itself */
   gtk_render_background (context, cr,
                          0, 0, base_size, base_size);
+  gtk_render_frame (context, cr,
+                    0, 0, base_size, base_size);
+
+  /* Now, render the tiles inside */
+  gtk_style_context_remove_class (context, "documents-collection-icon");
+  gtk_style_context_add_class (context, "documents-collection-icon-tile");
+
+  /* TODO: do not hardcode 4, but scale to another layout if more
+   * pixbufs are provided.
+   */
+  padding = MAX (floor (base_size / 10), 4);
+  gtk_style_context_get_border (context, GTK_STATE_FLAG_NORMAL, &tile_border);
+  tile_size = (base_size - (3 * padding)) / 2 -
+    MAX (tile_border.left + tile_border.right, tile_border.top + tile_border.bottom);
 
   l = pixbufs;
   idx = 0;
@@ -340,34 +230,50 @@ gd_create_collection_icon (gint base_size,
 
   while (l != NULL && idx < 4)
     {
+      GdkPixbuf *pix;
+      gboolean is_thumbnail;
+      gint pix_width, pix_height, scale_size;
+
       pix = l->data;
+      is_thumbnail = (gdk_pixbuf_get_option (pix, "-documents-has-thumb") != NULL);
+
+      /* Only draw a box for thumbnails */
+      if (is_thumbnail)
+        {
+          gtk_render_background (context, cr,
+                                 cur_x, cur_y,
+                                 tile_size + tile_border.left + tile_border.right,
+                                 tile_size + tile_border.top + tile_border.bottom);
+          gtk_render_frame (context, cr,
+                            cur_x, cur_y,
+                            tile_size + tile_border.left + tile_border.right,
+                            tile_size + tile_border.top + tile_border.bottom);
+        }
+
       pix_width = gdk_pixbuf_get_width (pix);
       pix_height = gdk_pixbuf_get_height (pix);
-
       scale_size = MIN (pix_width, pix_height);
 
       cairo_save (cr);
 
-      cairo_translate (cr, cur_x, cur_y);
-
-      cairo_rectangle (cr, 0, 0,
-                       tile_size, tile_size);
+      cairo_translate (cr, cur_x + tile_border.left, cur_y + tile_border.top);
+      cairo_rectangle (cr, 0, 0, tile_size, tile_size);
       cairo_clip (cr);
 
       cairo_scale (cr, (gdouble) tile_size / (gdouble) scale_size, (gdouble) tile_size / (gdouble) scale_size);
       gdk_cairo_set_source_pixbuf (cr, pix, 0, 0);
-
       cairo_paint (cr);
+
       cairo_restore (cr);
 
       if ((idx % 2) == 0)
         {
-          cur_x += tile_size + padding;
+          cur_x += tile_size + padding + tile_border.left + tile_border.right;
         }
       else
         {
           cur_x = padding;
-          cur_y += tile_size + padding;
+          cur_y += tile_size + padding + tile_border.top + tile_border.bottom;
         }
 
       idx++;
@@ -397,6 +303,8 @@ void
 gd_show_about_dialog (GtkWindow *parent,
                       gboolean is_books)
 {
+  GApplication *app;
+
   const char *artists[] = {
     "Jakub Steiner <jimmac@gmail.com>",
     NULL
@@ -410,20 +318,19 @@ gd_show_about_dialog (GtkWindow *parent,
     NULL
   };
 
-  const char *program_name, *comments, *logo_icon_name, *website;
+  const char *app_id, *comments, *website;
+
+  app = g_application_get_default ();
+  app_id = g_application_get_application_id (app);
 
   if(!is_books)
     {
-      program_name = _("Documents");
       comments = _("A document manager application");
-      logo_icon_name = "org.gnome.Documents";
       website = "https://wiki.gnome.org/Apps/Documents";
     }
   else
     {
-      program_name = _("Books");
       comments = _("An e-books manager application");
-      logo_icon_name = "org.gnome.Books";
       website = "https://wiki.gnome.org/Apps/Books";
     }
 
@@ -431,9 +338,8 @@ gd_show_about_dialog (GtkWindow *parent,
                          "artists", artists,
                          "authors", authors,
                          "translator-credits", _("translator-credits"),
-                         "program-name", program_name,
                          "comments", comments,
-                         "logo-icon-name", logo_icon_name,
+                         "logo-icon-name", app_id,
                          "website", website,
                          "copyright", "Copyright © 2011-2014 Red Hat, Inc.",
                          "license-type", GTK_LICENSE_GPL_2_0,

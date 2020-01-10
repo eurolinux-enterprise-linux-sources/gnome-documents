@@ -49,30 +49,30 @@ const Utils = imports.utils;
 const WindowMode = imports.windowMode;
 
 // used globally
-let application = null;
-let connection = null;
-let connectionQueue = null;
-let goaClient = null;
-let settings = null;
+var application = null;
+var connection = null;
+var connectionQueue = null;
+var goaClient = null;
+var settings = null;
 
 // used by the application, but not by the search provider
-let changeMonitor = null;
+var changeMonitor = null;
 let cssProvider = null;
-let documentManager = null;
-let modeController = null;
-let notificationManager = null;
-let offsetCollectionsController = null;
-let offsetDocumentsController = null;
-let offsetSearchController = null;
-let queryBuilder = null;
-let searchController = null;
-let searchMatchManager = null;
-let searchTypeManager = null;
-let selectionController = null;
-let sourceManager = null;
-let trackerCollectionsController = null;
-let trackerDocumentsController = null;
-let trackerSearchController = null;
+var documentManager = null;
+var modeController = null;
+var notificationManager = null;
+var offsetCollectionsController = null;
+var offsetDocumentsController = null;
+var offsetSearchController = null;
+var queryBuilder = null;
+var searchController = null;
+var searchMatchManager = null;
+var searchTypeManager = null;
+var selectionController = null;
+var sourceManager = null;
+var trackerCollectionsController = null;
+var trackerDocumentsController = null;
+var trackerSearchController = null;
 
 const TrackerExtractPriorityIface = '<node> \
 <interface name="org.freedesktop.Tracker1.Extract.Priority"> \
@@ -92,14 +92,18 @@ function TrackerExtractPriority() {
 
 const MINER_REFRESH_TIMEOUT = 60; /* seconds */
 
-const Application = new Lang.Class({
+var Application = new Lang.Class({
     Name: 'Application',
     Extends: Gtk.Application,
+    Signals: {
+        'miners-changed': {}
+    },
 
     _init: function(isBooks) {
         this.minersRunning = [];
         this._activationTimestamp = Gdk.CURRENT_TIME;
         this._extractPriority = null;
+        this._searchProvider = null;
 
         this.isBooks = isBooks;
 
@@ -120,10 +124,6 @@ const Application = new Lang.Class({
 
         this.add_main_option('version', 'v'.charCodeAt(0), GLib.OptionFlags.NONE, GLib.OptionArg.NONE,
                              _("Show the version of the program"), null);
-
-        this._searchProvider = new ShellSearchProvider.ShellSearchProvider();
-        this._searchProvider.connect('activate-result', Lang.bind(this, this._onActivateResult));
-        this._searchProvider.connect('launch-search', Lang.bind(this, this._onLaunchSearch));
     },
 
     _initGettingStarted: function() {
@@ -138,51 +138,28 @@ const Application = new Lang.Class({
 
         this.gettingStartedLocation = null;
 
-        function checkNextFile(obj) {
-            let file = files.shift();
-            if (!file) {
-                log('Can\'t find a valid getting started PDF document');
-                return;
+        for (let i in files) {
+            try {
+                let info = files[i].query_info(Gio.FILE_ATTRIBUTE_STANDARD_TYPE,
+                                               Gio.FileQueryInfoFlags.NONE,
+                                               null);
+            } catch (e) {
+                continue;
             }
 
-            file.query_info_async('standard::type', Gio.FileQueryInfoFlags.NONE, 0, null, Lang.bind(this,
-                function(object, res) {
-                    try {
-                        let info = object.query_info_finish(res);
-                        this.gettingStartedLocation = file.get_parent();
+            this.gettingStartedLocation = files[i].get_parent();
 
-                        manager.index_file_async(file, null,
-                            function(object, res) {
-                                try {
-                                    manager.index_file_finish(res);
-                                } catch (e) {
-                                    log('Error indexing the getting started PDF: ' + e.message);
-                                }
-                            });
-                    } catch (e) {
-                        checkNextFile.apply(this);
-                    }
-                }));
+            try {
+                manager.index_file(files[i], null);
+            } catch (e) {
+                logError(e, 'Error indexing the getting started PDF');
+            }
+
+            break;
         }
 
-        checkNextFile.apply(this);
-    },
-
-    _fullscreenCreateHook: function(action) {
-        modeController.connect('can-fullscreen-changed', Lang.bind(this,
-            function() {
-                let canFullscreen = modeController.getCanFullscreen();
-                action.set_enabled(canFullscreen);
-            }));
-    },
-
-    _viewAsCreateHook: function(action) {
-        settings.connect('changed::view-as', Lang.bind(this,
-            function() {
-                let state = settings.get_value('view-as');
-                if (state.get_string()[0] != action.state.get_string()[0])
-                    action.change_state(state);
-            }));
+        if (!this.gettingStartedLocation)
+            log('Can\'t find a valid getting started PDF document');
     },
 
     _nightModeCreateHook: function(action) {
@@ -201,15 +178,6 @@ const Application = new Lang.Class({
         gtkSettings.gtk_application_prefer_dark_theme = state.get_boolean();
     },
 
-    _sortByCreateHook: function(action) {
-        settings.connect('changed::sort-by', Lang.bind(this,
-            function() {
-                let state = settings.get_value('sort-by');
-                if (state.get_string()[0] != action.state.get_string()[0])
-                    action.change_state(state);
-            }));
-    },
-
     _onActionQuit: function() {
         this._mainWindow.destroy();
     },
@@ -220,56 +188,17 @@ const Application = new Lang.Class({
 
     _onActionHelp: function() {
         try {
-            Gtk.show_uri(this._mainWindow.get_screen(),
-                         'help:gnome-documents',
-                         Gtk.get_current_event_time());
+            Gtk.show_uri_on_window(this._mainWindow,
+                                   'help:gnome-documents',
+                                   Gtk.get_current_event_time());
         } catch (e) {
-            log('Unable to display help: ' + e.message);
+            logError(e, 'Unable to display help');
         }
     },
 
     _onActionNightMode: function(action) {
         let state = action.get_state();
         settings.set_value('night-mode', GLib.Variant.new('b', !state.get_boolean()));
-    },
-
-    _onActionFullscreen: function(action) {
-        let state = action.get_state();
-        let newState = !state.get_boolean();
-        action.change_state(GLib.Variant.new('b', newState));
-        modeController.setFullscreen(newState);
-    },
-
-    _onActionViewAs: function(action, parameter) {
-        if (parameter.get_string()[0] != action.state.get_string()[0])
-            settings.set_value('view-as', parameter);
-    },
-
-    _onActionSortBy: function(action, parameter) {
-        if (parameter.get_string()[0] != action.state.get_string()[0])
-            settings.set_value('sort-by', parameter);
-    },
-
-    _connectActionsToMode: function() {
-        this._actionEntries.forEach(Lang.bind(this,
-            function(actionEntry) {
-                if (actionEntry.window_mode) {
-                    modeController.connect('window-mode-changed', Lang.bind(this,
-                        function() {
-                            let mode = modeController.getWindowMode();
-                            let action = this.lookup_action(actionEntry.name);
-                            action.set_enabled(mode == actionEntry.window_mode);
-                        }));
-                } else if (actionEntry.window_modes) {
-                    modeController.connect('window-mode-changed', Lang.bind(this,
-                        function() {
-                            let mode = modeController.getWindowMode();
-                            let enable = actionEntry.window_modes.indexOf(mode) != -1;
-                            let action = this.lookup_action(actionEntry.name);
-                            action.set_enabled(enable);
-                        }));
-                }
-            }));
     },
 
     _createMiners: function(callback) {
@@ -306,7 +235,7 @@ const Application = new Lang.Class({
             return false;
 
         this.minersRunning.push(miner);
-        this.emitJS('miners-changed', this.minersRunning);
+        this.emit('miners-changed');
 
         miner._cancellable = new Gio.Cancellable();
         miner.RefreshDBRemote(['documents'], miner._cancellable, Lang.bind(this,
@@ -315,11 +244,11 @@ const Application = new Lang.Class({
                     function(element) {
                         return element != miner;
                     });
-                this.emitJS('miners-changed', this.minersRunning);
+                this.emit('miners-changed');
 
                 if (error) {
                     if (!error.matches(Gio.IOErrorEnum, Gio.IOErrorEnum.CANCELLED))
-                        log('Error updating the cache: ' + error.toString());
+                        logError(error, 'Error updating the cache');
 
                     return;
                 }
@@ -339,7 +268,7 @@ const Application = new Lang.Class({
                 // startup a refresh of the gdocs cache
                 this._refreshMinerNow(this.gdataMiner);
             } catch (e) {
-                log('Unable to start GData miner: ' + e.message);
+                logError(e, 'Unable to start GData miner');
             }
         }
 
@@ -348,7 +277,7 @@ const Application = new Lang.Class({
                 // startup a refresh of the owncloud cache
                 this._refreshMinerNow(this.owncloudMiner);
             } catch (e) {
-                log('Unable to start Owncloud miner: ' + e.message);
+                logError(e, 'Unable to start Owncloud miner');
             }
         }
 
@@ -357,7 +286,7 @@ const Application = new Lang.Class({
                 // startup a refresh of the skydrive cache
                 this._refreshMinerNow(this.zpjMiner);
             } catch (e) {
-                log('Unable to start Zpj miner: ' + e.message);
+                logError(e, 'Unable to start Zpj miner');
             }
         }
     },
@@ -389,6 +318,7 @@ const Application = new Lang.Class({
             function(miner) {
                 miner._cancellable.cancel();
             }));
+        this.minersRunning = [];
 
         this.gdataMiner = null;
         this.owncloudMiner = null;
@@ -433,7 +363,7 @@ const Application = new Lang.Class({
         try {
             connection = Tracker.SparqlConnection.get(null);
         } catch (e) {
-            log('Unable to connect to the tracker database: ' + e.toString());
+            logError(e, 'Unable to connect to the tracker database');
             return;
         }
 
@@ -441,7 +371,7 @@ const Application = new Lang.Class({
             try {
                 goaClient = Goa.Client.new_sync(null);
             } catch (e) {
-                log('Unable to create the GOA client: ' + e.toString());
+                logError(e, 'Unable to create the GOA client');
                 return;
             }
         }
@@ -462,7 +392,7 @@ const Application = new Lang.Class({
         trackerSearchController = new TrackerController.TrackerSearchController();
         selectionController = new Selections.SelectionController();
 
-        this._actionEntries = [
+        let actionEntries = [
             { name: 'quit',
               callback: Lang.bind(this, this._onActionQuit),
               accels: ['<Primary>q'] },
@@ -471,34 +401,23 @@ const Application = new Lang.Class({
             { name: 'help',
               callback: Lang.bind(this, this._onActionHelp),
               accels: ['F1'] },
-            { name: 'fullscreen',
-              callback: Lang.bind(this, this._onActionFullscreen),
-              state: GLib.Variant.new('b', false),
-              create_hook: Lang.bind(this, this._fullscreenCreateHook),
-              accels: ['F11'],
-              window_mode: WindowMode.WindowMode.PREVIEW_EV },
             { name: 'night-mode',
               callback: Lang.bind(this, this._onActionNightMode),
               create_hook: Lang.bind(this, this._nightModeCreateHook),
               state: settings.get_value('night-mode') },
-            { name: 'search',
-              callback: Utils.actionToggleCallback,
-              state: GLib.Variant.new('b', false),
-              accels: ['<Primary>f'] }
         ];
 
-        if (!this.isBooks)
-            this._initGettingStarted();
-
-        Utils.populateActionGroup(this, this._actionEntries, 'app');
+        Utils.populateActionGroup(this, actionEntries, 'app');
     },
 
     _createWindow: function() {
         if (this._mainWindow)
             return;
 
+        if (!this.isBooks)
+            this._initGettingStarted();
+
         notificationManager = new Notifications.NotificationManager();
-        this._connectActionsToMode();
         this._mainWindow = new MainWindow.MainWindow(this);
         this._mainWindow.connect('destroy', Lang.bind(this, this._onWindowDestroy));
 
@@ -506,7 +425,7 @@ const Application = new Lang.Class({
             this._extractPriority = TrackerExtractPriority();
             this._extractPriority.SetRdfTypesRemote(['nfo:Document']);
         } catch (e) {
-            log('Unable to connect to the tracker extractor: ' + e.toString());
+            logError(e, 'Unable to connect to the tracker extractor');
         }
 
         // start miners
@@ -516,12 +435,28 @@ const Application = new Lang.Class({
     vfunc_dbus_register: function(connection, path) {
         this.parent(connection, path);
 
-        this._searchProvider.export(connection);
+        if (this._searchProvider != null)
+            throw(new Error('ShellSearchProvider already instantiated - dbus_register called twice?'));
+
+        this._searchProvider = new ShellSearchProvider.ShellSearchProvider();
+        this._searchProvider.connect('activate-result', Lang.bind(this, this._onActivateResult));
+        this._searchProvider.connect('launch-search', Lang.bind(this, this._onLaunchSearch));
+
+        try {
+            this._searchProvider.export(connection);
+        } catch(e) {
+            this._searchProvider = null;
+            throw(e);
+        }
+
         return true;
     },
 
     vfunc_dbus_unregister: function(connection, path) {
-        this._searchProvider.unexport(connection);
+        if (this._searchProvider != null) {
+            this._searchProvider.unexport(connection);
+            this._searchProvider = null;
+        }
 
         this.parent(connection, path);
     },
@@ -557,7 +492,6 @@ const Application = new Lang.Class({
         trackerSearchController.disconnectAll();
         selectionController.disconnectAll();
         modeController.disconnectAll();
-        this.disconnectAllJS();
 
         // reset state
         documentManager.clearRowRefs();
@@ -583,7 +517,6 @@ const Application = new Lang.Class({
 
     _onActivateResult: function(provider, urn, terms, timestamp) {
         this._createWindow();
-        modeController.setWindowMode(WindowMode.WindowMode.PREVIEW_EV);
 
         let doc = documentManager.getItemById(urn);
         if (doc) {
@@ -608,14 +541,10 @@ const Application = new Lang.Class({
             // forward the search terms next time we enter the overview
             let modeChangeId = modeController.connect('window-mode-changed', Lang.bind(this,
                 function(object, newMode) {
-                    if (newMode == WindowMode.WindowMode.EDIT
-                        || newMode == WindowMode.WindowMode.PREVIEW_EV)
-                        return;
-
-                    modeController.disconnect(modeChangeId);
-
-                    searchController.setString(terms.join(' '));
-                    this.change_action_state('search', GLib.Variant.new('b', true));
+                    if (newMode == WindowMode.WindowMode.DOCUMENTS) {
+                        modeController.disconnect(modeChangeId);
+                        searchController.setString(terms.join(' '));
+                    }
                 }));
         }
     },
@@ -624,7 +553,6 @@ const Application = new Lang.Class({
         this._createWindow();
         modeController.setWindowMode(WindowMode.WindowMode.DOCUMENTS);
         searchController.setString(terms.join(' '));
-        this.change_action_state('search', GLib.Variant.new('b', true));
 
         this._activationTimestamp = timestamp;
         this.activate();
@@ -646,4 +574,3 @@ const Application = new Lang.Class({
         return window;
     }
 });
-Utils.addJSSignalMethods(Application.prototype);

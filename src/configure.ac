@@ -1,6 +1,6 @@
-dnl -*- mode: m4 -*-
+dnl -*- mode: Autoconf -*-
 AC_PREREQ(2.63)
-AC_INIT([gnome-documents],[3.22.2],[],[gnome-documents])
+AC_INIT([gnome-documents],[3.28.1],[],[gnome-documents])
 
 AC_CONFIG_HEADERS([config/config.h])
 AC_CONFIG_SRCDIR([src/main.js])
@@ -15,12 +15,22 @@ AC_CANONICAL_TARGET
 AM_INIT_AUTOMAKE([1.11 dist-xz no-dist-gzip tar-ustar foreign])
 AM_MAINTAINER_MODE([enable])
 
+AX_IS_RELEASE([git-directory])
+AX_CHECK_ENABLE_DEBUG([yes],,, [$ax_is_release])
+
 GETTEXT_PACKAGE=AC_PACKAGE_NAME
 AC_SUBST(GETTEXT_PACKAGE)
 AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE,"$GETTEXT_PACKAGE",[The name of the gettext domain])
-IT_PROG_INTLTOOL(0.50.1)
+
+AX_REQUIRE_DEFINED([AM_GNU_GETTEXT_VERSION])
+AM_GNU_GETTEXT_VERSION([0.19.8])
+
+AX_REQUIRE_DEFINED([AM_GNU_GETTEXT])
+AM_GNU_GETTEXT([external])
+
 PKG_PROG_PKG_CONFIG([0.22])
 
+AX_REQUIRE_DEFINED([YELP_HELP_INIT])
 YELP_HELP_INIT
 
 GOBJECT_INTROSPECTION_REQUIRE([0.9.6])
@@ -43,7 +53,9 @@ AC_PROG_LIBTOOL
 ## don't rerun to this point if we abort
 AC_CACHE_SAVE
 
+AX_REQUIRE_DEFINED([GLIB_GSETTINGS])
 GLIB_GSETTINGS
+
 GETTING_STARTED_INIT
 
 AC_CHECK_LIBM
@@ -52,12 +64,10 @@ AC_SUBST(LIBM)
 EVINCE_MIN_VERSION=3.13.3
 WEBKITGTK_MIN_VERSION=2.6.0
 GLIB_MIN_VERSION=2.39.3
-GTK_MIN_VERSION=3.19.1
+GJS_MIN_VERSION=1.48.0
+GTK_MIN_VERSION=3.22.15
 GOBJECT_INTROSPECTION_MIN_VERSION=1.31.6
-GDATA_MIN_VERSION=0.13.3
-GOA_MIN_VERSION=3.2.0
 TRACKER_MIN_VERSION=0.17.3
-ZAPOJIT_MIN_VERSION=0.0.2
 SOUP_MIN_VERSION=2.41.3
 
 AC_ARG_ENABLE(documentation,
@@ -76,17 +86,14 @@ PKG_CHECK_MODULES(DOCUMENTS,
                   evince-document-3.0 >= $EVINCE_MIN_VERSION
                   evince-view-3.0 >= $EVINCE_MIN_VERSION
                   webkit2gtk-4.0 >= $WEBKITGTK_MIN_VERSION
-                  gjs-1.0
+                  gjs-1.0 >= $GJS_MIN_VERSION
                   glib-2.0 >= $GLIB_MIN_VERSION
                   gobject-introspection-1.0 >= $GOBJECT_INTROSPECTION_MIN_VERSION
                   gtk+-3.0 >= $GTK_MIN_VERSION
                   libsoup-2.4 >= $SOUP_MIN_VERSION
                   gnome-desktop-3.0
-                  tracker-control-1.0 >= $TRACKER_MIN_VERSION
-                  tracker-sparql-1.0 >= $TRACKER_MIN_VERSION
-                  goa-1.0 >= $GOA_MIN_VERSION
-                  libgdata >= $GDATA_MIN_VERSION
-                  zapojit-0.0 >= $ZAPOJIT_MIN_VERSION)
+                  tracker-control-2.0 >= $TRACKER_MIN_VERSION
+                  tracker-sparql-2.0 >= $TRACKER_MIN_VERSION)
 
 # Although GTK+ 3.10 includes hi-dpi functionality, it does not require a cairo with
 # cairo_surface_set_device_scale(), which we also need if we're to support hi-dpi,
@@ -102,7 +109,7 @@ LIBGD_INIT([
   notification
   tagged-entry
   gir
-])
+][subprojects/libgd])
 
 AX_PROG_GJS
 AX_CHECK_GIRS_GJS([cairo], [1.0])
@@ -119,11 +126,11 @@ AX_CHECK_GIRS_GJS([GObject], [2.0])
 AX_CHECK_GIR_SYMBOLS_GJS([Gtk], [3.0], [ShortcutsWindow ShortcutsSection
   ShortcutsGroup ShortcutsShortcut])
 AX_CHECK_GIRS_GJS([Pango], [1.0])
-AX_CHECK_GIRS_GJS([Tracker], [1.0])
-AX_CHECK_GIRS_GJS([TrackerControl], [1.0])
+AX_CHECK_GIRS_GJS([Tracker], [2.0])
+AX_CHECK_GIRS_GJS([TrackerControl], [2.0])
 AX_CHECK_GIRS_GJS([WebKit2], [4.0])
 AX_CHECK_GIRS_GJS([Zpj], [0.0])
-AX_CHECK_GIRS_GJS([Gepub], [0.4])
+AX_CHECK_GIRS_GJS([Gepub], [0.6])
 
 GLIB_COMPILE_RESOURCES=`$PKG_CONFIG --variable glib_compile_resources gio-2.0`
 AC_SUBST(GLIB_COMPILE_RESOURCES)
@@ -133,7 +140,7 @@ AC_PATH_PROG(DESKTOP_FILE_VALIDATE, desktop-file-validate)
 AC_CONFIG_FILES([
 Makefile
 help/Makefile
-libgd/Makefile
+subprojects/libgd/Makefile
 src/Makefile
 data/Makefile
 data/icons/Makefile
@@ -152,6 +159,4 @@ echo "
 
         prefix:    ${prefix}
         compiler:  ${CC}
-
-        Now type 'make' to build $PACKAGE
 "

@@ -30,11 +30,10 @@ const WindowMode = imports.windowMode;
 
 const Lang = imports.lang;
 const Mainloop = imports.mainloop;
-const Signals = imports.signals;
 
-const DELETE_TIMEOUT = 10; // seconds
+var DELETE_TIMEOUT = 10; // seconds
 
-const DeleteNotification = new Lang.Class({
+var DeleteNotification = new Lang.Class({
     Name: 'DeleteNotification',
 
     _init: function(docs) {
@@ -110,7 +109,7 @@ const DeleteNotification = new Lang.Class({
     }
 });
 
-const PrintNotification = new Lang.Class({
+var PrintNotification = new Lang.Class({
     Name: 'PrintNotification',
 
     _init: function(printOp, doc) {
@@ -181,12 +180,12 @@ const IndexingNotification = new Lang.Class({
             this._manager = TrackerControl.MinerManager.new_full(false);
             this._manager.connect('miner-progress', Lang.bind(this, this._checkNotification));
         } catch(e) {
-            log('Unable to create a TrackerMinerManager, indexing progress ' +
-                'notification won\'t work: ' + e.message);
+            logError(e, 'Unable to create a TrackerMinerManager, indexing progress ' +
+                     'notification won\'t work');
             return;
         }
 
-        Application.application.connectJS('miners-changed', Lang.bind(this, this._checkNotification));
+        Application.application.connect('miners-changed', Lang.bind(this, this._checkNotification));
         Application.modeController.connect('window-mode-changed', Lang.bind(this, this._checkNotification));
     },
 
@@ -325,19 +324,22 @@ const IndexingNotification = new Lang.Class({
     }
 });
 
-const NotificationManager = new Lang.Class({
+var NotificationManager = new Lang.Class({
     Name: 'NotificationManager',
-    Extends: Gd.Notification,
+    Extends: Gtk.Revealer,
 
     _init: function() {
-        this.parent({ timeout: -1,
-                      show_close_button: false,
-                      halign: Gtk.Align.CENTER,
+        this.parent({ halign: Gtk.Align.CENTER,
                       valign: Gtk.Align.START });
+
+        let frame = new Gtk.Frame();
+        frame.get_style_context().add_class('app-notification');
+        this.add(frame);
+
         this._grid = new Gtk.Grid({ orientation: Gtk.Orientation.VERTICAL,
                                     row_spacing: 6 });
 
-        this.add(this._grid);
+        frame.add(this._grid);
 
         // add indexing monitor notification
         this._indexingNotification = new IndexingNotification();
@@ -348,13 +350,13 @@ const NotificationManager = new Lang.Class({
         notification.widget.connect('destroy', Lang.bind(this, this._onWidgetDestroy));
 
         this.show_all();
+        this.reveal_child = true;
     },
 
     _onWidgetDestroy: function() {
         let children = this._grid.get_children();
 
         if (children.length == 0)
-            this.hide();
+            this.reveal_child = false;
     }
 });
-Signals.addSignalMethods(NotificationManager.prototype);

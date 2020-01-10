@@ -37,7 +37,7 @@ const _CONFIGURE_ID_TIMEOUT = 100; // msecs
 const _WINDOW_MIN_WIDTH = 600;
 const _WINDOW_MIN_HEIGHT = 500;
 
-const MainWindow = new Lang.Class({
+var MainWindow = new Lang.Class({
     Name: 'MainWindow',
     Extends: Gtk.ApplicationWindow,
 
@@ -76,9 +76,6 @@ const MainWindow = new Lang.Class({
         this.connect('configure-event', Lang.bind(this, this._onConfigureEvent));
         this.connect('window-state-event', Lang.bind(this, this._onWindowStateEvent));
 
-        this._fsId = Application.modeController.connect('fullscreen-changed',
-            Lang.bind(this, this._onFullscreenChanged));
-
         this._embed = new Embed.Embed(this);
         this.add(this._embed);
     },
@@ -101,7 +98,10 @@ const MainWindow = new Lang.Class({
     },
 
     _onConfigureEvent: function(widget, event) {
-        if (Application.modeController.getFullscreen())
+        let window = this.get_window();
+        let state = window.get_state();
+
+        if (state & Gdk.WindowState.FULLSCREEN)
             return;
 
         if (this._configureId != 0) {
@@ -120,51 +120,8 @@ const MainWindow = new Lang.Class({
     _onWindowStateEvent: function(widget, event) {
         let window = widget.get_window();
         let state = window.get_state();
-
-        if (state & Gdk.WindowState.FULLSCREEN) {
-            Application.modeController.setFullscreen(true);
-            return;
-        }
-
-        Application.modeController.setFullscreen(false);
-
         let maximized = (state & Gdk.WindowState.MAXIMIZED);
         Application.settings.set_boolean('window-maximized', maximized);
-    },
-
-    _onFullscreenChanged: function(controller, fullscreen) {
-        if (fullscreen)
-            this.fullscreen();
-        else
-            this.unfullscreen();
-    },
-
-    _goBack: function() {
-        let windowMode = Application.modeController.getWindowMode();
-        let activeCollection = Application.documentManager.getActiveCollection();
-        let handled = true;
-
-        switch (windowMode) {
-        case WindowMode.WindowMode.NONE:
-        case WindowMode.WindowMode.DOCUMENTS:
-            handled = false;
-            break;
-        case WindowMode.WindowMode.EDIT:
-        case WindowMode.WindowMode.PREVIEW_EV:
-            Application.documentManager.setActiveItem(null);
-            Application.modeController.goBack();
-            break;
-        case WindowMode.WindowMode.COLLECTIONS:
-        case WindowMode.WindowMode.SEARCH:
-            if (activeCollection)
-                Application.documentManager.activatePreviousCollection();
-            break;
-        default:
-            throw(new Error('Not handled'));
-            break;
-        }
-
-        return handled;
     },
 
     _onButtonPressEvent: function(widget, event) {
@@ -178,124 +135,19 @@ const MainWindow = new Lang.Class({
         if (button != 8)
             return false;
 
-        return this._goBack();
+        let view = this._embed.view.view;
+        let action = view.getAction('go-back');
+        if (action) {
+            action.activate(null);
+            return true;
+        }
+
+        return false;
     },
 
     _onKeyPressEvent: function(widget, event) {
-        if (this._handleBackKey(event))
-            return true;
-
         let toolbar = this._embed.getMainToolbar();
-        if (toolbar.handleEvent(event))
-            return true;
-
-        switch (Application.modeController.getWindowMode()) {
-        case WindowMode.WindowMode.NONE:
-            return false;
-        case WindowMode.WindowMode.PREVIEW_EV:
-        case WindowMode.WindowMode.PREVIEW_EPUB:
-        case WindowMode.WindowMode.PREVIEW_LOK:
-            return this._handleKeyPreview(event);
-        case WindowMode.WindowMode.COLLECTIONS:
-        case WindowMode.WindowMode.DOCUMENTS:
-        case WindowMode.WindowMode.SEARCH:
-            return this._handleKeyOverview(event);
-        case WindowMode.WindowMode.EDIT:
-            return false;
-        default:
-            throw(new Error('Not handled'));
-            break;
-        }
-
-        return false;
-    },
-
-    _isBackKey: function(event) {
-        let direction = this.get_direction();
-        let keyval = event.get_keyval()[1];
-        let state = event.get_state()[1];
-
-        let isBack = (((state & Gdk.ModifierType.MOD1_MASK) != 0 &&
-                       ((direction == Gtk.TextDirection.LTR && keyval == Gdk.KEY_Left) ||
-                       (direction == Gtk.TextDirection.RTL && keyval == Gdk.KEY_Right))) ||
-                      keyval == Gdk.KEY_Back);
-
-        return isBack;
-    },
-
-    _handleBackKey: function(event) {
-        let isBack = this._isBackKey(event);
-        if (!isBack)
-            return false;
-
-        return this._goBack();
-    },
-
-    _handleKeyPreview: function(event) {
-        let keyval = event.get_keyval()[1];
-        let fullscreen = Application.modeController.getFullscreen();
-        let def_mod_mask = Gtk.accelerator_get_default_mod_mask();
-        let preview = this._embed.getPreview();
-        let state = event.get_state()[1];
-        let windowMode = Application.modeController.getWindowMode();
-
-        if (keyval == Gdk.KEY_Escape &&
-            windowMode == WindowMode.WindowMode.PREVIEW_EV) {
-            let model = preview.getModel();
-
-            if (preview.controlsVisible && (model != null)) {
-                preview.controlsVisible = false;
-            } else if (fullscreen) {
-                Application.documentManager.setActiveItem(null);
-                Application.modeController.goBack();
-            }
-
-            return false;
-        }
-
-        if (((keyval == Gdk.KEY_Page_Up) &&
-            ((state & Gdk.ModifierType.CONTROL_MASK) != 0)) ||
-            ((keyval == Gdk.KEY_Left) && ((state & def_mod_mask) == 0))) {
-            preview.goPrev();
-            return true;
-        }
-
-        if (((keyval == Gdk.KEY_Page_Down) &&
-            ((state & Gdk.ModifierType.CONTROL_MASK) != 0)) ||
-            ((keyval == Gdk.KEY_Right) && ((state & def_mod_mask) == 0))) {
-            preview.goNext();
-            return true;
-        }
-
-        if (keyval == Gdk.KEY_Page_Up) {
-            try {
-                preview.scroll(Gtk.ScrollType.PAGE_BACKWARD);
-                return true;
-            } catch (e) {
-            }
-        }
-
-        if (keyval == Gdk.KEY_Page_Down) {
-            try {
-                preview.scroll(Gtk.ScrollType.PAGE_FORWARD);
-                return true;
-            } catch (e) {
-            }
-        }
-
-        return false;
-    },
-
-    _handleKeyOverview: function(event) {
-        let keyval = event.get_keyval()[1];
-
-        if (Application.selectionController.getSelectionMode() &&
-            keyval == Gdk.KEY_Escape) {
-            Application.selectionController.setSelectionMode(false);
-            return true;
-        }
-
-        return false;
+        return toolbar.handleEvent(event);
     },
 
     _quit: function() {

@@ -22,12 +22,15 @@
 const GdPrivate = imports.gi.GdPrivate;
 const Gepub = imports.gi.Gepub;
 const Gio = imports.gi.Gio;
+const GLib = imports.gi.GLib;
+const Gtk = imports.gi.Gtk;
 const WebKit2 = imports.gi.WebKit2;
 
 const _ = imports.gettext.gettext;
 
 const Documents = imports.documents;
 const Preview = imports.preview;
+const Utils = imports.utils;
 
 const Lang = imports.lang;
 
@@ -35,12 +38,17 @@ function isEpub(mimeType) {
     return (mimeType == 'application/epub+zip');
 }
 
-const EPUBView = new Lang.Class({
+var EPUBView = new Lang.Class({
     Name: 'EPUBView',
     Extends: Preview.Preview,
 
     createActions: function() {
         return [
+            { name: 'find',
+              callback: Utils.actionToggleCallback,
+              state: GLib.Variant.new('b', false),
+              stateChanged: Lang.bind(this, this._findStateChanged),
+              accels: ['<Primary>f'] },
             { name: 'find-prev',
               callback: Lang.bind(this, this.findPrev),
               accels: ['<Shift><Primary>g'] },
@@ -54,8 +62,25 @@ const EPUBView = new Lang.Class({
         return new EPUBViewToolbar(this);
     },
 
+    createNavControls: function() {
+        return new EPUBViewNavControls(this, this.overlay);
+    },
+
     createView: function() {
-        return new Gepub.Widget();
+        let view = new Gepub.Widget();
+
+        let fc = view.get_find_controller();
+        fc.connect('found-text', Lang.bind(this, function(view, matchCount, data) {
+            let hasResults = matchCount > 0;
+
+            this.getAction('find-prev').enabled = hasResults;
+            this.getAction('find-next').enabled = hasResults;
+        }));
+
+        view.connect('button-release-event', Lang.bind(this,
+            this._onButtonReleaseEvent));
+
+        return view;
     },
 
     createContextMenu: function() {
@@ -65,16 +90,17 @@ const EPUBView = new Lang.Class({
     onLoadFinished: function(manager, doc) {
         this.parent(manager, doc);
 
-        let f = Gio.File.new_for_uri(doc.uri);
+        let f = Gio.File.new_for_uri(doc.uriToLoad);
         this._epubdoc = new Gepub.Doc({ path: f.get_path() });
         this._epubdoc.init(null);
 
         this.view.doc = this._epubdoc;
-        this._epubdoc.connect('notify::page', Lang.bind(this, this._onPageChanged));
+        this._epubdoc.connect('notify::chapter', Lang.bind(this, this._onChapterChanged));
 
         this._metadata = this._loadMetadata();
 
         this.set_visible_child_name('view');
+        this.navControls.setDocument(this._epubdoc);
     },
 
     _loadMetadata: function() {
@@ -86,15 +112,28 @@ const EPUBView = new Lang.Class({
 
         let [res, val] = metadata.get_int('page');
         if (res)
-            this._epubdoc.page = val;
+            this._epubdoc.chapter = val;
 
         return metadata;
     },
 
-    _onPageChanged: function() {
-        let pageNumber = this._epubdoc.page;
+    _onChapterChanged: function() {
+        let pageNumber = this._epubdoc.chapter;
         if (this._metadata)
             this._metadata.set_int('page', pageNumber);
+    },
+
+    _onButtonReleaseEvent: function(widget, event) {
+        let button = event.get_button()[1];
+        let clickCount = event.get_click_count()[1];
+
+        if (button == 1
+            && clickCount == 1)
+            this.queueControlsFlip();
+        else
+            this.cancelControlsFlip();
+
+        return false;
     },
 
     goPrev: function() {
@@ -106,15 +145,19 @@ const EPUBView = new Lang.Class({
     },
 
     get hasPages() {
-        return true;
+        return this._epubdoc ? this._epubdoc.get_n_chapters() > 0 : false;
     },
 
     get page() {
-        return this._epubdoc ? this._epubdoc.get_page() : 0;
+        return this._epubdoc ? this._epubdoc.get_chapter() : 0;
     },
 
     get numPages() {
-        return this._epubdoc ? this._epubdoc.get_n_pages() : 0;
+        return this._epubdoc ? this._epubdoc.get_n_chapters() : 0;
+    },
+
+    get canFullscreen() {
+        return true;
     },
 
     search: function(str) {
@@ -124,8 +167,15 @@ const EPUBView = new Lang.Class({
         fc.search(str, WebKit2.FindOptions.CASE_INSENSITIVE, 0);
     },
 
-    get canFind() {
-        return true;
+    _findStateChanged: function(action) {
+        if (action.state.get_boolean()) {
+            this.toolbar.searchbar.reveal();
+        } else {
+            this.toolbar.searchbar.conceal();
+
+            let fc = this.view.get_find_controller();
+            fc.search_finish();
+        }
     },
 
     findNext: function() {
@@ -139,39 +189,74 @@ const EPUBView = new Lang.Class({
     }
 });
 
-const EPUBSearchbar = new Lang.Class({
-    Name: 'EPUBSearchbar',
-    Extends: Preview.PreviewSearchbar,
-
-    _init: function(preview) {
-        this.parent(preview);
-
-        let fc = this.preview.view.get_find_controller();
-        fc.connect('found-text', Lang.bind(this, function(view, matchCount, data) {
-            this._onSearchChanged(this.preview, matchCount > 0);
-        }));
-
-        this._onSearchChanged(this.preview, false);
-    },
-
-    _onSearchChanged: function(view, hasResults) {
-        this.preview.getAction('find-prev').enabled = hasResults;
-        this.preview.getAction('find-next').enabled = hasResults;
-    },
-
-    conceal: function() {
-        let fc = this.preview.view.get_find_controller();
-        fc.search_finish();
-
-        this.parent();
-    }
-});
-
 const EPUBViewToolbar = new Lang.Class({
     Name: 'EPUBViewToolbar',
     Extends: Preview.PreviewToolbar,
 
-    createSearchbar: function() {
-        return new EPUBSearchbar(this.preview);
+    _init: function(preview) {
+        this.parent(preview);
+
+        this.addSearchButton('view.find');
     }
+});
+
+const EPUBViewNavControls = new Lang.Class({
+    Name: 'EPUBViewNavControls',
+    Extends: Preview.PreviewNavControls,
+
+    _init: function(preview, overlay) {
+        this._epubdoc = null;
+        this.parent(preview, overlay);
+    },
+
+    setDocument: function(epubdoc) {
+        this._epubdoc = epubdoc;
+
+        if (this._epubdoc != null) {
+            this._level.set_range(1.0, this.preview.numPages);
+            this._epubdoc.connect('notify::chapter', Lang.bind(this, function() {
+                this._updatePage();
+                this._updateVisibility();
+            }));
+            this._updatePage();
+        }
+    },
+
+    _updatePage: function() {
+        let current = this.preview.page + 1;
+        let max = this.preview.numPages;
+        let text = _("chapter %s of %s").format(current, max);
+
+        this._label.set_text(text);
+        this._level.set_value(current);
+    },
+
+    createBarWidget: function() {
+        let barWidget = new EPUBBarWidget({ orientation: Gtk.Orientation.HORIZONTAL,
+                                            spacing: 10 });
+
+        this._label = new Gtk.Label();
+        barWidget.add(this._label);
+
+        this._level = new Gtk.Scale({ orientation: Gtk.Orientation.HORIZONTAL });
+        this._level.set_increments(1.0, 1.0);
+        this._level.set_draw_value(false);
+        this._level.set_digits(0);
+        barWidget.pack_start(this._level, true, true, 5);
+        this._level.connect('value-changed', Lang.bind(this, function() {
+            if (this._epubdoc != null)
+                this._epubdoc.set_chapter(this._level.get_value() - 1);
+        }));
+
+        return barWidget;
+    }
+});
+
+// This class is needed to change the css_name of the widget, to style as a
+// toolbar, with round borders and the correct padding. Doing this we'll
+// have the same styles as GdNavBar
+const EPUBBarWidget = new Lang.Class({
+    Name: 'EPUBBarWidget',
+    Extends: Gtk.Box,
+    CssName: 'toolbar'
 });

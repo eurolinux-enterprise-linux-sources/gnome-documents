@@ -26,10 +26,6 @@
 #include <gio/gio.h>
 #include <evince-view.h>
 
-#define GOA_API_IS_SUBJECT_TO_CHANGE
-#include <gdata/gdata.h>
-#include <zpj/zpj.h>
-
 G_BEGIN_DECLS
 
 void gd_pdf_loader_load_uri_async (const gchar *uri,
@@ -39,22 +35,6 @@ void gd_pdf_loader_load_uri_async (const gchar *uri,
                                    gpointer user_data);
 EvDocumentModel *gd_pdf_loader_load_uri_finish (GAsyncResult *res,
                                                 GError **error);
-
-void gd_pdf_loader_load_gdata_entry_async (GDataEntry *entry,
-                                           GDataDocumentsService *service,
-                                           GCancellable *cancellable,
-                                           GAsyncReadyCallback callback,
-                                           gpointer user_data);
-EvDocumentModel *gd_pdf_loader_load_gdata_entry_finish (GAsyncResult *res,
-                                                        GError **error);
-
-void gd_pdf_loader_load_zpj_entry_async (ZpjSkydriveEntry *entry,
-                                         ZpjSkydrive *service,
-                                         GCancellable *cancellable,
-                                         GAsyncReadyCallback callback,
-                                         gpointer user_data);
-EvDocumentModel *gd_pdf_loader_load_zpj_entry_finish (GAsyncResult *res,
-                                                      GError **error);
 
 G_END_DECLS
 
