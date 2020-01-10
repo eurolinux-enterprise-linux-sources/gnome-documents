@@ -1,0 +1,774 @@
+# Assamese translation for gnome-documents.
+# Copyright (C) 2011 gnome-documents's COPYRIGHT HOLDER
+# This file is distributed under the same license as the gnome-documents package.
+#
+# ngoswami <ngoswami@redhat.com>, 2011.
+# Nilamdyuti Goswami <ngoswami@redhat.com>, 2011, 2012, 2013, 2014.
+msgid ""
+msgstr ""
+"Project-Id-Version: gnome-documents master\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
+"documents&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2014-08-18 06:47+0000\n"
+"PO-Revision-Date: 2014-08-18 17:57+0530\n"
+"Last-Translator: Nilamdyuti Goswami <ngoswami@redhat.com>\n"
+"Language-Team: Assamese <kde-i18n-doc@kde.org>\n"
+"Language: as_IN\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Lokalize 1.5\n"
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:1
+#: ../data/org.gnome.Documents.desktop.in.h:1 ../src/application.js:121
+#: ../src/mainWindow.js:52 ../src/mainWindow.js:302
+msgid "Documents"
+msgstr "দস্তাবেজসমূহ"
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:2
+msgid "A document manager application for GNOME"
+msgstr "GNOME ৰ বাবে এটা দস্তাবেজ ব্যৱস্থাপক এপ্লিকেচন"
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:3
+msgid ""
+"A simple application to access, organize and share your documents on GNOME. "
+"It is meant to be a simple and elegant replacement for using a file manager "
+"to deal with documents. Seamless cloud integration is offered through GNOME "
+"Online Accounts."
+msgstr ""
+"GNOME ত আপোনাৰ দস্তাবেজসমূহ অভিগম, সংঘঠিত আৰু অংশীদাৰী কৰিবলৈ এটা সাধাৰণ "
+"এপ্লিকেচন। ই দস্তাবেজসমূহ ব্যৱস্থাপনা কৰিবলৈ এটা ফাইল ব্যৱস্থাপকৰ এটা সহজ আৰু "
+"সুবিন্যস্ত প্ৰতিস্থাপন। GNOME অনলাইন একাওন্টসমূহৰ সহায়ত সন্ধিহীন cloud অনুকলন "
+"প্ৰদান "
+"কৰা হয়।"
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:4
+msgid "It lets you:"
+msgstr "ই আপোনাক অনুমতি দিয়ে:"
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:5
+msgid "View recent local and online documents"
+msgstr "শেহতীয়া স্থানীয় আৰু অনলাইন দস্তাবেজসমূহ দৰ্শন কৰক"
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:6
+msgid "Access your Google, ownCloud or OneDrive content"
+msgstr "আপোনাৰ Google, ownCloud অথবা OneDrive সমল অভিগম কৰক"
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:7
+msgid "Search through documents"
+msgstr "দস্তাবেজসমূহত সন্ধান কৰক"
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:8
+msgid "See new documents shared by friends"
+msgstr "বন্ধুসকল দ্বাৰা অংশীদাৰী কৰা নতুন দস্তাবেজসমূহ চাওক"
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:9
+msgid "View documents fullscreen"
+msgstr "দস্তাবেজসমূহ পূৰ্ণপৰ্দা দৰ্শন কৰক"
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:10
+#| msgid "PDF Documents"
+msgid "Print documents"
+msgstr "দস্তাবেজসমূহ প্ৰিন্ট কৰক"
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:11
+#| msgid "Select Items"
+msgid "Select favorites"
+msgstr "পছন্দসমূহ বাছক"
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:12
+msgid "Allow opening full featured editor for non-trivial changes"
+msgstr ""
+"গুৰুত্বপূৰ্ণ পৰিবৰ্তনসমূহৰ বাবে সম্পূৰ্ণ বৈশিষ্ট্য থকা সম্পাদক খোলাৰ অনুমতি "
+"দিয়ক"
+
+#: ../data/org.gnome.Documents.desktop.in.h:2
+msgid "Access, manage and share documents"
+msgstr "দস্তাবেজসমূহ অভিগম, ব্যৱস্থাপনা আৰু অংশীদাৰী কৰক"
+
+#: ../data/org.gnome.Documents.desktop.in.h:3
+msgid "Docs;PDF;Document;"
+msgstr "দস্তাবেজসমূহ;PDF;দস্তাবেজ;"
+
+#: ../data/org.gnome.documents.gschema.xml.h:1
+msgid "View as"
+msgstr "এই ধৰণে দৰ্শন কৰক"
+
+#: ../data/org.gnome.documents.gschema.xml.h:2
+msgid "View as type"
+msgstr "ধৰণ হিচাপে দৰ্শন কৰক"
+
+#: ../data/org.gnome.documents.gschema.xml.h:3
+msgid "Window size"
+msgstr "উইন্ডো আকাৰ"
+
+#: ../data/org.gnome.documents.gschema.xml.h:4
+msgid "Window size (width and height)."
+msgstr "উইন্ডো আকাৰ (প্ৰস্থ আৰু উচ্চতা)।"
+
+#: ../data/org.gnome.documents.gschema.xml.h:5
+msgid "Window position"
+msgstr "উইন্ডো অৱস্থান"
+
+#: ../data/org.gnome.documents.gschema.xml.h:6
+msgid "Window position (x and y)."
+msgstr "উইন্ডো অৱস্থান (x আৰু y)।"
+
+#: ../data/org.gnome.documents.gschema.xml.h:7
+msgid "Window maximized"
+msgstr "উইন্ডো সৰ্বাধিক আকাৰ"
+
+#: ../data/org.gnome.documents.gschema.xml.h:8
+msgid "Window maximized state"
+msgstr "উইন্ডো সৰ্বাধিক অৱস্থা"
+
+#: ../src/documents.js:621
+msgid "Failed to print document"
+msgstr "দস্তাবেজ প্ৰিন্ট কৰিবলৈ ব্যৰ্থ"
+
+#: ../src/documents.js:658 ../src/search.js:427
+msgid "Local"
+msgstr "স্থানীয়"
+
+#: ../src/documents.js:679
+msgid "GNOME"
+msgstr "GNOME"
+
+#: ../src/documents.js:680
+msgid "Getting Started with Documents"
+msgstr "দস্তাবেজসমূহৰ সৈতে আৰম্ভ কৰা"
+
+#: ../src/documents.js:696 ../src/documents.js:877 ../src/documents.js:939
+#: ../src/documents.js:1047
+msgid "Collection"
+msgstr "সংগ্ৰহ"
+
+#: ../src/documents.js:756
+msgid "Google Docs"
+msgstr "Google দস্তাবেজসমূহ"
+
+#: ../src/documents.js:757
+msgid "Google"
+msgstr "Google"
+
+#: ../src/documents.js:879 ../src/documents.js:1049
+msgid "Spreadsheet"
+msgstr "স্প্ৰেডশ্বিট"
+
+#: ../src/documents.js:881 ../src/documents.js:1051 ../src/presentation.js:47
+msgid "Presentation"
+msgstr "পৰিৱেশন"
+
+#: ../src/documents.js:883 ../src/documents.js:1053
+msgid "Document"
+msgstr "দস্তাবেজ"
+
+#: ../src/documents.js:917
+msgid "ownCloud"
+msgstr "ownCloud"
+
+#: ../src/documents.js:981 ../src/documents.js:982
+msgid "OneDrive"
+msgstr "OneDrive"
+
+#: ../src/documents.js:1181
+msgid "Please check the network connection."
+msgstr "অনুগ্ৰহ কৰি নেটৱৰ্ক সংযোগ নিৰীক্ষণ কৰক।"
+
+#: ../src/documents.js:1184
+msgid "Please check the network proxy settings."
+msgstr "অনুগ্ৰহ কৰি নেটৱৰ্ক প্ৰক্সি সংহতিসমূহ নিৰীক্ষণ কৰক।"
+
+#: ../src/documents.js:1187
+msgid "Unable to sign in to the document service."
+msgstr "দস্তাবেজ সেৱালে ছাইন ইন কৰিবলে অক্ষম।"
+
+#: ../src/documents.js:1190
+msgid "Unable to locate this document."
+msgstr "এই দস্তাবেজ অৱস্থিত কৰিবলে অক্ষম।"
+
+#: ../src/documents.js:1193
+#, javascript-format
+msgid "Hmm, something is fishy (%d)."
+msgstr "উমম, কিবা ঠিক যেন লগা নাই (%d)।"
+
+#: ../src/documents.js:1211
+#, javascript-format
+msgid "Oops! Unable to load “%s”"
+msgstr "ইচ্চ! “%s” ল'ড কৰিবলে অক্ষম"
+
+#: ../src/edit.js:192
+msgid "View"
+msgstr "দৰ্শন"
+
+#: ../src/embed.js:142
+msgid "No Documents Found"
+msgstr "কোনো দস্তাবেজ পোৱা নগল"
+
+#: ../src/embed.js:163
+#, javascript-format
+msgid "You can add your online accounts in %s"
+msgstr "আপুনি আপোনাৰ অনলাইন একাওন্টসমূহ %s ত যোগ কৰিব পাৰিব"
+
+#: ../src/embed.js:167
+msgid "Settings"
+msgstr "সংহতিসমূহ"
+
+#: ../src/lib/gd-nav-bar.c:238
+#, c-format
+msgid "Page %u of %u"
+msgstr "%u ৰ পৃষ্ঠা %u"
+
+#: ../src/lib/gd-pdf-loader.c:247
+msgid "Unable to load the document"
+msgstr "দস্তাবেজ ল'ড কৰিবলে অক্ষম"
+
+#: ../src/lib/gd-pdf-loader.c:715
+msgid "LibreOffice is required to view this document"
+msgstr "এই দস্তাবেজ দৰ্শন কৰিবলে LibreOffice ৰ প্ৰয়োজন"
+
+#. Translators: %s is the number of the page, already formatted
+#. * as a string, for example "Page 5".
+#.
+#: ../src/lib/gd-places-bookmarks.c:315
+#, c-format
+msgid "Page %s"
+msgstr "পৃষ্ঠা %s"
+
+#: ../src/lib/gd-places-bookmarks.c:378
+msgid "No bookmarks"
+msgstr "কোনো পত্ৰচিহ্ন নাই"
+
+#: ../src/lib/gd-places-bookmarks.c:386 ../src/lib/gd-places-links.c:257
+#: ../src/view.js:71
+msgid "Loading…"
+msgstr "ল'ড কৰা হৈছে…"
+
+#: ../src/lib/gd-places-bookmarks.c:651 ../src/preview.js:580
+msgid "Bookmarks"
+msgstr "পত্ৰচিহ্নসমূহ"
+
+#: ../src/lib/gd-places-links.c:342
+msgid "No table of contents"
+msgstr "কোনো সমলসমূহৰ টেবুল নাই"
+
+#: ../src/lib/gd-places-links.c:518
+msgid "Contents"
+msgstr "সমলসমূহ"
+
+#: ../src/mainToolbar.js:79
+msgid "Search"
+msgstr "সন্ধান কৰক"
+
+#: ../src/mainToolbar.js:87
+msgid "Back"
+msgstr "পিছলৈ"
+
+#: ../src/mainToolbar.js:132
+msgid "View items as a list"
+msgstr "বস্তুবোৰ এটা তালিকা ৰূপে দৰ্শন কৰক"
+
+#: ../src/mainToolbar.js:138
+msgid "View items as a grid of icons"
+msgstr "বস্তুবোৰক আইকনসমূহৰ এটা গ্ৰিড ৰূপে দৰ্শন কৰক"
+
+#: ../src/mainToolbar.js:168
+msgid "Click on items to select them"
+msgstr "বস্তুবোৰ নিৰ্বাচন কৰিবলে সিহতত ক্লিক কৰক"
+
+#: ../src/mainToolbar.js:170
+#, javascript-format
+msgid "%d selected"
+msgid_plural "%d selected"
+msgstr[0] "%d নিৰ্বাচন কৰা হৈছে"
+msgstr[1] "%d নিৰ্বাচন কৰা হৈছে"
+
+#: ../src/mainToolbar.js:200
+msgid "Cancel"
+msgstr "বাতিল কৰক"
+
+#: ../src/mainToolbar.js:242
+msgid "Select Items"
+msgstr "বস্তুবোৰ বাছক"
+
+#: ../src/mainWindow.js:301
+msgid "translator-credits"
+msgstr "নীলমদ্যুতি গোস্বামী (ngoswami@redhat.com)"
+
+#: ../src/mainWindow.js:303
+msgid "A document manager application"
+msgstr "এটা দস্তাবেজ ব্যৱস্থাপক এপ্লিকেচন"
+
+#: ../src/notifications.js:50
+msgid "Selected item has been deleted"
+msgid_plural "Selected items have been deleted"
+msgstr[0] "নিৰ্বাচিত বস্তুক মচি পেলোৱা হৈছে"
+msgstr[1] "নিৰ্বাচিত বস্তুসমূহক মচি পেলোৱা হৈছে"
+
+#: ../src/notifications.js:57
+msgid "Undo"
+msgstr "বাতিল কৰক"
+
+#: ../src/notifications.js:157
+#, javascript-format
+msgid "Printing “%s”: %s"
+msgstr "“%s” প্ৰিন্ট কৰা হৈছে: %s"
+
+#: ../src/notifications.js:213
+msgid "Your documents are being indexed"
+msgstr "আপোনাৰ দস্তাবেজসমূহ সূচীত কৰা হৈছে"
+
+#: ../src/notifications.js:214
+msgid "Some documents might not be available during this process"
+msgstr "এই প্ৰক্ৰিয়াৰ সময়ত কিছুমান দস্তাবেজ উপলব্ধ নাথাকিব পাৰে"
+
+#: ../src/notifications.js:236
+#, javascript-format
+msgid "Fetching documents from %s"
+msgstr "%s ৰ পৰা দস্তাবেজসমূহ প্ৰাপ্ত কৰা হৈছে"
+
+#: ../src/notifications.js:238
+msgid "Fetching documents from online accounts"
+msgstr "অনলাইন একাওন্টসমূহৰ পৰা দস্তাবেজসমূহ প্ৰাপ্ত কৰা হৈছে"
+
+#: ../src/password.js:46
+msgid "Password Required"
+msgstr "পাছৱৰ্ডৰ প্ৰয়োজন"
+
+#: ../src/password.js:49
+msgid "_Unlock"
+msgstr "আনলক কৰক (_U)"
+
+#: ../src/password.js:65
+#, javascript-format
+msgid "Document %s is locked and requires a password to be opened."
+msgstr "দস্তাবেজ %s লক কৰা আছে আৰু খোলিবলৈ এটা পাছৱৰ্ডৰ প্ৰয়োজন।"
+
+#: ../src/password.js:79
+msgid "_Password"
+msgstr "পাছৱৰ্ড (_P)"
+
+#: ../src/presentation.js:104
+msgid "Running in presentation mode"
+msgstr "উপস্থাপন অৱস্থাত চলি আছে"
+
+#: ../src/presentation.js:157
+msgid "Present On"
+msgstr "পৰিৱেশন চলি আছে"
+
+#: ../src/preview.js:588
+msgid "Bookmark this page"
+msgstr "এই পৃষ্ঠা পত্ৰচিহ্নিত কৰক"
+
+#: ../src/preview.js:823 ../src/selections.js:857
+#, javascript-format
+msgid "Open with %s"
+msgstr "%s ৰ সৈতে খোলক"
+
+#: ../src/preview.js:885
+msgid "Find Previous"
+msgstr "পূৰ্বৱৰ্তী সন্ধান কৰক"
+
+#: ../src/preview.js:892
+msgid "Find Next"
+msgstr "পৰৱৰ্তী সন্ধান কৰক"
+
+#: ../src/properties.js:61 ../src/resources/preview-menu.ui.h:9
+#: ../src/selections.js:767
+msgid "Properties"
+msgstr "বৈশিষ্টসমূহ"
+
+#: ../src/properties.js:81
+msgctxt "Document Title"
+msgid "Title"
+msgstr "শীৰ্ষক"
+
+#: ../src/properties.js:90
+msgctxt "Document Author"
+msgid "Author"
+msgstr "লেখক"
+
+#: ../src/properties.js:97
+msgid "Source"
+msgstr "উৎস"
+
+#: ../src/properties.js:103
+msgid "Date Modified"
+msgstr "পৰিবৰ্তনৰ তাৰিখ"
+
+#: ../src/properties.js:110
+msgid "Date Created"
+msgstr "সৃষ্টি কৰাৰ তাৰিখ"
+
+#: ../src/properties.js:119
+msgctxt "Document Type"
+msgid "Type"
+msgstr "ধৰণ"
+
+#: ../src/resources/app-menu.ui.h:1
+msgid "Fullscreen"
+msgstr "পূৰ্ণপৰ্দা"
+
+#: ../src/resources/app-menu.ui.h:2
+msgid "Help"
+msgstr "সহায়"
+
+#: ../src/resources/app-menu.ui.h:3
+msgid "About"
+msgstr "বিষয়ে"
+
+#: ../src/resources/app-menu.ui.h:4
+msgid "Quit"
+msgstr "প্ৰস্থান কৰক"
+
+#: ../src/resources/preview-context-menu.ui.h:1
+msgid "_Copy"
+msgstr "কপি কৰক (_C)"
+
+#: ../src/resources/preview-menu.ui.h:1 ../src/selections.js:747
+#: ../src/selections.js:860
+msgid "Open"
+msgstr "খোলক"
+
+#: ../src/resources/preview-menu.ui.h:2
+msgid "Edit"
+msgstr "সম্পাদনা"
+
+#: ../src/resources/preview-menu.ui.h:3
+msgid "Print…"
+msgstr "প্ৰিন্ট কৰক..."
+
+#: ../src/resources/preview-menu.ui.h:4
+msgid "Present"
+msgstr "পৰিৱেশন"
+
+#: ../src/resources/preview-menu.ui.h:5
+msgid "Zoom In"
+msgstr "ডাঙৰ কৰি দেখুৱাওক"
+
+#: ../src/resources/preview-menu.ui.h:6
+msgid "Zoom Out"
+msgstr "সৰু কৰি দেখুৱাওক"
+
+#: ../src/resources/preview-menu.ui.h:7
+msgid "Rotate ↶"
+msgstr "ঘুৰাওক ↶"
+
+#: ../src/resources/preview-menu.ui.h:8
+msgid "Rotate ↷"
+msgstr "ঘুৰাওক ↷"
+
+#: ../src/resources/selection-menu.ui.h:1
+msgid "Select All"
+msgstr "সকলো বাছক"
+
+#: ../src/resources/selection-menu.ui.h:2
+msgid "Select None"
+msgstr "কোনোটো নাবাছিব"
+
+#: ../src/search.js:114
+msgid "Category"
+msgstr "বিভাগ"
+
+#: ../src/search.js:119 ../src/search.js:180 ../src/search.js:265
+#: ../src/search.js:421
+msgid "All"
+msgstr "সকলো"
+
+#: ../src/search.js:125
+msgid "Favorites"
+msgstr "পছন্দৰ"
+
+#: ../src/search.js:130
+msgid "Shared with you"
+msgstr "আপোনাৰ সৈতে অংশীদাৰী কৰা আছে"
+
+#: ../src/search.js:177
+msgctxt "Search Filter"
+msgid "Type"
+msgstr "ধৰণ"
+
+#: ../src/search.js:182
+msgid "Collections"
+msgstr "সংগ্ৰহসমূহ"
+
+#: ../src/search.js:186
+msgid "PDF Documents"
+msgstr "PDF দস্তাবেজসমূহ"
+
+#: ../src/search.js:190
+msgid "Presentations"
+msgstr "পৰিৱেশনসমূহ"
+
+#: ../src/search.js:193
+msgid "Spreadsheets"
+msgstr "স্প্ৰেডশ্বিটসমূহ"
+
+#: ../src/search.js:196
+msgid "Text Documents"
+msgstr "লিখনি দস্তাবেজসমূহ"
+
+#: ../src/search.js:262
+msgid "Match"
+msgstr "মিল"
+
+#: ../src/search.js:268
+msgctxt "Search Filter"
+msgid "Title"
+msgstr "শীৰ্ষক"
+
+#: ../src/search.js:271
+msgctxt "Search Filter"
+msgid "Author"
+msgstr "লেখক"
+
+#: ../src/search.js:417
+msgid "Sources"
+msgstr "উৎসসমূহ"
+
+#: ../src/selections.js:461
+msgid "You don't have any collections yet. Enter a new collection name above."
+msgstr "আপোনাৰ ওচৰত এতিয়াও কোনো সংগ্ৰহ নাই। ওপৰত এটা নতুন সংগ্ৰহ নাম সুমুৱাওক।"
+
+#: ../src/selections.js:604
+msgid "Create new collection"
+msgstr "নতুন সংগ্ৰহ সৃষ্টি কৰক"
+
+#: ../src/selections.js:640
+msgctxt "Dialog Title"
+msgid "Collections"
+msgstr "সংগ্ৰহসমূহ"
+
+#: ../src/selections.js:752
+msgid "Print"
+msgstr "প্ৰিন্ট কৰক"
+
+#: ../src/selections.js:757
+msgid "Delete"
+msgstr "মচি পেলাওক"
+
+#: ../src/selections.js:762
+msgid "Share"
+msgstr "অংশীদাৰী কৰক"
+
+#: ../src/selections.js:772
+msgid "Add to Collection"
+msgstr "সংগ্ৰহলৈ যোগ কৰক"
+
+#: ../src/sharing.js:98
+msgid "Sharing Settings"
+msgstr "অংশীদাৰী সংহতিসমূহ"
+
+#: ../src/sharing.js:102
+msgid "Done"
+msgstr "কৰা হল"
+
+#: ../src/sharing.js:135
+msgid "Document permissions"
+msgstr "দস্তাবেজৰ অনুমতি"
+
+#: ../src/sharing.js:142 ../src/sharing.js:320
+msgid "Change"
+msgstr "পৰিবৰ্তন"
+
+#: ../src/sharing.js:166 ../src/sharing.js:295
+msgid "Private"
+msgstr "ব্যক্তিগত"
+
+#: ../src/sharing.js:176 ../src/sharing.js:288
+msgid "Public"
+msgstr "ৰাজহুৱা"
+
+#: ../src/sharing.js:180 ../src/sharing.js:290
+msgid "Everyone can edit"
+msgstr "সকলোৱে সম্পাদন কৰিব পাৰিব"
+
+#: ../src/sharing.js:187
+msgid "Add people"
+msgstr "মানুহ যোগ কৰক"
+
+#: ../src/sharing.js:194
+msgid "Enter an email address"
+msgstr "এটা ইমেইল ঠিকনা সুমুৱাওক"
+
+#: ../src/sharing.js:209 ../src/sharing.js:376
+msgid "Can edit"
+msgstr "সম্পাদন কৰিব পাৰিব"
+
+#: ../src/sharing.js:209 ../src/sharing.js:379
+msgid "Can view"
+msgstr "দৰ্শন কৰিব পাৰিব"
+
+#: ../src/sharing.js:216
+msgid "Add"
+msgstr "যোগ কৰক"
+
+#: ../src/sharing.js:292
+msgid "Everyone can read"
+msgstr "সকলোৱে পঢ়িব পাৰিব"
+
+#: ../src/sharing.js:307
+msgid "Save"
+msgstr "সংৰক্ষণ কৰক"
+
+#: ../src/sharing.js:373
+msgid "Owner"
+msgstr "গৰাকী"
+
+#: ../src/sharing.js:442
+#, javascript-format
+msgid "You can ask %s for access"
+msgstr "অভিগমৰ বাবে আপুনি %s ক সোধিব পাৰিব"
+
+#: ../src/sharing.js:479 ../src/sharing.js:515 ../src/sharing.js:572
+#: ../src/sharing.js:589 ../src/sharing.js:608
+msgid "The document was not updated"
+msgstr "দস্তাবেজক আপডেইট কৰা হোৱা নাছিল"
+
+#: ../src/shellSearchProvider.js:294
+msgid "Untitled Document"
+msgstr "শীৰ্ষকবিহিন দস্তাবেজ"
+
+#: ../src/trackerController.js:170
+msgid "Unable to fetch the list of documents"
+msgstr "দস্তাবেজসমূহৰ তালিকা প্ৰাপ্ত কৰিবলে অক্ষম"
+
+#: ../src/view.js:62 ../src/view.js:93
+msgid "Load More"
+msgstr "অধিক ল'ড কৰক"
+
+#: ../src/view.js:307
+msgid "Yesterday"
+msgstr "যোৱাকালী"
+
+#: ../src/view.js:309
+#, javascript-format
+msgid "%d day ago"
+msgid_plural "%d days ago"
+msgstr[0] "%d দিন আগত"
+msgstr[1] "%d দিন আগত"
+
+#: ../src/view.js:313
+msgid "Last week"
+msgstr "যোৱা সপ্তাহ"
+
+#: ../src/view.js:315
+#, javascript-format
+msgid "%d week ago"
+msgid_plural "%d weeks ago"
+msgstr[0] "%d সপ্তাহ আগত"
+msgstr[1] "%d সপ্তাহসমূহ আগত"
+
+#: ../src/view.js:319
+msgid "Last month"
+msgstr "যোৱা মাহ"
+
+#: ../src/view.js:321
+#, javascript-format
+msgid "%d month ago"
+msgid_plural "%d months ago"
+msgstr[0] "%d মাহ আগত"
+msgstr[1] "%d মাহ আগত"
+
+#: ../src/view.js:325
+msgid "Last year"
+msgstr "যোৱা বছৰ"
+
+#: ../src/view.js:327
+#, javascript-format
+msgid "%d year ago"
+msgid_plural "%d years ago"
+msgstr[0] "%d বছৰ আগত"
+msgstr[1] "%d বছৰ আগত"
+
+#~ msgid ""
+#~ "<li>View recent local and online documents</li> <li>Access your Google, "
+#~ "ownCloud or SkyDrive content</li> <li>Search through documents</li> "
+#~ "<li>See new documents shared by friends</li> <li>View documents "
+#~ "fullscreen</li> <li>Print documents</li> <li>Select favorites</li> "
+#~ "<li>Allow opening full featured editor for non-trivial changes</li>"
+#~ msgstr ""
+#~ "<li>শেহতীয়া স্থানীয় আৰু অনলাইন দস্তাবেজসমূহ দৰ্শন কৰাৰ</li> <li>আপোনাৰ Google, "
+#~ "ownCloud অথবা SkyDrive সমল অভিগম কৰাৰ</li> <li>দস্তাবেজসমূহত সন্ধান কৰাৰ</"
+#~ "li> <li>বন্ধুসকল দ্বাৰা অংশীদাৰী কৰা নতুন দস্তাবেজসমূহ চোৱাৰ</li> "
+#~ "<li>দস্তাবেজসমূহ পূৰ্ণপৰ্দা দৰ্শন কৰাৰ</li> <li>দস্তাবেজসমূহ প্ৰিন্ট কৰাৰ</li> "
+#~ "<li>পছন্দ নিৰ্বাচন কৰাৰ</li> <li>অসাধাৰণ পৰিবৰ্তনসমূহৰ বাবে সম্পূৰ্ণ বৈশিষ্ট্যৰ "
+#~ "সম্পাদক খোলাৰ</li>"
+
+#~ msgid "Skydrive"
+#~ msgstr "Skydrive"
+
+#~ msgid "Results for “%s”"
+#~ msgstr "“%s” ৰ বাবে ফলাফলসমূহ"
+
+#~ msgid "Close"
+#~ msgstr "বন্ধ কৰক"
+
+#~ msgid "Grid"
+#~ msgstr "গ্ৰিড"
+
+#~ msgid "List"
+#~ msgstr "তালিকা"
+
+#~ msgid "About Documents"
+#~ msgstr "দস্তাবেজসমূহৰ বিষয়ে"
+
+#~| msgid "Organize"
+#~ msgctxt "Dialog Title"
+#~ msgid "Organize"
+#~ msgstr "সংঘঠিত কৰক"
+
+#~| msgid "Organize"
+#~ msgctxt "Toolbar button tooltip"
+#~ msgid "Organize"
+#~ msgstr "সংঘঠিত কৰক"
+
+#~ msgid "Unable to load \"%s\" for preview"
+#~ msgstr " \"%s\" ক পূৰ্বদৰ্শনৰ বাবে ল'ড কৰিবলে অক্ষম"
+
+#~ msgid "filtered by title"
+#~ msgstr "শীৰ্ষক দ্বাৰা পৰিস্ৰাৱিত"
+
+#~ msgid "filtered by author"
+#~ msgstr "লেখক দ্বাৰা পৰিস্ৰাৱিত"
+
+#~ msgid "Cannot find \"unoconv\", please check your LibreOffice installation"
+#~ msgstr ""
+#~ "\"unoconv\" বিচাৰি পোৱা নাযায়, অনুগ্ৰহ কৰি আপোনাৰ LibreOffice ইনস্টল নিৰীক্ষণ "
+#~ "কৰক"
+
+#~ msgid "Rotate Right"
+#~ msgstr "সোঁফালে ঘুৰাওক"
+
+#~ msgid "New and Recent"
+#~ msgstr "নতুন আৰু শেহতীয়া"
+
+#~ msgid "Load %d more document"
+#~ msgid_plural "Load %d more documents"
+#~ msgstr[0] "%d অধিক দস্তাবেজ ল'ড কৰক"
+#~ msgstr[1] "%d অধিক দস্তাবেজসমূহ ল'ড কৰক"
+
+#~ msgid "Print..."
+#~ msgstr "প্ৰিন্ট কৰক..."
+
+#~ msgid "Remove from favorites"
+#~ msgstr "পছন্দৰ পৰা আতৰাওক"
+
+#~ msgid "Add to favorites"
+#~ msgstr "পছন্দলে যোগ কৰক"
+
+#~ msgid "%d of %d"
+#~ msgstr "%d  ৰ %d"
+
+#~ msgid "GNOME Documents"
+#~ msgstr "GNOME দস্তাবেজসমূহ"
+
+#~ msgid "The active source filter"
+#~ msgstr "সক্ৰিয় উৎস পৰিস্ৰাৱক"
+
+#~ msgid "The last active source filter"
+#~ msgstr "সৰ্বশেষ সক্ৰিয় উৎস পৰিস্ৰাৱক"
+
+#~ msgid "Enable list view"
+#~ msgstr "তালিকা দৰ্শন সামৰ্থবান কৰক"

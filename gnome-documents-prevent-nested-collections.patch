@@ -1,0 +1,25 @@
+From 43217734c4b01e894bd1d4efa19d9a07bbb2807c Mon Sep 17 00:00:00 2001
+From: Debarshi Ray <debarshir@gnome.org>
+Date: Wed, 15 Jun 2016 12:19:49 +0200
+Subject: [PATCH] selections: Prevent nested collections
+
+https://bugzilla.redhat.com/show_bug.cgi?id=958690
+---
+ src/selections.js | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/src/selections.js b/src/selections.js
+index 7c1b47d9983d..cec718b9a793 100644
+--- a/src/selections.js
++++ b/src/selections.js
+@@ -841,6 +841,7 @@ const SelectionToolbar = new Lang.Class({
+                     showShare = false;
+ 
+                 showTrash &= doc.canTrash();
++                showCollection &= !doc.collection;
+                 showPrint &= !doc.collection;
+             }));
+ 
+-- 
+2.5.5
+

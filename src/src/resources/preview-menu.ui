@@ -1,0 +1,54 @@
+<interface>
+  <menu id="preview-menu">
+    <section id="open-section">
+      <item>
+        <attribute name="action">app.open-current</attribute>
+        <attribute name="label" translatable="yes">Open</attribute>
+      </item>
+      <item>
+        <attribute name="action">app.edit-current</attribute>
+        <attribute name="label" translatable="yes">Edit</attribute>
+      </item>
+      <item>
+        <attribute name="action">app.print-current</attribute>
+        <attribute name="label" translatable="yes">Print…</attribute>
+        <attribute name="accel">&lt;Primary&gt;p</attribute>
+      </item>
+      <item>
+        <attribute name="action">app.present-current</attribute>
+        <attribute name="label" translatable="yes">Present</attribute>
+        <attribute name="accel">F5</attribute>
+      </item>
+    </section>
+    <section>
+      <item>
+        <attribute name="action">app.zoom-in</attribute>
+        <attribute name="label" translatable="yes">Zoom In</attribute>
+        <attribute name="accel">&lt;Primary&gt;plus</attribute>
+      </item>
+      <item>
+        <attribute name="action">app.zoom-out</attribute>
+        <attribute name="label" translatable="yes">Zoom Out</attribute>
+        <attribute name="accel">&lt;Primary&gt;minus</attribute>
+      </item>
+    </section>
+    <section>
+      <item>
+        <attribute name="action">app.rotate-left</attribute>
+        <attribute name="label" translatable="yes">Rotate ↶</attribute>
+        <attribute name="accel">&lt;Primary&gt;Left</attribute>
+      </item>
+      <item>
+        <attribute name="action">app.rotate-right</attribute>
+        <attribute name="label" translatable="yes">Rotate ↷</attribute>
+        <attribute name="accel">&lt;Primary&gt;Right</attribute>
+      </item>
+    </section>
+    <section>
+      <item>
+        <attribute name="action">app.properties</attribute>
+        <attribute name="label" translatable="yes">Properties</attribute>
+      </item>
+    </section>
+  </menu>
+</interface>

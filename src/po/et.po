@@ -1,0 +1,599 @@
+# Estonian translation for gnome-documents.
+# Copyright (C) 2012 gnome-documents's COPYRIGHT HOLDER
+# This file is distributed under the same license as the gnome-documents package.
+# Mattias Põldaru <mahfiaz@gmail.com>, 2012, 2013.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: gnome-documents master\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
+"documents&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2013-09-18 20:27+0000\n"
+"PO-Revision-Date: 2013-09-21 10:08+0300\n"
+"Last-Translator: Mattias Põldaru <mahfiaz@gmail.com>\n"
+"Language-Team: Estonian <>\n"
+"Language: et\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n!=1);\n"
+"X-Generator: Poedit 1.5.4\n"
+
+msgid ""
+"A simple application to access, organize and share your documents on GNOME. "
+"It is meant to be a simple and elegant replacement for using a file manager "
+"to deal with documents. Seamless cloud integration is offered through GNOME "
+"Online Accounts."
+msgstr ""
+"Lihtne rakendus GNOMEs dokumentide avamiseks, haldamiseks ning jagamiseks. "
+"See on lihtne ja elegantne asendus failihalduri kasutamisele dokumentide "
+"haldamiseks. GNOME veebikontode kaudu on sellel sujuv integratsioon "
+"pilveserveritega."
+
+msgid "It lets you:"
+msgstr "See võimaldab sul:"
+
+msgid ""
+"<li>View recent local and online documents</li> <li>Access your Google, "
+"ownCloud or SkyDrive content</li> <li>Search through documents</li> <li>See "
+"new documents shared by friends</li> <li>View documents fullscreen</li> "
+"<li>Print documents</li> <li>Select favorites</li> <li>Allow opening full "
+"featured editor for non-trivial changes</li>"
+msgstr ""
+"<li>kuvada hiljutisi dokumente arvutis ja internetis</li> <li>ligipääsu "
+"Google'i, ownCloud'i või SkyDrive'i sisule</li> <li>otsida dokumentidest</"
+"li> <li>näha sõprade jagatud uusi dokumente</li> <li>vaadata dokumente "
+"täisekraanil</li> <li>printida dokumente</li> <li>märkida lemmikuid</li> "
+"<li>avada võimsama redaktori keerulisemate muudatuste jaoks</li>"
+
+msgid "Documents"
+msgstr "Dokumendid"
+
+msgid "Access, manage and share documents"
+msgstr "Dokumentide haldus ja jagamine"
+
+msgid "Docs;PDF;Document;"
+msgstr "Dokumendid;Dokument;PDF;"
+
+msgid "View as"
+msgstr "Kuvatakse kui"
+
+msgid "View as type"
+msgstr "Kuvatakse liigina"
+
+msgid "Window size"
+msgstr "Akna suurus"
+
+msgid "Window size (width and height)."
+msgstr "Akna suurus (laius ja kõrgus)."
+
+msgid "Window position"
+msgstr "Akna asukoht"
+
+msgid "Window position (x and y)."
+msgstr "Akna asukoht (x ja y)."
+
+msgid "Window maximized"
+msgstr "Aken maksimeeritud"
+
+msgid "Window maximized state"
+msgstr "Akna maksimeeritud olek"
+
+#. Translators: this refers to local documents
+msgid "Local"
+msgstr "Kohalik"
+
+#. Translators: Documents ships a "Getting Started with Documents"
+#. tutorial PDF. The "GNOME" string below is displayed as the author name
+#. of that document, and doesn't normally need to be translated.
+msgid "GNOME"
+msgstr "GNOME"
+
+msgid "Getting Started with Documents"
+msgstr "GNOME dokumentide kasutamise õppimine"
+
+msgid "Collection"
+msgstr "Kogu"
+
+#. overridden
+msgid "Google Docs"
+msgstr "Google Docs"
+
+msgid "Google"
+msgstr "Google"
+
+msgid "Spreadsheet"
+msgstr "Arvutustabel"
+
+msgid "Presentation"
+msgstr "Esitlus"
+
+msgid "Document"
+msgstr "Dokument"
+
+#. overridden
+msgid "ownCloud"
+msgstr "ownCloud"
+
+#. overridden
+msgid "Skydrive"
+msgstr "Skydrive"
+
+msgid "Please check the network connection."
+msgstr "Palun kontrolli võrguühendust."
+
+msgid "Please check the network proxy settings."
+msgstr "Palun kontrolli võrgu proksi sätteid."
+
+msgid "Unable to sign in to the document service."
+msgstr "Dokumenditeenusesse ei saanud sisse logida."
+
+msgid "Unable to locate this document."
+msgstr "Dokumenti ei leitud."
+
+#, c-format
+msgid "Hmm, something is fishy (%d)."
+msgstr "Hmm, miski on jama (%d)."
+
+#. Translators: %s is the title of a document
+#, c-format
+msgid "Oops! Unable to load “%s”"
+msgstr "Ups! “%s” pole võimalik laadida"
+
+msgid "View"
+msgstr "Vaade"
+
+msgid "Loading…"
+msgstr "Laadimine…"
+
+msgid "No Documents Found"
+msgstr "Ühtegi dokumenti ei leitud"
+
+#. Translators: %s here is "System Settings", which is in a separate string
+#. due to markup, and should be translated only in the context of this sentence
+#, c-format
+msgid "You can add your online accounts in %s"
+msgstr "Sa võid lisada oma veebikontod %s alt"
+
+#. Translators: this should be translated in the context of the
+#. "You can add your online accounts in System Settings" sentence above
+msgid "System Settings"
+msgstr "süsteemi sätete"
+
+#, c-format
+msgid "Page %u of %u"
+msgstr "Lehekülg %u / %u"
+
+msgid "Unable to load the document"
+msgstr "Dokumenti pole võimalik laadida"
+
+msgid "LibreOffice is required to view this document"
+msgstr "Selle dokumendi kuvamiseks on vaja LibreOffice'it"
+
+#. Translators: %s is the number of the page, already formatted
+#. * as a string, for example "Page 5".
+#.
+#, c-format
+msgid "Page %s"
+msgstr "Lehekülg %s"
+
+msgid "No bookmarks"
+msgstr "Järjehoidjaid pole"
+
+msgid "Bookmarks"
+msgstr "Järjehoidjad"
+
+msgid "No table of contents"
+msgstr "Sisukorda pole"
+
+msgid "Contents"
+msgstr "Sisukord"
+
+msgid "Search"
+msgstr "Otsi"
+
+msgid "Back"
+msgstr "Tagasi"
+
+#, c-format
+msgid "Results for “%s”"
+msgstr "\"%s\" otsingu tulemused"
+
+msgid "Click on items to select them"
+msgstr "Kirjete märkimiseks klõpsa neil"
+
+#, c-format
+msgid "%d selected"
+msgid_plural "%d selected"
+msgstr[0] "%d on valitud"
+msgstr[1] "%d on valitud"
+
+msgid "Cancel"
+msgstr "Loobu"
+
+msgid "Select Items"
+msgstr "Kirjete valimine"
+
+msgid "translator-credits"
+msgstr "Mattias Põldaru, 2012."
+
+msgid "A document manager application"
+msgstr "Dokumendihalduse rakendus"
+
+#, c-format
+msgid "Printing “%s”: %s"
+msgstr "“%s” printimine: %s"
+
+msgid "Your documents are being indexed"
+msgstr "Su dokumendid on indekseerimisel"
+
+msgid "Some documents might not be available during this process"
+msgstr "Indekseerimise käigus ei pruugi kõik dokumendid olla saadaval"
+
+#. Translators: %s refers to an online account provider, e.g.
+#. "Google", or "Windows Live".
+#, c-format
+msgid "Fetching documents from %s"
+msgstr "Dokumentide hankimine %s serverist"
+
+msgid "Fetching documents from online accounts"
+msgstr "Dokumentide hankimine veebikontodest"
+
+msgid "Password Required"
+msgstr "Vajalik on parool"
+
+msgid "_Unlock"
+msgstr "_Võta lukust lahti"
+
+#, c-format
+msgid "Document %s is locked and requires a password to be opened."
+msgstr "Dokument %s on lukus ning selle avamiseks on vaja parooli."
+
+msgid "_Password"
+msgstr "_Parool"
+
+msgid "Close"
+msgstr "Sulge"
+
+msgid "Running in presentation mode"
+msgstr "Töötamine esitlusrežiimis"
+
+msgid "Present On"
+msgstr "Esitlus sees"
+
+msgid "Bookmark this page"
+msgstr "Selle lehe lisamine järjehoidjatesse"
+
+#. Translators: this is the Open action in a context menu
+#, c-format
+msgid "Open with %s"
+msgstr "Ava programmiga %s"
+
+msgid "Find Previous"
+msgstr "Leia eelmine"
+
+msgid "Find Next"
+msgstr "Leia järgmine"
+
+#. properties button
+msgid "Properties"
+msgstr "Omadused"
+
+#. Label for Done button in Sharing dialog
+msgid "Done"
+msgstr "Valmis"
+
+#. Title item
+#. Translators: "Title" is the label next to the document title
+#. in the properties dialog
+msgctxt "Document Title"
+msgid "Title"
+msgstr "Pealkiri"
+
+#. Translators: "Author" is the label next to the document author
+#. in the properties dialog
+msgctxt "Document Author"
+msgid "Author"
+msgstr "Autor"
+
+#. Source item
+msgid "Source"
+msgstr "Allikas"
+
+#. Date Modified item
+msgid "Date Modified"
+msgstr "Muutmise kuupäev"
+
+msgid "Date Created"
+msgstr "Loomise kuupäev"
+
+#. Document type item
+#. Translators: "Type" is the label next to the document type
+#. (PDF, spreadsheet, ...) in the properties dialog
+msgctxt "Document Type"
+msgid "Type"
+msgstr "Liik"
+
+msgid "Grid"
+msgstr "Tabel"
+
+msgid "List"
+msgstr "Loend"
+
+msgid "Fullscreen"
+msgstr "Täisekraan"
+
+msgid "About Documents"
+msgstr "Dokumentidest lähemalt"
+
+msgid "Help"
+msgstr "Abi"
+
+msgid "Quit"
+msgstr "Lõpeta"
+
+msgid "_Copy"
+msgstr "_Kopeeri"
+
+#. open button
+#. Translators: this is the Open action in a context menu
+msgid "Open"
+msgstr "Ava"
+
+msgid "Edit"
+msgstr "Muuda"
+
+msgid "Print…"
+msgstr "Printimine…"
+
+msgid "Present"
+msgstr "Esitlus"
+
+msgid "Zoom In"
+msgstr "Suurenda"
+
+msgid "Zoom Out"
+msgstr "Vähenda"
+
+msgid "Rotate ↶"
+msgstr "Pööra ↶"
+
+msgid "Rotate ↷"
+msgstr "Pööra ↷"
+
+msgid "Select All"
+msgstr "Vali kõik"
+
+msgid "Select None"
+msgstr "Tühista valik"
+
+msgid "Category"
+msgstr "Kategooria"
+
+#. Translators: this refers to new and recent documents
+#. Translators: this refers to documents
+msgid "All"
+msgstr "Kõik"
+
+#. Translators: this refers to favorite documents
+msgid "Favorites"
+msgstr "Lemmikud"
+
+#. Translators: this refers to shared documents
+msgid "Shared with you"
+msgstr "Sinuga jagatud"
+
+#. Translators: "Type" refers to a search filter on the document type
+#. (PDF, spreadsheet, ...)
+msgctxt "Search Filter"
+msgid "Type"
+msgstr "Liik"
+
+msgid "Collections"
+msgstr "Kogud"
+
+msgid "PDF Documents"
+msgstr "PDF-dokumendid"
+
+msgid "Presentations"
+msgstr "Esitlused"
+
+msgid "Spreadsheets"
+msgstr "Arvutustabelid"
+
+msgid "Text Documents"
+msgstr "Tekstidokumendid"
+
+#. Translators: this is a verb that refers to "All", "Title" and "Author",
+#. as in "Match All", "Match Title" and "Match Author"
+msgid "Match"
+msgstr "Vaste"
+
+#. Translators: "Title" refers to "Match Title" when searching
+msgctxt "Search Filter"
+msgid "Title"
+msgstr "Pealkiri"
+
+#. Translators: "Author" refers to "Match Author" when searching
+msgctxt "Search Filter"
+msgid "Author"
+msgstr "Autor"
+
+msgid "Sources"
+msgstr "Allikad"
+
+msgid "You don't have any collections yet. Enter a new collection name above."
+msgstr "Sul pole veel kogusid. Sisesta ülesse uue kogu nimi."
+
+msgid "Create new collection"
+msgstr "Uue kogu loomine"
+
+#. Translators: "Collections" refers to documents in this context
+msgctxt "Dialog Title"
+msgid "Collections"
+msgstr "Kogud"
+
+#. print button
+msgid "Print"
+msgstr "Prindi"
+
+#. trash button
+msgid "Delete"
+msgstr "Kustuta"
+
+#. organize button
+msgid "Add to Collection"
+msgstr "Lisa kogusse"
+
+#. share button
+msgid "Share"
+msgstr "Jaga"
+
+msgid "Sharing Settings"
+msgstr "Jagamise valikud"
+
+#. Label for widget group for changing document permissions
+msgid "Document permissions"
+msgstr "Dokumendi õigused"
+
+#. Label for permission change in Sharing dialog
+msgid "Change"
+msgstr "Muuda"
+
+#. Label for radiobutton that sets doc permission to private
+msgid "Private"
+msgstr "Privaatne"
+
+msgid "Public"
+msgstr "Avalik"
+
+#. Label for checkbutton that sets doc permission to Can edit
+msgid "Everyone can edit"
+msgstr "Kõik võivad muuta"
+
+#. Label for widget group used for adding new contacts
+msgid "Add people"
+msgstr "Lisa inimesi"
+
+#. Editable text in entry field
+msgid "Enter an email address"
+msgstr "Sisesta e-posti aadress"
+
+msgid "Can edit"
+msgstr "Võib muuta"
+
+msgid "Can view"
+msgstr "Võib vaadata"
+
+msgid "Add"
+msgstr "Lisa"
+
+msgid "Everyone can read"
+msgstr "Kõik võivad vaadata"
+
+msgid "Save"
+msgstr "Salvesta"
+
+msgid "Owner"
+msgstr "Omanik"
+
+#, c-format
+msgid "You can ask %s for access"
+msgstr "Sa võid küsida kasutajalt %s ligipääsu luba"
+
+msgid "The document was not updated"
+msgstr "Dokumenti ei uuendatud"
+
+msgid "Untitled Document"
+msgstr "Pealkirjata dokument"
+
+msgid "Unable to fetch the list of documents"
+msgstr "Dokumentide loendi hankimine nurjus"
+
+#. Translators: "more" refers to documents in this context
+msgid "Load More"
+msgstr "Laadi juurde"
+
+msgid "Yesterday"
+msgstr "Eile"
+
+#, c-format
+msgid "%d day ago"
+msgid_plural "%d days ago"
+msgstr[0] "%d päev tagasi"
+msgstr[1] "%d päeva tagasi"
+
+msgid "Last week"
+msgstr "Eelmisel nädalal"
+
+#, c-format
+msgid "%d week ago"
+msgid_plural "%d weeks ago"
+msgstr[0] "%d nädal tagasi"
+msgstr[1] "%d nädalat tagasi"
+
+msgid "Last month"
+msgstr "Eelmisel kuul"
+
+#, c-format
+msgid "%d month ago"
+msgid_plural "%d months ago"
+msgstr[0] "%d kuu tagasi"
+msgstr[1] "%d kuud taasi"
+
+msgid "Last year"
+msgstr "Eelmisel aastal"
+
+#, c-format
+msgid "%d year ago"
+msgid_plural "%d years ago"
+msgstr[0] "%d aasta tagasi"
+msgstr[1] "%d aastat tagasi"
+
+#~ msgid "Organize"
+#~ msgstr "Korrasta"
+
+#~ msgid "Unable to load \"%s\" for preview"
+#~ msgstr "\"%s\" pole võimalik eelvaateks laadida"
+
+#~ msgid "filtered by title"
+#~ msgstr "pealkirja järgi filtreeritud"
+
+#~ msgid "filtered by author"
+#~ msgstr "autori järgi filtreeritud"
+
+#~ msgid "Cannot find \"unoconv\", please check your LibreOffice installation"
+#~ msgstr ""
+#~ "Ei leitud programmi \"unoconv\", kontrolli oma LibreOffice paigaldust"
+
+#~ msgid "Rotate Right"
+#~ msgstr "Pööra paremale"
+
+#~ msgid "New and Recent"
+#~ msgstr "Uued ja hiljutised"
+
+#~ msgid "Load %d more document"
+#~ msgid_plural "Load %d more documents"
+#~ msgstr[0] "Laadi veel %d dokument"
+#~ msgstr[1] "Laadi veel %d dokumenti"
+
+#~ msgid "Print..."
+#~ msgstr "Prindi..."
+
+#~ msgid "The active source filter"
+#~ msgstr "Aktiivne lähtefilter"
+
+#~ msgid "The last active source filter"
+#~ msgstr "Viimane aktiivne lähtefilter"
+
+#~ msgid "%d of %d"
+#~ msgstr "%d, kokku %d"
+
+#~ msgid "GNOME Documents"
+#~ msgstr "GNOME dokumendid"
+
+#~ msgid "Remove from favorites"
+#~ msgstr "Eemalda lemmikutest"
+
+#~ msgid "Add to favorites"
+#~ msgstr "Lisa lemmikutesse"

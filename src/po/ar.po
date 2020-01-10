@@ -1,0 +1,752 @@
+# Arabic translation for gnome-documents.
+# Copyright (C) 2011 gnome-documents's COPYRIGHT HOLDER
+# This file is distributed under the same license as the gnome-documents package.
+# Abdalrahim G. Fakhouri <abdilra7eem@yahoo.com>, 2011.
+# Ibrahim Saed <ibraheem5000@gmail.com>, 2012.
+# Khaled Hosny <khaledhosny@eglug.org>, 2012, 2013.
+msgid ""
+msgstr ""
+"Project-Id-Version: gnome-documents master\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-03-26 01:48+0200\n"
+"PO-Revision-Date: 2013-12-17 03:26+0200\n"
+"Last-Translator: Khaled Hosny <khaledhosny@eglug.org>\n"
+"Language-Team: Arabic <doc@arabeyes.org>\n"
+"Language: ar\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
+"&& n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
+"X-Generator: Virtaal 0.7.1-rc1\n"
+"X-Project-Style: gnome\n"
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:1
+#: ../data/org.gnome.Documents.desktop.in.h:1 ../src/application.js:120
+#: ../src/mainWindow.js:52 ../src/mainWindow.js:274
+msgid "Documents"
+msgstr "المستندات"
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:2
+msgid "A document manager application for GNOME"
+msgstr "تطبيق إدارة مُستندات لجنوم"
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:3
+msgid ""
+"A simple application to access, organize and share your documents on GNOME. "
+"It is meant to be a simple and elegant replacement for using a file manager "
+"to deal with documents. Seamless cloud integration is offered through GNOME "
+"Online Accounts."
+msgstr ""
+"تطبيق بسيط للوصول إلى المستندات و تنظيمها و مشاركتها في جنوم. صُمم ليكون "
+"بديلا بسيطًا و رائعًا عن مدير الملفات للتعامل مع المستندات. يتوفر تكامل سلل مع "
+"الخدمات السحابية عبر حسابات الإنترنت في جنوم."
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:4
+msgid "It lets you:"
+msgstr "يتيح لك:"
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:5
+#, fuzzy
+msgid ""
+"<li>View recent local and online documents</li> <li>Access your Google, "
+"ownCloud or OneDrive content</li> <li>Search through documents</li> <li>See "
+"new documents shared by friends</li> <li>View documents fullscreen</li> "
+"<li>Print documents</li> <li>Select favorites</li> <li>Allow opening full "
+"featured editor for non-trivial changes</li>"
+msgstr ""
+"<li>عرض المستندات الحديثة من حاسوبك أو الوب</li> <li>الوصول إلى محتوى جوجل "
+"أو ownCloud أو SkyDrive</li> <li>البحث في المستندات</li> <li>رؤية المستندات "
+"الجديدة التي يُشاركها معك أصدقاؤك</li> <li>عرض المستندات تملأ الشاشة</li> "
+"<li>طباعة المستندات</li> <li>اختيار المفضلات</li> <li>يسمح بفتح محرر كامل "
+"الخصائص للتغييرات غير البسيطة</li>"
+
+#: ../data/org.gnome.Documents.desktop.in.h:2
+msgid "Access, manage and share documents"
+msgstr "الوصول للمستندات وإدارتها ومشاركتها"
+
+#: ../data/org.gnome.Documents.desktop.in.h:3
+msgid "Docs;PDF;Document;"
+msgstr "مستندات;المستندات;بي دي اف;"
+
+#: ../data/org.gnome.documents.gschema.xml.h:1
+msgid "View as"
+msgstr "اعرض كـ"
+
+#: ../data/org.gnome.documents.gschema.xml.h:2
+msgid "View as type"
+msgstr "اعرض حسب النوع"
+
+#: ../data/org.gnome.documents.gschema.xml.h:3
+msgid "Window size"
+msgstr "حجم النافذة"
+
+#: ../data/org.gnome.documents.gschema.xml.h:4
+msgid "Window size (width and height)."
+msgstr "حجم النافذة (العرض والارتفاع)."
+
+#: ../data/org.gnome.documents.gschema.xml.h:5
+msgid "Window position"
+msgstr "موضع النافذة"
+
+#: ../data/org.gnome.documents.gschema.xml.h:6
+msgid "Window position (x and y)."
+msgstr "موضع النافذة (س و ص)."
+
+#: ../data/org.gnome.documents.gschema.xml.h:7
+msgid "Window maximized"
+msgstr "تكبير النافذة"
+
+#: ../data/org.gnome.documents.gschema.xml.h:8
+msgid "Window maximized state"
+msgstr "حالة تكبير النافذة"
+
+#: ../src/documents.js:600
+#, fuzzy
+msgid "Failed to print document"
+msgstr "تعذّر تحميل المُستند"
+
+#: ../src/documents.js:637 ../src/search.js:418
+msgid "Local"
+msgstr "محلّي"
+
+#: ../src/documents.js:658
+msgid "GNOME"
+msgstr "جنوم"
+
+#: ../src/documents.js:659
+msgid "Getting Started with Documents"
+msgstr "ابدأ مع المستندات"
+
+#: ../src/documents.js:675 ../src/documents.js:848 ../src/documents.js:910
+#: ../src/documents.js:1018
+msgid "Collection"
+msgstr "تجميعة"
+
+#: ../src/documents.js:727
+msgid "Google Docs"
+msgstr "مستندات جوجل"
+
+#: ../src/documents.js:728
+msgid "Google"
+msgstr "جوجل"
+
+#: ../src/documents.js:850 ../src/documents.js:1020
+msgid "Spreadsheet"
+msgstr "جدول ممتد"
+
+#: ../src/documents.js:852 ../src/documents.js:1022 ../src/presentation.js:47
+msgid "Presentation"
+msgstr "عرض تقديمي"
+
+#: ../src/documents.js:854 ../src/documents.js:1024
+msgid "Document"
+msgstr "مستندات"
+
+#: ../src/documents.js:888
+msgid "ownCloud"
+msgstr "ownCloud"
+
+#: ../src/documents.js:952 ../src/documents.js:953
+msgid "OneDrive"
+msgstr ""
+
+#: ../src/documents.js:1152
+msgid "Please check the network connection."
+msgstr "افحص الاتصال الشبكي من فضلك."
+
+#: ../src/documents.js:1155
+msgid "Please check the network proxy settings."
+msgstr "افحص إعدادات وسيط الشبكة من فضلك."
+
+#: ../src/documents.js:1158
+msgid "Unable to sign in to the document service."
+msgstr "تعذّر الولوج إلى خدمة المستندات."
+
+#: ../src/documents.js:1161
+msgid "Unable to locate this document."
+msgstr "تعذّر إيجاد المُستند."
+
+#: ../src/documents.js:1164
+#, javascript-format
+msgid "Hmm, something is fishy (%d)."
+msgstr "شيء ما خطأ (%d)."
+
+#: ../src/documents.js:1182
+#, javascript-format
+msgid "Oops! Unable to load “%s”"
+msgstr "تعذّر تحميل ”%s“"
+
+#: ../src/edit.js:192
+msgid "View"
+msgstr "عرض"
+
+#: ../src/embed.js:142
+msgid "No Documents Found"
+msgstr "لم يُعثر على أي مستندات"
+
+#: ../src/embed.js:163
+#, javascript-format
+msgid "You can add your online accounts in %s"
+msgstr "يمكنك إضافة حسابات الإنترنت في %s"
+
+#: ../src/embed.js:167
+#, fuzzy
+msgid "Settings"
+msgstr "إعدادات النظام"
+
+#: ../src/lib/gd-nav-bar.c:235
+#, c-format
+msgid "Page %u of %u"
+msgstr "صفحة %u من %u"
+
+#: ../src/lib/gd-pdf-loader.c:247
+msgid "Unable to load the document"
+msgstr "تعذّر تحميل المُستند"
+
+#: ../src/lib/gd-pdf-loader.c:715
+msgid "LibreOffice is required to view this document"
+msgstr "تحتاج ليبرأوفيس لعرض هذا المستند"
+
+#. Translators: %s is the number of the page, already formatted
+#. * as a string, for example "Page 5".
+#.
+#: ../src/lib/gd-places-bookmarks.c:315
+#, c-format
+msgid "Page %s"
+msgstr "صفحة %s"
+
+#: ../src/lib/gd-places-bookmarks.c:378
+msgid "No bookmarks"
+msgstr "لا علامات"
+
+#: ../src/lib/gd-places-bookmarks.c:386 ../src/lib/gd-places-links.c:257
+#: ../src/view.js:71
+msgid "Loading…"
+msgstr "يُحمّل…"
+
+#: ../src/lib/gd-places-bookmarks.c:651 ../src/preview.js:601
+msgid "Bookmarks"
+msgstr "العلامات"
+
+#: ../src/lib/gd-places-links.c:342
+msgid "No table of contents"
+msgstr "لا جدول محتويات"
+
+#: ../src/lib/gd-places-links.c:518
+msgid "Contents"
+msgstr "المحتويات"
+
+#: ../src/mainToolbar.js:79
+msgid "Search"
+msgstr "ابحث"
+
+#: ../src/mainToolbar.js:90
+msgid "Back"
+msgstr "السابق"
+
+#: ../src/mainToolbar.js:149
+msgid "View items as a list"
+msgstr ""
+
+#: ../src/mainToolbar.js:155
+msgid "View items as a grid of icons"
+msgstr ""
+
+#: ../src/mainToolbar.js:189
+#, javascript-format
+msgid "Results for “%s”"
+msgstr "نتائج ”%s“"
+
+#: ../src/mainToolbar.js:197
+msgid "Click on items to select them"
+msgstr "انقر على عناصر لاختيارها"
+
+#: ../src/mainToolbar.js:199
+msgid "%d selected"
+msgid_plural "%d selected"
+msgstr[0] "لا عناصر مُختارة"
+msgstr[1] "عنصر واحد مُختار"
+msgstr[2] "عنصرين مختارين"
+msgstr[3] "%d عناصر مُختارة"
+msgstr[4] "%d عنصرا مُختارًا"
+msgstr[5] "%d عنصر مُختار"
+
+#: ../src/mainToolbar.js:226
+msgid "Cancel"
+msgstr "ألغِ"
+
+#: ../src/mainToolbar.js:268
+msgid "Select Items"
+msgstr "اختر العناصر"
+
+#: ../src/mainWindow.js:273
+msgid "translator-credits"
+msgstr ""
+"فريق عربآيز للترجمة http://www.arabeyes.org:\n"
+"عبد الرحيم فاخوري <abdilra7eem@yahoo.com>\n"
+"إبراهيم سعيد <ibraheem5000@gmail.com>\n"
+"خالد حسني <khaledhosny@eglug.org>"
+
+#: ../src/mainWindow.js:275
+msgid "A document manager application"
+msgstr "تطبيق إدارة مُستندات"
+
+#: ../src/notifications.js:86
+#, javascript-format
+msgid "Printing “%s”: %s"
+msgstr "يطبع ”%s“:‏ %s"
+
+#: ../src/notifications.js:142
+msgid "Your documents are being indexed"
+msgstr "يجري فهرسة مستنداتك"
+
+#: ../src/notifications.js:143
+msgid "Some documents might not be available during this process"
+msgstr "قد لا تتاح بعض المستندات أثناء هذا"
+
+#: ../src/notifications.js:165
+#, javascript-format
+msgid "Fetching documents from %s"
+msgstr "يجلب المستند من %s"
+
+#: ../src/notifications.js:167
+msgid "Fetching documents from online accounts"
+msgstr "يجلب المستندات من حسابات الإنترنت"
+
+#: ../src/password.js:46
+msgid "Password Required"
+msgstr "كلمة السر مطلوبة"
+
+#: ../src/password.js:49
+msgid "_Unlock"
+msgstr "ا_فتح"
+
+#: ../src/password.js:65
+#, javascript-format
+msgid "Document %s is locked and requires a password to be opened."
+msgstr "المستند %s مقفل ويتطلب كلمة سر ليُفتح."
+
+#: ../src/password.js:79
+msgid "_Password"
+msgstr "_كلمة السر"
+
+#: ../src/places.js:56
+msgid "Close"
+msgstr "أغلق"
+
+#: ../src/presentation.js:104
+msgid "Running in presentation mode"
+msgstr "يعمل في نمط العرض التقديمي"
+
+#: ../src/presentation.js:157
+msgid "Present On"
+msgstr "عرض تقديمي"
+
+#: ../src/preview.js:609
+msgid "Bookmark this page"
+msgstr "علّم هذه الصفحة"
+
+#: ../src/preview.js:853 ../src/selections.js:857
+#, javascript-format
+msgid "Open with %s"
+msgstr "افتح باستخدام %s"
+
+#: ../src/preview.js:915
+msgid "Find Previous"
+msgstr "ابحث عن السابق"
+
+#: ../src/preview.js:922
+msgid "Find Next"
+msgstr "ابحث عن التالي"
+
+#: ../src/properties.js:61 ../src/resources/preview-menu.ui.h:9
+#: ../src/selections.js:767
+msgid "Properties"
+msgstr "الخصائص"
+
+#: ../src/properties.js:63 ../src/sharing.js:102
+msgid "Done"
+msgstr "تم"
+
+#: ../src/properties.js:83
+msgctxt "Document Title"
+msgid "Title"
+msgstr "العنوان"
+
+#: ../src/properties.js:92
+msgctxt "Document Author"
+msgid "Author"
+msgstr "المؤلف"
+
+#: ../src/properties.js:99
+msgid "Source"
+msgstr "المصدر"
+
+#: ../src/properties.js:105
+msgid "Date Modified"
+msgstr "تاريخ التعديل"
+
+#: ../src/properties.js:112
+msgid "Date Created"
+msgstr "تاريخ الإنشاء"
+
+#: ../src/properties.js:121
+msgctxt "Document Type"
+msgid "Type"
+msgstr "النوع"
+
+#: ../src/resources/app-menu.ui.h:1
+msgid "Fullscreen"
+msgstr "ملء الشاشة"
+
+#: ../src/resources/app-menu.ui.h:2
+msgid "Help"
+msgstr "مساعدة"
+
+#: ../src/resources/app-menu.ui.h:3
+msgid "About"
+msgstr "عنْ"
+
+#: ../src/resources/app-menu.ui.h:4
+msgid "Quit"
+msgstr "أنهِ"
+
+#: ../src/resources/preview-context-menu.ui.h:1
+msgid "_Copy"
+msgstr "ا_نسخ"
+
+#: ../src/resources/preview-menu.ui.h:1 ../src/selections.js:747
+#: ../src/selections.js:860
+msgid "Open"
+msgstr "افتح"
+
+#: ../src/resources/preview-menu.ui.h:2
+msgid "Edit"
+msgstr "تحرير"
+
+#: ../src/resources/preview-menu.ui.h:3
+msgid "Print…"
+msgstr "اطبع…"
+
+#: ../src/resources/preview-menu.ui.h:4
+msgid "Present"
+msgstr "عرض تقديمي"
+
+#: ../src/resources/preview-menu.ui.h:5
+msgid "Zoom In"
+msgstr "قرّب"
+
+#: ../src/resources/preview-menu.ui.h:6
+msgid "Zoom Out"
+msgstr "بعّد"
+
+#: ../src/resources/preview-menu.ui.h:7
+msgid "Rotate ↶"
+msgstr "أدِر ↶"
+
+#: ../src/resources/preview-menu.ui.h:8
+msgid "Rotate ↷"
+msgstr "أدِر ↷"
+
+#: ../src/resources/selection-menu.ui.h:1
+msgid "Select All"
+msgstr "اختر الكل"
+
+#: ../src/resources/selection-menu.ui.h:2
+msgid "Select None"
+msgstr "أزل الاختيار عن الكل"
+
+#: ../src/search.js:114
+msgid "Category"
+msgstr "الفئة"
+
+#: ../src/search.js:119 ../src/search.js:171 ../src/search.js:256
+#: ../src/search.js:412
+msgid "All"
+msgstr "الكلّ"
+
+#: ../src/search.js:125
+msgid "Favorites"
+msgstr "المفضّلة"
+
+#: ../src/search.js:130
+msgid "Shared with you"
+msgstr "مشتركة معك"
+
+#: ../src/search.js:168
+msgctxt "Search Filter"
+msgid "Type"
+msgstr "النوع"
+
+#: ../src/search.js:173
+msgid "Collections"
+msgstr "تجميعات"
+
+#: ../src/search.js:177
+msgid "PDF Documents"
+msgstr "مستندات PDF"
+
+#: ../src/search.js:181
+msgid "Presentations"
+msgstr "عروض تقديميّة"
+
+#: ../src/search.js:184
+msgid "Spreadsheets"
+msgstr "جداول ممتدة"
+
+#: ../src/search.js:187
+msgid "Text Documents"
+msgstr "مستندات نصيّة"
+
+#: ../src/search.js:253
+msgid "Match"
+msgstr "طابق"
+
+#: ../src/search.js:259
+msgctxt "Search Filter"
+msgid "Title"
+msgstr "العنوان"
+
+#: ../src/search.js:262
+msgctxt "Search Filter"
+msgid "Author"
+msgstr "المؤلف"
+
+#: ../src/search.js:408
+msgid "Sources"
+msgstr "المصادر"
+
+#: ../src/selections.js:461
+msgid "You don't have any collections yet. Enter a new collection name above."
+msgstr "ليس لديك أي تجميعات بعد. أدخل اسم تجميعة جديدة أعلاه."
+
+#: ../src/selections.js:604
+msgid "Create new collection"
+msgstr "أنشئ تجميعة جديدة"
+
+#: ../src/selections.js:640
+msgctxt "Dialog Title"
+msgid "Collections"
+msgstr "التجميعات"
+
+#: ../src/selections.js:752
+msgid "Print"
+msgstr "اطبع"
+
+#: ../src/selections.js:757
+msgid "Delete"
+msgstr "احذف"
+
+#: ../src/selections.js:762
+msgid "Share"
+msgstr "تشارَك"
+
+#: ../src/selections.js:772
+msgid "Add to Collection"
+msgstr "أضف إلى التجميعة"
+
+#: ../src/sharing.js:98
+msgid "Sharing Settings"
+msgstr "إعدادات المشاركة"
+
+#: ../src/sharing.js:135
+msgid "Document permissions"
+msgstr "صلاحيات المستندات"
+
+#: ../src/sharing.js:142 ../src/sharing.js:320
+msgid "Change"
+msgstr "غيّر"
+
+#: ../src/sharing.js:166 ../src/sharing.js:295
+msgid "Private"
+msgstr "خاص"
+
+#: ../src/sharing.js:176 ../src/sharing.js:288
+msgid "Public"
+msgstr "عام"
+
+#: ../src/sharing.js:180 ../src/sharing.js:290
+msgid "Everyone can edit"
+msgstr "يمكن للجميع تحريره"
+
+#: ../src/sharing.js:187
+msgid "Add people"
+msgstr "أضف أشخاصًا"
+
+#: ../src/sharing.js:194
+msgid "Enter an email address"
+msgstr "أدخل عنوان البريد"
+
+#: ../src/sharing.js:209 ../src/sharing.js:376
+msgid "Can edit"
+msgstr "يستطيع التحرير"
+
+#: ../src/sharing.js:209 ../src/sharing.js:379
+msgid "Can view"
+msgstr "يستطيع العرض"
+
+#: ../src/sharing.js:216
+msgid "Add"
+msgstr "أضِف"
+
+#: ../src/sharing.js:292
+msgid "Everyone can read"
+msgstr "يمكن للجميع قراءته"
+
+#: ../src/sharing.js:307
+msgid "Save"
+msgstr "احفظ"
+
+#: ../src/sharing.js:373
+msgid "Owner"
+msgstr "المالك"
+
+#: ../src/sharing.js:442
+#, javascript-format
+msgid "You can ask %s for access"
+msgstr "يمكنك طلب الصلاحية من %s"
+
+#: ../src/sharing.js:479 ../src/sharing.js:515 ../src/sharing.js:572
+#: ../src/sharing.js:589 ../src/sharing.js:608
+msgid "The document was not updated"
+msgstr "لم يُحدَّث المستند"
+
+#: ../src/shellSearchProvider.js:294
+msgid "Untitled Document"
+msgstr "مستند بلا عنوان"
+
+#: ../src/trackerController.js:170
+msgid "Unable to fetch the list of documents"
+msgstr "تعذّر جلب قائمة المستندات"
+
+#: ../src/view.js:62 ../src/view.js:93
+msgid "Load More"
+msgstr "حمّل المزيد"
+
+#: ../src/view.js:307
+msgid "Yesterday"
+msgstr "بالأمس"
+
+#: ../src/view.js:309
+msgid "%d day ago"
+msgid_plural "%d days ago"
+msgstr[0] "منذ أقل من يوم"
+msgstr[1] "منذ يوم واحد"
+msgstr[2] "منذ يومين"
+msgstr[3] "منذ %d أيام"
+msgstr[4] "منذ %d يوما"
+msgstr[5] "منذ %d يوم"
+
+#: ../src/view.js:313
+msgid "Last week"
+msgstr "الأسبوع الماضي"
+
+#: ../src/view.js:315
+msgid "%d week ago"
+msgid_plural "%d weeks ago"
+msgstr[0] "منذ أقل من أسبوع"
+msgstr[1] "منذ أسبوع واحد"
+msgstr[2] "منذ أسبوعين"
+msgstr[3] "منذ %d أسابيع"
+msgstr[4] "منذ %d أسبوعا"
+msgstr[5] "منذ %d أسبوع"
+
+#: ../src/view.js:319
+msgid "Last month"
+msgstr "الشهر الماضي"
+
+#: ../src/view.js:321
+msgid "%d month ago"
+msgid_plural "%d months ago"
+msgstr[0] "منذ أقل من شهر"
+msgstr[1] "منذ شهر واحد"
+msgstr[2] "منذ شهرين"
+msgstr[3] "منذ %d أشهر"
+msgstr[4] "منذ %d شهرا"
+msgstr[5] "منذ %d شهر"
+
+#: ../src/view.js:325
+msgid "Last year"
+msgstr "السنة الماضية"
+
+#: ../src/view.js:327
+msgid "%d year ago"
+msgid_plural "%d years ago"
+msgstr[0] "منذ أقل من سنة"
+msgstr[1] "منذ سنة واحدة"
+msgstr[2] "منذ سنتين"
+msgstr[3] "منذ %d سنوات"
+msgstr[4] "منذ %d سنة"
+msgstr[5] "منذ %d سنة"
+
+#~ msgid "Skydrive"
+#~ msgstr "Skydrive"
+
+#~ msgid "Grid"
+#~ msgstr "شبكة"
+
+#~ msgid "List"
+#~ msgstr "قائمة"
+
+#~ msgid "About Documents"
+#~ msgstr "عَنْ المستندات"
+
+#~ msgctxt "Dialog Title"
+#~ msgid "Organize"
+#~ msgstr "نظّم"
+
+#~ msgctxt "Toolbar button tooltip"
+#~ msgid "Organize"
+#~ msgstr "نظّم"
+
+#~ msgid "Unable to load \"%s\" for preview"
+#~ msgstr "تعذّر تحميل \"%s\" للعرض المُسبق"
+
+#~ msgid "Cannot find \"unoconv\", please check your LibreOffice installation"
+#~ msgstr "تعذّر العثور على \"unoconv\"، رجاءً تأكد من تثبيت ليبر أوفيس"
+
+#~ msgid "New and Recent"
+#~ msgstr "جديد وحديث"
+
+#~ msgid "filtered by title"
+#~ msgstr "مُرشّحة حسب العنوان"
+
+#~ msgid "filtered by author"
+#~ msgstr "مُرشّحة حسب المؤلف"
+
+#~ msgid "Load %d more document"
+#~ msgid_plural "Load %d more documents"
+#~ msgstr[0] "حمّل %d مستندات إضافيّة"
+#~ msgstr[1] "حمّل مستند واحد إضافي"
+#~ msgstr[2] "حمّل مستندين إضافيين"
+#~ msgstr[3] "حمّل %d مستندات إضافيّة"
+#~ msgstr[4] "حمّل %d مستندا إضافيّا"
+#~ msgstr[5] "حمّل %d مستند إضافي"
+
+#~ msgid "Print..."
+#~ msgstr "اطبع..."
+
+#~ msgid "Rotate Right"
+#~ msgstr "أدِر لليمين"
+
+#~ msgid "Remove from favorites"
+#~ msgstr "أزل من المفضّلة"
+
+#~ msgid "Add to favorites"
+#~ msgstr "أضف للمفضّلة"
+
+#~ msgid "%d of %d"
+#~ msgstr "%d من %d"
+
+#~ msgid "The active source filter"
+#~ msgstr "مرشّح المصادر المفعّل"
+
+#~ msgid "The last active source filter"
+#~ msgstr "مرشّح المصادر الأخير المفعّل"
+
+#~ msgid "GNOME Documents"
+#~ msgstr "مستندات جنوم"
+
+#~ msgid "Enable list view"
+#~ msgstr "فعّل العرض كقائمة"

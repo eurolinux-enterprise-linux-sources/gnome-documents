@@ -1,0 +1,254 @@
+Index: new/po/bn_IN.po
+===================================================================
+--- new.orig/po/bn_IN.po
++++ new/po/bn_IN.po
+@@ -27,7 +27,6 @@ msgid "Documents"
+ msgstr "দস্তাবেজ"
+ 
+ #: ../data/org.gnome.Documents.appdata.xml.in.h:2
+-#| msgid "A document manager application"
+ msgid "A document manager application for GNOME"
+ msgstr "GNOME'র জন্য দস্তাবেজ ব্যবস্থাপনার একটি অ্যাপ্লিকেশন"
+ 
+@@ -38,10 +37,10 @@ msgid ""
+ "to deal with documents. Seamless cloud integration is offered through GNOME "
+ "Online Accounts."
+ msgstr ""
+-"GNOME এ অাপনার নথিগুলি অ্যাক্সেস, সংগঠিত এবং ভাগ করার এক অ্যাপ্লিকেশন। "
+-"নথি নিয়ে কাজ করতে ফাইল ম্যানেজারের ব্যবহার করার থেকে এর ব্যবহার অনেক বেশি সহজ "
+-"এবং কার্যকর। GNOME "
+-"অনলাইন অ্যাকাউন্টের মাধ্যমে ঝামেলামুক্ত ভাবে ক্লাউড একত্রিকরণ প্রদান করা হয়।"
++"GNOME এ অাপনার নথিগুলি অ্যাক্সেস, সংগঠিত এবং ভাগ করার এক অ্যাপ্লিকেশন। নথি নিয়ে "
++"কাজ করতে ফাইল ম্যানেজারের ব্যবহার করার থেকে এর ব্যবহার অনেক বেশি সহজ এবং "
++"কার্যকর। GNOME অনলাইন অ্যাকাউন্টের মাধ্যমে ঝামেলামুক্ত ভাবে ক্লাউড একত্রিকরণ প্রদান "
++"করা হয়।"
+ 
+ #: ../data/org.gnome.Documents.appdata.xml.in.h:4
+ msgid "It lets you:"
+@@ -68,20 +67,16 @@ msgid "View documents fullscreen"
+ msgstr "নথিগুলি সম্পূর্ণ-স্ক্রিনে দেখুন"
+ 
+ #: ../data/org.gnome.Documents.appdata.xml.in.h:10
+-#| msgid "PDF Documents"
+ msgid "Print documents"
+ msgstr "দস্তাবেজগুলি মুদ্রণ করুন"
+ 
+ #: ../data/org.gnome.Documents.appdata.xml.in.h:11
+-#| msgid "Select Items"
+ msgid "Select favorites"
+ msgstr "পছন্দসই নির্বাচন করুন"
+ 
+ #: ../data/org.gnome.Documents.appdata.xml.in.h:12
+ msgid "Allow opening full featured editor for non-trivial changes"
+-msgstr ""
+-"বিস্তারিত পরিবর্তনের ক্ষেত্রে সম্পূর্ণ বৈশিষ্ট সমন্বিত সম্পাদক খোলার অনুমতি "
+-"দিন"
++msgstr "বিস্তারিত পরিবর্তনের ক্ষেত্রে সম্পূর্ণ বৈশিষ্ট সমন্বিত সম্পাদক খোলার অনুমতি দিন"
+ 
+ #: ../data/org.gnome.Documents.desktop.in.h:2
+ msgid "Access, manage and share documents"
+@@ -124,7 +119,6 @@ msgid "Window maximized state"
+ msgstr "পূর্ণবিস্তারিত উইন্ডো রূপ"
+ 
+ #: ../src/documents.js:621
+-#| msgid "Unable to load the document"
+ msgid "Failed to print document"
+ msgstr "ডকুমেন্ট প্রিন্ট করতে ব্যর্থ"
+ 
+@@ -213,7 +207,6 @@ msgid "You can add your online accounts
+ msgstr "আপনি %s - এ আপনার অনলাইন অ্যাকাউন্ট যোগ করতে পারেন"
+ 
+ #: ../src/embed.js:167
+-#| msgid "System Settings"
+ msgid "Settings"
+ msgstr "সেটিংস"
+ 
+@@ -376,7 +369,6 @@ msgid "Present On"
+ msgstr "এতে উপস্থিত"
+ 
+ #: ../src/preview.js:594
+-#| msgid "Bookmarks"
+ msgid "Bookmark this page"
+ msgstr "এই পৃষ্ঠা বুকমার্ক করুন"
+ 
+@@ -399,13 +391,11 @@ msgid "Properties"
+ msgstr "বৈশিষ্ট্যাবলী"
+ 
+ #: ../src/properties.js:81
+-#| msgid "Title"
+ msgctxt "Document Title"
+ msgid "Title"
+ msgstr "শিরোনাম"
+ 
+ #: ../src/properties.js:90
+-#| msgid "Author"
+ msgctxt "Document Author"
+ msgid "Author"
+ msgstr "লেখক"
+@@ -423,7 +413,6 @@ msgid "Date Created"
+ msgstr "নির্মান তারিখ"
+ 
+ #: ../src/properties.js:119
+-#| msgid "Type"
+ msgctxt "Document Type"
+ msgid "Type"
+ msgstr "প্রকার"
+@@ -507,7 +496,6 @@ msgid "Shared with you"
+ msgstr "আপনার সাথে শেয়ার করা"
+ 
+ #: ../src/search.js:177
+-#| msgid "Type"
+ msgctxt "Search Filter"
+ msgid "Type"
+ msgstr "প্রকার"
+@@ -537,13 +525,11 @@ msgid "Match"
+ msgstr "মেলান"
+ 
+ #: ../src/search.js:268
+-#| msgid "Title"
+ msgctxt "Search Filter"
+ msgid "Title"
+ msgstr "শিরোনাম"
+ 
+ #: ../src/search.js:271
+-#| msgid "Author"
+ msgctxt "Search Filter"
+ msgid "Author"
+ msgstr "লেখক"
+@@ -557,12 +543,10 @@ msgid "You don't have any collections ye
+ msgstr "এখনও পর্যন্ত অাপনার কোনো সংগ্রহ নেই। উপরে একটি নতুন সংগ্রহ নাম দিন।"
+ 
+ #: ../src/selections.js:604
+-#| msgid "Collection"
+ msgid "Create new collection"
+ msgstr "নতুন সংগ্রহ তৈরি করুন"
+ 
+ #: ../src/selections.js:640
+-#| msgid "Collections"
+ msgctxt "Dialog Title"
+ msgid "Collections"
+ msgstr "সংগ্রহসমূহ"
+@@ -580,7 +564,6 @@ msgid "Share"
+ msgstr "ভাগ করুন"
+ 
+ #: ../src/selections.js:772
+-#| msgid "Collection"
+ msgid "Add to Collection"
+ msgstr "সংগ্রহে যোগ করুন"
+ 
+@@ -659,7 +642,6 @@ msgid "Untitled Document"
+ msgstr "শিরোনামহীন দস্তাবেজ"
+ 
+ #: ../src/trackerController.js:170
+-#| msgid "Unable to locate this document."
+ msgid "Unable to fetch the list of documents"
+ msgstr "নথিগুলির তালিকা নিয়ে অাসা গেল না"
+ 
+Index: new/po/ta.po
+===================================================================
+--- new.orig/po/ta.po
++++ new/po/ta.po
+@@ -38,12 +38,9 @@ msgid ""
+ "to deal with documents. Seamless cloud integration is offered through GNOME "
+ "Online Accounts."
+ msgstr ""
+-"GNOME இல் உங்கள் ஆவணங்களை அணுகவும் ஒழுங்கமைக்கவும் பகிரவும் உதவும் ஒரு எளிய "
+-"பயன்பாடு. "
+-"இது ஆவணங்களைக் கையாள கோப்பு நிர்வாகியைப் பயன்படுத்துவதற்கு பதிலாக "
+-"உருவாக்கப்பட்ட ஒரு "
+-"எளியதும் அற்புதமானதுமான ஒரு கருவி. GNOME ஆன்லைன் கணக்குகளுடன் சிக்கலற்ற "
+-"ஒத்திசைவு "
++"GNOME இல் உங்கள் ஆவணங்களை அணுகவும் ஒழுங்கமைக்கவும் பகிரவும் உதவும் ஒரு எளிய பயன்பாடு. "
++"இது ஆவணங்களைக் கையாள கோப்பு நிர்வாகியைப் பயன்படுத்துவதற்கு பதிலாக உருவாக்கப்பட்ட ஒரு "
++"எளியதும் அற்புதமானதுமான ஒரு கருவி. GNOME ஆன்லைன் கணக்குகளுடன் சிக்கலற்ற ஒத்திசைவு "
+ "வசதியையும் இது வழங்குகிறது."
+ 
+ #: ../data/org.gnome.Documents.appdata.xml.in.h:4
+@@ -71,19 +68,16 @@ msgid "View documents fullscreen"
+ msgstr "ஆவணங்களை முழுத்திரையில் காணலாம்"
+ 
+ #: ../data/org.gnome.Documents.appdata.xml.in.h:10
+-#| msgid "PDF Documents"
+ msgid "Print documents"
+ msgstr "ஆவணங்களை அச்சிடலாம்"
+ 
+ #: ../data/org.gnome.Documents.appdata.xml.in.h:11
+-#| msgid "Select Items"
+ msgid "Select favorites"
+ msgstr "பிடித்தவற்றைத் தேர்ந்தெடுக்கலாம்"
+ 
+ #: ../data/org.gnome.Documents.appdata.xml.in.h:12
+ msgid "Allow opening full featured editor for non-trivial changes"
+-msgstr ""
+-"மிக முக்கியமல்லாத மாற்றங்களுக்கு முழு வசதி கொண்ட திருத்தியைத் திறக்க அனுமதி"
++msgstr "மிக முக்கியமல்லாத மாற்றங்களுக்கு முழு வசதி கொண்ட திருத்தியைத் திறக்க அனுமதி"
+ 
+ #: ../data/org.gnome.Documents.desktop.in.h:2
+ msgid "Access, manage and share documents"
+@@ -126,7 +120,6 @@ msgid "Window maximized state"
+ msgstr "முழுமையாக்கிய சாளர நிலை"
+ 
+ #: ../src/documents.js:621
+-#| msgid "Unable to load the document"
+ msgid "Failed to print document"
+ msgstr "ஆவணத்தை அச்சிட முடியவில்லை"
+ 
+@@ -215,7 +208,6 @@ msgid "You can add your online accounts
+ msgstr "நீங்கள் %s இல் உங்கள் இணைய கணக்குகளை சேர்க்கலாம் "
+ 
+ #: ../src/embed.js:167
+-#| msgid "System Settings"
+ msgid "Settings"
+ msgstr "அமைவுகள்"
+ 
+@@ -349,8 +341,7 @@ msgstr "விடுவி (_U)"
+ #: ../src/password.js:65
+ #, javascript-format
+ msgid "Document %s is locked and requires a password to be opened."
+-msgstr ""
+-"ஆவணம் %s பூட்டப்பட்டுள்ளது, அதனை திறப்பதற்கு கடவுச்சொல் தேவைப்படுகிறது."
++msgstr "ஆவணம் %s பூட்டப்பட்டுள்ளது, அதனை திறப்பதற்கு கடவுச்சொல் தேவைப்படுகிறது."
+ 
+ #: ../src/password.js:79
+ msgid "_Password"
+@@ -536,9 +527,7 @@ msgstr "மூலங்கள் "
+ 
+ #: ../src/selections.js:461
+ msgid "You don't have any collections yet. Enter a new collection name above."
+-msgstr ""
+-"உங்களிடம் தொகுப்புகள் எதுவும் இல்லை. மேலே ஒரு புதிய தொகுப்பின் பெயரை "
+-"உள்ளிடவும்."
++msgstr "உங்களிடம் தொகுப்புகள் எதுவும் இல்லை. மேலே ஒரு புதிய தொகுப்பின் பெயரை உள்ளிடவும்."
+ 
+ #: ../src/selections.js:604
+ msgid "Create new collection"
+Index: new/po/zh_TW.po
+===================================================================
+--- new.orig/po/zh_TW.po
++++ new/po/zh_TW.po
+@@ -64,12 +64,10 @@ msgid "View documents fullscreen"
+ msgstr "全螢幕檢視文件"
+ 
+ #: ../data/org.gnome.Documents.appdata.xml.in.h:10
+-#| msgid "PDF Documents"
+ msgid "Print documents"
+ msgstr "列印文件"
+ 
+ #: ../data/org.gnome.Documents.appdata.xml.in.h:11
+-#| msgid "Select Items"
+ msgid "Select favorites"
+ msgstr "選擇喜好"
+ 
+@@ -672,12 +670,6 @@ msgid "%d year ago"
+ msgid_plural "%d years ago"
+ msgstr[0] "%d 年以前"
+ 
+-#~| msgid ""
+-#~| "<li>View recent local and online documents</li> <li>Access your Google, "
+-#~| "ownCloud or SkyDrive content</li> <li>Search through documents</li> "
+-#~| "<li>See new documents shared by friends</li> <li>View documents "
+-#~| "fullscreen</li> <li>Print documents</li> <li>Select favorites</li> "
+-#~| "<li>Allow opening full featured editor for non-trivial changes</li>"
+ #~ msgid ""
+ #~ "<li>View recent local and online documents</li> <li>Access your Google, "
+ #~ "ownCloud or OneDrive content</li> <li>Search through documents</li> "

@@ -1,0 +1,660 @@
+# gnome-documents' portuguese translation.
+# Copyright © 2011, 2012, 2013, 2014 gnome-documents
+# This file is distributed under the same license as the gnome-documents package.
+# Duarte Loreto <happyguy_pt@hotmail.com>, 2011, 2012, 2013, 2014.
+# Tiago S. <almosthumane@portugalmail.pt>, 2014.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: 3.12\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
+"documents&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2014-03-17 19:47+0000\n"
+"PO-Revision-Date: 2014-03-18 07:40+0100\n"
+"Last-Translator: Tiago S. <almosthumane@portugalmail.pt>\n"
+"Language-Team: Portuguese <gnome_pt@yahoogroups.com>\n"
+"Language: pt\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 1.5.4\n"
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:1
+#: ../data/org.gnome.Documents.desktop.in.h:1 ../src/application.js:103
+#: ../src/mainWindow.js:52 ../src/mainWindow.js:274
+msgid "Documents"
+msgstr "Documentos"
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:2
+msgid "A document manager application for GNOME"
+msgstr "Uma aplicação de gestão de documentos para o GNOME"
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:3
+msgid ""
+"A simple application to access, organize and share your documents on GNOME. "
+"It is meant to be a simple and elegant replacement for using a file manager "
+"to deal with documents. Seamless cloud integration is offered through GNOME "
+"Online Accounts."
+msgstr ""
+"Uma aplicação simples para aceder, organizar e partilhar os seus documentos "
+"no GNOME. Tem por objetivo ser uma forma simples e elegante de substituir a "
+"utilização de um gestor de ficheiros para gerir documentos. A integração com "
+"a cloud é garantida através das Contas Online GNOME."
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:4
+msgid "It lets you:"
+msgstr "Permite-lhe:"
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:5
+msgid ""
+"<li>View recent local and online documents</li> <li>Access your Google, "
+"ownCloud or OneDrive content</li> <li>Search through documents</li> <li>See "
+"new documents shared by friends</li> <li>View documents fullscreen</li> "
+"<li>Print documents</li> <li>Select favorites</li> <li>Allow opening full "
+"featured editor for non-trivial changes</li>"
+msgstr ""
+"<li>Visualizar documentos recentes locais e online</li> <li>Aceder aos seus "
+"conteúdos Google, ownCloud ou OneDrive</li> <li>Procurar nos documentos</li> "
+"<li>Visualizar novos documentos partilhados por amigos</li> <li>Visualizar "
+"documentos em modo de ecrã completo</li> <li>Imprimir documentos</li> "
+"<li>Selecionar favoritos</li> <li>Permite abrir um editor completo para "
+"alterações que não sejam triviais</li>"
+
+#: ../data/org.gnome.Documents.desktop.in.h:2
+msgid "Access, manage and share documents"
+msgstr "Aceder, gerir e partilhar documentos"
+
+#: ../data/org.gnome.Documents.desktop.in.h:3
+msgid "Docs;PDF;Document;"
+msgstr "Documento;PDF;Docs;"
+
+#: ../data/org.gnome.documents.gschema.xml.h:1
+msgid "View as"
+msgstr "Ver como"
+
+#: ../data/org.gnome.documents.gschema.xml.h:2
+msgid "View as type"
+msgstr "Ver como tipo"
+
+#: ../data/org.gnome.documents.gschema.xml.h:3
+msgid "Window size"
+msgstr "Tamanho da janela"
+
+#: ../data/org.gnome.documents.gschema.xml.h:4
+msgid "Window size (width and height)."
+msgstr "Tamanho da janela (largura e altura)."
+
+#: ../data/org.gnome.documents.gschema.xml.h:5
+msgid "Window position"
+msgstr "Posição da janela"
+
+#: ../data/org.gnome.documents.gschema.xml.h:6
+msgid "Window position (x and y)."
+msgstr "Posição da janela (x e y)."
+
+#: ../data/org.gnome.documents.gschema.xml.h:7
+msgid "Window maximized"
+msgstr "Janela maximizada"
+
+#: ../data/org.gnome.documents.gschema.xml.h:8
+msgid "Window maximized state"
+msgstr "Estado de maximização da janela"
+
+#: ../src/documents.js:599
+msgid "Failed to print document"
+msgstr "Falha ao imprimir documento"
+
+#: ../src/documents.js:636 ../src/search.js:418
+msgid "Local"
+msgstr "Local"
+
+#: ../src/documents.js:657
+msgid "GNOME"
+msgstr "GNOME"
+
+#: ../src/documents.js:658
+msgid "Getting Started with Documents"
+msgstr "Primeiros Passos com o Documentos"
+
+#: ../src/documents.js:674 ../src/documents.js:847 ../src/documents.js:909
+#: ../src/documents.js:1017
+msgid "Collection"
+msgstr "Coleção"
+
+#: ../src/documents.js:726
+msgid "Google Docs"
+msgstr "Google Docs"
+
+#: ../src/documents.js:727
+msgid "Google"
+msgstr "Google"
+
+#: ../src/documents.js:849 ../src/documents.js:1019
+msgid "Spreadsheet"
+msgstr "Folha de Cálculo"
+
+#: ../src/documents.js:851 ../src/documents.js:1021 ../src/presentation.js:47
+msgid "Presentation"
+msgstr "Apresentação"
+
+#: ../src/documents.js:853 ../src/documents.js:1023
+msgid "Document"
+msgstr "Documento"
+
+#: ../src/documents.js:887
+msgid "ownCloud"
+msgstr "ownCloud"
+
+#: ../src/documents.js:951 ../src/documents.js:952
+msgid "OneDrive"
+msgstr "OneDrive"
+
+#: ../src/documents.js:1151
+msgid "Please check the network connection."
+msgstr "Verifique a sua ligação à rede."
+
+#: ../src/documents.js:1154
+msgid "Please check the network proxy settings."
+msgstr "Verifique as definições de proxy de rede."
+
+#: ../src/documents.js:1157
+msgid "Unable to sign in to the document service."
+msgstr "Incapaz de iniciar uma sessão no serviço de documentos."
+
+#: ../src/documents.js:1160
+msgid "Unable to locate this document."
+msgstr "Incapaz de localizar este documento."
+
+#: ../src/documents.js:1163
+#, javascript-format
+msgid "Hmm, something is fishy (%d)."
+msgstr "Algo está errado (%d)."
+
+#: ../src/documents.js:1181
+#, javascript-format
+msgid "Oops! Unable to load “%s”"
+msgstr "Incapaz de ler “%s”"
+
+#: ../src/edit.js:192
+msgid "View"
+msgstr "Ver"
+
+#: ../src/embed.js:142
+msgid "No Documents Found"
+msgstr "Nenhum Documento Encontrado"
+
+#: ../src/embed.js:163
+#, javascript-format
+msgid "You can add your online accounts in %s"
+msgstr "Pode adicionar as suas contas online em %s"
+
+#: ../src/embed.js:167
+msgid "Settings"
+msgstr "Definições"
+
+#: ../src/lib/gd-nav-bar.c:235
+#, c-format
+msgid "Page %u of %u"
+msgstr "Página %u de %u"
+
+#: ../src/lib/gd-pdf-loader.c:247
+msgid "Unable to load the document"
+msgstr "Incapaz de ler o documento"
+
+#: ../src/lib/gd-pdf-loader.c:715
+msgid "LibreOffice is required to view this document"
+msgstr "É necessario o LibreOffice para visualizar este documento"
+
+#. Translators: %s is the number of the page, already formatted
+#. * as a string, for example "Page 5".
+#.
+#: ../src/lib/gd-places-bookmarks.c:315
+#, c-format
+msgid "Page %s"
+msgstr "Página %s"
+
+#: ../src/lib/gd-places-bookmarks.c:378
+msgid "No bookmarks"
+msgstr "Nenhum marcador"
+
+#: ../src/lib/gd-places-bookmarks.c:386 ../src/lib/gd-places-links.c:257
+#: ../src/view.js:71
+msgid "Loading…"
+msgstr "A Ler…"
+
+#: ../src/lib/gd-places-bookmarks.c:651 ../src/preview.js:601
+msgid "Bookmarks"
+msgstr "Marcadores"
+
+#: ../src/lib/gd-places-links.c:342
+msgid "No table of contents"
+msgstr "Nenhum índice"
+
+#: ../src/lib/gd-places-links.c:518
+msgid "Contents"
+msgstr "Conteúdos"
+
+#: ../src/mainToolbar.js:79
+msgid "Search"
+msgstr "Procurar"
+
+#: ../src/mainToolbar.js:90
+msgid "Back"
+msgstr "Retroceder"
+
+#: ../src/mainToolbar.js:163
+msgid "View items as a list"
+msgstr "Ver itens como uma lista"
+
+#: ../src/mainToolbar.js:169
+msgid "View items as a grid of icons"
+msgstr "Ver itens como uma grade de ícones"
+
+#: ../src/mainToolbar.js:203
+#, javascript-format
+msgid "Results for “%s”"
+msgstr "Resultados para “%s”"
+
+#: ../src/mainToolbar.js:211
+msgid "Click on items to select them"
+msgstr "Clique nos itens para os selecionar"
+
+#: ../src/mainToolbar.js:213
+#, javascript-format
+msgid "%d selected"
+msgid_plural "%d selected"
+msgstr[0] "%d selecionado"
+msgstr[1] "%d selecionados"
+
+#: ../src/mainToolbar.js:240
+msgid "Cancel"
+msgstr "Cancelar"
+
+#: ../src/mainToolbar.js:282
+msgid "Select Items"
+msgstr "Selecionar Itens"
+
+#: ../src/mainWindow.js:273
+msgid "translator-credits"
+msgstr "Duarte Loreto <happyguy_pt@hotmail.com>"
+
+#: ../src/mainWindow.js:275
+msgid "A document manager application"
+msgstr "Uma aplicação de gestão de documentos"
+
+#: ../src/notifications.js:86
+#, javascript-format
+msgid "Printing “%s”: %s"
+msgstr "A imprimir “%s”: %s"
+
+#: ../src/notifications.js:142
+msgid "Your documents are being indexed"
+msgstr "Os seus documentos estão a ser indexados"
+
+#: ../src/notifications.js:143
+msgid "Some documents might not be available during this process"
+msgstr "Alguns documentos poderão não estar disponíveis durante este processo"
+
+#: ../src/notifications.js:165
+#, javascript-format
+msgid "Fetching documents from %s"
+msgstr "A obter os documentos de %s"
+
+#: ../src/notifications.js:167
+msgid "Fetching documents from online accounts"
+msgstr "A obter os documentos de contas online"
+
+#: ../src/password.js:46
+msgid "Password Required"
+msgstr "Senha Necessária"
+
+#: ../src/password.js:49
+msgid "_Unlock"
+msgstr "_Destrancar"
+
+#: ../src/password.js:65
+#, javascript-format
+msgid "Document %s is locked and requires a password to be opened."
+msgstr "O documento %s está trancado e é necessária uma senha para o abrir."
+
+#: ../src/password.js:79
+msgid "_Password"
+msgstr "_Senha"
+
+#: ../src/places.js:56
+msgid "Close"
+msgstr "Fechar"
+
+#: ../src/presentation.js:104
+msgid "Running in presentation mode"
+msgstr "A executar em modo de apresentação"
+
+#: ../src/presentation.js:157
+msgid "Present On"
+msgstr "Apresentação Ativa"
+
+#: ../src/preview.js:609
+msgid "Bookmark this page"
+msgstr "Marcar esta página"
+
+#: ../src/preview.js:853 ../src/selections.js:857
+#, javascript-format
+msgid "Open with %s"
+msgstr "Abrir com %s"
+
+#: ../src/preview.js:915
+msgid "Find Previous"
+msgstr "Encontrar Anterior"
+
+#: ../src/preview.js:922
+msgid "Find Next"
+msgstr "Encontrar Posterior"
+
+#: ../src/properties.js:61 ../src/resources/preview-menu.ui.h:9
+#: ../src/selections.js:767
+msgid "Properties"
+msgstr "Propriedades"
+
+#: ../src/properties.js:63 ../src/sharing.js:102
+msgid "Done"
+msgstr "Terminado"
+
+#: ../src/properties.js:83
+msgctxt "Document Title"
+msgid "Title"
+msgstr "Título"
+
+#: ../src/properties.js:92
+msgctxt "Document Author"
+msgid "Author"
+msgstr "Autor"
+
+#: ../src/properties.js:99
+msgid "Source"
+msgstr "Origem"
+
+#: ../src/properties.js:105
+msgid "Date Modified"
+msgstr "Data de Alteração"
+
+#: ../src/properties.js:112
+msgid "Date Created"
+msgstr "Data de Criação"
+
+#: ../src/properties.js:121
+msgctxt "Document Type"
+msgid "Type"
+msgstr "Tipo"
+
+#: ../src/resources/app-menu.ui.h:1
+msgid "Fullscreen"
+msgstr "Ecrã Completo"
+
+#: ../src/resources/app-menu.ui.h:2
+msgid "Help"
+msgstr "Ajuda"
+
+#: ../src/resources/app-menu.ui.h:3
+msgid "About"
+msgstr "Sobre"
+
+#: ../src/resources/app-menu.ui.h:4
+msgid "Quit"
+msgstr "Sair"
+
+#: ../src/resources/preview-context-menu.ui.h:1
+msgid "_Copy"
+msgstr "_Copiar"
+
+#: ../src/resources/preview-menu.ui.h:1 ../src/selections.js:747
+#: ../src/selections.js:860
+msgid "Open"
+msgstr "Abrir"
+
+#: ../src/resources/preview-menu.ui.h:2
+msgid "Edit"
+msgstr "Editar"
+
+#: ../src/resources/preview-menu.ui.h:3
+msgid "Print…"
+msgstr "Imprimir…"
+
+#: ../src/resources/preview-menu.ui.h:4
+msgid "Present"
+msgstr "Apresentar"
+
+#: ../src/resources/preview-menu.ui.h:5
+msgid "Zoom In"
+msgstr "Aumentar Zoom"
+
+#: ../src/resources/preview-menu.ui.h:6
+msgid "Zoom Out"
+msgstr "Reduzir Zoom"
+
+#: ../src/resources/preview-menu.ui.h:7
+msgid "Rotate ↶"
+msgstr "Rodar ↶"
+
+#: ../src/resources/preview-menu.ui.h:8
+msgid "Rotate ↷"
+msgstr "Rodar ↷"
+
+#: ../src/resources/selection-menu.ui.h:1
+msgid "Select All"
+msgstr "Selecionar Tudo"
+
+#: ../src/resources/selection-menu.ui.h:2
+msgid "Select None"
+msgstr "Não Selecionar Nada"
+
+#: ../src/search.js:114
+msgid "Category"
+msgstr "Categoria"
+
+#: ../src/search.js:119 ../src/search.js:171 ../src/search.js:256
+#: ../src/search.js:412
+msgid "All"
+msgstr "Todas"
+
+#: ../src/search.js:125
+msgid "Favorites"
+msgstr "Favoritos"
+
+#: ../src/search.js:130
+msgid "Shared with you"
+msgstr "Partilhados consigo"
+
+#: ../src/search.js:168
+msgctxt "Search Filter"
+msgid "Type"
+msgstr "Tipo"
+
+#: ../src/search.js:173
+msgid "Collections"
+msgstr "Coleções"
+
+#: ../src/search.js:177
+msgid "PDF Documents"
+msgstr "Documentos PDF"
+
+#: ../src/search.js:181
+msgid "Presentations"
+msgstr "Apresentações"
+
+#: ../src/search.js:184
+msgid "Spreadsheets"
+msgstr "Folhas de Cálculo"
+
+#: ../src/search.js:187
+msgid "Text Documents"
+msgstr "Documentos de Texto"
+
+#: ../src/search.js:253
+msgid "Match"
+msgstr "Coincidir"
+
+#: ../src/search.js:259
+msgctxt "Search Filter"
+msgid "Title"
+msgstr "Título"
+
+#: ../src/search.js:262
+msgctxt "Search Filter"
+msgid "Author"
+msgstr "Autor"
+
+#: ../src/search.js:408
+msgid "Sources"
+msgstr "Origens"
+
+#: ../src/selections.js:461
+msgid "You don't have any collections yet. Enter a new collection name above."
+msgstr "Ainda não possui coleções. Introduza acima o nome de uma nova coleção."
+
+#: ../src/selections.js:604
+msgid "Create new collection"
+msgstr "Criar uma nova coleção"
+
+#: ../src/selections.js:640
+msgctxt "Dialog Title"
+msgid "Collections"
+msgstr "Coleções"
+
+#: ../src/selections.js:752
+msgid "Print"
+msgstr "Imprimir"
+
+#: ../src/selections.js:757
+msgid "Delete"
+msgstr "Apagar"
+
+#: ../src/selections.js:762
+msgid "Share"
+msgstr "Partilhar"
+
+#: ../src/selections.js:772
+msgid "Add to Collection"
+msgstr "Adicionar à Coleção"
+
+#: ../src/sharing.js:98
+msgid "Sharing Settings"
+msgstr "Definições de Partilha"
+
+#: ../src/sharing.js:135
+msgid "Document permissions"
+msgstr "Permissões do documento"
+
+#: ../src/sharing.js:142 ../src/sharing.js:320
+msgid "Change"
+msgstr "Alterar"
+
+#: ../src/sharing.js:166 ../src/sharing.js:295
+msgid "Private"
+msgstr "Privado"
+
+#: ../src/sharing.js:176 ../src/sharing.js:288
+msgid "Public"
+msgstr "Público"
+
+#: ../src/sharing.js:180 ../src/sharing.js:290
+msgid "Everyone can edit"
+msgstr "Qualquer pessoa pode editar"
+
+#: ../src/sharing.js:187
+msgid "Add people"
+msgstr "Adicionar pessoas"
+
+#: ../src/sharing.js:194
+msgid "Enter an email address"
+msgstr "Introduza um endereço de email"
+
+#: ../src/sharing.js:209 ../src/sharing.js:376
+msgid "Can edit"
+msgstr "Pode editar"
+
+#: ../src/sharing.js:209 ../src/sharing.js:379
+msgid "Can view"
+msgstr "Pode visualizar"
+
+#: ../src/sharing.js:216
+msgid "Add"
+msgstr "Adicionar"
+
+#: ../src/sharing.js:292
+msgid "Everyone can read"
+msgstr "Qualquer pessoa pode ler"
+
+#: ../src/sharing.js:307
+msgid "Save"
+msgstr "Gravar"
+
+#: ../src/sharing.js:373
+msgid "Owner"
+msgstr "Dono"
+
+#: ../src/sharing.js:442
+#, javascript-format
+msgid "You can ask %s for access"
+msgstr "Pode pedir acesso a %s"
+
+#: ../src/sharing.js:479 ../src/sharing.js:515 ../src/sharing.js:572
+#: ../src/sharing.js:589 ../src/sharing.js:608
+msgid "The document was not updated"
+msgstr "O documento não foi atualizado"
+
+#: ../src/shellSearchProvider.js:294
+msgid "Untitled Document"
+msgstr "Documento Sem Título"
+
+#: ../src/trackerController.js:170
+msgid "Unable to fetch the list of documents"
+msgstr "Incapaz de obter a lista de documentos"
+
+#: ../src/view.js:62 ../src/view.js:93
+msgid "Load More"
+msgstr "Ler Mais"
+
+#: ../src/view.js:307
+msgid "Yesterday"
+msgstr "Ontem"
+
+#: ../src/view.js:309
+#, javascript-format
+msgid "%d day ago"
+msgid_plural "%d days ago"
+msgstr[0] "%d dia atrás"
+msgstr[1] "%d dias atrás"
+
+#: ../src/view.js:313
+msgid "Last week"
+msgstr "Semana passada"
+
+#: ../src/view.js:315
+#, javascript-format
+msgid "%d week ago"
+msgid_plural "%d weeks ago"
+msgstr[0] "%d semana atrás"
+msgstr[1] "%d semanas atrás"
+
+#: ../src/view.js:319
+msgid "Last month"
+msgstr "Mês passado"
+
+#: ../src/view.js:321
+#, javascript-format
+msgid "%d month ago"
+msgid_plural "%d months ago"
+msgstr[0] "%d mês atrás"
+msgstr[1] "%d meses atrás"
+
+#: ../src/view.js:325
+msgid "Last year"
+msgstr "Ano passado"
+
+#: ../src/view.js:327
+#, javascript-format
+msgid "%d year ago"
+msgid_plural "%d years ago"
+msgstr[0] "%d ano atrás"
+msgstr[1] "%d anos atrás"

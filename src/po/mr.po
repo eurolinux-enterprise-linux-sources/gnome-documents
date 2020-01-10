@@ -1,0 +1,758 @@
+# Marathi translation for gnome-documents.
+# Copyright (C) 2012 gnome-documents's COPYRIGHT HOLDER
+# This file is distributed under the same license as the gnome-documents package.
+#
+# Sandeep Shedmake <sshedmak@redhat.com>, 2012, 2013, 2014.
+msgid ""
+msgstr ""
+"Project-Id-Version: gnome-documents master\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
+"documents&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2014-09-17 18:44+0000\n"
+"PO-Revision-Date: 2014-09-18 13:12+0530\n"
+"Last-Translator: Sandeep Shedmake <sshedmak@redhat.com>\n"
+"Language-Team: Marathi <maajhe-sanganak@freelists.org>\n"
+"Language: mr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Lokalize 1.5\n"
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:1
+#: ../data/org.gnome.Documents.desktop.in.h:1 ../src/application.js:121
+#: ../src/mainWindow.js:52 ../src/mainWindow.js:302
+msgid "Documents"
+msgstr "दस्तऐवज"
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:2
+#| msgid "A document manager application"
+msgid "A document manager application for GNOME"
+msgstr "GNOME करिता दस्तऐवज व्यवस्थापक ॲप्लिकेशन"
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:3
+msgid ""
+"A simple application to access, organize and share your documents on GNOME. "
+"It is meant to be a simple and elegant replacement for using a file manager "
+"to deal with documents. Seamless cloud integration is offered through GNOME "
+"Online Accounts."
+msgstr ""
+"GNOME वरील दस्तऐवजांकरिता प्रवेश, आयोजन आणि एकत्रीत वापरकरिता एक सोपे "
+"ॲप्लिकेशन. फाइल व्यवस्थापकाचे दस्तऐवज हाताळणीकरिता ते सोपे आणि उत्कृष्ट "
+"अदलाबदल पर्याय आहे. GNOME ऑनलाइन अकाँट्समार्फत सिमलेस क्लाउड एकत्रीकरण पुरवले "
+"जाते."
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:4
+msgid "It lets you:"
+msgstr "तुम्हाला खालील पुरवेल:"
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:5
+msgid "View recent local and online documents"
+msgstr "सर्वात नवीन स्थानीय आणि ऑनलाइन दस्तऐवजांचे अवलोकन"
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:6
+msgid "Access your Google, ownCloud or OneDrive content"
+msgstr "Google, ownCloud किंवा OneDrive अंतर्भुत माहिती शोधा"
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:7
+msgid "Search through documents"
+msgstr "दस्तऐवज अंतर्गत शोधा"
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:8
+msgid "See new documents shared by friends"
+msgstr "मित्रांतर्फे शेअर केलेले नवीन दस्तऐवज पहा"
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:9
+msgid "View documents fullscreen"
+msgstr "दस्तऐवजांना पडदाभर अवलोकन करा"
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:10
+#| msgid "PDF Documents"
+msgid "Print documents"
+msgstr "दस्तऐवजांची छपाई करा"
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:11
+#| msgid "Select Items"
+msgid "Select favorites"
+msgstr "पसंतीचे नीवडा"
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:12
+msgid "Allow opening full featured editor for non-trivial changes"
+msgstr ""
+"विना-सामान्य बदलांकरिता संपूर्णतया गुणविशेष परिपूर्णयुक्त संपादक खुले करण्यास "
+"परवानगी द्या"
+
+#: ../data/org.gnome.Documents.desktop.in.h:2
+msgid "Access, manage and share documents"
+msgstr "दस्तऐवजकरीता प्रवेश, व्यवस्थापन व एकत्र वापर"
+
+#: ../data/org.gnome.Documents.desktop.in.h:3
+msgid "Docs;PDF;Document;"
+msgstr "डॉक्स;PDF;दस्तऐवज;"
+
+#: ../data/org.gnome.documents.gschema.xml.h:1
+msgid "View as"
+msgstr "असे अवलोकन"
+
+#: ../data/org.gnome.documents.gschema.xml.h:2
+msgid "View as type"
+msgstr "प्रकार अवलोकन"
+
+#: ../data/org.gnome.documents.gschema.xml.h:3
+msgid "Window size"
+msgstr "पटल आकार"
+
+#: ../data/org.gnome.documents.gschema.xml.h:4
+msgid "Window size (width and height)."
+msgstr "पटल आकार (रूंदी व ऊंची)."
+
+#: ../data/org.gnome.documents.gschema.xml.h:5
+msgid "Window position"
+msgstr "पटलाचे ठिकाण"
+
+#: ../data/org.gnome.documents.gschema.xml.h:6
+msgid "Window position (x and y)."
+msgstr "पटलाचे ठिकाण (x व y)."
+
+#: ../data/org.gnome.documents.gschema.xml.h:7
+msgid "Window maximized"
+msgstr "पटल मोठे करा"
+
+#: ../data/org.gnome.documents.gschema.xml.h:8
+msgid "Window maximized state"
+msgstr "पटल मोठे केल्याचे स्तर"
+
+#: ../src/documents.js:621
+#| msgid "Unable to load the document"
+msgid "Failed to print document"
+msgstr "दस्तऐजाची छपाई करण्यास अपयशी"
+
+#: ../src/documents.js:658 ../src/search.js:427
+msgid "Local"
+msgstr "स्थानीय"
+
+#: ../src/documents.js:679
+msgid "GNOME"
+msgstr "GNOME"
+
+#: ../src/documents.js:680
+msgid "Getting Started with Documents"
+msgstr "दस्तऐवजांपासून सुरू करत आहे"
+
+#: ../src/documents.js:696 ../src/documents.js:877 ../src/documents.js:939
+#: ../src/documents.js:1047
+msgid "Collection"
+msgstr "गोलाकार"
+
+#: ../src/documents.js:756
+msgid "Google Docs"
+msgstr "गूगल डॉक्स"
+
+#: ../src/documents.js:757
+msgid "Google"
+msgstr "गूगल"
+
+#: ../src/documents.js:879 ../src/documents.js:1049
+msgid "Spreadsheet"
+msgstr "स्प्रेडशीट"
+
+#: ../src/documents.js:881 ../src/documents.js:1051 ../src/presentation.js:47
+msgid "Presentation"
+msgstr "प्रस्तुतीकरण"
+
+#: ../src/documents.js:883 ../src/documents.js:1053
+msgid "Document"
+msgstr "दस्तऐवज"
+
+#: ../src/documents.js:917
+msgid "ownCloud"
+msgstr "ownCloud"
+
+#: ../src/documents.js:981 ../src/documents.js:982
+msgid "OneDrive"
+msgstr "OneDrive"
+
+#: ../src/documents.js:1181
+msgid "Please check the network connection."
+msgstr "कृपया नेटवर्क जोडणी तपासा."
+
+#: ../src/documents.js:1184
+msgid "Please check the network proxy settings."
+msgstr "कृपया नेटवर्क प्रॉक्सी सेटिंग्ज तपासा."
+
+#: ../src/documents.js:1187
+msgid "Unable to sign in to the document service."
+msgstr "दस्तऐज सर्व्हिसमध्ये स्वाक्षरि करण्यास अशक्य."
+
+#: ../src/documents.js:1190
+msgid "Unable to locate this document."
+msgstr "हे दस्तऐवज शोधण्यास अशक्य."
+
+#: ../src/documents.js:1193
+#, javascript-format
+msgid "Hmm, something is fishy (%d)."
+msgstr "हम्म, काही घोळ आहे (%d)."
+
+#: ../src/documents.js:1211
+#, javascript-format
+msgid "Oops! Unable to load “%s”"
+msgstr "अरेच्छा! “%s” लोड करणे अशक्य"
+
+#: ../src/edit.js:192
+msgid "View"
+msgstr "दृष्य"
+
+#: ../src/embed.js:142
+msgid "No Documents Found"
+msgstr "दस्तऐवज आढळले नाही"
+
+#: ../src/embed.js:163
+#, javascript-format
+msgid "You can add your online accounts in %s"
+msgstr "तुम्ही %s मध्ये ऑनलाइन खाते समाविष्ट करू शकता"
+
+#: ../src/embed.js:167
+#| msgid "System Settings"
+msgid "Settings"
+msgstr "सेटिंग्ज"
+
+#: ../src/lib/gd-nav-bar.c:242
+#, c-format
+msgid "Page %u of %u"
+msgstr "पान %u, %u पैकी"
+
+#: ../src/lib/gd-pdf-loader.c:247
+msgid "Unable to load the document"
+msgstr "दस्तऐज लोड करणे अशक्य"
+
+#: ../src/lib/gd-pdf-loader.c:715
+msgid "LibreOffice is required to view this document"
+msgstr "हे दस्तऐवज पहाण्याकरीता LibreOffice आवश्यक आहे"
+
+#. Translators: %s is the number of the page, already formatted
+#. * as a string, for example "Page 5".
+#.
+#: ../src/lib/gd-places-bookmarks.c:315
+#, c-format
+msgid "Page %s"
+msgstr "पान %s"
+
+#: ../src/lib/gd-places-bookmarks.c:378
+msgid "No bookmarks"
+msgstr "वाचनखुणा नाही"
+
+#: ../src/lib/gd-places-bookmarks.c:386 ../src/lib/gd-places-links.c:257
+#: ../src/view.js:71
+msgid "Loading…"
+msgstr "लोड करत आहे..."
+
+#: ../src/lib/gd-places-bookmarks.c:651 ../src/preview.js:580
+msgid "Bookmarks"
+msgstr "वाचनखुणा"
+
+#: ../src/lib/gd-places-links.c:342
+msgid "No table of contents"
+msgstr "अंतर्भुत माहितीचा तक्ता नाही"
+
+#: ../src/lib/gd-places-links.c:518
+msgid "Contents"
+msgstr "अंतर्भुत माहिती"
+
+#: ../src/mainToolbar.js:79
+msgid "Search"
+msgstr "शोधा"
+
+#: ../src/mainToolbar.js:87
+msgid "Back"
+msgstr "मागे"
+
+#: ../src/mainToolbar.js:132
+msgid "View items as a list"
+msgstr "घटकांचे अवलोकन सूची स्वरूपात करा"
+
+#: ../src/mainToolbar.js:138
+msgid "View items as a grid of icons"
+msgstr "घटकांचे अवलोकन चिन्हाचे ग्रीड या स्वरूपात करा"
+
+#: ../src/mainToolbar.js:168
+msgid "Click on items to select them"
+msgstr "निवडण्याकरीता घटकांवर क्लिक करा"
+
+#: ../src/mainToolbar.js:170
+#, javascript-format
+msgid "%d selected"
+msgid_plural "%d selected"
+msgstr[0] "%d निवडले"
+msgstr[1] "%d निवडले"
+
+#: ../src/mainToolbar.js:200
+msgid "Cancel"
+msgstr "रद्द करा"
+
+#: ../src/mainToolbar.js:242
+msgid "Select Items"
+msgstr "घटके नीवडा"
+
+#: ../src/mainWindow.js:301
+msgid "translator-credits"
+msgstr "संदिप शेडमाके <sshedmak@redhat.com>, 2012"
+
+#: ../src/mainWindow.js:303
+msgid "A document manager application"
+msgstr "दस्तऐवज व्यवस्थापक ॲप्लिकेशन"
+
+#: ../src/notifications.js:50
+msgid "Selected item has been deleted"
+msgid_plural "Selected items have been deleted"
+msgstr[0] "नीवडलेले घटक नष्ट केले"
+msgstr[1] "नीवडलेल्या घटकांना नष्ट केले"
+
+#: ../src/notifications.js:57
+msgid "Undo"
+msgstr "पूर्ववत् करा"
+
+#: ../src/notifications.js:157
+#, javascript-format
+msgid "Printing “%s”: %s"
+msgstr "“%s”: %s ची छपाई करत आहे"
+
+#: ../src/notifications.js:213
+msgid "Your documents are being indexed"
+msgstr "तुमचे दस्तऐवज इंडेक्स् केले जात आहे"
+
+#: ../src/notifications.js:214
+msgid "Some documents might not be available during this process"
+msgstr "ह्या प्रोसेसवेळी काहिक दस्तऐवज कदाचित अनुपलब्ध राहतील"
+
+#: ../src/notifications.js:236
+#, javascript-format
+msgid "Fetching documents from %s"
+msgstr "%s पासून दस्तऐवज प्राप्त करत आहे"
+
+#: ../src/notifications.js:238
+msgid "Fetching documents from online accounts"
+msgstr "ऑनलाइन खातींपासून दस्तऐवज प्राप्त करत आहे"
+
+#: ../src/password.js:46
+msgid "Password Required"
+msgstr "पासवर्ड आवश्यक"
+
+#: ../src/password.js:49
+msgid "_Unlock"
+msgstr "कुलूपबंद अशक्य करा (_U)"
+
+#: ../src/password.js:65
+#, javascript-format
+msgid "Document %s is locked and requires a password to be opened."
+msgstr "दस्तऐवज %s कुलूपबंद केले आणि खुले करण्यासाठी पासवर्ड आवश्यक आहे."
+
+#: ../src/password.js:79
+msgid "_Password"
+msgstr "पासवर्ड (_P)"
+
+#: ../src/presentation.js:104
+msgid "Running in presentation mode"
+msgstr "प्रस्तुतीकरण मोडमध्ये चालवत आहे"
+
+#: ../src/presentation.js:157
+msgid "Present On"
+msgstr "प्रेजेंट ऑन"
+
+#: ../src/preview.js:588
+#| msgid "Bookmarks"
+msgid "Bookmark this page"
+msgstr "या पृष्ठाला वाचनखूण लावा"
+
+#: ../src/preview.js:823 ../src/selections.js:857
+#, javascript-format
+msgid "Open with %s"
+msgstr "%s सह उघडा"
+
+#: ../src/preview.js:885
+msgid "Find Previous"
+msgstr "मागील शोधा"
+
+#: ../src/preview.js:892
+msgid "Find Next"
+msgstr "पुढील शोधा"
+
+#: ../src/properties.js:61 ../src/resources/preview-menu.ui.h:9
+#: ../src/selections.js:767
+msgid "Properties"
+msgstr " गुणधर्म"
+
+#: ../src/properties.js:81
+#| msgid "Title"
+msgctxt "Document Title"
+msgid "Title"
+msgstr "शीर्षक"
+
+#: ../src/properties.js:90
+#| msgid "Author"
+msgctxt "Document Author"
+msgid "Author"
+msgstr "लेखक"
+
+#: ../src/properties.js:97
+msgid "Source"
+msgstr "स्रोत"
+
+#: ../src/properties.js:103
+msgid "Date Modified"
+msgstr "संपादित केलेले दिनांक"
+
+#: ../src/properties.js:110
+msgid "Date Created"
+msgstr "निर्माण केल्याचे दिनांक"
+
+#: ../src/properties.js:119
+#| msgid "Type"
+msgctxt "Document Type"
+msgid "Type"
+msgstr "प्रकार"
+
+#: ../src/resources/app-menu.ui.h:1
+msgid "Fullscreen"
+msgstr "पडदाभर"
+
+#: ../src/resources/app-menu.ui.h:2
+msgid "Help"
+msgstr "मदत"
+
+#: ../src/resources/app-menu.ui.h:3
+msgid "About"
+msgstr "विषयी"
+
+#: ../src/resources/app-menu.ui.h:4
+msgid "Quit"
+msgstr "बाहेर पडा"
+
+#: ../src/resources/preview-context-menu.ui.h:1
+msgid "_Copy"
+msgstr "प्रत बनवा (_C)"
+
+#: ../src/resources/preview-menu.ui.h:1 ../src/selections.js:747
+#: ../src/selections.js:860
+msgid "Open"
+msgstr "उघडा"
+
+#: ../src/resources/preview-menu.ui.h:2
+msgid "Edit"
+msgstr "संपादित करा"
+
+#: ../src/resources/preview-menu.ui.h:3
+msgid "Print…"
+msgstr "छपाई..."
+
+#: ../src/resources/preview-menu.ui.h:4
+msgid "Present"
+msgstr "सध्याचे"
+
+#: ../src/resources/preview-menu.ui.h:5
+msgid "Zoom In"
+msgstr "मोठे करा"
+
+#: ../src/resources/preview-menu.ui.h:6
+msgid "Zoom Out"
+msgstr "लहान करा"
+
+#: ../src/resources/preview-menu.ui.h:7
+msgid "Rotate ↶"
+msgstr "फिरवा ↶"
+
+#: ../src/resources/preview-menu.ui.h:8
+msgid "Rotate ↷"
+msgstr "फिरवा ↷"
+
+#: ../src/resources/selection-menu.ui.h:1
+msgid "Select All"
+msgstr "सर्व नीवडा"
+
+#: ../src/resources/selection-menu.ui.h:2
+msgid "Select None"
+msgstr "काहिच नीवडू नका"
+
+#: ../src/search.js:114
+msgid "Category"
+msgstr "विभाग"
+
+#: ../src/search.js:119 ../src/search.js:180 ../src/search.js:265
+#: ../src/search.js:421
+msgid "All"
+msgstr "सर्व"
+
+#: ../src/search.js:125
+msgid "Favorites"
+msgstr "पसंतीचे"
+
+#: ../src/search.js:130
+msgid "Shared with you"
+msgstr "तुमच्यासह शेअर केले"
+
+#: ../src/search.js:177
+#| msgid "Type"
+msgctxt "Search Filter"
+msgid "Type"
+msgstr "प्रकार"
+
+#: ../src/search.js:182
+msgid "Collections"
+msgstr "कलेक्शन्स्"
+
+#: ../src/search.js:186
+msgid "PDF Documents"
+msgstr "PDF दस्तऐवज"
+
+#: ../src/search.js:190
+msgid "Presentations"
+msgstr "प्रस्तुतिकरण"
+
+#: ../src/search.js:193
+msgid "Spreadsheets"
+msgstr "स्प्रेडशीटस्"
+
+#: ../src/search.js:196
+msgid "Text Documents"
+msgstr "मजकूर दस्तऐवज"
+
+#: ../src/search.js:262
+msgid "Match"
+msgstr "मॅच"
+
+#: ../src/search.js:268
+#| msgid "Title"
+msgctxt "Search Filter"
+msgid "Title"
+msgstr "शीर्षक"
+
+#: ../src/search.js:271
+#| msgid "Author"
+msgctxt "Search Filter"
+msgid "Author"
+msgstr "लेखक"
+
+#: ../src/search.js:417
+msgid "Sources"
+msgstr "सोअर्सेस्"
+
+#: ../src/selections.js:461
+msgid "You don't have any collections yet. Enter a new collection name above."
+msgstr ""
+"तुमच्याकडे अजूनही कुठलेही संग्रह नाही. वरीलप्रमाणे नवीन कलेक्शनकरिता नाव द्या."
+
+#: ../src/selections.js:604
+#| msgid "Collection"
+msgid "Create new collection"
+msgstr "नवीन संग्रह निर्माण करा"
+
+#: ../src/selections.js:640
+#| msgid "Collections"
+msgctxt "Dialog Title"
+msgid "Collections"
+msgstr "कलेक्शन्स"
+
+#: ../src/selections.js:752
+msgid "Print"
+msgstr "छपाई"
+
+#: ../src/selections.js:757
+msgid "Delete"
+msgstr "नष्ट करा"
+
+#: ../src/selections.js:762
+msgid "Share"
+msgstr "मिळून वापर करा"
+
+#: ../src/selections.js:772
+#| msgid "Collection"
+msgid "Add to Collection"
+msgstr "संग्रहात समाविष्ट करा"
+
+#: ../src/sharing.js:98
+msgid "Sharing Settings"
+msgstr "सेटिंग्ज शेअर करत आहे"
+
+#: ../src/sharing.js:102
+msgid "Done"
+msgstr "पूर्ण झाले"
+
+#: ../src/sharing.js:135
+msgid "Document permissions"
+msgstr "दस्तऐवज परवानगी"
+
+#: ../src/sharing.js:142 ../src/sharing.js:320
+msgid "Change"
+msgstr "बदल"
+
+#: ../src/sharing.js:166 ../src/sharing.js:295
+msgid "Private"
+msgstr "खाजगी"
+
+#: ../src/sharing.js:176 ../src/sharing.js:288
+msgid "Public"
+msgstr "सार्वजनिक"
+
+#: ../src/sharing.js:180 ../src/sharing.js:290
+msgid "Everyone can edit"
+msgstr "कोणिही संपादित करू शकतो"
+
+#: ../src/sharing.js:187
+msgid "Add people"
+msgstr "व्यक्ति समाविष्ट करा"
+
+#: ../src/sharing.js:194
+msgid "Enter an email address"
+msgstr "ईमेल पत्ता द्या"
+
+#: ../src/sharing.js:209 ../src/sharing.js:376
+msgid "Can edit"
+msgstr "संपादन शक्य"
+
+#: ../src/sharing.js:209 ../src/sharing.js:379
+msgid "Can view"
+msgstr "दृष्य शक्य"
+
+#: ../src/sharing.js:216
+msgid "Add"
+msgstr "समावेश"
+
+#: ../src/sharing.js:292
+msgid "Everyone can read"
+msgstr "कोणिही वाचण करू शकतो"
+
+#: ../src/sharing.js:307
+msgid "Save"
+msgstr "साठवा"
+
+#: ../src/sharing.js:373
+msgid "Owner"
+msgstr "मालक"
+
+#: ../src/sharing.js:442
+#, javascript-format
+msgid "You can ask %s for access"
+msgstr "प्रवेशकरीता %sला विचारा"
+
+#: ../src/sharing.js:479 ../src/sharing.js:515 ../src/sharing.js:572
+#: ../src/sharing.js:589 ../src/sharing.js:608
+msgid "The document was not updated"
+msgstr "दस्तऐवज सुधारित केले नाही"
+
+#: ../src/shellSearchProvider.js:294
+msgid "Untitled Document"
+msgstr "विनाशीर्षक दस्तऐवज"
+
+#: ../src/trackerController.js:170
+msgid "Unable to fetch the list of documents"
+msgstr "दस्तऐवजांची सूची प्राप्त करणे अशक्य"
+
+#: ../src/view.js:62 ../src/view.js:93
+msgid "Load More"
+msgstr "आणखी लोड करा"
+
+#: ../src/view.js:307
+msgid "Yesterday"
+msgstr "काल"
+
+#: ../src/view.js:309
+#, javascript-format
+msgid "%d day ago"
+msgid_plural "%d days ago"
+msgstr[0] "%d दिवस अगोदर"
+msgstr[1] "%d दिवस अगोदर"
+
+#: ../src/view.js:313
+msgid "Last week"
+msgstr "शेवटचा सप्ताह"
+
+#: ../src/view.js:315
+#, javascript-format
+msgid "%d week ago"
+msgid_plural "%d weeks ago"
+msgstr[0] "%d सप्ताह अगोदर"
+msgstr[1] "%d सप्ताह अगोदर"
+
+#: ../src/view.js:319
+msgid "Last month"
+msgstr "शेटवचा महिना"
+
+#: ../src/view.js:321
+#, javascript-format
+msgid "%d month ago"
+msgid_plural "%d months ago"
+msgstr[0] "%d महिना अगोदर"
+msgstr[1] "%d महिना अगोदर"
+
+#: ../src/view.js:325
+msgid "Last year"
+msgstr "शेवटचा वर्ष"
+
+#: ../src/view.js:327
+#, javascript-format
+msgid "%d year ago"
+msgid_plural "%d years ago"
+msgstr[0] "%d वर्ष अगोदर"
+msgstr[1] "%d वर्ष अगोदर"
+
+#~ msgid "Skydrive"
+#~ msgstr "स्कायड्राइव्ह"
+
+#~| msgid "Results for \"%s\""
+#~ msgid "Results for “%s”"
+#~ msgstr "“%s” करीता परिणाम"
+
+#~ msgid "Grid"
+#~ msgstr "ग्रिड"
+
+#~ msgid "List"
+#~ msgstr "सूची"
+
+#~ msgid "About Documents"
+#~ msgstr "दस्तऐवज विषयी"
+
+#~ msgid "Organize"
+#~ msgstr "व्यवस्थापित करा"
+
+#~ msgid "Unable to load \"%s\" for preview"
+#~ msgstr "पूर्वावलोकनकरीता \"%s\" लोड करणे अशक्य"
+
+#~ msgid "Cannot find \"unoconv\", please check your LibreOffice installation"
+#~ msgstr "\"unoconv\" शोधणे अशक्य, कृपया LibreOffice प्रतिष्ठापनची तपासणी करा"
+
+#~ msgid "New and Recent"
+#~ msgstr "नविन व नुकतेच"
+
+#~ msgid "filtered by title"
+#~ msgstr "शीर्षकतर्फे फिल्टर केले"
+
+#~ msgid "filtered by author"
+#~ msgstr "ऑथरतर्फे फिल्टर केले"
+
+#~ msgid "Load %d more document"
+#~ msgid_plural "Load %d more documents"
+#~ msgstr[0] "%d दस्तऐवज लोड करा"
+#~ msgstr[1] "%d दस्तऐवज लोड करा"
+
+#~ msgid "Print..."
+#~ msgstr "छपाई..."
+
+#~ msgid "Rotate Right"
+#~ msgstr "उजवीकडे फिरवा"
+
+#~ msgid "Remove from favorites"
+#~ msgstr "पसंतीतून काढून टाकतो"
+
+#~ msgid "Add to favorites"
+#~ msgstr "पंसतीमध्ये समाविष्ट करा"
+
+#~ msgid "The active source filter"
+#~ msgstr "सक्रीय सोअर्स फिल्टर"
+
+#~ msgid "The last active source filter"
+#~ msgstr "शेटवचे सक्रिय सोअर्स फिल्टर"
+
+#~ msgid "%d of %d"
+#~ msgstr "%d, %d पैकी"
+
+#~ msgid "GNOME Documents"
+#~ msgstr "GNOME दस्तऐवज"

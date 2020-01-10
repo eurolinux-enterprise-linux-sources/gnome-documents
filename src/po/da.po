@@ -1,0 +1,727 @@
+# Danish translation for gnome-documents.
+# Copyright (C) 2011, 2012 Free Software Foundation and translators
+# This file is distributed under the same license as the gnome-documents package.
+#
+# Kris Thomsen <mail@kristhomsen.dk>, 2011-2014.
+# Kenneth Nielsen <k.nielsen81@gmail.com>, 2012-2013.
+# Ask Hjorth Larsen <asklarsen@gmail.com>, 2012.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: gnome-documents master\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-09-16 21:07+0200\n"
+"PO-Revision-Date: 2014-09-09 20:52+0200\n"
+"Last-Translator: Kris Thomsen <mail@kristhomsen.dk>\n"
+"Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
+"Language: da\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:1
+#: ../data/org.gnome.Documents.desktop.in.h:1 ../src/application.js:121
+#: ../src/mainWindow.js:52 ../src/mainWindow.js:302
+msgid "Documents"
+msgstr "Dokumenter"
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:2
+msgid "A document manager application for GNOME"
+msgstr "Et program til dokumenthåndtering i GNOME"
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:3
+msgid ""
+"A simple application to access, organize and share your documents on GNOME. "
+"It is meant to be a simple and elegant replacement for using a file manager "
+"to deal with documents. Seamless cloud integration is offered through GNOME "
+"Online Accounts."
+msgstr ""
+"En simpel applikation til at tilgå, organisere og dele dine dokumenter i "
+"GNOME. Det er påtænkt at være en simpel og elegant erstatning for at bruge "
+"et filhåndteringsprogram til at håndtere dokumenter. Problemfri cloud-"
+"integration tilbydes gennem GNOME online-konti."
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:4
+msgid "It lets you:"
+msgstr "Den lader dig:"
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:5
+msgid "View recent local and online documents"
+msgstr "Se nylige lokale og online dokumenter"
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:6
+msgid "Access your Google, ownCloud or OneDrive content"
+msgstr "Tilgå dit indhold fra Google, ownCloud eller OneDrive"
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:7
+msgid "Search through documents"
+msgstr "Søg i dokumenter"
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:8
+msgid "See new documents shared by friends"
+msgstr "Se nye dokumenter, delt af venner"
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:9
+msgid "View documents fullscreen"
+msgstr "Se dokumenter i fuld skærm"
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:10
+msgid "Print documents"
+msgstr "Udskriv dokumenter"
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:11
+msgid "Select favorites"
+msgstr "Vælg favoritter"
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:12
+msgid "Allow opening full featured editor for non-trivial changes"
+msgstr ""
+"Tillad åbning af et fuldt funktionsdygtigt redigeringsprogram til større "
+"ændringer"
+
+#: ../data/org.gnome.Documents.desktop.in.h:2
+msgid "Access, manage and share documents"
+msgstr "Tilgå, håndtér og del dokumenter"
+
+#: ../data/org.gnome.Documents.desktop.in.h:3
+msgid "Docs;PDF;Document;"
+msgstr "Docs;PDF;Dokument;"
+
+#: ../data/org.gnome.documents.gschema.xml.h:1
+msgid "View as"
+msgstr "Vis som"
+
+#: ../data/org.gnome.documents.gschema.xml.h:2
+msgid "View as type"
+msgstr "Vis som type"
+
+#: ../data/org.gnome.documents.gschema.xml.h:3
+msgid "Window size"
+msgstr "Vinduesstørrelse"
+
+#: ../data/org.gnome.documents.gschema.xml.h:4
+msgid "Window size (width and height)."
+msgstr "Vinduesstørrelse (bredde og højde)."
+
+#: ../data/org.gnome.documents.gschema.xml.h:5
+msgid "Window position"
+msgstr "Vinduesposition"
+
+#: ../data/org.gnome.documents.gschema.xml.h:6
+msgid "Window position (x and y)."
+msgstr "Vinduesposition (x og y)."
+
+#: ../data/org.gnome.documents.gschema.xml.h:7
+msgid "Window maximized"
+msgstr "Vindue maksimeret"
+
+#: ../data/org.gnome.documents.gschema.xml.h:8
+msgid "Window maximized state"
+msgstr "Maksimeringstilstand for vindue"
+
+#: ../src/documents.js:621
+msgid "Failed to print document"
+msgstr "Kunne ikke udskrive dokument"
+
+#: ../src/documents.js:658 ../src/search.js:427
+msgid "Local"
+msgstr "Lokale"
+
+#: ../src/documents.js:679
+msgid "GNOME"
+msgstr "GNOME"
+
+#: ../src/documents.js:680
+msgid "Getting Started with Documents"
+msgstr "Kom godt i gang med Dokumenter"
+
+#: ../src/documents.js:696 ../src/documents.js:877 ../src/documents.js:939
+#: ../src/documents.js:1047
+msgid "Collection"
+msgstr "Samling"
+
+#: ../src/documents.js:756
+msgid "Google Docs"
+msgstr "Google Dokumenter"
+
+#: ../src/documents.js:757
+msgid "Google"
+msgstr "Google"
+
+#: ../src/documents.js:879 ../src/documents.js:1049
+msgid "Spreadsheet"
+msgstr "Regneark"
+
+#: ../src/documents.js:881 ../src/documents.js:1051 ../src/presentation.js:47
+msgid "Presentation"
+msgstr "Præsentation"
+
+#: ../src/documents.js:883 ../src/documents.js:1053
+msgid "Document"
+msgstr "Dokument"
+
+#: ../src/documents.js:917
+msgid "ownCloud"
+msgstr "ownCloud"
+
+#: ../src/documents.js:981 ../src/documents.js:982
+msgid "OneDrive"
+msgstr "OneDrive"
+
+#: ../src/documents.js:1181
+msgid "Please check the network connection."
+msgstr "Kontrollér venligst din netværkskonfiguration."
+
+#: ../src/documents.js:1184
+msgid "Please check the network proxy settings."
+msgstr "Kontrollér venligst konfiguration for din netværksproxy."
+
+#: ../src/documents.js:1187
+msgid "Unable to sign in to the document service."
+msgstr "Kunne ikke logge ind på dokumenttjenesten."
+
+#: ../src/documents.js:1190
+msgid "Unable to locate this document."
+msgstr "Kunne ikke finde dette dokumentet."
+
+#: ../src/documents.js:1193
+#, javascript-format
+msgid "Hmm, something is fishy (%d)."
+msgstr "Hmm, noget er mistænkeligt (%d)."
+
+#: ../src/documents.js:1211
+#, javascript-format
+msgid "Oops! Unable to load “%s”"
+msgstr "Ups! Ikke i stand til at indlæse “%s”"
+
+#: ../src/edit.js:192
+msgid "View"
+msgstr "Vis"
+
+#: ../src/embed.js:142
+msgid "No Documents Found"
+msgstr "Ingen dokumenter fundet"
+
+#: ../src/embed.js:163
+#, javascript-format
+msgid "You can add your online accounts in %s"
+msgstr "Du kan tilføje dine onlinekonti i %s"
+
+#: ../src/embed.js:167
+msgid "Settings"
+msgstr "Indstillinger"
+
+#: ../src/lib/gd-nav-bar.c:242
+#, c-format
+msgid "Page %u of %u"
+msgstr "Side %u af %u"
+
+#: ../src/lib/gd-pdf-loader.c:247
+msgid "Unable to load the document"
+msgstr "Kunne ikke indlæse dokumentet"
+
+#: ../src/lib/gd-pdf-loader.c:715
+msgid "LibreOffice is required to view this document"
+msgstr "Du skal bruge LibreOffice for at se dette dokument"
+
+#. Translators: %s is the number of the page, already formatted
+#. * as a string, for example "Page 5".
+#.
+#: ../src/lib/gd-places-bookmarks.c:315
+#, c-format
+msgid "Page %s"
+msgstr "Side %s"
+
+#: ../src/lib/gd-places-bookmarks.c:378
+msgid "No bookmarks"
+msgstr "Ingen bogmærker"
+
+#: ../src/lib/gd-places-bookmarks.c:386 ../src/lib/gd-places-links.c:257
+#: ../src/view.js:71
+msgid "Loading…"
+msgstr "Indlæser…"
+
+#: ../src/lib/gd-places-bookmarks.c:651 ../src/preview.js:580
+msgid "Bookmarks"
+msgstr "Bogmærker"
+
+#: ../src/lib/gd-places-links.c:342
+msgid "No table of contents"
+msgstr "Ingen indholdsfortegnelse"
+
+#: ../src/lib/gd-places-links.c:518
+msgid "Contents"
+msgstr "Indhold"
+
+#: ../src/mainToolbar.js:79
+msgid "Search"
+msgstr "Søg"
+
+#: ../src/mainToolbar.js:87
+msgid "Back"
+msgstr "Tilbage"
+
+#: ../src/mainToolbar.js:132
+msgid "View items as a list"
+msgstr "Vis elementer som en liste"
+
+#: ../src/mainToolbar.js:138
+msgid "View items as a grid of icons"
+msgstr "Vis elementer som et gitter af ikoner"
+
+#: ../src/mainToolbar.js:168
+msgid "Click on items to select them"
+msgstr "Klik på elementer for at vælge dem"
+
+#: ../src/mainToolbar.js:170
+#, javascript-format
+msgid "%d selected"
+msgid_plural "%d selected"
+msgstr[0] "%d valgt"
+msgstr[1] "%d valgte"
+
+#: ../src/mainToolbar.js:200
+msgid "Cancel"
+msgstr "Annullér"
+
+#: ../src/mainToolbar.js:242
+msgid "Select Items"
+msgstr "Vælg elementer"
+
+#: ../src/mainWindow.js:301
+msgid "translator-credits"
+msgstr ""
+"Kris Thomsen\n"
+"Ask Hjorth Larsen\n"
+"\n"
+"Dansk-gruppen <dansk@dansk-gruppen.dk>\n"
+"Mere info: http://www.dansk-gruppen.dk"
+
+#: ../src/mainWindow.js:303
+msgid "A document manager application"
+msgstr "Et program til dokumenthåndtering"
+
+#: ../src/notifications.js:50
+msgid "Selected item has been deleted"
+msgid_plural "Selected items have been deleted"
+msgstr[0] "Det valgte element er blevet slettet"
+msgstr[1] "De valgte elementer er blevet slettet"
+
+#: ../src/notifications.js:57
+msgid "Undo"
+msgstr "Omgør"
+
+#: ../src/notifications.js:157
+#, javascript-format
+msgid "Printing “%s”: %s"
+msgstr "Udskriver “%s”: %s"
+
+#: ../src/notifications.js:213
+msgid "Your documents are being indexed"
+msgstr "Dine dokumenter bliver indekseret"
+
+#: ../src/notifications.js:214
+msgid "Some documents might not be available during this process"
+msgstr "Visse dokumenter er måske ikke tilgængelige under processen"
+
+#: ../src/notifications.js:236
+#, javascript-format
+msgid "Fetching documents from %s"
+msgstr "Henter dokumenter fra %s"
+
+#: ../src/notifications.js:238
+msgid "Fetching documents from online accounts"
+msgstr "Henter dokumenter fra online-konti"
+
+#: ../src/password.js:46
+msgid "Password Required"
+msgstr "Adgangskode påkrævet"
+
+#: ../src/password.js:49
+msgid "_Unlock"
+msgstr "_Lås op"
+
+#: ../src/password.js:65
+#, javascript-format
+msgid "Document %s is locked and requires a password to be opened."
+msgstr "Dokumentet %s er låst og kræver en adgangskode for at blive åbnet."
+
+#: ../src/password.js:79
+msgid "_Password"
+msgstr "_Adgangskode"
+
+#: ../src/presentation.js:104
+msgid "Running in presentation mode"
+msgstr "Kører i præsentationstilstand"
+
+#: ../src/presentation.js:157
+msgid "Present On"
+msgstr "Præsentér på"
+
+#: ../src/preview.js:588
+msgid "Bookmark this page"
+msgstr "Bogmærk denne side"
+
+#: ../src/preview.js:823 ../src/selections.js:857
+#, javascript-format
+msgid "Open with %s"
+msgstr "Åbn med %s"
+
+#: ../src/preview.js:885
+msgid "Find Previous"
+msgstr "Find forrige"
+
+#: ../src/preview.js:892
+msgid "Find Next"
+msgstr "Find næste"
+
+#: ../src/properties.js:61 ../src/resources/preview-menu.ui.h:9
+#: ../src/selections.js:767
+msgid "Properties"
+msgstr "Egenskaber"
+
+#: ../src/properties.js:81
+msgctxt "Document Title"
+msgid "Title"
+msgstr "Titel"
+
+#: ../src/properties.js:90
+msgctxt "Document Author"
+msgid "Author"
+msgstr "Forfatter"
+
+#: ../src/properties.js:97
+msgid "Source"
+msgstr "Kilde"
+
+#: ../src/properties.js:103
+msgid "Date Modified"
+msgstr "Modifikationsdato"
+
+#: ../src/properties.js:110
+msgid "Date Created"
+msgstr "Oprettelsesdato"
+
+#: ../src/properties.js:119
+msgctxt "Document Type"
+msgid "Type"
+msgstr "Type"
+
+#: ../src/resources/app-menu.ui.h:1
+msgid "Fullscreen"
+msgstr "Fuldskærm"
+
+#: ../src/resources/app-menu.ui.h:2
+msgid "Help"
+msgstr "Hjælp"
+
+#: ../src/resources/app-menu.ui.h:3
+msgid "About"
+msgstr "Om"
+
+#: ../src/resources/app-menu.ui.h:4
+msgid "Quit"
+msgstr "Afslut"
+
+#: ../src/resources/preview-context-menu.ui.h:1
+msgid "_Copy"
+msgstr "_Kopiér"
+
+#: ../src/resources/preview-menu.ui.h:1 ../src/selections.js:747
+#: ../src/selections.js:860
+msgid "Open"
+msgstr "Åbn"
+
+#: ../src/resources/preview-menu.ui.h:2
+msgid "Edit"
+msgstr "Redigér"
+
+#: ../src/resources/preview-menu.ui.h:3
+msgid "Print…"
+msgstr "Udskriv…"
+
+#: ../src/resources/preview-menu.ui.h:4
+msgid "Present"
+msgstr "Præsentér"
+
+#: ../src/resources/preview-menu.ui.h:5
+msgid "Zoom In"
+msgstr "Forstør"
+
+#: ../src/resources/preview-menu.ui.h:6
+msgid "Zoom Out"
+msgstr "Formindsk"
+
+#: ../src/resources/preview-menu.ui.h:7
+msgid "Rotate ↶"
+msgstr "Rotér ↶"
+
+#: ../src/resources/preview-menu.ui.h:8
+msgid "Rotate ↷"
+msgstr "Rotér ↷"
+
+#: ../src/resources/selection-menu.ui.h:1
+msgid "Select All"
+msgstr "Vælg alle"
+
+#: ../src/resources/selection-menu.ui.h:2
+msgid "Select None"
+msgstr "Vælg ingen"
+
+#: ../src/search.js:114
+msgid "Category"
+msgstr "Kategori"
+
+#: ../src/search.js:119 ../src/search.js:180 ../src/search.js:265
+#: ../src/search.js:421
+msgid "All"
+msgstr "Alle"
+
+#: ../src/search.js:125
+msgid "Favorites"
+msgstr "Favoritter"
+
+#: ../src/search.js:130
+msgid "Shared with you"
+msgstr "Delt med dig"
+
+#: ../src/search.js:177
+msgctxt "Search Filter"
+msgid "Type"
+msgstr "Type"
+
+#: ../src/search.js:182
+msgid "Collections"
+msgstr "Samlinger"
+
+#: ../src/search.js:186
+msgid "PDF Documents"
+msgstr "PDF-dokumenter"
+
+#: ../src/search.js:190
+msgid "Presentations"
+msgstr "Præsentationer"
+
+#: ../src/search.js:193
+msgid "Spreadsheets"
+msgstr "Regneark"
+
+#: ../src/search.js:196
+msgid "Text Documents"
+msgstr "Tekstdokumenter"
+
+#: ../src/search.js:262
+msgid "Match"
+msgstr "Match"
+
+#: ../src/search.js:268
+msgctxt "Search Filter"
+msgid "Title"
+msgstr "Titel"
+
+#: ../src/search.js:271
+msgctxt "Search Filter"
+msgid "Author"
+msgstr "Forfatter"
+
+#: ../src/search.js:417
+msgid "Sources"
+msgstr "Kilder"
+
+#: ../src/selections.js:461
+msgid "You don't have any collections yet. Enter a new collection name above."
+msgstr ""
+"Du har endnu ingen samlinger. Indtast et navn til en ny samling ovenfor."
+
+#: ../src/selections.js:604
+msgid "Create new collection"
+msgstr "Opret ny samling"
+
+#: ../src/selections.js:640
+msgctxt "Dialog Title"
+msgid "Collections"
+msgstr "Samlinger"
+
+#: ../src/selections.js:752
+msgid "Print"
+msgstr "Udskriv"
+
+#: ../src/selections.js:757
+msgid "Delete"
+msgstr "Slet"
+
+#: ../src/selections.js:762
+msgid "Share"
+msgstr "Del"
+
+#: ../src/selections.js:772
+msgid "Add to Collection"
+msgstr "Føj til samling"
+
+#: ../src/sharing.js:98
+msgid "Sharing Settings"
+msgstr "Delingsindstillinger"
+
+#: ../src/sharing.js:102
+msgid "Done"
+msgstr "Færdig"
+
+#: ../src/sharing.js:135
+msgid "Document permissions"
+msgstr "Dokumentrettigheder"
+
+#: ../src/sharing.js:142 ../src/sharing.js:320
+msgid "Change"
+msgstr "Ændr"
+
+#: ../src/sharing.js:166 ../src/sharing.js:295
+msgid "Private"
+msgstr "Privat"
+
+#: ../src/sharing.js:176 ../src/sharing.js:288
+msgid "Public"
+msgstr "Offentlig"
+
+#: ../src/sharing.js:180 ../src/sharing.js:290
+msgid "Everyone can edit"
+msgstr "Alle kan redigere"
+
+#: ../src/sharing.js:187
+msgid "Add people"
+msgstr "Tilføj folk"
+
+#: ../src/sharing.js:194
+msgid "Enter an email address"
+msgstr "Indtast en e-mailadresse"
+
+#: ../src/sharing.js:209 ../src/sharing.js:376
+msgid "Can edit"
+msgstr "Kan redigere"
+
+#: ../src/sharing.js:209 ../src/sharing.js:379
+msgid "Can view"
+msgstr "Kan se"
+
+#: ../src/sharing.js:216
+msgid "Add"
+msgstr "Tilføj"
+
+#: ../src/sharing.js:292
+msgid "Everyone can read"
+msgstr "Alle kan læse"
+
+#: ../src/sharing.js:307
+msgid "Save"
+msgstr "Gem"
+
+#: ../src/sharing.js:373
+msgid "Owner"
+msgstr "Ejer"
+
+#: ../src/sharing.js:442
+#, javascript-format
+msgid "You can ask %s for access"
+msgstr "Du kan bede %s om adgang"
+
+#: ../src/sharing.js:479 ../src/sharing.js:515 ../src/sharing.js:572
+#: ../src/sharing.js:589 ../src/sharing.js:608
+msgid "The document was not updated"
+msgstr "Dokumentet blev ikke opdateret"
+
+#: ../src/shellSearchProvider.js:294
+msgid "Untitled Document"
+msgstr "Unavngivet dokument"
+
+#: ../src/trackerController.js:170
+msgid "Unable to fetch the list of documents"
+msgstr "Kunne ikke hente dokumentlisten"
+
+#: ../src/view.js:62 ../src/view.js:93
+msgid "Load More"
+msgstr "Indlæs flere"
+
+#: ../src/view.js:307
+msgid "Yesterday"
+msgstr "I går"
+
+#: ../src/view.js:309
+#, javascript-format
+msgid "%d day ago"
+msgid_plural "%d days ago"
+msgstr[0] "%d dag siden"
+msgstr[1] "%d dage siden"
+
+#: ../src/view.js:313
+msgid "Last week"
+msgstr "Sidste uge"
+
+#: ../src/view.js:315
+#, javascript-format
+msgid "%d week ago"
+msgid_plural "%d weeks ago"
+msgstr[0] "%d uge siden"
+msgstr[1] "%d uger siden"
+
+#: ../src/view.js:319
+msgid "Last month"
+msgstr "Sidste måned"
+
+#: ../src/view.js:321
+#, javascript-format
+msgid "%d month ago"
+msgid_plural "%d months ago"
+msgstr[0] "%d måned siden"
+msgstr[1] "%d måneder siden"
+
+#: ../src/view.js:325
+msgid "Last year"
+msgstr "Sidste år"
+
+#: ../src/view.js:327
+#, javascript-format
+msgid "%d year ago"
+msgid_plural "%d years ago"
+msgstr[0] "%d år siden"
+msgstr[1] "%d år siden"
+
+#~ msgid ""
+#~ "<li>View recent local and online documents</li> <li>Access your Google, "
+#~ "ownCloud or OneDrive content</li> <li>Search through documents</li> "
+#~ "<li>See new documents shared by friends</li> <li>View documents "
+#~ "fullscreen</li> <li>Print documents</li> <li>Select favorites</li> "
+#~ "<li>Allow opening full featured editor for non-trivial changes</li>"
+#~ msgstr ""
+#~ "<li>Se seneste lokale og online dokumenter</li> <li>Tilgå dit Google-, "
+#~ "ownCloud- eller OneDrive-indhold</li> <li>Søge i dokumenter</li> <li>Se "
+#~ "nye dokumenter delt af dine venner</li> <li>Se dokumenter i "
+#~ "fuldskærmstilstand</li> <li>Udskrive dokumenter</li> <li>Vælge "
+#~ "favoritter</li> <li>Åbne et fuldt funktionsdygtigt redigeringsprogram til "
+#~ "ikke-trivielle ændringer</li>"
+
+#~ msgid "Results for “%s”"
+#~ msgstr "Resultater for “%s”"
+
+#~ msgid "Close"
+#~ msgstr "Luk"
+
+# MS lagring i skyen-snask http://en.wikipedia.org/wiki/SkyDrive
+#~ msgid "Skydrive"
+#~ msgstr "Skydrive"
+
+#~ msgid "Grid"
+#~ msgstr "Gitter"
+
+#~ msgid "List"
+#~ msgstr "Liste"
+
+#~ msgid "About Documents"
+#~ msgstr "Om Dokumenter"
+
+#~ msgctxt "Dialog Title"
+#~ msgid "Organize"
+#~ msgstr "Organisér"
+
+#~ msgctxt "Toolbar button tooltip"
+#~ msgid "Organize"
+#~ msgstr "Organisér"

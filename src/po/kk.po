@@ -1,0 +1,673 @@
+# Kazakh translation for gnome-documents.
+# Copyright (C) 2013 gnome-documents's COPYRIGHT HOLDER
+# This file is distributed under the same license as the gnome-documents package.
+# Baurzhan Muftakhidinov <baurthefirst@gmail.com>, 2013.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: gnome-documents master\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
+"documents&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2014-10-09 08:03+0000\n"
+"PO-Revision-Date: 2014-10-11 21:04+0600\n"
+"Last-Translator: Baurzhan Muftakhidinov <baurthefirst@gmail.com>\n"
+"Language-Team: Kazakh <kk_KZ@googlegroups.com>\n"
+"Language: kk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Poedit 1.5.4\n"
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:1
+#: ../data/org.gnome.Documents.desktop.in.h:1 ../src/application.js:121
+#: ../src/mainWindow.js:52 ../src/mainWindow.js:302
+msgid "Documents"
+msgstr "Құжаттар қолданбасы"
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:2
+msgid "A document manager application for GNOME"
+msgstr "GNOME үшін құжаттарды басқару қолданбасы"
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:3
+msgid ""
+"A simple application to access, organize and share your documents on GNOME. "
+"It is meant to be a simple and elegant replacement for using a file manager "
+"to deal with documents. Seamless cloud integration is offered through GNOME "
+"Online Accounts."
+msgstr ""
+"GNOME ішінде құжаттарыңызға қатынау, реттеу және бөлісу үшін арналған "
+"қарапайым қолданба. Ол құжаттармен жұмысы үшін файлдар басқарушысын "
+"алмастыратын қарапайым әрі элегантты шешім ретінде ұсынылады. GNOME желілік "
+"тіркелгілері арқылы бұлттық қызметтермен жапсарсыз интеграция іске асырылады."
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:4
+msgid "It lets you:"
+msgstr "Мүмкіндіктері:"
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:5
+msgid "View recent local and online documents"
+msgstr "Жуырдағы жергілікті және онлайн құжаттарын қарау"
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:6
+msgid "Access your Google, ownCloud or OneDrive content"
+msgstr "Өзіңіздің Google, ownCloud не OneDrive құрамасына қатынаңыз"
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:7
+msgid "Search through documents"
+msgstr "Құжаттар ішінен іздеу"
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:8
+msgid "See new documents shared by friends"
+msgstr "Достар бөліскен жаңа құжаттарды қарау"
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:9
+msgid "View documents fullscreen"
+msgstr "Құжаттарды толық экранда қарау"
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:10
+#| msgid "PDF Documents"
+msgid "Print documents"
+msgstr "Құжаттарды баспаға шығару"
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:11
+#| msgid "Select Items"
+msgid "Select favorites"
+msgstr "Таңдамалыларды таңдау"
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:12
+msgid "Allow opening full featured editor for non-trivial changes"
+msgstr "Қарапайым емес өзгерістер үшін түзеткішті ашуды рұқсат ету"
+
+#: ../data/org.gnome.Documents.desktop.in.h:2
+msgid "Access, manage and share documents"
+msgstr "Құжаттарға қатынау, басқару және олармен бөлісу"
+
+#: ../data/org.gnome.Documents.desktop.in.h:3
+msgid "Docs;PDF;Document;"
+msgstr "Құжаттар;PDF;Құжат;"
+
+#: ../data/org.gnome.documents.gschema.xml.h:1
+msgid "View as"
+msgstr "Қалайша қарау"
+
+#: ../data/org.gnome.documents.gschema.xml.h:2
+msgid "View as type"
+msgstr "Түрі ретінде қарау"
+
+#: ../data/org.gnome.documents.gschema.xml.h:3
+msgid "Window size"
+msgstr "Терезе өлшемі"
+
+#: ../data/org.gnome.documents.gschema.xml.h:4
+msgid "Window size (width and height)."
+msgstr "Терезе өлшемі (ені мен биіктігі)."
+
+#: ../data/org.gnome.documents.gschema.xml.h:5
+msgid "Window position"
+msgstr "Терезе орны"
+
+#: ../data/org.gnome.documents.gschema.xml.h:6
+msgid "Window position (x and y)."
+msgstr "Терезе орны (x және y)."
+
+#: ../data/org.gnome.documents.gschema.xml.h:7
+msgid "Window maximized"
+msgstr "Терезе максималды етілген"
+
+#: ../data/org.gnome.documents.gschema.xml.h:8
+msgid "Window maximized state"
+msgstr "Терезе максималды күйі"
+
+#: ../src/documents.js:621
+msgid "Failed to print document"
+msgstr "Құжатты баспаға шығару сәтсіз аяқталды"
+
+#: ../src/documents.js:658 ../src/search.js:427
+msgid "Local"
+msgstr "Жергілікті"
+
+#: ../src/documents.js:679
+msgid "GNOME"
+msgstr "GNOME"
+
+#: ../src/documents.js:680
+msgid "Getting Started with Documents"
+msgstr "Құжаттар қолданбасымен жұмысты бастау"
+
+#: ../src/documents.js:696 ../src/documents.js:877 ../src/documents.js:939
+#: ../src/documents.js:1047
+msgid "Collection"
+msgstr "Жинақ"
+
+#: ../src/documents.js:756
+msgid "Google Docs"
+msgstr "Google Docs"
+
+#: ../src/documents.js:757
+msgid "Google"
+msgstr "Google"
+
+#: ../src/documents.js:879 ../src/documents.js:1049
+msgid "Spreadsheet"
+msgstr "Электрондық кесте"
+
+#: ../src/documents.js:881 ../src/documents.js:1051 ../src/presentation.js:47
+msgid "Presentation"
+msgstr "Презентация"
+
+#: ../src/documents.js:883 ../src/documents.js:1053
+msgid "Document"
+msgstr "Құжат"
+
+#: ../src/documents.js:917
+msgid "ownCloud"
+msgstr "ownCloud"
+
+#: ../src/documents.js:981 ../src/documents.js:982
+msgid "OneDrive"
+msgstr "OneDrive"
+
+#: ../src/documents.js:1181
+msgid "Please check the network connection."
+msgstr "Желілік байланысты тексеріңіз."
+
+#: ../src/documents.js:1184
+msgid "Please check the network proxy settings."
+msgstr "Желілік прокси баптауларын тексеріңіз."
+
+#: ../src/documents.js:1187
+msgid "Unable to sign in to the document service."
+msgstr "Құжаттарды сақтау қызметіне кіру мүмкін емес."
+
+#: ../src/documents.js:1190
+msgid "Unable to locate this document."
+msgstr "Бұл құжатты табу мүмкін емес."
+
+#: ../src/documents.js:1193
+#, javascript-format
+msgid "Hmm, something is fishy (%d)."
+msgstr "Қап, бірнәрсе біртүрлі болып тұр (%d)."
+
+#: ../src/documents.js:1211
+#, javascript-format
+msgid "Oops! Unable to load “%s”"
+msgstr "Қап! “%s” жүктеу мүмкін емес"
+
+#: ../src/edit.js:192
+msgid "View"
+msgstr "Қарау"
+
+#: ../src/embed.js:142
+msgid "No Documents Found"
+msgstr "Құжаттар табылмады"
+
+#: ../src/embed.js:163
+#, javascript-format
+msgid "You can add your online accounts in %s"
+msgstr "Сіз желідегі тіркелгілерді %s ішінен қоса аласыз"
+
+#: ../src/embed.js:167
+msgid "Settings"
+msgstr "Баптаулар"
+
+#: ../src/lib/gd-nav-bar.c:242
+#, c-format
+msgid "Page %u of %u"
+msgstr "Бет %u, барлығы %u"
+
+#: ../src/lib/gd-pdf-loader.c:247
+msgid "Unable to load the document"
+msgstr "Құжатты жүктеу мүмкін емес"
+
+#: ../src/lib/gd-pdf-loader.c:715
+msgid "LibreOffice is required to view this document"
+msgstr "Бұл құжатты қарау үшін LibreOffice керек"
+
+#. Translators: %s is the number of the page, already formatted
+#. * as a string, for example "Page 5".
+#.
+#: ../src/lib/gd-places-bookmarks.c:321
+#, c-format
+msgid "Page %s"
+msgstr "Бет %s"
+
+#: ../src/lib/gd-places-bookmarks.c:384
+msgid "No bookmarks"
+msgstr "Бетбелгілер жоқ"
+
+#: ../src/lib/gd-places-bookmarks.c:392 ../src/lib/gd-places-links.c:257
+#: ../src/view.js:71
+msgid "Loading…"
+msgstr "Жүктеу..."
+
+#: ../src/lib/gd-places-bookmarks.c:657 ../src/preview.js:580
+msgid "Bookmarks"
+msgstr "Бетбелгілер"
+
+#: ../src/lib/gd-places-links.c:342
+msgid "No table of contents"
+msgstr "Мазмұны жоқ"
+
+#: ../src/lib/gd-places-links.c:518
+msgid "Contents"
+msgstr "Құрамасы"
+
+#: ../src/mainToolbar.js:79
+msgid "Search"
+msgstr "Іздеу"
+
+#: ../src/mainToolbar.js:87
+msgid "Back"
+msgstr "Артқа"
+
+#: ../src/mainToolbar.js:132
+msgid "View items as a list"
+msgstr "Нәрселерді тізім ретінде көрсету"
+
+#: ../src/mainToolbar.js:138
+msgid "View items as a grid of icons"
+msgstr "Нәрселерді таңбашалар торы ретінде көрсету"
+
+#: ../src/mainToolbar.js:168
+msgid "Click on items to select them"
+msgstr "Бірнәрсені таңдау үшін оның үстіне шертіңіз"
+
+#: ../src/mainToolbar.js:170
+#, javascript-format
+msgid "%d selected"
+msgid_plural "%d selected"
+msgstr[0] "%d таңдалды"
+
+#: ../src/mainToolbar.js:200
+msgid "Cancel"
+msgstr "Бас тарту"
+
+#: ../src/mainToolbar.js:242
+msgid "Select Items"
+msgstr "Нәрселерді таңдау"
+
+#: ../src/mainWindow.js:301
+msgid "translator-credits"
+msgstr "Baurzhan Muftakhidinov <baurthefirst@gmail.com> 2013"
+
+#: ../src/mainWindow.js:303
+msgid "A document manager application"
+msgstr "Құжаттарды басқару қолданбасы"
+
+#: ../src/notifications.js:50
+msgid "Selected item has been deleted"
+msgid_plural "Selected items have been deleted"
+msgstr[0] "Таңдалған нәрселер өшірілген"
+
+#: ../src/notifications.js:57
+msgid "Undo"
+msgstr "Болдырмау"
+
+#: ../src/notifications.js:157
+#, javascript-format
+msgid "Printing “%s”: %s"
+msgstr "Баспаға шығару “%s”: %s"
+
+#: ../src/notifications.js:213
+msgid "Your documents are being indexed"
+msgstr "Құжаттарыңызды индекстеу жүруде"
+
+#: ../src/notifications.js:214
+msgid "Some documents might not be available during this process"
+msgstr "Бұл әрекет кезінде кейбір құжаттар қолжетерсіз болуы мүмкін"
+
+#: ../src/notifications.js:236
+#, javascript-format
+msgid "Fetching documents from %s"
+msgstr "%s ішінен құжаттарды алу"
+
+#: ../src/notifications.js:238
+msgid "Fetching documents from online accounts"
+msgstr "Желідегі тіркелгілерден құжаттарды алу"
+
+#: ../src/password.js:46
+msgid "Password Required"
+msgstr "Пароль керек"
+
+#: ../src/password.js:49
+msgid "_Unlock"
+msgstr "Бо_сату"
+
+#: ../src/password.js:65
+#, javascript-format
+msgid "Document %s is locked and requires a password to be opened."
+msgstr "%s құжаты блокталған және оны ашу үшін пароль керек."
+
+#: ../src/password.js:79
+msgid "_Password"
+msgstr "_Пароль"
+
+#: ../src/presentation.js:104
+msgid "Running in presentation mode"
+msgstr "Презентация режимінде орындалу"
+
+#: ../src/presentation.js:157
+msgid "Present On"
+msgstr "Қайда бар"
+
+#: ../src/preview.js:588
+msgid "Bookmark this page"
+msgstr "Бұл парақты бетбелгілерге қосу"
+
+#: ../src/preview.js:823 ../src/selections.js:857
+#, javascript-format
+msgid "Open with %s"
+msgstr "%s көмегімен ашу"
+
+#: ../src/preview.js:885
+msgid "Find Previous"
+msgstr "Алдыңғысын табу"
+
+#: ../src/preview.js:892
+msgid "Find Next"
+msgstr "Келесісін табу"
+
+#: ../src/properties.js:61 ../src/resources/preview-menu.ui.h:9
+#: ../src/selections.js:767
+msgid "Properties"
+msgstr "Қасиеттері"
+
+#: ../src/properties.js:81
+msgctxt "Document Title"
+msgid "Title"
+msgstr "Атауы"
+
+#: ../src/properties.js:90
+msgctxt "Document Author"
+msgid "Author"
+msgstr "Авторы"
+
+#: ../src/properties.js:97
+msgid "Source"
+msgstr "Қайнар көзі"
+
+#: ../src/properties.js:103
+msgid "Date Modified"
+msgstr "Түзетілген уақыты"
+
+#: ../src/properties.js:110
+msgid "Date Created"
+msgstr "Жасалған күні"
+
+#: ../src/properties.js:119
+msgctxt "Document Type"
+msgid "Type"
+msgstr "Түрі"
+
+#: ../src/resources/app-menu.ui.h:1
+msgid "Fullscreen"
+msgstr "Толық экранға"
+
+#: ../src/resources/app-menu.ui.h:2
+msgid "Help"
+msgstr "Көмек"
+
+#: ../src/resources/app-menu.ui.h:3
+msgid "About"
+msgstr "Осы туралы"
+
+#: ../src/resources/app-menu.ui.h:4
+msgid "Quit"
+msgstr "Шығу"
+
+#: ../src/resources/preview-context-menu.ui.h:1
+msgid "_Copy"
+msgstr "_Көшіру"
+
+#: ../src/resources/preview-menu.ui.h:1 ../src/selections.js:747
+#: ../src/selections.js:860
+msgid "Open"
+msgstr "Ашу"
+
+#: ../src/resources/preview-menu.ui.h:2
+msgid "Edit"
+msgstr "Түзету"
+
+#: ../src/resources/preview-menu.ui.h:3
+msgid "Print…"
+msgstr "Баспаға шығару..."
+
+#: ../src/resources/preview-menu.ui.h:4
+msgid "Present"
+msgstr "Бар"
+
+#: ../src/resources/preview-menu.ui.h:5
+msgid "Zoom In"
+msgstr "Үлкейту"
+
+#: ../src/resources/preview-menu.ui.h:6
+msgid "Zoom Out"
+msgstr "Кішірейту"
+
+#: ../src/resources/preview-menu.ui.h:7
+msgid "Rotate ↶"
+msgstr "Бұру ↶"
+
+#: ../src/resources/preview-menu.ui.h:8
+msgid "Rotate ↷"
+msgstr "Бұру ↷"
+
+#: ../src/resources/selection-menu.ui.h:1
+msgid "Select All"
+msgstr "Барлығын таңдау"
+
+#: ../src/resources/selection-menu.ui.h:2
+msgid "Select None"
+msgstr "Ештеңе таңдамау"
+
+#: ../src/search.js:114
+msgid "Category"
+msgstr "Санат"
+
+#: ../src/search.js:119 ../src/search.js:180 ../src/search.js:265
+#: ../src/search.js:421
+msgid "All"
+msgstr "Барлығы"
+
+#: ../src/search.js:125
+msgid "Favorites"
+msgstr "Таңдамалы"
+
+#: ../src/search.js:130
+msgid "Shared with you"
+msgstr "Сізбен ортақ етілген"
+
+#: ../src/search.js:177
+msgctxt "Search Filter"
+msgid "Type"
+msgstr "Түрі"
+
+#: ../src/search.js:182
+msgid "Collections"
+msgstr "Жинақтар"
+
+#: ../src/search.js:186
+msgid "PDF Documents"
+msgstr "PDF құжаттары"
+
+#: ../src/search.js:190
+msgid "Presentations"
+msgstr "Презентациялар"
+
+#: ../src/search.js:193
+msgid "Spreadsheets"
+msgstr "Электрондық кесте құжаттары"
+
+#: ../src/search.js:196
+msgid "Text Documents"
+msgstr "Мәтiндiк құжаттар"
+
+#: ../src/search.js:262
+msgid "Match"
+msgstr "Сәйкес"
+
+#: ../src/search.js:268
+msgctxt "Search Filter"
+msgid "Title"
+msgstr "Атауы"
+
+#: ../src/search.js:271
+msgctxt "Search Filter"
+msgid "Author"
+msgstr "Авторы"
+
+#: ../src/search.js:417
+msgid "Sources"
+msgstr "Қайнар көздер"
+
+#: ../src/selections.js:461
+msgid "You don't have any collections yet. Enter a new collection name above."
+msgstr "Сізде бірде-бір жинақ жоқ. Жоғарыда жаңа жинақтың атауын енгізіңіз."
+
+#: ../src/selections.js:604
+msgid "Create new collection"
+msgstr "Жаңа жинақты жасау"
+
+#: ../src/selections.js:640
+msgctxt "Dialog Title"
+msgid "Collections"
+msgstr "Жинақтар"
+
+#: ../src/selections.js:752
+msgid "Print"
+msgstr "Баспаға шығару"
+
+#: ../src/selections.js:757
+msgid "Delete"
+msgstr "Өшіру"
+
+#: ../src/selections.js:762
+msgid "Share"
+msgstr "Бөлісу"
+
+#: ../src/selections.js:772
+msgid "Add to Collection"
+msgstr "Жинаққа қосу"
+
+#: ../src/sharing.js:98
+msgid "Sharing Settings"
+msgstr "Ортақ қылудың баптаулары"
+
+#: ../src/sharing.js:102
+msgid "Done"
+msgstr "Дайын"
+
+#: ../src/sharing.js:135
+msgid "Document permissions"
+msgstr "Құжат рұқсаттары"
+
+#: ../src/sharing.js:142 ../src/sharing.js:320
+msgid "Change"
+msgstr "Өзгерту"
+
+#: ../src/sharing.js:166 ../src/sharing.js:295
+msgid "Private"
+msgstr "Жеке"
+
+#: ../src/sharing.js:176 ../src/sharing.js:288
+msgid "Public"
+msgstr "Ортақ"
+
+#: ../src/sharing.js:180 ../src/sharing.js:290
+msgid "Everyone can edit"
+msgstr "Әркім түзете алады"
+
+#: ../src/sharing.js:187
+msgid "Add people"
+msgstr "Адамды қосу"
+
+#: ../src/sharing.js:194
+msgid "Enter an email address"
+msgstr "Эл. пошта адресін енгізіңіз"
+
+#: ../src/sharing.js:209 ../src/sharing.js:376
+msgid "Can edit"
+msgstr "Өзгерте алады"
+
+#: ../src/sharing.js:209 ../src/sharing.js:379
+msgid "Can view"
+msgstr "Көре алады"
+
+#: ../src/sharing.js:216
+msgid "Add"
+msgstr "Қосу"
+
+#: ../src/sharing.js:292
+msgid "Everyone can read"
+msgstr "Әркім көре алады"
+
+#: ../src/sharing.js:307
+msgid "Save"
+msgstr "Сақтау"
+
+#: ../src/sharing.js:373
+msgid "Owner"
+msgstr "Иесі"
+
+#: ../src/sharing.js:442
+#, javascript-format
+msgid "You can ask %s for access"
+msgstr "Рұқсат үшін %s сұраңыз"
+
+#: ../src/sharing.js:479 ../src/sharing.js:515 ../src/sharing.js:572
+#: ../src/sharing.js:589 ../src/sharing.js:608
+msgid "The document was not updated"
+msgstr "Құжат жаңартылмады"
+
+#: ../src/shellSearchProvider.js:294
+msgid "Untitled Document"
+msgstr "Атаусыз құжат"
+
+#: ../src/trackerController.js:170
+msgid "Unable to fetch the list of documents"
+msgstr "Құжаттар тізімін алу мүмкін емес"
+
+#: ../src/view.js:62 ../src/view.js:93
+msgid "Load More"
+msgstr "Көбірек жүктеу"
+
+#: ../src/view.js:307
+msgid "Yesterday"
+msgstr "Кеше"
+
+#: ../src/view.js:309
+#, javascript-format
+msgid "%d day ago"
+msgid_plural "%d days ago"
+msgstr[0] "%d күн бұрын"
+
+#: ../src/view.js:313
+msgid "Last week"
+msgstr "Өткен апта"
+
+#: ../src/view.js:315
+#, javascript-format
+msgid "%d week ago"
+msgid_plural "%d weeks ago"
+msgstr[0] "%d апта бұрын"
+
+#: ../src/view.js:319
+msgid "Last month"
+msgstr "Өткен ай"
+
+#: ../src/view.js:321
+#, javascript-format
+msgid "%d month ago"
+msgid_plural "%d months ago"
+msgstr[0] "%d ай бұрын"
+
+#: ../src/view.js:325
+msgid "Last year"
+msgstr "Былтыр"
+
+#: ../src/view.js:327
+#, javascript-format
+msgid "%d year ago"
+msgid_plural "%d years ago"
+msgstr[0] "%d жыл бұрын"

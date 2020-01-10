@@ -1,0 +1,752 @@
+# Thai translation for gnome-documents.
+# Copyright (C) 2011-2014 Free Software Foundation, Inc.
+# This file is distributed under the same license as the gnome-documents package.
+# Unticha Pramgoed <unticha@gmail.com>, 2011.
+# Akom Chotiphantawanon <knight2000@gmail.com>, 2011-2014.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: gnome-documents master\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
+"documents&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2014-08-25 05:49+0000\n"
+"PO-Revision-Date: 2014-09-16 14:49+0700\n"
+"Last-Translator: Akom Chotiphantawanon <knight2000@gmail.com>\n"
+"Language-Team: Thai <thai-l10n@googlegroups.com>\n"
+"Language: th\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Poedit 1.5.7\n"
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:1
+#: ../data/org.gnome.Documents.desktop.in.h:1 ../src/application.js:121
+#: ../src/mainWindow.js:52 ../src/mainWindow.js:302
+msgid "Documents"
+msgstr "เอกสาร"
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:2
+msgid "A document manager application for GNOME"
+msgstr "โปรแกรมจัดการเอกสารสำหรับ GNOME"
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:3
+msgid ""
+"A simple application to access, organize and share your documents on GNOME. "
+"It is meant to be a simple and elegant replacement for using a file manager "
+"to deal with documents. Seamless cloud integration is offered through GNOME "
+"Online Accounts."
+msgstr ""
+"โปรแกรมอย่างง่ายสำหรับเข้าถึง จัดระเบียบ และแบ่งปันเอกสารของคุณใน GNOME "
+"เป็นโปรแกรมที่เรียบง่ายและงดงามที่ใช้แทนเครื่องมือจัดการแฟ้มในการจัดการกับเอกสาร "
+"มีการเชื่อมรวมกับคลาวด์อย่างแนบเนียนผ่านโปรแกรมบัญชีออนไลน์ของ GNOME"
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:4
+msgid "It lets you:"
+msgstr "ช่วยให้คุณ:"
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:5
+msgid "View recent local and online documents"
+msgstr "ดูเอกสารในเครื่องและออนไลน์ล่าสุด"
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:6
+msgid "Access your Google, ownCloud or OneDrive content"
+msgstr "เข้าถึงเนื้อหา Google, ownCloud หรือ OneDrive ของคุณ"
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:7
+msgid "Search through documents"
+msgstr "ค้นหาเอกสาร"
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:8
+msgid "See new documents shared by friends"
+msgstr "ดูเอกสารใหม่ที่เพื่อนๆ แบ่งปัน"
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:9
+msgid "View documents fullscreen"
+msgstr "ดูเอกสารแบบเต็มจอ"
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:10
+msgid "Print documents"
+msgstr "จัดพิมพ์เอกสาร"
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:11
+msgid "Select favorites"
+msgstr "เลือกรายการโปรด"
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:12
+msgid "Allow opening full featured editor for non-trivial changes"
+msgstr "สามารถเปิดเครื่องมือแก้ไขที่เต็มรูปแบบสำหรับการเปลี่ยนแปลงที่เป็นกิจจะลักษณะ"
+
+#: ../data/org.gnome.Documents.desktop.in.h:2
+msgid "Access, manage and share documents"
+msgstr "เข้าถึง จัดการ และแบ่งปันเอกสาร"
+
+#: ../data/org.gnome.Documents.desktop.in.h:3
+msgid "Docs;PDF;Document;"
+msgstr "Docs;PDF;เอกสาร;"
+
+#: ../data/org.gnome.documents.gschema.xml.h:1
+msgid "View as"
+msgstr "มุมมอง"
+
+#: ../data/org.gnome.documents.gschema.xml.h:2
+msgid "View as type"
+msgstr "ชนิดของมุมมอง"
+
+#: ../data/org.gnome.documents.gschema.xml.h:3
+msgid "Window size"
+msgstr "ขนาดหน้าต่าง"
+
+#: ../data/org.gnome.documents.gschema.xml.h:4
+msgid "Window size (width and height)."
+msgstr "ขนาดของหน้าต่าง (ความกว้างและความสูง)"
+
+#: ../data/org.gnome.documents.gschema.xml.h:5
+msgid "Window position"
+msgstr "ตำแหน่งหน้าต่าง"
+
+#: ../data/org.gnome.documents.gschema.xml.h:6
+msgid "Window position (x and y)."
+msgstr "ตำแหน่งของหน้าต่าง (x และ y)"
+
+#: ../data/org.gnome.documents.gschema.xml.h:7
+msgid "Window maximized"
+msgstr "หน้าต่างขยายแผ่อยู่"
+
+#: ../data/org.gnome.documents.gschema.xml.h:8
+msgid "Window maximized state"
+msgstr "สถานะการขยายแผ่หน้าต่าง"
+
+#: ../src/documents.js:621
+msgid "Failed to print document"
+msgstr "พิมพ์เอกสารไม่สำเร็จ"
+
+#: ../src/documents.js:658 ../src/search.js:427
+msgid "Local"
+msgstr "ในเครื่อง"
+
+#: ../src/documents.js:679
+msgid "GNOME"
+msgstr "GNOME"
+
+#: ../src/documents.js:680
+msgid "Getting Started with Documents"
+msgstr "เริ่มต้นกับเอกสาร"
+
+#: ../src/documents.js:696 ../src/documents.js:877 ../src/documents.js:939
+#: ../src/documents.js:1047
+msgid "Collection"
+msgstr "ชุดเอกสาร"
+
+#: ../src/documents.js:756
+msgid "Google Docs"
+msgstr "Google Docs"
+
+#: ../src/documents.js:757
+msgid "Google"
+msgstr "Google"
+
+#: ../src/documents.js:879 ../src/documents.js:1049
+msgid "Spreadsheet"
+msgstr "ตารางคำนวณ"
+
+#: ../src/documents.js:881 ../src/documents.js:1051 ../src/presentation.js:47
+msgid "Presentation"
+msgstr "งานนำเสนอ"
+
+#: ../src/documents.js:883 ../src/documents.js:1053
+msgid "Document"
+msgstr "เอกสาร"
+
+#: ../src/documents.js:917
+msgid "ownCloud"
+msgstr "ownCloud"
+
+#: ../src/documents.js:981 ../src/documents.js:982
+msgid "OneDrive"
+msgstr "OneDrive"
+
+#: ../src/documents.js:1181
+msgid "Please check the network connection."
+msgstr "กรุณาตรวจสอบการเชื่อมต่อเครือข่าย"
+
+#: ../src/documents.js:1184
+msgid "Please check the network proxy settings."
+msgstr "กรุณาตรวจสอบการตั้งค่าพร็อกซีเครือข่าย"
+
+#: ../src/documents.js:1187
+msgid "Unable to sign in to the document service."
+msgstr "ไม่สามารถเข้าระบบเพื่อใช้บริการเอกสารได้"
+
+#: ../src/documents.js:1190
+msgid "Unable to locate this document."
+msgstr "หาเอกสารนี้ไม่พบ"
+
+#: ../src/documents.js:1193
+#, javascript-format
+msgid "Hmm, something is fishy (%d)."
+msgstr "มีบางสิ่งบางอย่างน่าสงสัย (%d)"
+
+#: ../src/documents.js:1211
+#, javascript-format
+msgid "Oops! Unable to load “%s”"
+msgstr "ไม่สามารถโหลด “%s” ได้"
+
+#: ../src/edit.js:192
+msgid "View"
+msgstr "ดู"
+
+#: ../src/embed.js:142
+msgid "No Documents Found"
+msgstr "ไม่พบเอกสาร"
+
+#: ../src/embed.js:163
+#, javascript-format
+msgid "You can add your online accounts in %s"
+msgstr "คุณสามารถเพิ่มบัญชีออนไลน์ของคุณได้ใน %s"
+
+#: ../src/embed.js:167
+msgid "Settings"
+msgstr "ค่าตั้ง"
+
+#: ../src/lib/gd-nav-bar.c:242
+#, c-format
+msgid "Page %u of %u"
+msgstr "หน้า %u จาก %u"
+
+#: ../src/lib/gd-pdf-loader.c:247
+msgid "Unable to load the document"
+msgstr "ไม่สามารถโหลดเอกสาร"
+
+#: ../src/lib/gd-pdf-loader.c:715
+msgid "LibreOffice is required to view this document"
+msgstr "ต้องใช้ LibreOffice ในการดูเอกสารนี้"
+
+#. Translators: %s is the number of the page, already formatted
+#. * as a string, for example "Page 5".
+#.
+#: ../src/lib/gd-places-bookmarks.c:315
+#, c-format
+msgid "Page %s"
+msgstr "หน้า %s"
+
+#: ../src/lib/gd-places-bookmarks.c:378
+msgid "No bookmarks"
+msgstr "ไม่มีที่คั่นหน้า"
+
+#: ../src/lib/gd-places-bookmarks.c:386 ../src/lib/gd-places-links.c:257
+#: ../src/view.js:71
+msgid "Loading…"
+msgstr "กำลังโหลด…"
+
+#: ../src/lib/gd-places-bookmarks.c:651 ../src/preview.js:580
+msgid "Bookmarks"
+msgstr "ที่คั่นหน้า"
+
+#: ../src/lib/gd-places-links.c:342
+msgid "No table of contents"
+msgstr "ไม่มีสารบัญ"
+
+#: ../src/lib/gd-places-links.c:518
+msgid "Contents"
+msgstr "เนื้อหา"
+
+#: ../src/mainToolbar.js:79
+msgid "Search"
+msgstr "ค้นหา"
+
+#: ../src/mainToolbar.js:87
+msgid "Back"
+msgstr "ถอยกลับ"
+
+#: ../src/mainToolbar.js:132
+msgid "View items as a list"
+msgstr "มุมมองรายการแบบรายชื่อ"
+
+#: ../src/mainToolbar.js:138
+msgid "View items as a grid of icons"
+msgstr "มุมมองรายการแบบแถวตารางไอคอน"
+
+#: ../src/mainToolbar.js:168
+msgid "Click on items to select them"
+msgstr "คลิกที่รายการเพื่อเลือก"
+
+#: ../src/mainToolbar.js:170
+#, javascript-format
+msgid "%d selected"
+msgid_plural "%d selected"
+msgstr[0] "เลือกอยู่ %d รายการ"
+
+#: ../src/mainToolbar.js:200
+msgid "Cancel"
+msgstr "ยกเลิก"
+
+#: ../src/mainToolbar.js:242
+msgid "Select Items"
+msgstr "เลือกรายการ"
+
+#: ../src/mainWindow.js:301
+msgid "translator-credits"
+msgstr "Akom Chotiphantawanon <knight2000@gmail.com>"
+
+#: ../src/mainWindow.js:303
+msgid "A document manager application"
+msgstr "โปรแกรมจัดการเอกสาร"
+
+#: ../src/notifications.js:50
+msgid "Selected item has been deleted"
+msgid_plural "Selected items have been deleted"
+msgstr[0] "ลบรายการที่เลือกแล้ว"
+
+#: ../src/notifications.js:57
+msgid "Undo"
+msgstr "เรียกคืน"
+
+#: ../src/notifications.js:157
+#, javascript-format
+msgid "Printing “%s”: %s"
+msgstr "กำลังพิมพ์ “%s”: %s"
+
+#: ../src/notifications.js:213
+msgid "Your documents are being indexed"
+msgstr "กำลังทำดัชนีเอกสารของคุณ"
+
+#: ../src/notifications.js:214
+msgid "Some documents might not be available during this process"
+msgstr "อาจไม่สามารถใช้เอกสารบางฉบับได้ในระหว่างกระบวนการนี้"
+
+#: ../src/notifications.js:236
+#, javascript-format
+msgid "Fetching documents from %s"
+msgstr "กำลังดึงเอกสารจาก %s"
+
+#: ../src/notifications.js:238
+msgid "Fetching documents from online accounts"
+msgstr "กำลังดึงเอกสารจากบัญชีออนไลน์"
+
+#: ../src/password.js:46
+msgid "Password Required"
+msgstr "ต้องการรหัสผ่าน"
+
+#: ../src/password.js:49
+msgid "_Unlock"
+msgstr "_ปลดล็อค"
+
+#: ../src/password.js:65
+#, javascript-format
+msgid "Document %s is locked and requires a password to be opened."
+msgstr "เอกสาร %s ถูกล็อคและต้องใช้รหัสผ่านในการเปิด"
+
+#: ../src/password.js:79
+msgid "_Password"
+msgstr "_รหัสผ่าน"
+
+#: ../src/presentation.js:104
+msgid "Running in presentation mode"
+msgstr "กำลังทำงานในแบบนำเสนอ"
+
+#: ../src/presentation.js:157
+msgid "Present On"
+msgstr "นำเสนอออกที่"
+
+#: ../src/preview.js:588
+msgid "Bookmark this page"
+msgstr "คั่นหน้านี้"
+
+#: ../src/preview.js:823 ../src/selections.js:857
+#, javascript-format
+msgid "Open with %s"
+msgstr "เปิดด้วย %s"
+
+#: ../src/preview.js:885
+msgid "Find Previous"
+msgstr "หาก่อนหน้า"
+
+#: ../src/preview.js:892
+msgid "Find Next"
+msgstr "หาต่อ"
+
+#: ../src/properties.js:61 ../src/resources/preview-menu.ui.h:9
+#: ../src/selections.js:767
+msgid "Properties"
+msgstr "คุณสมบัติ"
+
+#: ../src/properties.js:81
+msgctxt "Document Title"
+msgid "Title"
+msgstr "ชื่อเรื่อง"
+
+#: ../src/properties.js:90
+msgctxt "Document Author"
+msgid "Author"
+msgstr "ผู้เขียน"
+
+#: ../src/properties.js:97
+msgid "Source"
+msgstr "แหล่ง"
+
+#: ../src/properties.js:103
+msgid "Date Modified"
+msgstr "วันที่แก้ไข"
+
+#: ../src/properties.js:110
+msgid "Date Created"
+msgstr "วันที่สร้าง"
+
+#: ../src/properties.js:119
+msgctxt "Document Type"
+msgid "Type"
+msgstr "ชนิด"
+
+#: ../src/resources/app-menu.ui.h:1
+msgid "Fullscreen"
+msgstr "เต็มจอ"
+
+#: ../src/resources/app-menu.ui.h:2
+msgid "Help"
+msgstr "วิธีใช้"
+
+#: ../src/resources/app-menu.ui.h:3
+msgid "About"
+msgstr "เกี่ยวกับ"
+
+#: ../src/resources/app-menu.ui.h:4
+msgid "Quit"
+msgstr "ออก"
+
+#: ../src/resources/preview-context-menu.ui.h:1
+msgid "_Copy"
+msgstr "_คัดลอก"
+
+#: ../src/resources/preview-menu.ui.h:1 ../src/selections.js:747
+#: ../src/selections.js:860
+msgid "Open"
+msgstr "เปิด"
+
+#: ../src/resources/preview-menu.ui.h:2
+msgid "Edit"
+msgstr "แก้ไข"
+
+#: ../src/resources/preview-menu.ui.h:3
+msgid "Print…"
+msgstr "พิมพ์…"
+
+#: ../src/resources/preview-menu.ui.h:4
+msgid "Present"
+msgstr "นำเสนอ"
+
+#: ../src/resources/preview-menu.ui.h:5
+msgid "Zoom In"
+msgstr "แสดงขยาย"
+
+#: ../src/resources/preview-menu.ui.h:6
+msgid "Zoom Out"
+msgstr "แสดงย่อ"
+
+#: ../src/resources/preview-menu.ui.h:7
+msgid "Rotate ↶"
+msgstr "หมุน ↶"
+
+#: ../src/resources/preview-menu.ui.h:8
+msgid "Rotate ↷"
+msgstr "หมุน ↷"
+
+#: ../src/resources/selection-menu.ui.h:1
+msgid "Select All"
+msgstr "เลือกทั้งหมด"
+
+#: ../src/resources/selection-menu.ui.h:2
+msgid "Select None"
+msgstr "ล้างการเลือก"
+
+#: ../src/search.js:114
+msgid "Category"
+msgstr "หมวดหมู่"
+
+#: ../src/search.js:119 ../src/search.js:180 ../src/search.js:265
+#: ../src/search.js:421
+msgid "All"
+msgstr "ทั้งหมด"
+
+#: ../src/search.js:125
+msgid "Favorites"
+msgstr "รายการโปรด"
+
+#: ../src/search.js:130
+msgid "Shared with you"
+msgstr "แบ่งปันกับคุณ"
+
+#: ../src/search.js:177
+msgctxt "Search Filter"
+msgid "Type"
+msgstr "ชนิด"
+
+#: ../src/search.js:182
+msgid "Collections"
+msgstr "ชุดเอกสาร"
+
+#: ../src/search.js:186
+msgid "PDF Documents"
+msgstr "เอกสาร PDF"
+
+#: ../src/search.js:190
+msgid "Presentations"
+msgstr "งานนำเสนอ"
+
+#: ../src/search.js:193
+msgid "Spreadsheets"
+msgstr "ตารางคำนวณ"
+
+#: ../src/search.js:196
+msgid "Text Documents"
+msgstr "เอกสารข้อเขียน"
+
+#: ../src/search.js:262
+msgid "Match"
+msgstr "ตรวจหา"
+
+#: ../src/search.js:268
+msgctxt "Search Filter"
+msgid "Title"
+msgstr "ชื่อเรื่อง"
+
+#: ../src/search.js:271
+msgctxt "Search Filter"
+msgid "Author"
+msgstr "ผู้เขียน"
+
+#: ../src/search.js:417
+msgid "Sources"
+msgstr "แหล่ง"
+
+#: ../src/selections.js:461
+msgid "You don't have any collections yet. Enter a new collection name above."
+msgstr "คุณยังไม่มีชุดเอกสารใดๆ กรุณาป้อนชื่อชุดเอกสารใหม่ที่ด้านบน"
+
+#: ../src/selections.js:604
+msgid "Create new collection"
+msgstr "สร้างชุดเอกสารใหม่"
+
+#: ../src/selections.js:640
+msgctxt "Dialog Title"
+msgid "Collections"
+msgstr "ชุดเอกสาร"
+
+#: ../src/selections.js:752
+msgid "Print"
+msgstr "พิมพ์"
+
+#: ../src/selections.js:757
+msgid "Delete"
+msgstr "ลบ"
+
+#: ../src/selections.js:762
+msgid "Share"
+msgstr "แบ่งปัน"
+
+#: ../src/selections.js:772
+msgid "Add to Collection"
+msgstr "เพิ่มเข้าชุดเอกสาร"
+
+#: ../src/sharing.js:98
+msgid "Sharing Settings"
+msgstr "ตั้งค่าการแบ่งปัน"
+
+#: ../src/sharing.js:102
+msgid "Done"
+msgstr "เสร็จ"
+
+#: ../src/sharing.js:135
+msgid "Document permissions"
+msgstr "การกำหนดสิทธิ์ของเอกสาร"
+
+#: ../src/sharing.js:142 ../src/sharing.js:320
+msgid "Change"
+msgstr "เปลี่ยน"
+
+#: ../src/sharing.js:166 ../src/sharing.js:295
+msgid "Private"
+msgstr "ส่วนตัว"
+
+#: ../src/sharing.js:176 ../src/sharing.js:288
+msgid "Public"
+msgstr "สาธารณะ"
+
+#: ../src/sharing.js:180 ../src/sharing.js:290
+msgid "Everyone can edit"
+msgstr "ทุกคนสามารถแก้ไขได้"
+
+#: ../src/sharing.js:187
+msgid "Add people"
+msgstr "เพิ่มบุคคล"
+
+#: ../src/sharing.js:194
+msgid "Enter an email address"
+msgstr "ป้อนที่อยู่อีเมล"
+
+#: ../src/sharing.js:209 ../src/sharing.js:376
+msgid "Can edit"
+msgstr "สามารถแก้ไข"
+
+#: ../src/sharing.js:209 ../src/sharing.js:379
+msgid "Can view"
+msgstr "สามารถดู"
+
+#: ../src/sharing.js:216
+msgid "Add"
+msgstr "เพิ่ม"
+
+#: ../src/sharing.js:292
+msgid "Everyone can read"
+msgstr "ทุกคนสามารถอ่านได้"
+
+#: ../src/sharing.js:307
+msgid "Save"
+msgstr "บันทึก"
+
+#: ../src/sharing.js:373
+msgid "Owner"
+msgstr "เจ้าของ"
+
+#: ../src/sharing.js:442
+#, javascript-format
+msgid "You can ask %s for access"
+msgstr "คุณสามารถติดต่อ %s เพื่อขอเข้าถึง"
+
+#: ../src/sharing.js:479 ../src/sharing.js:515 ../src/sharing.js:572
+#: ../src/sharing.js:589 ../src/sharing.js:608
+msgid "The document was not updated"
+msgstr "เอกสารยังไม่เป็นฉบับล่าสุด"
+
+#: ../src/shellSearchProvider.js:294
+msgid "Untitled Document"
+msgstr "เอกสารไม่มีชื่อ"
+
+#: ../src/trackerController.js:170
+msgid "Unable to fetch the list of documents"
+msgstr "ไม่สามารถดึงข้อมูลรายชื่อเอกสาร"
+
+#: ../src/view.js:62 ../src/view.js:93
+msgid "Load More"
+msgstr "โหลดเพิ่มเติม"
+
+#: ../src/view.js:307
+msgid "Yesterday"
+msgstr "เมื่อวาน"
+
+#: ../src/view.js:309
+#, javascript-format
+msgid "%d day ago"
+msgid_plural "%d days ago"
+msgstr[0] "%d วันที่แล้ว"
+
+#: ../src/view.js:313
+msgid "Last week"
+msgstr "สัปดาห์ที่แล้ว"
+
+#: ../src/view.js:315
+#, javascript-format
+msgid "%d week ago"
+msgid_plural "%d weeks ago"
+msgstr[0] "%d สัปดาห์ที่แล้ว"
+
+#: ../src/view.js:319
+msgid "Last month"
+msgstr "เดือนที่แล้ว"
+
+#: ../src/view.js:321
+#, javascript-format
+msgid "%d month ago"
+msgid_plural "%d months ago"
+msgstr[0] "%d เดือนที่แล้ว"
+
+#: ../src/view.js:325
+msgid "Last year"
+msgstr "ปีที่แล้ว"
+
+#: ../src/view.js:327
+#, javascript-format
+msgid "%d year ago"
+msgid_plural "%d years ago"
+msgstr[0] "%d ปีที่แล้ว"
+
+#~ msgid ""
+#~ "<li>View recent local and online documents</li> <li>Access your Google, "
+#~ "ownCloud or OneDrive content</li> <li>Search through documents</li> "
+#~ "<li>See new documents shared by friends</li> <li>View documents "
+#~ "fullscreen</li> <li>Print documents</li> <li>Select favorites</li> "
+#~ "<li>Allow opening full featured editor for non-trivial changes</li>"
+#~ msgstr ""
+#~ "<li>ดูเอกสารล่าสุดในเครื่องและออนไลน์</li> <li>เข้าถึงเนื้อหา Google, ownCloud หรือ "
+#~ "OneDrive ของคุณ</li> <li>ค้นข้อมูลในเอกสาร</li> <li>ดูเอกสารใหม่ที่เพื่อนๆ แบ่งปัน</"
+#~ "li> <li>ดูเอกสารแบบเต็มจอ</li> <li>พิมพ์เอกสาร</li> <li>เลือกรายการโปรด</li> "
+#~ "<li>สามารถเปิดเครื่องมือแก้ไขที่เต็มรูปแบบสำหรับการเปลี่ยนแปลงที่เป็นกิจจะลักษณะ</li>"
+
+#~ msgid "Close"
+#~ msgstr "ปิด"
+
+#~ msgid "Results for “%s”"
+#~ msgstr "ผลการค้นหาสำหรับ “%s”"
+
+#~ msgid "Skydrive"
+#~ msgstr "Skydrive"
+
+#~ msgid "Grid"
+#~ msgstr "แถวตาราง"
+
+#~ msgid "List"
+#~ msgstr "รายชื่อ"
+
+#~ msgid "About Documents"
+#~ msgstr "เกี่ยวกับโปรแกรมเอกสาร"
+
+#~ msgctxt "Dialog Title"
+#~ msgid "Organize"
+#~ msgstr "จัดระเบียบ"
+
+#~ msgctxt "Toolbar button tooltip"
+#~ msgid "Organize"
+#~ msgstr "จัดระเบียบ"
+
+#~ msgid "Unable to load \"%s\" for preview"
+#~ msgstr "ไม่สามารถโหลด \"%s\" เพื่อแสดงตัวอย่าง"
+
+#~ msgid "filtered by title"
+#~ msgstr "กรองด้วยชื่อ"
+
+#~ msgid "filtered by author"
+#~ msgstr "กรองด้วยผู้เขียน"
+
+#~ msgid "Cannot find \"unoconv\", please check your LibreOffice installation"
+#~ msgstr "หา \"unoconv\" ไม่พบ กรุณาตรวจสอบการติดตั้ง LibreOffice ของคุณ"
+
+#~ msgid "New and Recent"
+#~ msgstr "ใหม่และล่าสุด"
+
+#~ msgid "Load %d more document"
+#~ msgid_plural "Load %d more documents"
+#~ msgstr[0] "โหลดเอกสารเพิ่มอีก %d ฉบับ"
+
+#~ msgid "Print..."
+#~ msgstr "พิมพ์..."
+
+#~ msgid "Rotate Right"
+#~ msgstr "หมุนขวา"
+
+#~ msgid "Enable list view"
+#~ msgstr "เปิดใช้งานมุมมองรายชื่อ"
+
+#~ msgid "The active source filter"
+#~ msgstr "ตัวกรองแหล่งที่ใช้งาน"
+
+#~ msgid "The last active source filter"
+#~ msgstr "ตัวกรองแหล่งล่าสุดที่ใช้งาน"
+
+#~ msgid "(%d of %d)"
+#~ msgstr "(%d จาก %d)"
+
+#~ msgid "Remove from favorites"
+#~ msgstr "ลบออกจากรายการโปรด"
+
+#~ msgid "Add to favorites"
+#~ msgstr "เพิ่มในรายการโปรด"

@@ -1,0 +1,823 @@
+# Hebrew translations for PACKAGE package.
+# Copyright (C) 2011 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# Yaron Shahrabani <sh.yaron@gmail.com>, 2011.
+# Yosef Or Boczko <yoseforb@gnome.org>, 2013, 2014.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Gnome-Documents\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-08-28 17:09+0300\n"
+"PO-Revision-Date: 2014-08-28 17:16+0300\n"
+"Last-Translator: Yosef Or Boczko <yoseforb@gmail.com>\n"
+"Language-Team: עברית <>\n"
+"Language: he\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=n==1 ? 0 : (n>2||n==0) ? 1 : 2;\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Generator: Gtranslator 2.91.6\n"
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:1
+#: ../data/org.gnome.Documents.desktop.in.h:1 ../src/application.js:121
+#: ../src/mainWindow.js:52 ../src/mainWindow.js:302
+msgid "Documents"
+msgstr "מסמכים"
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:2
+msgid "A document manager application for GNOME"
+msgstr "יישום לניהול מסמכים עבור GNOME"
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:3
+msgid ""
+"A simple application to access, organize and share your documents on GNOME. "
+"It is meant to be a simple and elegant replacement for using a file manager "
+"to deal with documents. Seamless cloud integration is offered through GNOME "
+"Online Accounts."
+msgstr ""
+"יישום פשוט למטרות גישה, ארגון ושיתוף המסמכים שלך עם GNOME. היישום משמש "
+"כחלופה פשוטה ואלגנטית למנהל הקבצים לצורך טיפול במסמכים. שילוב שקוף בשירותי "
+"ענן מוצע באמצעות חשבונות מקוונים ב־GNOME."
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:4
+msgid "It lets you:"
+msgstr "היישום מאפשר לך:"
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:5
+msgid "View recent local and online documents"
+msgstr "הצגת מסמכים מקומיים ומקוונים אחרונים"
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:6
+msgid "Access your Google, ownCloud or OneDrive content"
+msgstr "גישה לתוכן Google,ownCloud או OneDrive שלך"
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:7
+msgid "Search through documents"
+msgstr "חיפוש דרך מסמכים"
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:8
+msgid "See new documents shared by friends"
+msgstr "צפייה במסמכים חדשים ששותפו על ידי חברים"
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:9
+msgid "View documents fullscreen"
+msgstr "צפייה במסמכים במסך מלא"
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:10
+msgid "Print documents"
+msgstr "הדפסת מסמכים"
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:11
+msgid "Select favorites"
+msgstr "בחירת מועדפים"
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:12
+msgid "Allow opening full featured editor for non-trivial changes"
+msgstr "אפשרות לפתיחה של עורך עשיר בתכונות לשינויים מתקדמים יותר"
+
+#: ../data/org.gnome.Documents.desktop.in.h:2
+msgid "Access, manage and share documents"
+msgstr "גישה, ניהול ושיתוף של מסמכים"
+
+#: ../data/org.gnome.Documents.desktop.in.h:3
+msgid "Docs;PDF;Document;"
+msgstr "מסמכים;PDF;מסמך;"
+
+#: ../data/org.gnome.documents.gschema.xml.h:1
+msgid "View as"
+msgstr "צפייה בתור"
+
+#: ../data/org.gnome.documents.gschema.xml.h:2
+msgid "View as type"
+msgstr "צפייה כסוג"
+
+#: ../data/org.gnome.documents.gschema.xml.h:3
+msgid "Window size"
+msgstr "Window size"
+
+#: ../data/org.gnome.documents.gschema.xml.h:4
+msgid "Window size (width and height)."
+msgstr "Window size (width and height)."
+
+#: ../data/org.gnome.documents.gschema.xml.h:5
+msgid "Window position"
+msgstr "Window position"
+
+#: ../data/org.gnome.documents.gschema.xml.h:6
+msgid "Window position (x and y)."
+msgstr "Window position (x and y)."
+
+#: ../data/org.gnome.documents.gschema.xml.h:7
+msgid "Window maximized"
+msgstr "Window maximized"
+
+#: ../data/org.gnome.documents.gschema.xml.h:8
+msgid "Window maximized state"
+msgstr "Window maximized state"
+
+#: ../src/documents.js:621
+msgid "Failed to print document"
+msgstr "נכשלה הדפסת המסמך"
+
+#. Translators: this refers to local documents
+#: ../src/documents.js:658 ../src/search.js:427
+msgid "Local"
+msgstr "מקומי"
+
+#. Translators: Documents ships a "Getting Started with Documents"
+#. tutorial PDF. The "GNOME" string below is displayed as the author name
+#. of that document, and doesn't normally need to be translated.
+#: ../src/documents.js:679
+msgid "GNOME"
+msgstr "GNOME"
+
+#: ../src/documents.js:680
+msgid "Getting Started with Documents"
+msgstr "צעדים ראשונים עם מסמכים"
+
+#: ../src/documents.js:696 ../src/documents.js:877 ../src/documents.js:939
+#: ../src/documents.js:1047
+msgid "Collection"
+msgstr "אוסף"
+
+#. overridden
+#: ../src/documents.js:756
+msgid "Google Docs"
+msgstr "Google Docs"
+
+#: ../src/documents.js:757
+msgid "Google"
+msgstr "Google"
+
+#: ../src/documents.js:879 ../src/documents.js:1049
+msgid "Spreadsheet"
+msgstr "גיליון אלקטרוני"
+
+#: ../src/documents.js:881 ../src/documents.js:1051 ../src/presentation.js:47
+msgid "Presentation"
+msgstr "מצגת"
+
+#: ../src/documents.js:883 ../src/documents.js:1053
+msgid "Document"
+msgstr "מסמך"
+
+#. overridden
+#: ../src/documents.js:917
+msgid "ownCloud"
+msgstr "ownCloud"
+
+#. overridden
+#: ../src/documents.js:981 ../src/documents.js:982
+msgid "OneDrive"
+msgstr "OneDrive"
+
+#: ../src/documents.js:1181
+msgid "Please check the network connection."
+msgstr "נא לבדוק את החיבור לרשת."
+
+#: ../src/documents.js:1184
+msgid "Please check the network proxy settings."
+msgstr "נא לבדוק את הגדרות המתווך של הרשת."
+
+#: ../src/documents.js:1187
+msgid "Unable to sign in to the document service."
+msgstr "לא ניתן להיכנס לשירות המסמכים."
+
+#: ../src/documents.js:1190
+msgid "Unable to locate this document."
+msgstr "לא ניתן לאתר מסמך זה."
+
+#: ../src/documents.js:1193
+#, javascript-format
+msgid "Hmm, something is fishy (%d)."
+msgstr "המממ, משהו פה מסריח (%d)."
+
+#. Translators: %s is the title of a document
+#: ../src/documents.js:1211
+#, javascript-format
+msgid "Oops! Unable to load “%s”"
+msgstr "אופס! לא ניתן לטעון את „%s“"
+
+#: ../src/edit.js:192
+msgid "View"
+msgstr "צפייה"
+
+#: ../src/embed.js:142
+msgid "No Documents Found"
+msgstr "לא נמצאו מסמכים"
+
+#. Translators: %s here is "Settings", which is in a separate string due to
+#. markup, and should be translated only in the context of this sentence
+#: ../src/embed.js:163
+#, javascript-format
+msgid "You can add your online accounts in %s"
+msgstr "ניתן להוסיף את החשבונות המקוונים שלך תחת %s"
+
+#. Translators: this should be translated in the context of the
+#. "You can add your online accounts in Settings" sentence above
+#: ../src/embed.js:167
+msgid "Settings"
+msgstr "הגדרות"
+
+#: ../src/lib/gd-nav-bar.c:242
+#, c-format
+msgid "Page %u of %u"
+msgstr "עמוד %u מתוך %u"
+
+#: ../src/lib/gd-pdf-loader.c:247
+msgid "Unable to load the document"
+msgstr "לא ניתן לטעון את המסמך"
+
+#: ../src/lib/gd-pdf-loader.c:715
+msgid "LibreOffice is required to view this document"
+msgstr "יש צורך ב־LibreOffice כדי לצפות במסמך זה"
+
+#. Translators: %s is the number of the page, already formatted
+#. * as a string, for example "Page 5".
+#.
+#: ../src/lib/gd-places-bookmarks.c:315
+#, c-format
+msgid "Page %s"
+msgstr "עמוד %s"
+
+#: ../src/lib/gd-places-bookmarks.c:378
+msgid "No bookmarks"
+msgstr "אין סימניות"
+
+#: ../src/lib/gd-places-bookmarks.c:386 ../src/lib/gd-places-links.c:257
+#: ../src/view.js:71
+msgid "Loading…"
+msgstr "בטעינה…"
+
+#: ../src/lib/gd-places-bookmarks.c:651 ../src/preview.js:580
+msgid "Bookmarks"
+msgstr "סימניות"
+
+#: ../src/lib/gd-places-links.c:342
+msgid "No table of contents"
+msgstr "אין טבלת תכנים"
+
+#: ../src/lib/gd-places-links.c:518
+msgid "Contents"
+msgstr "תכנים"
+
+#: ../src/mainToolbar.js:79
+msgid "Search"
+msgstr "חיפוש"
+
+#: ../src/mainToolbar.js:87
+msgid "Back"
+msgstr "חזרה"
+
+#: ../src/mainToolbar.js:132
+msgid "View items as a list"
+msgstr "צפייה בפירטים כרשימה"
+
+#: ../src/mainToolbar.js:138
+msgid "View items as a grid of icons"
+msgstr "צפייה בפריטים כרשת של סמלים"
+
+#: ../src/mainToolbar.js:168
+msgid "Click on items to select them"
+msgstr "יש ללחוץ על פריטים כדי לבחור אותם"
+
+#: ../src/mainToolbar.js:170
+#, c-format
+msgid "%d selected"
+msgid_plural "%d selected"
+msgstr[0] "אחד נבחר"
+msgstr[1] "%d נבחרו"
+msgstr[2] "%d נבחרו"
+
+#: ../src/mainToolbar.js:200
+msgid "Cancel"
+msgstr "ביטול"
+
+#: ../src/mainToolbar.js:242
+msgid "Select Items"
+msgstr "בחירת פריטים"
+
+#: ../src/mainWindow.js:301
+msgid "translator-credits"
+msgstr ""
+"ירון שהרבני <sh.yaron@gmail.com>\n"
+"יוסף אור בוצ׳קו <yoseforb@gnome.org>"
+
+#: ../src/mainWindow.js:303
+msgid "A document manager application"
+msgstr "יישום לניהול מסמכים"
+
+#: ../src/notifications.js:50
+msgid "Selected item has been deleted"
+msgid_plural "Selected items have been deleted"
+msgstr[0] "הפריט הנבחר נמחק"
+msgstr[1] "הפריטים הנבחרים נמחקו"
+msgstr[2] "הפריטים הנבחרים נמחקו"
+
+#: ../src/notifications.js:57
+msgid "Undo"
+msgstr "ביטול"
+
+#: ../src/notifications.js:157
+#, javascript-format
+msgid "Printing “%s”: %s"
+msgstr "מתבצעת הדפסה של „%s“:‏ %s"
+
+#: ../src/notifications.js:213
+msgid "Your documents are being indexed"
+msgstr "המסמכים שלך נשמרים באינדקס"
+
+#: ../src/notifications.js:214
+msgid "Some documents might not be available during this process"
+msgstr "יתכן שחלק מהמסמכים לא יהיו זמינים במשך תהליך זה"
+
+#. Translators: %s refers to an online account provider, e.g.
+#. "Google", or "Windows Live".
+#: ../src/notifications.js:236
+#, javascript-format
+msgid "Fetching documents from %s"
+msgstr "מתקבל מסמך מ־%s"
+
+#: ../src/notifications.js:238
+msgid "Fetching documents from online accounts"
+msgstr "מתקבלים מסמכים מחשבונות מקוונים"
+
+#: ../src/password.js:46
+msgid "Password Required"
+msgstr "נדרשת ססמה"
+
+#: ../src/password.js:49
+msgid "_Unlock"
+msgstr "_שחרור"
+
+#: ../src/password.js:65
+#, javascript-format
+msgid "Document %s is locked and requires a password to be opened."
+msgstr "המסמך %s נעול ונדרשת ססמה כדי לפתוח אותו."
+
+#: ../src/password.js:79
+msgid "_Password"
+msgstr "_ססמה"
+
+#: ../src/presentation.js:104
+msgid "Running in presentation mode"
+msgstr "רץ במצב מצגת"
+
+#: ../src/presentation.js:157
+msgid "Present On"
+msgstr "מצב מצגת מופעל"
+
+#: ../src/preview.js:588
+msgid "Bookmark this page"
+msgstr "סימון דף זה"
+
+#. Translators: this is the Open action in a context menu
+#: ../src/preview.js:823 ../src/selections.js:857
+#, javascript-format
+msgid "Open with %s"
+msgstr "פתיחה באמצעות %s"
+
+#: ../src/preview.js:885
+msgid "Find Previous"
+msgstr "חיפוש הקודם"
+
+#: ../src/preview.js:892
+msgid "Find Next"
+msgstr "חיפוש הבא"
+
+#. properties button
+#: ../src/properties.js:61 ../src/resources/preview-menu.ui.h:9
+#: ../src/selections.js:767
+msgid "Properties"
+msgstr "מאפיינים"
+
+#. Title item
+#. Translators: "Title" is the label next to the document title
+#. in the properties dialog
+#: ../src/properties.js:81
+msgctxt "Document Title"
+msgid "Title"
+msgstr "כותרת"
+
+#. Translators: "Author" is the label next to the document author
+#. in the properties dialog
+#: ../src/properties.js:90
+msgctxt "Document Author"
+msgid "Author"
+msgstr "מאת"
+
+#. Source item
+#: ../src/properties.js:97
+msgid "Source"
+msgstr "מקור"
+
+#. Date Modified item
+#: ../src/properties.js:103
+msgid "Date Modified"
+msgstr "מועד השינוי"
+
+#: ../src/properties.js:110
+msgid "Date Created"
+msgstr "מועד היצירה"
+
+#. Document type item
+#. Translators: "Type" is the label next to the document type
+#. (PDF, spreadsheet, ...) in the properties dialog
+#: ../src/properties.js:119
+msgctxt "Document Type"
+msgid "Type"
+msgstr "סוג"
+
+#: ../src/resources/app-menu.ui.h:1
+msgid "Fullscreen"
+msgstr "מסך מלא"
+
+#: ../src/resources/app-menu.ui.h:2
+msgid "Help"
+msgstr "עזרה"
+
+#: ../src/resources/app-menu.ui.h:3
+msgid "About"
+msgstr "על אודות"
+
+#: ../src/resources/app-menu.ui.h:4
+msgid "Quit"
+msgstr "יציאה"
+
+#: ../src/resources/preview-context-menu.ui.h:1
+msgid "_Copy"
+msgstr "ה_עתקה"
+
+#. open button
+#. Translators: this is the Open action in a context menu
+#: ../src/resources/preview-menu.ui.h:1 ../src/selections.js:747
+#: ../src/selections.js:860
+msgid "Open"
+msgstr "פתיחה"
+
+#: ../src/resources/preview-menu.ui.h:2
+msgid "Edit"
+msgstr "עריכה"
+
+#: ../src/resources/preview-menu.ui.h:3
+msgid "Print…"
+msgstr "הדפסה…"
+
+#: ../src/resources/preview-menu.ui.h:4
+msgid "Present"
+msgstr "מצגת"
+
+#: ../src/resources/preview-menu.ui.h:5
+msgid "Zoom In"
+msgstr "התקרבות"
+
+#: ../src/resources/preview-menu.ui.h:6
+msgid "Zoom Out"
+msgstr "התרחקות"
+
+#: ../src/resources/preview-menu.ui.h:7
+msgid "Rotate ↶"
+msgstr "הטייה ↶"
+
+#: ../src/resources/preview-menu.ui.h:8
+msgid "Rotate ↷"
+msgstr "הטייה ↷"
+
+#: ../src/resources/selection-menu.ui.h:1
+msgid "Select All"
+msgstr "בחירת הכול"
+
+#: ../src/resources/selection-menu.ui.h:2
+msgid "Select None"
+msgstr "ביטול הבחירה"
+
+#: ../src/search.js:114
+msgid "Category"
+msgstr "קטגוריה"
+
+#. Translators: this refers to new and recent documents
+#. Translators: this refers to documents
+#: ../src/search.js:119 ../src/search.js:180 ../src/search.js:265
+#: ../src/search.js:421
+msgid "All"
+msgstr "הכול"
+
+#. Translators: this refers to favorite documents
+#: ../src/search.js:125
+msgid "Favorites"
+msgstr "מועדפים"
+
+#. Translators: this refers to shared documents
+#: ../src/search.js:130
+msgid "Shared with you"
+msgstr "משותף אתך"
+
+#. Translators: "Type" refers to a search filter on the document type
+#. (PDF, spreadsheet, ...)
+#: ../src/search.js:177
+msgctxt "Search Filter"
+msgid "Type"
+msgstr "סוג"
+
+#: ../src/search.js:182
+msgid "Collections"
+msgstr "אוספים"
+
+#: ../src/search.js:186
+msgid "PDF Documents"
+msgstr "מסמכי PDF"
+
+#: ../src/search.js:190
+msgid "Presentations"
+msgstr "מצגות"
+
+#: ../src/search.js:193
+msgid "Spreadsheets"
+msgstr "גיליונות אלקטרוניים"
+
+#: ../src/search.js:196
+msgid "Text Documents"
+msgstr "מסמכי טקסט"
+
+#. Translators: this is a verb that refers to "All", "Title" and "Author",
+#. as in "Match All", "Match Title" and "Match Author"
+#: ../src/search.js:262
+msgid "Match"
+msgstr "התאמה"
+
+#. Translators: "Title" refers to "Match Title" when searching
+#: ../src/search.js:268
+msgctxt "Search Filter"
+msgid "Title"
+msgstr "כותרת"
+
+#. Translators: "Author" refers to "Match Author" when searching
+#: ../src/search.js:271
+msgctxt "Search Filter"
+msgid "Author"
+msgstr "מאת"
+
+#: ../src/search.js:417
+msgid "Sources"
+msgstr "מקורות"
+
+#: ../src/selections.js:461
+msgid "You don't have any collections yet. Enter a new collection name above."
+msgstr "אין לך אוספים עדיין. נא להזין שם אוסף חדש להלן."
+
+#: ../src/selections.js:604
+msgid "Create new collection"
+msgstr "יצירת אוסף חדש"
+
+#. Translators: "Collections" refers to documents in this context
+#: ../src/selections.js:640
+msgctxt "Dialog Title"
+msgid "Collections"
+msgstr "אוספים"
+
+#. print button
+#: ../src/selections.js:752
+msgid "Print"
+msgstr "הדפסה"
+
+#. trash button
+#: ../src/selections.js:757
+msgid "Delete"
+msgstr "מחיקה"
+
+#. share button
+#: ../src/selections.js:762
+msgid "Share"
+msgstr "שיתוף"
+
+#. organize button
+#: ../src/selections.js:772
+msgid "Add to Collection"
+msgstr "הוספה לאוסף"
+
+#: ../src/sharing.js:98
+msgid "Sharing Settings"
+msgstr "הגדרות שיתוף"
+
+#. Label for Done button in Sharing dialog
+#: ../src/sharing.js:102
+msgid "Done"
+msgstr "בוצע"
+
+#. Label for widget group for changing document permissions
+#: ../src/sharing.js:135
+msgid "Document permissions"
+msgstr "הרשאות המסמך"
+
+#. Label for permission change in Sharing dialog
+#: ../src/sharing.js:142 ../src/sharing.js:320
+msgid "Change"
+msgstr "שינוי"
+
+#. Label for radiobutton that sets doc permission to private
+#: ../src/sharing.js:166 ../src/sharing.js:295
+msgid "Private"
+msgstr "פרטי"
+
+#: ../src/sharing.js:176 ../src/sharing.js:288
+msgid "Public"
+msgstr "ציבורי"
+
+#. Label for checkbutton that sets doc permission to Can edit
+#: ../src/sharing.js:180 ../src/sharing.js:290
+msgid "Everyone can edit"
+msgstr "כולם יכולים לערוך"
+
+#. Label for widget group used for adding new contacts
+#: ../src/sharing.js:187
+msgid "Add people"
+msgstr "הוספת אנשים"
+
+#. Editable text in entry field
+#: ../src/sharing.js:194
+msgid "Enter an email address"
+msgstr "נא להזין כתובת דוא״ל"
+
+#: ../src/sharing.js:209 ../src/sharing.js:376
+msgid "Can edit"
+msgstr "יש הרשאות עריכה"
+
+#: ../src/sharing.js:209 ../src/sharing.js:379
+msgid "Can view"
+msgstr "יש הרשאות לצפייה"
+
+#: ../src/sharing.js:216
+msgid "Add"
+msgstr "הוספה"
+
+#: ../src/sharing.js:292
+msgid "Everyone can read"
+msgstr "כולם יכולים לקרוא"
+
+#: ../src/sharing.js:307
+msgid "Save"
+msgstr "שמירה"
+
+#: ../src/sharing.js:373
+msgid "Owner"
+msgstr "בעלים"
+
+#: ../src/sharing.js:442
+#, javascript-format
+msgid "You can ask %s for access"
+msgstr "ניתן לבקש גישה מ־%s"
+
+#: ../src/sharing.js:479 ../src/sharing.js:515 ../src/sharing.js:572
+#: ../src/sharing.js:589 ../src/sharing.js:608
+msgid "The document was not updated"
+msgstr "המסמך לא עודכן"
+
+#: ../src/shellSearchProvider.js:294
+msgid "Untitled Document"
+msgstr "מסמך ללא שם"
+
+#: ../src/trackerController.js:170
+msgid "Unable to fetch the list of documents"
+msgstr "לא ניתן לקבל את רשימת המסמכים"
+
+#. Translators: "more" refers to documents in this context
+#: ../src/view.js:62 ../src/view.js:93
+msgid "Load More"
+msgstr "טעינת נוספים"
+
+#: ../src/view.js:307
+msgid "Yesterday"
+msgstr "אתמול"
+
+#: ../src/view.js:309
+#, c-format
+msgid "%d day ago"
+msgid_plural "%d days ago"
+msgstr[0] "אתמול"
+msgstr[1] "לפני %d ימים"
+msgstr[2] "שלשום"
+
+#: ../src/view.js:313
+msgid "Last week"
+msgstr "שבוע שעבר"
+
+#: ../src/view.js:315
+#, c-format
+msgid "%d week ago"
+msgid_plural "%d weeks ago"
+msgstr[0] "לפני שבוע"
+msgstr[1] "לפני %d שבועות"
+msgstr[2] "לפני שבועיים"
+
+#: ../src/view.js:319
+msgid "Last month"
+msgstr "בחודש שעבר"
+
+#: ../src/view.js:321
+#, c-format
+msgid "%d month ago"
+msgid_plural "%d months ago"
+msgstr[0] "לפני חודש"
+msgstr[1] "לפני %d חודשים"
+msgstr[2] "לפני חודשיים"
+
+#: ../src/view.js:325
+msgid "Last year"
+msgstr "שנה שעברה"
+
+#: ../src/view.js:327
+#, c-format
+msgid "%d year ago"
+msgid_plural "%d years ago"
+msgstr[0] "לפני שנה"
+msgstr[1] "לפני %d שנים"
+msgstr[2] "לפני שנתיים"
+
+#~ msgid ""
+#~ "<li>View recent local and online documents</li> <li>Access your Google, "
+#~ "ownCloud or OneDrive content</li> <li>Search through documents</li> "
+#~ "<li>See new documents shared by friends</li> <li>View documents "
+#~ "fullscreen</li> <li>Print documents</li> <li>Select favorites</li> "
+#~ "<li>Allow opening full featured editor for non-trivial changes</li>"
+#~ msgstr ""
+#~ "<li>צפייה במסמכים מקומיים ומקוונים</li> <li>גישה לתוכן שלך ב־Google, "
+#~ "ownCloud או OneDrive</li> <li>חיפוש במסמכים</li> <li>צפייה במסמכים חדשים "
+#~ "ששותפו על ידי חברים</li> <li>צפייה במסמכים במסך מלא</li> <li>הדפסת "
+#~ "מסמכים</li> <li>בחירת מועדפים</li> <li>אפשרות לפתיחה של עורך עשיר בתכונות "
+#~ "לצורך עריכות שאינן משניות</li>"
+
+#~ msgid "Results for “%s”"
+#~ msgstr "תוצאות עבור „%s“"
+
+#~ msgid "Close"
+#~ msgstr "סגירה"
+
+#~ msgid "Skydrive"
+#~ msgstr "Skydrive"
+
+#~ msgid "Grid"
+#~ msgstr "רשת"
+
+#~ msgid "List"
+#~ msgstr "רשימה"
+
+#~ msgid "About Documents"
+#~ msgstr "על אודות מסמכים"
+
+#~ msgctxt "Toolbar button tooltip"
+#~ msgid "Organize"
+#~ msgstr "ארגון"
+
+#~ msgctxt "Dialog Title"
+#~ msgid "Organize"
+#~ msgstr "ארגון"
+
+#~ msgid "filtered by title"
+#~ msgstr "מסונן לפי כותרת"
+
+#~ msgid "filtered by author"
+#~ msgstr "מסונן לפי יוצר"
+
+#~ msgid "Unable to load \"%s\" for preview"
+#~ msgstr "לא ניתן לטעון את ”%s“ לתצוגה מקדימה"
+
+#~ msgid "Cannot find \"unoconv\", please check your LibreOffice installation"
+#~ msgstr "לא ניתן למצוא את \"unoconv\", נא לבדוק את התקנת ה־LibreOffice שלך"
+
+#~ msgid "New and Recent"
+#~ msgstr "חדש ו"
+
+#~ msgid "Load %d more document"
+#~ msgid_plural "Load %d more documents"
+#~ msgstr[0] "טעינת מסמך נוסף"
+#~ msgstr[1] "טעינת %d מסמכים נוספים"
+#~ msgstr[2] "טעינת 2 מסמכים נוספים"
+
+#~ msgid "Print..."
+#~ msgstr "הדפסה..."
+
+#~ msgid "Rotate Right"
+#~ msgstr "הטיה לימין"
+
+#~ msgid "Remove from favorites"
+#~ msgstr "הסרה מהמועדפים"
+
+#~ msgid "Add to favorites"
+#~ msgstr "הוספה למועדפים"
+
+#~ msgid "%d of %d"
+#~ msgstr "%d מתוך %d"
+
+#~ msgid "The active source filter"
+#~ msgstr "The active source filter"
+
+#~ msgid "The last active source filter"
+#~ msgstr "The last active source filter"
+
+#~ msgid "GNOME Documents"
+#~ msgstr "מסמכים מבית GNOME"
+
+#~ msgid "Enable list view"
+#~ msgstr "Enable list view"

@@ -1,0 +1,691 @@
+# Russian translation for gnome-documents.
+# Copyright (C) 2011 gnome-documents's COPYRIGHT HOLDER
+# This file is distributed under the same license as the gnome-documents package.
+#
+#
+# Stas Solovey <whats_up@tut.by>, 2011.
+# Yuri Kozlov <yuray@komyakino.ru>, 2012.
+# Alexsey Nadtochey <irbis4lan@yandex.com>, 2012.
+# Yuri Myasoedov <ymyasoedov@yandex.ru>, 2011, 2012, 2013, 2014.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: gnome-documents master\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
+"documents&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2014-09-05 06:49+0000\n"
+"PO-Revision-Date: 2014-09-05 16:48+0400\n"
+"Last-Translator: Yuri Myasoedov <ymyasoedov@yandex.ru>\n"
+"Language-Team: русский <gnome-cyr@gnome.org>\n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2)\n"
+"X-Generator: Gtranslator 2.91.6\n"
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:1
+#: ../data/org.gnome.Documents.desktop.in.h:1 ../src/application.js:121
+#: ../src/mainWindow.js:52 ../src/mainWindow.js:302
+msgid "Documents"
+msgstr "Документы"
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:2
+msgid "A document manager application for GNOME"
+msgstr "Приложение для управления документами в GNOME"
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:3
+msgid ""
+"A simple application to access, organize and share your documents on GNOME. "
+"It is meant to be a simple and elegant replacement for using a file manager "
+"to deal with documents. Seamless cloud integration is offered through GNOME "
+"Online Accounts."
+msgstr ""
+"Просто приложение для получения доступа, управления и публикации документов "
+"в GNOME. Это приложение упрощает работу с документами, по сравнению с "
+"обычным файловым менеджером. Бесшовная интеграция с облачными службами "
+"осуществляется через сетевые учётные записи GNOME."
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:4
+msgid "It lets you:"
+msgstr "Оно позволяет вам:"
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:5
+msgid "View recent local and online documents"
+msgstr "просматривать последние документы локально и в Интернете"
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:6
+msgid "Access your Google, ownCloud or OneDrive content"
+msgstr "получать доступ к содержимому Google, ownCloud или OneDrive"
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:7
+msgid "Search through documents"
+msgstr "выполнять поиск по документам"
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:8
+msgid "See new documents shared by friends"
+msgstr "просматривать документы, находящиеся в общем доступе"
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:9
+msgid "View documents fullscreen"
+msgstr "просматривать документы в полноэкранном режиме"
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:10
+#| msgid "PDF Documents"
+msgid "Print documents"
+msgstr "печатать документы"
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:11
+#| msgid "Select Items"
+msgid "Select favorites"
+msgstr "добавлять документы в избранное"
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:12
+msgid "Allow opening full featured editor for non-trivial changes"
+msgstr "открывать документы в полнофункциональных редакторах"
+
+#: ../data/org.gnome.Documents.desktop.in.h:2
+msgid "Access, manage and share documents"
+msgstr "Управление и предоставление доступа к документам"
+
+#: ../data/org.gnome.Documents.desktop.in.h:3
+msgid "Docs;PDF;Document;"
+msgstr "Документы;PDF;Документ;"
+
+#: ../data/org.gnome.documents.gschema.xml.h:1
+msgid "View as"
+msgstr "Вид"
+
+#: ../data/org.gnome.documents.gschema.xml.h:2
+msgid "View as type"
+msgstr "Вид"
+
+#: ../data/org.gnome.documents.gschema.xml.h:3
+msgid "Window size"
+msgstr "Размер окна"
+
+#: ../data/org.gnome.documents.gschema.xml.h:4
+msgid "Window size (width and height)."
+msgstr "Размер окна (ширина и высота)."
+
+#: ../data/org.gnome.documents.gschema.xml.h:5
+msgid "Window position"
+msgstr "Положение окна"
+
+#: ../data/org.gnome.documents.gschema.xml.h:6
+msgid "Window position (x and y)."
+msgstr "Положение окна (x, y)."
+
+#: ../data/org.gnome.documents.gschema.xml.h:7
+msgid "Window maximized"
+msgstr "Окно развёрнуто"
+
+#: ../data/org.gnome.documents.gschema.xml.h:8
+msgid "Window maximized state"
+msgstr "Состояние развёрнутого окна"
+
+#: ../src/documents.js:621
+msgid "Failed to print document"
+msgstr "Не удалось напечатать документ"
+
+#: ../src/documents.js:658 ../src/search.js:427
+msgid "Local"
+msgstr "Локальные"
+
+#: ../src/documents.js:679
+msgid "GNOME"
+msgstr "GNOME"
+
+#: ../src/documents.js:680
+msgid "Getting Started with Documents"
+msgstr "Начало работы с приложением «Документы»"
+
+#: ../src/documents.js:696 ../src/documents.js:877 ../src/documents.js:939
+#: ../src/documents.js:1047
+msgid "Collection"
+msgstr "Коллекция"
+
+#: ../src/documents.js:756
+msgid "Google Docs"
+msgstr "Документы Google"
+
+#: ../src/documents.js:757
+msgid "Google"
+msgstr "Google"
+
+#: ../src/documents.js:879 ../src/documents.js:1049
+msgid "Spreadsheet"
+msgstr "Таблица"
+
+#: ../src/documents.js:881 ../src/documents.js:1051 ../src/presentation.js:47
+msgid "Presentation"
+msgstr "Презентация"
+
+#: ../src/documents.js:883 ../src/documents.js:1053
+msgid "Document"
+msgstr "Документ"
+
+#: ../src/documents.js:917
+msgid "ownCloud"
+msgstr "ownCloud"
+
+#: ../src/documents.js:981 ../src/documents.js:982
+msgid "OneDrive"
+msgstr "OneDrive"
+
+#: ../src/documents.js:1181
+msgid "Please check the network connection."
+msgstr "Проверьте подключение к сети."
+
+#: ../src/documents.js:1184
+msgid "Please check the network proxy settings."
+msgstr "Проверьте параметры прокси-сервера."
+
+#: ../src/documents.js:1187
+msgid "Unable to sign in to the document service."
+msgstr "Не удалось войти в службу документов."
+
+#: ../src/documents.js:1190
+msgid "Unable to locate this document."
+msgstr "Не удалось определить расположение документа."
+
+#: ../src/documents.js:1193
+#, javascript-format
+msgid "Hmm, something is fishy (%d)."
+msgstr "Хм, что-то сомнительно (%d)."
+
+#: ../src/documents.js:1211
+#, javascript-format
+msgid "Oops! Unable to load “%s”"
+msgstr "Ой! Не удалось загрузить «%s»"
+
+#: ../src/edit.js:192
+msgid "View"
+msgstr "Вид"
+
+#: ../src/embed.js:142
+msgid "No Documents Found"
+msgstr "Документы не найдены"
+
+#: ../src/embed.js:163
+#, javascript-format
+msgid "You can add your online accounts in %s"
+msgstr "Вы можете добавить сетевые учётные записи через приложение «%s»"
+
+#: ../src/embed.js:167
+msgid "Settings"
+msgstr "Параметры"
+
+#: ../src/lib/gd-nav-bar.c:242
+#, c-format
+msgid "Page %u of %u"
+msgstr "Страница %u из %u"
+
+#: ../src/lib/gd-pdf-loader.c:247
+msgid "Unable to load the document"
+msgstr "Не удалось загрузить документ"
+
+#: ../src/lib/gd-pdf-loader.c:715
+msgid "LibreOffice is required to view this document"
+msgstr "Для просмотра этого документа нужен LibreOffice"
+
+#. Translators: %s is the number of the page, already formatted
+#. * as a string, for example "Page 5".
+#.
+#: ../src/lib/gd-places-bookmarks.c:315
+#, c-format
+msgid "Page %s"
+msgstr "Страница %s"
+
+#: ../src/lib/gd-places-bookmarks.c:378
+msgid "No bookmarks"
+msgstr "Нет закладок"
+
+#: ../src/lib/gd-places-bookmarks.c:386 ../src/lib/gd-places-links.c:257
+#: ../src/view.js:71
+msgid "Loading…"
+msgstr "Загрузка…"
+
+#: ../src/lib/gd-places-bookmarks.c:651 ../src/preview.js:580
+msgid "Bookmarks"
+msgstr "Закладки"
+
+#: ../src/lib/gd-places-links.c:342
+msgid "No table of contents"
+msgstr "Нет содержания"
+
+#: ../src/lib/gd-places-links.c:518
+msgid "Contents"
+msgstr "Содержание"
+
+#: ../src/mainToolbar.js:79
+msgid "Search"
+msgstr "Поиск"
+
+#: ../src/mainToolbar.js:87
+msgid "Back"
+msgstr "Назад"
+
+#: ../src/mainToolbar.js:132
+msgid "View items as a list"
+msgstr "Показывать в виде списка"
+
+#: ../src/mainToolbar.js:138
+msgid "View items as a grid of icons"
+msgstr "Показывать в виде сетки значков"
+
+#: ../src/mainToolbar.js:168
+msgid "Click on items to select them"
+msgstr "Щёлкните по элементам, чтобы выбрать их"
+
+#: ../src/mainToolbar.js:170
+#, javascript-format
+msgid "%d selected"
+msgid_plural "%d selected"
+msgstr[0] "Выбрано: %d"
+msgstr[1] "Выбрано: %d"
+msgstr[2] "Выбрано: %d"
+
+#: ../src/mainToolbar.js:200
+msgid "Cancel"
+msgstr "Отмена"
+
+#: ../src/mainToolbar.js:242
+msgid "Select Items"
+msgstr "Выбрать элементы"
+
+#: ../src/mainWindow.js:301
+msgid "translator-credits"
+msgstr "Юрий Мясоедов <omerta13@yandex.ru>, 2014"
+
+#: ../src/mainWindow.js:303
+msgid "A document manager application"
+msgstr "Приложение для управления документами"
+
+#: ../src/notifications.js:50
+msgid "Selected item has been deleted"
+msgid_plural "Selected items have been deleted"
+msgstr[0] "Выделенный элемент был удалён"
+msgstr[1] "Выделенные элементы были удалены"
+msgstr[2] "Выделенные элементы были удалены"
+
+#: ../src/notifications.js:57
+msgid "Undo"
+msgstr "Отменить"
+
+#: ../src/notifications.js:157
+#, javascript-format
+msgid "Printing “%s”: %s"
+msgstr "Печать «%s»: %s"
+
+#: ../src/notifications.js:213
+msgid "Your documents are being indexed"
+msgstr "Документы проиндексированы"
+
+#: ../src/notifications.js:214
+msgid "Some documents might not be available during this process"
+msgstr "Некоторые документы могут быть недоступны во время данного процесса"
+
+#: ../src/notifications.js:236
+#, javascript-format
+msgid "Fetching documents from %s"
+msgstr "Получение документов из %s"
+
+#: ../src/notifications.js:238
+msgid "Fetching documents from online accounts"
+msgstr "Получение документов из сетевых учётных записей"
+
+#: ../src/password.js:46
+msgid "Password Required"
+msgstr "Требуется пароль"
+
+#: ../src/password.js:49
+msgid "_Unlock"
+msgstr "_Разблокировать"
+
+#: ../src/password.js:65
+#, javascript-format
+msgid "Document %s is locked and requires a password to be opened."
+msgstr "Документ %s заблокирован, чтобы его открыть нужен пароль."
+
+#: ../src/password.js:79
+msgid "_Password"
+msgstr "_Пароль"
+
+#: ../src/presentation.js:104
+msgid "Running in presentation mode"
+msgstr "Запуск в режиме презентации"
+
+#: ../src/presentation.js:157
+msgid "Present On"
+msgstr "Презентация"
+
+#: ../src/preview.js:588
+msgid "Bookmark this page"
+msgstr "Добавить в закладки эту страницу"
+
+#: ../src/preview.js:823 ../src/selections.js:857
+#, javascript-format
+msgid "Open with %s"
+msgstr "Открыть с помощью %s"
+
+#: ../src/preview.js:885
+msgid "Find Previous"
+msgstr "Найти предыдущее"
+
+#: ../src/preview.js:892
+msgid "Find Next"
+msgstr "Найти следующее"
+
+#: ../src/properties.js:61 ../src/resources/preview-menu.ui.h:9
+#: ../src/selections.js:767
+msgid "Properties"
+msgstr "Свойства"
+
+#: ../src/properties.js:81
+msgctxt "Document Title"
+msgid "Title"
+msgstr "Заголовок"
+
+#: ../src/properties.js:90
+msgctxt "Document Author"
+msgid "Author"
+msgstr "Автор"
+
+#: ../src/properties.js:97
+msgid "Source"
+msgstr "Источник"
+
+#: ../src/properties.js:103
+msgid "Date Modified"
+msgstr "Дата последнего изменения"
+
+#: ../src/properties.js:110
+msgid "Date Created"
+msgstr "Дата создания"
+
+#: ../src/properties.js:119
+msgctxt "Document Type"
+msgid "Type"
+msgstr "Тип"
+
+#: ../src/resources/app-menu.ui.h:1
+msgid "Fullscreen"
+msgstr "На полный экран"
+
+#: ../src/resources/app-menu.ui.h:2
+msgid "Help"
+msgstr "Справка"
+
+#: ../src/resources/app-menu.ui.h:3
+msgid "About"
+msgstr "О приложении"
+
+#: ../src/resources/app-menu.ui.h:4
+msgid "Quit"
+msgstr "Закончить"
+
+#: ../src/resources/preview-context-menu.ui.h:1
+msgid "_Copy"
+msgstr "_Копировать"
+
+#: ../src/resources/preview-menu.ui.h:1 ../src/selections.js:747
+#: ../src/selections.js:860
+msgid "Open"
+msgstr "Открыть"
+
+#: ../src/resources/preview-menu.ui.h:2
+msgid "Edit"
+msgstr "Правка"
+
+#: ../src/resources/preview-menu.ui.h:3
+msgid "Print…"
+msgstr "Печать…"
+
+#: ../src/resources/preview-menu.ui.h:4
+msgid "Present"
+msgstr "Презентация"
+
+#: ../src/resources/preview-menu.ui.h:5
+msgid "Zoom In"
+msgstr "Увеличить"
+
+#: ../src/resources/preview-menu.ui.h:6
+msgid "Zoom Out"
+msgstr "Уменьшить"
+
+#: ../src/resources/preview-menu.ui.h:7
+msgid "Rotate ↶"
+msgstr "Повернуть ↶"
+
+#: ../src/resources/preview-menu.ui.h:8
+msgid "Rotate ↷"
+msgstr "Повернуть ↷"
+
+#: ../src/resources/selection-menu.ui.h:1
+msgid "Select All"
+msgstr "Выбрать все"
+
+#: ../src/resources/selection-menu.ui.h:2
+msgid "Select None"
+msgstr "Отменить выбор"
+
+#: ../src/search.js:114
+msgid "Category"
+msgstr "Категория"
+
+#: ../src/search.js:119 ../src/search.js:180 ../src/search.js:265
+#: ../src/search.js:421
+msgid "All"
+msgstr "Все"
+
+#: ../src/search.js:125
+msgid "Favorites"
+msgstr "Избранное"
+
+#: ../src/search.js:130
+msgid "Shared with you"
+msgstr "В открытом для вас доступе"
+
+#: ../src/search.js:177
+msgctxt "Search Filter"
+msgid "Type"
+msgstr "Тип"
+
+#: ../src/search.js:182
+msgid "Collections"
+msgstr "Коллекции"
+
+#: ../src/search.js:186
+msgid "PDF Documents"
+msgstr "Документы PDF"
+
+#: ../src/search.js:190
+msgid "Presentations"
+msgstr "Презентации"
+
+#: ../src/search.js:193
+msgid "Spreadsheets"
+msgstr "Таблицы"
+
+#: ../src/search.js:196
+msgid "Text Documents"
+msgstr "Текстовые документы"
+
+#: ../src/search.js:262
+msgid "Match"
+msgstr "Совпадение"
+
+#: ../src/search.js:268
+msgctxt "Search Filter"
+msgid "Title"
+msgstr "Заголовок"
+
+#: ../src/search.js:271
+msgctxt "Search Filter"
+msgid "Author"
+msgstr "Автор"
+
+#: ../src/search.js:417
+msgid "Sources"
+msgstr "Источники"
+
+#: ../src/selections.js:461
+msgid "You don't have any collections yet. Enter a new collection name above."
+msgstr "Пока ещё нет ни одной коллекции. Введите имя новой коллекции выше."
+
+#: ../src/selections.js:604
+msgid "Create new collection"
+msgstr "Создать новую коллекцию"
+
+#: ../src/selections.js:640
+msgctxt "Dialog Title"
+msgid "Collections"
+msgstr "Коллекции"
+
+#: ../src/selections.js:752
+msgid "Print"
+msgstr "Печать"
+
+#: ../src/selections.js:757
+msgid "Delete"
+msgstr "Удалить"
+
+#: ../src/selections.js:762
+msgid "Share"
+msgstr "Общий доступ"
+
+#: ../src/selections.js:772
+msgid "Add to Collection"
+msgstr "Добавить в коллекцию"
+
+#: ../src/sharing.js:98
+msgid "Sharing Settings"
+msgstr "Параметры общего доступа"
+
+#: ../src/sharing.js:102
+msgid "Done"
+msgstr "Выполнено"
+
+#: ../src/sharing.js:135
+msgid "Document permissions"
+msgstr "Права доступа к документам"
+
+#: ../src/sharing.js:142 ../src/sharing.js:320
+msgid "Change"
+msgstr "Изменение"
+
+#: ../src/sharing.js:166 ../src/sharing.js:295
+msgid "Private"
+msgstr "Личное"
+
+#: ../src/sharing.js:176 ../src/sharing.js:288
+msgid "Public"
+msgstr "Публичное"
+
+#: ../src/sharing.js:180 ../src/sharing.js:290
+msgid "Everyone can edit"
+msgstr "Все могут изменять"
+
+#: ../src/sharing.js:187
+msgid "Add people"
+msgstr "Добавить человека"
+
+#: ../src/sharing.js:194
+msgid "Enter an email address"
+msgstr "Введите адрес эл. почты"
+
+#: ../src/sharing.js:209 ../src/sharing.js:376
+msgid "Can edit"
+msgstr "Может изменять"
+
+#: ../src/sharing.js:209 ../src/sharing.js:379
+msgid "Can view"
+msgstr "Может просматривать"
+
+#: ../src/sharing.js:216
+msgid "Add"
+msgstr "Добавить"
+
+#: ../src/sharing.js:292
+msgid "Everyone can read"
+msgstr "Все могут читать"
+
+#: ../src/sharing.js:307
+msgid "Save"
+msgstr "Сохранить"
+
+#: ../src/sharing.js:373
+msgid "Owner"
+msgstr "Владелец"
+
+#: ../src/sharing.js:442
+#, javascript-format
+msgid "You can ask %s for access"
+msgstr "Можно попросить %s для получения доступа"
+
+#: ../src/sharing.js:479 ../src/sharing.js:515 ../src/sharing.js:572
+#: ../src/sharing.js:589 ../src/sharing.js:608
+msgid "The document was not updated"
+msgstr "Документ не был обновлён"
+
+#: ../src/shellSearchProvider.js:294
+msgid "Untitled Document"
+msgstr "Безымянный документ"
+
+#: ../src/trackerController.js:170
+msgid "Unable to fetch the list of documents"
+msgstr "Не удалось получить список документов"
+
+#: ../src/view.js:62 ../src/view.js:93
+msgid "Load More"
+msgstr "Загрузить ещё"
+
+#: ../src/view.js:307
+msgid "Yesterday"
+msgstr "Вчера"
+
+#: ../src/view.js:309
+#, javascript-format
+msgid "%d day ago"
+msgid_plural "%d days ago"
+msgstr[0] "%d день назад"
+msgstr[1] "%d дня назад"
+msgstr[2] "%d дней назад"
+
+#: ../src/view.js:313
+msgid "Last week"
+msgstr "На прошлой неделе"
+
+#: ../src/view.js:315
+#, javascript-format
+msgid "%d week ago"
+msgid_plural "%d weeks ago"
+msgstr[0] "%d неделя назад"
+msgstr[1] "%d недели назад"
+msgstr[2] "%d недель назад"
+
+#: ../src/view.js:319
+msgid "Last month"
+msgstr "В прошлом месяце"
+
+#: ../src/view.js:321
+#, javascript-format
+msgid "%d month ago"
+msgid_plural "%d months ago"
+msgstr[0] "%d месяц назад"
+msgstr[1] "%d месяца назад"
+msgstr[2] "%d месяцев назад"
+
+#: ../src/view.js:325
+msgid "Last year"
+msgstr "В прошлом году"
+
+#: ../src/view.js:327
+#, javascript-format
+msgid "%d year ago"
+msgid_plural "%d years ago"
+msgstr[0] "%d год назад"
+msgstr[1] "%d года назад"
+msgstr[2] "%d лет назад"

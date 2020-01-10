@@ -1,0 +1,752 @@
+# Slovak translation for gnome-documents.
+# Copyright (C) 2011-2013 Free Software Foundation, Inc.
+# This file is distributed under the same license as the gnome-documents package.
+# Stanislav Petrek <stanislav.petrek@gmail.com>, 2011.
+# Dušan Kazik <prescott66@gmail.com>, 2012, 2013.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: gnome-documents\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
+"documents&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2014-09-10 06:49+0000\n"
+"PO-Revision-Date: 2014-09-10 16:30+0100\n"
+"Last-Translator: Dušan Kazik <prescott66@gmail.com>\n"
+"Language-Team: Slovak <gnome-sk-list@gnome.org>\n"
+"Language: sk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 1 : (n>=2 && n<=4) ? 2 : 0;\n"
+"X-Generator: Poedit 1.5.4\n"
+
+# desktop entry name
+#: ../data/org.gnome.Documents.appdata.xml.in.h:1
+#: ../data/org.gnome.Documents.desktop.in.h:1 ../src/application.js:121
+#: ../src/mainWindow.js:52 ../src/mainWindow.js:302
+msgid "Documents"
+msgstr "Dokumenty"
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:2
+msgid "A document manager application for GNOME"
+msgstr "Aplikácia prostredia GNOME na správu dokumentov"
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:3
+msgid ""
+"A simple application to access, organize and share your documents on GNOME. "
+"It is meant to be a simple and elegant replacement for using a file manager "
+"to deal with documents. Seamless cloud integration is offered through GNOME "
+"Online Accounts."
+msgstr ""
+"Jednoduchá aplikácia prostredia GNOME na prístup k vašim dokumentom, ich "
+"organizáciu a zdieľanie. Mala by byť jednoduchou a pohodlnou náhradou "
+"pôvodného prehliadania dokumentov za pomoci správcu súborov. Prepojenie s "
+"cloudom je zabezpečené pomocou Účtov služieb prostredia GNOME (GOA)."
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:4
+msgid "It lets you:"
+msgstr "Umožňuje vám:"
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:5
+msgid "View recent local and online documents"
+msgstr "Prehliadať nedávne miestne a vzdialené dokumenty"
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:6
+msgid "Access your Google, ownCloud or OneDrive content"
+msgstr "Pristupovať k obsahu na službách Google, ownCloud alebo OneDrive"
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:7
+msgid "Search through documents"
+msgstr "Vyhľadávať v dokumentoch"
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:8
+msgid "See new documents shared by friends"
+msgstr "Prezerať nové dokumenty sprístupnené priateľmi"
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:9
+msgid "View documents fullscreen"
+msgstr "Prehliadať dokumenty v režime na celú obrazovku"
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:10
+#| msgid "PDF Documents"
+msgid "Print documents"
+msgstr "Tlačiť dokumenty"
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:11
+#| msgid "Select Items"
+msgid "Select favorites"
+msgstr "Vybrať obľúbené dokumenty"
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:12
+msgid "Allow opening full featured editor for non-trivial changes"
+msgstr "Otvoriť plne funkčný editor pre zložitejšie úpravy"
+
+# desktop entry comment
+#: ../data/org.gnome.Documents.desktop.in.h:2
+msgid "Access, manage and share documents"
+msgstr "Pristupovať, spravovať a sprístupňovať dokumenty"
+
+# nie som si isty ci su pod "Docs" myslene "Dokumenty" (kvoli kratsej fraze)
+# PM: sú ale pre dohľadanie to veľký význam nemá teda uvádzať Dokument keď sú uvedené Dokumenty
+# desktop entry keywords
+#: ../data/org.gnome.Documents.desktop.in.h:3
+msgid "Docs;PDF;Document;"
+msgstr "Dokumenty;PDF;Dokument;"
+
+# gsettings summary; menu item
+#: ../data/org.gnome.documents.gschema.xml.h:1
+msgid "View as"
+msgstr "Zobraziť ako"
+
+# gsettings description
+#: ../data/org.gnome.documents.gschema.xml.h:2
+msgid "View as type"
+msgstr "Typ zobrazenia"
+
+# gsettings summary
+#: ../data/org.gnome.documents.gschema.xml.h:3
+msgid "Window size"
+msgstr "Veľkosť okna"
+
+# gsettings description
+#: ../data/org.gnome.documents.gschema.xml.h:4
+msgid "Window size (width and height)."
+msgstr "Rozmery okna (šírka a výška)."
+
+# gsettings summary
+#: ../data/org.gnome.documents.gschema.xml.h:5
+msgid "Window position"
+msgstr "Poloha okna"
+
+# gsettings description
+#: ../data/org.gnome.documents.gschema.xml.h:6
+msgid "Window position (x and y)."
+msgstr "Súradnice polohy okna (x a y)."
+
+# gsettings summary
+#: ../data/org.gnome.documents.gschema.xml.h:7
+msgid "Window maximized"
+msgstr "Maximalizované okno"
+
+# gsettings description
+#: ../data/org.gnome.documents.gschema.xml.h:8
+msgid "Window maximized state"
+msgstr "Maximalizovaný stav okna"
+
+#: ../src/documents.js:621
+#| msgid "Unable to load the document"
+msgid "Failed to print document"
+msgstr "Zlyhala tlač dokumentu"
+
+# https://bugzilla.gnome.org/show_bug.cgi?id=696217
+#: ../src/documents.js:658 ../src/search.js:427
+msgid "Local"
+msgstr "Lokálne"
+
+# https://bugzilla.gnome.org/show_bug.cgi?id=696217
+# DK:reprezentuje autora navodu pre Dokumenty.cize ostava tak ako je
+#: ../src/documents.js:679
+msgid "GNOME"
+msgstr "GNOME"
+
+#: ../src/documents.js:680
+msgid "Getting Started with Documents"
+msgstr "Začíname s aplikáciou Dokumenty"
+
+#: ../src/documents.js:696 ../src/documents.js:877 ../src/documents.js:939
+#: ../src/documents.js:1047
+msgid "Collection"
+msgstr "Zbierka"
+
+# PM: toto je preklad služby na stránkach Google
+#: ../src/documents.js:756
+msgid "Google Docs"
+msgstr "Dokumenty Google"
+
+#: ../src/documents.js:757
+msgid "Google"
+msgstr "Google"
+
+#: ../src/documents.js:879 ../src/documents.js:1049
+msgid "Spreadsheet"
+msgstr "Tabuľkový zošit"
+
+#: ../src/documents.js:881 ../src/documents.js:1051 ../src/presentation.js:47
+msgid "Presentation"
+msgstr "Prezentácia"
+
+#: ../src/documents.js:883 ../src/documents.js:1053
+msgid "Document"
+msgstr "Dokument"
+
+# MČ: ownCloud je názov služby (programu), pomocou ktorého si môžete urobiť vlastný mráčik
+#: ../src/documents.js:917
+msgid "ownCloud"
+msgstr "ownCloud"
+
+#: ../src/documents.js:981 ../src/documents.js:982
+msgid "OneDrive"
+msgstr "OneDrive"
+
+#: ../src/documents.js:1181
+msgid "Please check the network connection."
+msgstr "Skontrolujte, prosím, sieťové pripojenie."
+
+#: ../src/documents.js:1184
+msgid "Please check the network proxy settings."
+msgstr "Skontrolujte prosím nastavenia sieťového sprostredkovateľa (proxy)."
+
+#: ../src/documents.js:1187
+msgid "Unable to sign in to the document service."
+msgstr "Nepodarilo sa prihlásiť k službe dokumentov."
+
+#: ../src/documents.js:1190
+msgid "Unable to locate this document."
+msgstr "Nepodarilo sa nájsť tento dokument."
+
+#: ../src/documents.js:1193
+#, javascript-format
+msgid "Hmm, something is fishy (%d)."
+msgstr "Zdá sa, že niekde nastal problém (%d)."
+
+#: ../src/documents.js:1211
+#, javascript-format
+msgid "Oops! Unable to load “%s”"
+msgstr "Ale nie! Nepodarilo sa načítať dokument „%s“"
+
+# button
+#: ../src/edit.js:192
+msgid "View"
+msgstr "Zobraziť"
+
+#: ../src/embed.js:142
+msgid "No Documents Found"
+msgstr "Neboli nájdené žiadne dokumenty"
+
+#: ../src/embed.js:163
+#, javascript-format
+msgid "You can add your online accounts in %s"
+msgstr "Vaše účty služieb môžete pridať v %s"
+
+# gramaticky apeluje na predoslu frazu "Mozete pridat Vase online ucty v %s"
+#: ../src/embed.js:167
+#| msgid "System Settings"
+msgid "Settings"
+msgstr "Nastaveniach"
+
+#: ../src/lib/gd-nav-bar.c:242
+#, c-format
+msgid "Page %u of %u"
+msgstr "%u. strana z %u"
+
+#: ../src/lib/gd-pdf-loader.c:247
+msgid "Unable to load the document"
+msgstr "Nepodarilo sa načítať dokument"
+
+#: ../src/lib/gd-pdf-loader.c:715
+msgid "LibreOffice is required to view this document"
+msgstr "Na zobrazenie tohoto dokumentu je potrebná aplikácia LibreOffice"
+
+# https://bugzilla.gnome.org/show_bug.cgi?id=696217
+#. Translators: %s is the number of the page, already formatted
+#. * as a string, for example "Page 5".
+#.
+#: ../src/lib/gd-places-bookmarks.c:315
+#, c-format
+msgid "Page %s"
+msgstr "Strana č. %s"
+
+# list store item
+#: ../src/lib/gd-places-bookmarks.c:378
+msgid "No bookmarks"
+msgstr "Žiadne záložky"
+
+#: ../src/lib/gd-places-bookmarks.c:386 ../src/lib/gd-places-links.c:257
+#: ../src/view.js:71
+msgid "Loading…"
+msgstr "Načítava sa…"
+
+#: ../src/lib/gd-places-bookmarks.c:651 ../src/preview.js:580
+msgid "Bookmarks"
+msgstr "Záložky"
+
+# list store item
+#: ../src/lib/gd-places-links.c:342
+msgid "No table of contents"
+msgstr "Žiadny obsah"
+
+#: ../src/lib/gd-places-links.c:518
+msgid "Contents"
+msgstr "Obsah"
+
+# tooltip
+#: ../src/mainToolbar.js:79
+msgid "Search"
+msgstr "Vyhľadá"
+
+#: ../src/mainToolbar.js:87
+msgid "Back"
+msgstr "Späť"
+
+# tooltip
+#: ../src/mainToolbar.js:132
+msgid "View items as a list"
+msgstr "Zobrazí položky ako zoznam"
+
+# tooltip
+#: ../src/mainToolbar.js:138
+msgid "View items as a grid of icons"
+msgstr "Zobrazí položky ako mriežku ikon"
+
+#: ../src/mainToolbar.js:168
+msgid "Click on items to select them"
+msgstr "Kliknutím na položky ich vyberiete"
+
+#: ../src/mainToolbar.js:170
+#, javascript-format
+msgid "%d selected"
+msgid_plural "%d selected"
+msgstr[0] "%d vybraných"
+msgstr[1] "%d vybraná"
+msgstr[2] "%d vybrané"
+
+#: ../src/mainToolbar.js:200
+msgid "Cancel"
+msgstr "Zrušiť"
+
+# DK: je to tooltip.prelozene na 100% spravne-overene
+#: ../src/mainToolbar.js:242
+msgid "Select Items"
+msgstr "Umožní výber položiek"
+
+#: ../src/mainWindow.js:301
+msgid "translator-credits"
+msgstr "Dušan Kazik <prescott66@gmail.com>"
+
+#: ../src/mainWindow.js:303
+msgid "A document manager application"
+msgstr "Aplikácia na správu dokumentov"
+
+#: ../src/notifications.js:50
+msgid "Selected item has been deleted"
+msgid_plural "Selected items have been deleted"
+msgstr[0] "Vybraté položky boli odstránené"
+msgstr[1] "Vybratá položka bola odstránená"
+msgstr[2] "Vybraté položky boli odstránené"
+
+#: ../src/notifications.js:57
+msgid "Undo"
+msgstr "Vrátiť späť"
+
+#: ../src/notifications.js:157
+#, javascript-format
+msgid "Printing “%s”: %s"
+msgstr "Tlačí sa „%s“: %s"
+
+#: ../src/notifications.js:213
+msgid "Your documents are being indexed"
+msgstr "Vaše dokumenty sa práve indexujú"
+
+#: ../src/notifications.js:214
+msgid "Some documents might not be available during this process"
+msgstr "Niektoré dokumenty nemusia byť počas tohto procesu dostupné"
+
+# DK:https://bugzilla.gnome.org/show_bug.cgi?id=695555
+#: ../src/notifications.js:236
+#, javascript-format
+msgid "Fetching documents from %s"
+msgstr "Získavajú sa dokumenty zo služby %s"
+
+#: ../src/notifications.js:238
+msgid "Fetching documents from online accounts"
+msgstr "Získavajú sa dokumenty z účtov služieb"
+
+# dialog title
+#: ../src/password.js:46
+msgid "Password Required"
+msgstr "Požiadavka na zadanie hesla"
+
+# button
+#: ../src/password.js:49
+msgid "_Unlock"
+msgstr "_Odomknúť"
+
+#: ../src/password.js:65
+#, javascript-format
+msgid "Document %s is locked and requires a password to be opened."
+msgstr "Dokument %s je zamknutý a na otvorenie vyžaduje heslo."
+
+#: ../src/password.js:79
+msgid "_Password"
+msgstr "_Heslo"
+
+# správa pre potlačenie
+#: ../src/presentation.js:104
+msgid "Running in presentation mode"
+msgstr "Spustené v režime prezentácie"
+
+# GtkDialog title
+#: ../src/presentation.js:157
+msgid "Present On"
+msgstr "Prezentácia"
+
+# toggleButton tooltip
+#: ../src/preview.js:588
+msgid "Bookmark this page"
+msgstr "Pridá túto stranu do záložiek"
+
+#: ../src/preview.js:823 ../src/selections.js:857
+#, javascript-format
+msgid "Open with %s"
+msgstr "Otvoriť pomocou %s"
+
+# MČ: ako som správne pochopil, tak sa jedná o „nájde predchádzajúcu aplikáciu“ je to tak? Len mi nie je jasné čo to má s dokumentami.
+# tooltip
+#: ../src/preview.js:885
+msgid "Find Previous"
+msgstr "Nájde predchádzajúcu"
+
+# tooltip
+#: ../src/preview.js:892
+msgid "Find Next"
+msgstr "Nájde ďalšiu"
+
+#: ../src/properties.js:61 ../src/resources/preview-menu.ui.h:9
+#: ../src/selections.js:767
+msgid "Properties"
+msgstr "Vlastnosti"
+
+#: ../src/properties.js:81
+msgctxt "Document Title"
+msgid "Title"
+msgstr "Názov"
+
+#: ../src/properties.js:90
+msgctxt "Document Author"
+msgid "Author"
+msgstr "Autor"
+
+#: ../src/properties.js:97
+msgid "Source"
+msgstr "Zdroj"
+
+#: ../src/properties.js:103
+msgid "Date Modified"
+msgstr "Dátum zmeny"
+
+#: ../src/properties.js:110
+msgid "Date Created"
+msgstr "Dátum vytvorenia"
+
+#: ../src/properties.js:119
+msgctxt "Document Type"
+msgid "Type"
+msgstr "Typ"
+
+#: ../src/resources/app-menu.ui.h:1
+msgid "Fullscreen"
+msgstr "Režim na celú obrazovku"
+
+#: ../src/resources/app-menu.ui.h:2
+msgid "Help"
+msgstr "Pomocník"
+
+#: ../src/resources/app-menu.ui.h:3
+msgid "About"
+msgstr "O programe"
+
+#: ../src/resources/app-menu.ui.h:4
+msgid "Quit"
+msgstr "Ukončiť"
+
+#: ../src/resources/preview-context-menu.ui.h:1
+msgid "_Copy"
+msgstr "_Kopírovať"
+
+#: ../src/resources/preview-menu.ui.h:1 ../src/selections.js:747
+#: ../src/selections.js:860
+msgid "Open"
+msgstr "Otvoriť"
+
+#: ../src/resources/preview-menu.ui.h:2
+msgid "Edit"
+msgstr "Upraviť"
+
+#: ../src/resources/preview-menu.ui.h:3
+msgid "Print…"
+msgstr "Tlačiť…"
+
+#: ../src/resources/preview-menu.ui.h:4
+msgid "Present"
+msgstr "Prezentovať"
+
+#: ../src/resources/preview-menu.ui.h:5
+msgid "Zoom In"
+msgstr "Zväčšiť"
+
+#: ../src/resources/preview-menu.ui.h:6
+msgid "Zoom Out"
+msgstr "Zmenšiť"
+
+#: ../src/resources/preview-menu.ui.h:7
+msgid "Rotate ↶"
+msgstr "Otočiť ↶"
+
+#: ../src/resources/preview-menu.ui.h:8
+msgid "Rotate ↷"
+msgstr "Otočiť ↷"
+
+#: ../src/resources/selection-menu.ui.h:1
+msgid "Select All"
+msgstr "Vybrať všetko"
+
+#: ../src/resources/selection-menu.ui.h:2
+msgid "Select None"
+msgstr "Zrušiť výber"
+
+#: ../src/search.js:114
+msgid "Category"
+msgstr "Kategória"
+
+# https://bugzilla.gnome.org/show_bug.cgi?id=696217
+#: ../src/search.js:119 ../src/search.js:180 ../src/search.js:265
+#: ../src/search.js:421
+msgid "All"
+msgstr "Všetky"
+
+#: ../src/search.js:125
+msgid "Favorites"
+msgstr "Obľúbené"
+
+#: ../src/search.js:130
+msgid "Shared with you"
+msgstr "Vám sprístupnené"
+
+#: ../src/search.js:177
+msgctxt "Search Filter"
+msgid "Type"
+msgstr "Typ"
+
+#: ../src/search.js:182
+msgid "Collections"
+msgstr "Zbierky"
+
+#: ../src/search.js:186
+msgid "PDF Documents"
+msgstr "Dokumenty PDF"
+
+#: ../src/search.js:190
+msgid "Presentations"
+msgstr "Prezentácie"
+
+#: ../src/search.js:193
+msgid "Spreadsheets"
+msgstr "Tabuľkové zošity"
+
+#: ../src/search.js:196
+msgid "Text Documents"
+msgstr "Textové dokumenty"
+
+#: ../src/search.js:262
+msgid "Match"
+msgstr "Hľadať podľa"
+
+#: ../src/search.js:268
+msgctxt "Search Filter"
+msgid "Title"
+msgstr "Názvu"
+
+#: ../src/search.js:271
+msgctxt "Search Filter"
+msgid "Author"
+msgstr "Autora"
+
+#: ../src/search.js:417
+msgid "Sources"
+msgstr "Zdroje"
+
+#: ../src/selections.js:461
+msgid "You don't have any collections yet. Enter a new collection name above."
+msgstr "Zatiaľ nemáte žiadne zbierky. Vyššie zadajte názov pre novú zbierku."
+
+#: ../src/selections.js:604
+msgid "Create new collection"
+msgstr "Vytvoriť novú zbierku"
+
+#: ../src/selections.js:640
+msgctxt "Dialog Title"
+msgid "Collections"
+msgstr "Zbierky"
+
+# button tooltip
+#: ../src/selections.js:752
+msgid "Print"
+msgstr "Uskutoční tlač"
+
+# button tooltip
+#: ../src/selections.js:757
+msgid "Delete"
+msgstr "Uskutoční odstránenie"
+
+# button tooltip
+#: ../src/selections.js:762
+msgid "Share"
+msgstr "Sprístupní"
+
+#: ../src/selections.js:772
+msgid "Add to Collection"
+msgstr "Pridať do zbierky"
+
+# dialog title
+#: ../src/sharing.js:98
+msgid "Sharing Settings"
+msgstr "Nastavenia sprístupnenia"
+
+#: ../src/sharing.js:102
+msgid "Done"
+msgstr "Hotovo"
+
+#: ../src/sharing.js:135
+msgid "Document permissions"
+msgstr "Oprávnenia k dokumentu"
+
+# button label
+#: ../src/sharing.js:142 ../src/sharing.js:320
+msgid "Change"
+msgstr "Zmeniť"
+
+# RadioButton
+#: ../src/sharing.js:166 ../src/sharing.js:295
+msgid "Private"
+msgstr "Súkromný"
+
+# RadioButton
+#: ../src/sharing.js:176 ../src/sharing.js:288
+msgid "Public"
+msgstr "Verejný"
+
+#: ../src/sharing.js:180 ../src/sharing.js:290
+msgid "Everyone can edit"
+msgstr "Upravovať môže ktokoľvek"
+
+#: ../src/sharing.js:187
+msgid "Add people"
+msgstr "Pridajte ľudí"
+
+#: ../src/sharing.js:194
+msgid "Enter an email address"
+msgstr "Zadajte emailovú adresu"
+
+# role
+#: ../src/sharing.js:209 ../src/sharing.js:376
+msgid "Can edit"
+msgstr "Môže upravovať"
+
+# role
+#: ../src/sharing.js:209 ../src/sharing.js:379
+msgid "Can view"
+msgstr "Môže prezerať"
+
+# button label
+#: ../src/sharing.js:216
+msgid "Add"
+msgstr "Pridať"
+
+#: ../src/sharing.js:292
+msgid "Everyone can read"
+msgstr "Čítať môže ktokoľvek"
+
+# button label
+#: ../src/sharing.js:307
+msgid "Save"
+msgstr "Uložiť"
+
+# role
+#: ../src/sharing.js:373
+msgid "Owner"
+msgstr "Vlastník"
+
+# %s je identifikator pouzivatela
+#: ../src/sharing.js:442
+#, javascript-format
+msgid "You can ask %s for access"
+msgstr "Prístup si môžete vyžiadať od používateľa %s"
+
+#: ../src/sharing.js:479 ../src/sharing.js:515 ../src/sharing.js:572
+#: ../src/sharing.js:589 ../src/sharing.js:608
+msgid "The document was not updated"
+msgstr "Dokument nebol aktualizovaný"
+
+#: ../src/shellSearchProvider.js:294
+msgid "Untitled Document"
+msgstr "Nepomenovaný dokument"
+
+#: ../src/trackerController.js:170
+msgid "Unable to fetch the list of documents"
+msgstr "Nepodarilo sa získať zoznam dokumentov."
+
+#: ../src/view.js:62 ../src/view.js:93
+msgid "Load More"
+msgstr "Načítať viac"
+
+#: ../src/view.js:307
+msgid "Yesterday"
+msgstr "Včera"
+
+#: ../src/view.js:309
+#, javascript-format
+msgid "%d day ago"
+msgid_plural "%d days ago"
+msgstr[0] "Pred %d dňami"
+msgstr[1] "Pred %d dňom"
+msgstr[2] "Pred %d dňami"
+
+#: ../src/view.js:313
+msgid "Last week"
+msgstr "Minulý týždeň"
+
+#: ../src/view.js:315
+#, javascript-format
+msgid "%d week ago"
+msgid_plural "%d weeks ago"
+msgstr[0] "Pred %d týždňami"
+msgstr[1] "Pred %d týždňom"
+msgstr[2] "Pred %d týždňami"
+
+#: ../src/view.js:319
+msgid "Last month"
+msgstr "Minulý mesiac"
+
+#: ../src/view.js:321
+#, javascript-format
+msgid "%d month ago"
+msgid_plural "%d months ago"
+msgstr[0] "Pred %d mesiacmi"
+msgstr[1] "Pred %d mesiacom"
+msgstr[2] "Pred %d mesiacmi"
+
+#: ../src/view.js:325
+msgid "Last year"
+msgstr "Minulý rok"
+
+#: ../src/view.js:327
+#, javascript-format
+msgid "%d year ago"
+msgid_plural "%d years ago"
+msgstr[0] "Pred %d rokmi"
+msgstr[1] "Pred %d rokom"
+msgstr[2] "Pred %d rokmi"
+
+#~ msgid ""
+#~ "<li>View recent local and online documents</li> <li>Access your Google, "
+#~ "ownCloud or SkyDrive content</li> <li>Search through documents</li> "
+#~ "<li>See new documents shared by friends</li> <li>View documents "
+#~ "fullscreen</li> <li>Print documents</li> <li>Select favorites</li> "
+#~ "<li>Allow opening full featured editor for non-trivial changes</li>"
+#~ msgstr ""
+#~ "<li>Prezerať nedávne miestne a online dokumenty</li> <li>Prístup k vášmu "
+#~ "obsahu na službách Google, ownCloud alebo SkyDrive</li> <li>Vyhľadávať v "
+#~ "dokumentoch</li> <li>Vidieť nové dokumenty zdieľané vašimi priateľmi</li> "
+#~ "<li>Prezerať dokumenty na celú obrazovku</li> <li>Tlačiť dokumenty</li> "
+#~ "<li>Vybrať obľúbené dokumenty</li> <li>>Povoliť otvorenie vo vyspelom "
+#~ "editore, ktorý umožňuje pokročilejšie úpravy</li>"

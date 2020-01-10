@@ -1,0 +1,676 @@
+# Indonesian translation for gnome-documents.
+# Copyright (C) 2011 gnome-documents's COPYRIGHT HOLDER
+# This file is distributed under the same license as the gnome-documents package.
+#
+# Andika Triwidada <andika@gmail.com>, 2011, 2012, 2013, 2014.
+# Dirgita <dirgitadevina@yahoo.co.id>, 2012.
+msgid ""
+msgstr ""
+"Project-Id-Version: gnome-documents master\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
+"documents&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2014-09-02 06:51+0000\n"
+"PO-Revision-Date: 2014-09-03 09:59+0700\n"
+"Last-Translator: Andika Triwidada <andika@gmail.com>\n"
+"Language-Team: Indonesian <gnome@i15n.org>\n"
+"Language: id\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Poedit 1.6.9\n"
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:1
+#: ../data/org.gnome.Documents.desktop.in.h:1 ../src/application.js:121
+#: ../src/mainWindow.js:52 ../src/mainWindow.js:302
+msgid "Documents"
+msgstr "Dokumen"
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:2
+msgid "A document manager application for GNOME"
+msgstr "Aplikasi manajer dokumen bagi GNOME"
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:3
+msgid ""
+"A simple application to access, organize and share your documents on GNOME. "
+"It is meant to be a simple and elegant replacement for using a file manager "
+"to deal with documents. Seamless cloud integration is offered through GNOME "
+"Online Accounts."
+msgstr ""
+"Aplikasi sederhana untuk mengakses, menata, dan berbagi dokumen Anda pada "
+"GNOME. Ini dimaksudkan sebagai pengganti yang sederhana dan elegan dari "
+"manajer berkas untuk berurusan dengan dokumen. Integrasi dengan cloud yang "
+"mulus ditawarkan melalui Akun Daring GNOME."
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:4
+msgid "It lets you:"
+msgstr "Ini memungkinkan Anda:"
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:5
+msgid "View recent local and online documents"
+msgstr "Tilik dokumen baru-baru ini daring dan lokal"
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:6
+msgid "Access your Google, ownCloud or OneDrive content"
+msgstr "Akses isi Google, ownCloud, atau OneDrive Anda"
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:7
+msgid "Search through documents"
+msgstr "Mencari dalam dokumen"
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:8
+msgid "See new documents shared by friends"
+msgstr "Melihat dokumen baru yang dibagikan oleh teman-teman"
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:9
+msgid "View documents fullscreen"
+msgstr "Lihat dokumen dalam layar penuh"
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:10
+msgid "Print documents"
+msgstr "Cetak dokumen"
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:11
+msgid "Select favorites"
+msgstr "Pilih favorit"
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:12
+msgid "Allow opening full featured editor for non-trivial changes"
+msgstr ""
+"Memungkinkan membuka penyunting berfitur lengkap untuk perubahan-perubahan "
+"tak trivial"
+
+#: ../data/org.gnome.Documents.desktop.in.h:2
+msgid "Access, manage and share documents"
+msgstr "Akses, kelola, dan berbagi dokumen"
+
+#: ../data/org.gnome.Documents.desktop.in.h:3
+msgid "Docs;PDF;Document;"
+msgstr "Dok;PDF;Dokumen;"
+
+#: ../data/org.gnome.documents.gschema.xml.h:1
+msgid "View as"
+msgstr "Tilik sebagai"
+
+#: ../data/org.gnome.documents.gschema.xml.h:2
+msgid "View as type"
+msgstr "Tilik sebagai jenis"
+
+#: ../data/org.gnome.documents.gschema.xml.h:3
+msgid "Window size"
+msgstr "Ukuran jendela"
+
+#: ../data/org.gnome.documents.gschema.xml.h:4
+msgid "Window size (width and height)."
+msgstr "Ukuran jendela (lebar dan tinggi)."
+
+#: ../data/org.gnome.documents.gschema.xml.h:5
+msgid "Window position"
+msgstr "Posisi jendela"
+
+#: ../data/org.gnome.documents.gschema.xml.h:6
+msgid "Window position (x and y)."
+msgstr "Posisi jendela (x dan y)."
+
+#: ../data/org.gnome.documents.gschema.xml.h:7
+msgid "Window maximized"
+msgstr "Jendela dimaksimalkan"
+
+#: ../data/org.gnome.documents.gschema.xml.h:8
+msgid "Window maximized state"
+msgstr "Jendela dalam keadaan dimaksimalkan"
+
+#: ../src/documents.js:621
+msgid "Failed to print document"
+msgstr "Gagal mencetak dokumen"
+
+#: ../src/documents.js:658 ../src/search.js:427
+msgid "Local"
+msgstr "Lokal"
+
+#: ../src/documents.js:679
+msgid "GNOME"
+msgstr "GNOME"
+
+#: ../src/documents.js:680
+msgid "Getting Started with Documents"
+msgstr "Mulai Memakai Dokumen"
+
+#: ../src/documents.js:696 ../src/documents.js:877 ../src/documents.js:939
+#: ../src/documents.js:1047
+msgid "Collection"
+msgstr "Koleksi"
+
+#: ../src/documents.js:756
+msgid "Google Docs"
+msgstr "Google Docs"
+
+#: ../src/documents.js:757
+msgid "Google"
+msgstr "Google"
+
+#: ../src/documents.js:879 ../src/documents.js:1049
+msgid "Spreadsheet"
+msgstr "Spreadsheet"
+
+#: ../src/documents.js:881 ../src/documents.js:1051 ../src/presentation.js:47
+msgid "Presentation"
+msgstr "Presentasi"
+
+#: ../src/documents.js:883 ../src/documents.js:1053
+msgid "Document"
+msgstr "Dokumen"
+
+#: ../src/documents.js:917
+msgid "ownCloud"
+msgstr "ownCloud"
+
+#: ../src/documents.js:981 ../src/documents.js:982
+msgid "OneDrive"
+msgstr "OneDrive"
+
+#: ../src/documents.js:1181
+msgid "Please check the network connection."
+msgstr "Harap periksa sambungan jaringan."
+
+#: ../src/documents.js:1184
+msgid "Please check the network proxy settings."
+msgstr "Harap periksa pengaturan proksi jaringan."
+
+#: ../src/documents.js:1187
+msgid "Unable to sign in to the document service."
+msgstr "Tak bisa masuk ke layanan dokumen."
+
+#: ../src/documents.js:1190
+msgid "Unable to locate this document."
+msgstr "Tak bisa menemukan dokumen ini."
+
+#: ../src/documents.js:1193
+#, javascript-format
+msgid "Hmm, something is fishy (%d)."
+msgstr "Hm, ada sesuatu yang mencurigakan (%d)."
+
+#: ../src/documents.js:1211
+#, javascript-format
+msgid "Oops! Unable to load “%s”"
+msgstr "Ups! Tak bisa memuat \"%s\""
+
+#: ../src/edit.js:192
+msgid "View"
+msgstr "Tilik"
+
+#: ../src/embed.js:142
+msgid "No Documents Found"
+msgstr "Tidak Ada Dokumen"
+
+#: ../src/embed.js:163
+#, javascript-format
+msgid "You can add your online accounts in %s"
+msgstr "Anda dapat menambahkan Akun daring Anda dalam %s"
+
+#: ../src/embed.js:167
+msgid "Settings"
+msgstr "Pengaturan"
+
+#: ../src/lib/gd-nav-bar.c:242
+#, c-format
+msgid "Page %u of %u"
+msgstr "Halaman %u dari %u"
+
+#: ../src/lib/gd-pdf-loader.c:247
+msgid "Unable to load the document"
+msgstr "Tak bisa memuat dokumen"
+
+#: ../src/lib/gd-pdf-loader.c:715
+msgid "LibreOffice is required to view this document"
+msgstr "LibreOffice diperlukan untuk menilik dokumen ini"
+
+#. Translators: %s is the number of the page, already formatted
+#. * as a string, for example "Page 5".
+#.
+#: ../src/lib/gd-places-bookmarks.c:315
+#, c-format
+msgid "Page %s"
+msgstr "Halaman %s"
+
+#: ../src/lib/gd-places-bookmarks.c:378
+msgid "No bookmarks"
+msgstr "Tiada penanda taut"
+
+#: ../src/lib/gd-places-bookmarks.c:386 ../src/lib/gd-places-links.c:257
+#: ../src/view.js:71
+msgid "Loading…"
+msgstr "Memuat…"
+
+#: ../src/lib/gd-places-bookmarks.c:651 ../src/preview.js:580
+msgid "Bookmarks"
+msgstr "Penanda taut"
+
+#: ../src/lib/gd-places-links.c:342
+msgid "No table of contents"
+msgstr "Tiada daftar isi"
+
+#: ../src/lib/gd-places-links.c:518
+msgid "Contents"
+msgstr "Isi"
+
+#: ../src/mainToolbar.js:79
+msgid "Search"
+msgstr "Cari"
+
+#: ../src/mainToolbar.js:87
+msgid "Back"
+msgstr "Mundur"
+
+#: ../src/mainToolbar.js:132
+msgid "View items as a list"
+msgstr "Tilik butir sebagai daftar"
+
+#: ../src/mainToolbar.js:138
+msgid "View items as a grid of icons"
+msgstr "Tilik butir sebagai kisi ikon"
+
+#: ../src/mainToolbar.js:168
+msgid "Click on items to select them"
+msgstr "Klik pada butir untuk memilihnya"
+
+#: ../src/mainToolbar.js:170
+#, javascript-format
+msgid "%d selected"
+msgid_plural "%d selected"
+msgstr[0] "%d dipilih"
+
+#: ../src/mainToolbar.js:200
+msgid "Cancel"
+msgstr "Batal"
+
+#: ../src/mainToolbar.js:242
+msgid "Select Items"
+msgstr "Pilih Item"
+
+#: ../src/mainWindow.js:301
+msgid "translator-credits"
+msgstr ""
+"Andika Triwidada <andika@gmail.com>, 2011, 2012, 2013, 2014.\n"
+"Dirgita <dirgitadevina@yahoo.co.id>, 2012."
+
+#: ../src/mainWindow.js:303
+msgid "A document manager application"
+msgstr "Aplikasi manajer dokumen"
+
+#: ../src/notifications.js:50
+msgid "Selected item has been deleted"
+msgid_plural "Selected items have been deleted"
+msgstr[0] "Butir-butir yang dipilih telah dihapus"
+
+#: ../src/notifications.js:57
+msgid "Undo"
+msgstr "Tak Jadi"
+
+#: ../src/notifications.js:157
+#, javascript-format
+msgid "Printing “%s”: %s"
+msgstr "Mencetak \"%s\": %s"
+
+#: ../src/notifications.js:213
+msgid "Your documents are being indexed"
+msgstr "Dokumen milik Anda tengah diindeks"
+
+#: ../src/notifications.js:214
+msgid "Some documents might not be available during this process"
+msgstr "Sejumlah dokumen mungkin tak tersedia selama proses ini berlangsung"
+
+#: ../src/notifications.js:236
+#, javascript-format
+msgid "Fetching documents from %s"
+msgstr "Mengambil dokumen dari %s"
+
+#: ../src/notifications.js:238
+msgid "Fetching documents from online accounts"
+msgstr "Mengambil dokumend dari akun daring"
+
+#: ../src/password.js:46
+msgid "Password Required"
+msgstr "Perlu Sandi"
+
+#: ../src/password.js:49
+msgid "_Unlock"
+msgstr "B_uka Kunci"
+
+#: ../src/password.js:65
+#, javascript-format
+msgid "Document %s is locked and requires a password to be opened."
+msgstr "Dokumen %s terkunci dan memerlukan sandi agar terbuka."
+
+#: ../src/password.js:79
+msgid "_Password"
+msgstr "_Sandi"
+
+#: ../src/presentation.js:104
+msgid "Running in presentation mode"
+msgstr "Berjalan dalam mode presentasi"
+
+#: ../src/presentation.js:157
+msgid "Present On"
+msgstr "Dipresentasi Pada"
+
+#: ../src/preview.js:588
+msgid "Bookmark this page"
+msgstr "Tanda tauti halaman ini"
+
+#: ../src/preview.js:823 ../src/selections.js:857
+#, javascript-format
+msgid "Open with %s"
+msgstr "Buka dengan %s"
+
+#: ../src/preview.js:885
+msgid "Find Previous"
+msgstr "Cari Sebelumnya"
+
+#: ../src/preview.js:892
+msgid "Find Next"
+msgstr "Cari Selanjutnya"
+
+#: ../src/properties.js:61 ../src/resources/preview-menu.ui.h:9
+#: ../src/selections.js:767
+msgid "Properties"
+msgstr "Properti"
+
+#: ../src/properties.js:81
+msgctxt "Document Title"
+msgid "Title"
+msgstr "Judul"
+
+#: ../src/properties.js:90
+msgctxt "Document Author"
+msgid "Author"
+msgstr "Pengarang"
+
+#: ../src/properties.js:97
+msgid "Source"
+msgstr "Sumber"
+
+#: ../src/properties.js:103
+msgid "Date Modified"
+msgstr "Tanggal Diubah"
+
+#: ../src/properties.js:110
+msgid "Date Created"
+msgstr "Tanggal Dibuat"
+
+#: ../src/properties.js:119
+msgctxt "Document Type"
+msgid "Type"
+msgstr "Jenis"
+
+#: ../src/resources/app-menu.ui.h:1
+msgid "Fullscreen"
+msgstr "Layar penuh"
+
+#: ../src/resources/app-menu.ui.h:2
+msgid "Help"
+msgstr "Bantuan"
+
+#: ../src/resources/app-menu.ui.h:3
+msgid "About"
+msgstr "Tentang"
+
+#: ../src/resources/app-menu.ui.h:4
+msgid "Quit"
+msgstr "Keluar"
+
+#: ../src/resources/preview-context-menu.ui.h:1
+msgid "_Copy"
+msgstr "_Salin"
+
+#: ../src/resources/preview-menu.ui.h:1 ../src/selections.js:747
+#: ../src/selections.js:860
+msgid "Open"
+msgstr "Buka"
+
+#: ../src/resources/preview-menu.ui.h:2
+msgid "Edit"
+msgstr "Sunting"
+
+#: ../src/resources/preview-menu.ui.h:3
+msgid "Print…"
+msgstr "Cetak…"
+
+#: ../src/resources/preview-menu.ui.h:4
+msgid "Present"
+msgstr "Sajikan"
+
+#: ../src/resources/preview-menu.ui.h:5
+msgid "Zoom In"
+msgstr "Perbesar"
+
+#: ../src/resources/preview-menu.ui.h:6
+msgid "Zoom Out"
+msgstr "Perkecil"
+
+#: ../src/resources/preview-menu.ui.h:7
+msgid "Rotate ↶"
+msgstr "Putar ↶"
+
+#: ../src/resources/preview-menu.ui.h:8
+msgid "Rotate ↷"
+msgstr "Putar ↷"
+
+#: ../src/resources/selection-menu.ui.h:1
+msgid "Select All"
+msgstr "Pilih Semua"
+
+#: ../src/resources/selection-menu.ui.h:2
+msgid "Select None"
+msgstr "Jangan Pilih"
+
+#: ../src/search.js:114
+msgid "Category"
+msgstr "Kategori"
+
+#: ../src/search.js:119 ../src/search.js:180 ../src/search.js:265
+#: ../src/search.js:421
+msgid "All"
+msgstr "Semua"
+
+#: ../src/search.js:125
+msgid "Favorites"
+msgstr "Favorit"
+
+#: ../src/search.js:130
+msgid "Shared with you"
+msgstr "Berbagi dengan Anda"
+
+#: ../src/search.js:177
+msgctxt "Search Filter"
+msgid "Type"
+msgstr "Jenis"
+
+#: ../src/search.js:182
+msgid "Collections"
+msgstr "Koleksi"
+
+#: ../src/search.js:186
+msgid "PDF Documents"
+msgstr "Dokumen PDF"
+
+#: ../src/search.js:190
+msgid "Presentations"
+msgstr "Presentasi"
+
+#: ../src/search.js:193
+msgid "Spreadsheets"
+msgstr "Spreadsheet"
+
+#: ../src/search.js:196
+msgid "Text Documents"
+msgstr "Dokumen Teks"
+
+#: ../src/search.js:262
+msgid "Match"
+msgstr "Cocok"
+
+#: ../src/search.js:268
+msgctxt "Search Filter"
+msgid "Title"
+msgstr "Judul"
+
+#: ../src/search.js:271
+msgctxt "Search Filter"
+msgid "Author"
+msgstr "Pengarang"
+
+#: ../src/search.js:417
+msgid "Sources"
+msgstr "Sumber"
+
+#: ../src/selections.js:461
+msgid "You don't have any collections yet. Enter a new collection name above."
+msgstr "Anda belum punya koleksi apapun. Masukkan nama koleksi baru di atas."
+
+#: ../src/selections.js:604
+msgid "Create new collection"
+msgstr "Buat koleksi baru"
+
+#: ../src/selections.js:640
+msgctxt "Dialog Title"
+msgid "Collections"
+msgstr "Koleksi"
+
+#: ../src/selections.js:752
+msgid "Print"
+msgstr "Cetak"
+
+#: ../src/selections.js:757
+msgid "Delete"
+msgstr "Hapus"
+
+#: ../src/selections.js:762
+msgid "Share"
+msgstr "Berbagi"
+
+#: ../src/selections.js:772
+msgid "Add to Collection"
+msgstr "Tambah ke Koleksi"
+
+#: ../src/sharing.js:98
+msgid "Sharing Settings"
+msgstr "Pengaturan Berbagi"
+
+#: ../src/sharing.js:102
+msgid "Done"
+msgstr "Selesai"
+
+#: ../src/sharing.js:135
+msgid "Document permissions"
+msgstr "Hak dokumen"
+
+#: ../src/sharing.js:142 ../src/sharing.js:320
+msgid "Change"
+msgstr "Ubah"
+
+#: ../src/sharing.js:166 ../src/sharing.js:295
+msgid "Private"
+msgstr "Pribadi"
+
+#: ../src/sharing.js:176 ../src/sharing.js:288
+msgid "Public"
+msgstr "Umum"
+
+#: ../src/sharing.js:180 ../src/sharing.js:290
+msgid "Everyone can edit"
+msgstr "Semua orang dapat menyunting"
+
+#: ../src/sharing.js:187
+msgid "Add people"
+msgstr "Tambah orang"
+
+#: ../src/sharing.js:194
+msgid "Enter an email address"
+msgstr "Masukkan alamat surel"
+
+#: ../src/sharing.js:209 ../src/sharing.js:376
+msgid "Can edit"
+msgstr "Dapat menyunting"
+
+#: ../src/sharing.js:209 ../src/sharing.js:379
+msgid "Can view"
+msgstr "Dapat menilik"
+
+#: ../src/sharing.js:216
+msgid "Add"
+msgstr "Tambah"
+
+#: ../src/sharing.js:292
+msgid "Everyone can read"
+msgstr "Semua bisa membaca"
+
+#: ../src/sharing.js:307
+msgid "Save"
+msgstr "Simpan"
+
+#: ../src/sharing.js:373
+msgid "Owner"
+msgstr "Pemilik"
+
+#: ../src/sharing.js:442
+#, javascript-format
+msgid "You can ask %s for access"
+msgstr "Anda dapat meminta akses ke %s"
+
+#: ../src/sharing.js:479 ../src/sharing.js:515 ../src/sharing.js:572
+#: ../src/sharing.js:589 ../src/sharing.js:608
+msgid "The document was not updated"
+msgstr "Dokumen tak dimutakhirkan"
+
+#: ../src/shellSearchProvider.js:294
+msgid "Untitled Document"
+msgstr "Dokumen Tanpa Judul"
+
+#: ../src/trackerController.js:170
+msgid "Unable to fetch the list of documents"
+msgstr "Tak bisa mengambil daftar dokumen"
+
+#: ../src/view.js:62 ../src/view.js:93
+msgid "Load More"
+msgstr "Muat Lebih Banyak"
+
+#: ../src/view.js:307
+msgid "Yesterday"
+msgstr "Kemarin"
+
+#: ../src/view.js:309
+#, javascript-format
+msgid "%d day ago"
+msgid_plural "%d days ago"
+msgstr[0] "%d hari yang lalu"
+
+#: ../src/view.js:313
+msgid "Last week"
+msgstr "Minggu lalu"
+
+#: ../src/view.js:315
+#, javascript-format
+msgid "%d week ago"
+msgid_plural "%d weeks ago"
+msgstr[0] "%d minggu yang lalu"
+
+#: ../src/view.js:319
+msgid "Last month"
+msgstr "Bulan lalu"
+
+#: ../src/view.js:321
+#, javascript-format
+msgid "%d month ago"
+msgid_plural "%d months ago"
+msgstr[0] "%d bulan yang laly"
+
+#: ../src/view.js:325
+msgid "Last year"
+msgstr "Tahun lalu"
+
+#: ../src/view.js:327
+#, javascript-format
+msgid "%d year ago"
+msgid_plural "%d years ago"
+msgstr[0] "%d tahun yang lalu"

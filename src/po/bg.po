@@ -1,0 +1,717 @@
+# Bulgarian translation of gnome-documents po-file.
+# Copyright (C) 2011, 2012 Free Software Foundation, Inc.
+# This file is distributed under the same license as the gnome-documents package.
+# Ivaylo Valkov <ivaylo@e-valkov.org>, 2011, 2012.
+# Alexander Shopov <ash@kambanaria.org>, 2012.
+# Valentin Laskov <laskov@festa.bg>, 2013.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: gnome-documents master\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-09-07 17:30+0300\n"
+"PO-Revision-Date: 2014-09-03 10:42+0300\n"
+"Last-Translator: Ivaylo Valkov <ivaylO@e-valkov.org>\n"
+"Language-Team: Bulgarian <dict@fsa-bg.org>\n"
+"Language: bg\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:1
+#: ../data/org.gnome.Documents.desktop.in.h:1 ../src/application.js:121
+#: ../src/mainWindow.js:52 ../src/mainWindow.js:302
+msgid "Documents"
+msgstr "Документи"
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:2
+msgid "A document manager application for GNOME"
+msgstr "Програма за управление на документи в GNOME"
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:3
+msgid ""
+"A simple application to access, organize and share your documents on GNOME. "
+"It is meant to be a simple and elegant replacement for using a file manager "
+"to deal with documents. Seamless cloud integration is offered through GNOME "
+"Online Accounts."
+msgstr ""
+"Опростено приложение за достъп, организиране и споделяне на документите в "
+"GNOME. Предназначено е да бъде олекотен и елегантен заместник на файловия "
+"мениджър при работа с документи. Предлага постоянна интеграция с облака чрез "
+"регистрациите на GNOME."
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:4
+msgid "It lets you:"
+msgstr "Чрез него можете да:"
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:5
+msgid "View recent local and online documents"
+msgstr "Преглед на скоро отваряните документи – локални и в Интернет"
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:6
+msgid "Access your Google, ownCloud or OneDrive content"
+msgstr "Достъп до вашите данни в Google, ownCloud или OneDrive"
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:7
+msgid "Search through documents"
+msgstr "Търсене в документите"
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:8
+msgid "See new documents shared by friends"
+msgstr "Преглед на новите документи споделени от вашите приятели"
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:9
+msgid "View documents fullscreen"
+msgstr "Преглед на документите на цял екран"
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:10
+msgid "Print documents"
+msgstr "Отпечатване на документи"
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:11
+msgid "Select favorites"
+msgstr "Избор на любими документи"
+
+#: ../data/org.gnome.Documents.appdata.xml.in.h:12
+msgid "Allow opening full featured editor for non-trivial changes"
+msgstr "Разрешаване на отварянето в специализиран редактор при повече промени"
+
+#: ../data/org.gnome.Documents.desktop.in.h:2
+msgid "Access, manage and share documents"
+msgstr "Преглед, управление и споделяне на документи"
+
+#: ../data/org.gnome.Documents.desktop.in.h:3
+msgid "Docs;PDF;Document;"
+msgstr "Документи;PDF;Документ;Docs;PDF;Document;"
+
+#: ../data/org.gnome.documents.gschema.xml.h:1
+msgid "View as"
+msgstr "Изглед като"
+
+#: ../data/org.gnome.documents.gschema.xml.h:2
+msgid "View as type"
+msgstr "Изглед като вид"
+
+#: ../data/org.gnome.documents.gschema.xml.h:3
+msgid "Window size"
+msgstr "Размер на прозореца"
+
+#: ../data/org.gnome.documents.gschema.xml.h:4
+msgid "Window size (width and height)."
+msgstr "Размер на прозореца (широчина и височина)."
+
+#: ../data/org.gnome.documents.gschema.xml.h:5
+msgid "Window position"
+msgstr "Местоположение на прозореца"
+
+#: ../data/org.gnome.documents.gschema.xml.h:6
+msgid "Window position (x and y)."
+msgstr "Местоположение на прозореца (x и y)."
+
+#: ../data/org.gnome.documents.gschema.xml.h:7
+msgid "Window maximized"
+msgstr "Максимизиран прозорец"
+
+#: ../data/org.gnome.documents.gschema.xml.h:8
+msgid "Window maximized state"
+msgstr "Максимизирано състояние на прозорец"
+
+#: ../src/documents.js:621
+msgid "Failed to print document"
+msgstr "Документът не може да бъде отпечатан"
+
+#: ../src/documents.js:658 ../src/search.js:427
+msgid "Local"
+msgstr "Местни"
+
+#: ../src/documents.js:679
+msgid "GNOME"
+msgstr "GNOME"
+
+#: ../src/documents.js:680
+msgid "Getting Started with Documents"
+msgstr "Първи стъпки с документи"
+
+#: ../src/documents.js:696 ../src/documents.js:877 ../src/documents.js:939
+#: ../src/documents.js:1047
+msgid "Collection"
+msgstr "Колекция"
+
+# Това е официалният превод, който използват от Google.
+# Не ми харесва, но предполагам, че друго ще създаде объркване.
+#: ../src/documents.js:756
+msgid "Google Docs"
+msgstr "Документи от Google "
+
+#: ../src/documents.js:757
+msgid "Google"
+msgstr "Google"
+
+#: ../src/documents.js:879 ../src/documents.js:1049
+msgid "Spreadsheet"
+msgstr "Електронна таблица"
+
+#: ../src/documents.js:881 ../src/documents.js:1051 ../src/presentation.js:47
+msgid "Presentation"
+msgstr "Презентация"
+
+#: ../src/documents.js:883 ../src/documents.js:1053
+msgid "Document"
+msgstr "Документ"
+
+#: ../src/documents.js:917
+msgid "ownCloud"
+msgstr "ownCloud"
+
+#: ../src/documents.js:981 ../src/documents.js:982
+msgid "OneDrive"
+msgstr "OneDrive"
+
+#: ../src/documents.js:1181
+msgid "Please check the network connection."
+msgstr "Проверете връзката с мрежата."
+
+#: ../src/documents.js:1184
+msgid "Please check the network proxy settings."
+msgstr "Проверете настройките на сървъра-посредник."
+
+#: ../src/documents.js:1187
+msgid "Unable to sign in to the document service."
+msgstr "Неуспешна идентификация към услугата за документи."
+
+#: ../src/documents.js:1190
+msgid "Unable to locate this document."
+msgstr "Този документ не може да бъде намерен."
+
+#: ../src/documents.js:1193
+#, javascript-format
+msgid "Hmm, something is fishy (%d)."
+msgstr "Нещо не е наред (%d)."
+
+#: ../src/documents.js:1211
+#, javascript-format
+msgid "Oops! Unable to load “%s”"
+msgstr "„%s“ не може да бъде зареден"
+
+#: ../src/edit.js:192
+msgid "View"
+msgstr "Изглед"
+
+#: ../src/embed.js:142
+msgid "No Documents Found"
+msgstr "Не са открити документи"
+
+#: ../src/embed.js:163
+#, javascript-format
+msgid "You can add your online accounts in %s"
+msgstr "Можете да добавите регистрациите си в %s"
+
+#: ../src/embed.js:167
+msgid "Settings"
+msgstr "Системни настройки"
+
+#: ../src/lib/gd-nav-bar.c:242
+#, c-format
+msgid "Page %u of %u"
+msgstr "Страница %u от %u"
+
+#: ../src/lib/gd-pdf-loader.c:247
+msgid "Unable to load the document"
+msgstr "Неуспешно зареждане на документа"
+
+#: ../src/lib/gd-pdf-loader.c:715
+msgid "LibreOffice is required to view this document"
+msgstr "За преглед на този документ е нужен LibreOffice"
+
+#. Translators: %s is the number of the page, already formatted
+#. * as a string, for example "Page 5".
+#.
+#: ../src/lib/gd-places-bookmarks.c:315
+#, c-format
+msgid "Page %s"
+msgstr "Страница %s"
+
+#: ../src/lib/gd-places-bookmarks.c:378
+msgid "No bookmarks"
+msgstr "Няма отметки"
+
+#: ../src/lib/gd-places-bookmarks.c:386 ../src/lib/gd-places-links.c:257
+#: ../src/view.js:71
+msgid "Loading…"
+msgstr "Зареждане…"
+
+#: ../src/lib/gd-places-bookmarks.c:651 ../src/preview.js:580
+msgid "Bookmarks"
+msgstr "Отметки"
+
+#: ../src/lib/gd-places-links.c:342
+msgid "No table of contents"
+msgstr "Няма таблица на съдържанието"
+
+#: ../src/lib/gd-places-links.c:518
+msgid "Contents"
+msgstr "Съдържание"
+
+#: ../src/mainToolbar.js:79
+msgid "Search"
+msgstr "Търсене"
+
+#: ../src/mainToolbar.js:87
+msgid "Back"
+msgstr "Назад"
+
+#: ../src/mainToolbar.js:132
+msgid "View items as a list"
+msgstr "Обектите да са подредени в списък"
+
+#: ../src/mainToolbar.js:138
+msgid "View items as a grid of icons"
+msgstr "Обектите да са подредени в решетка"
+
+#: ../src/mainToolbar.js:168
+msgid "Click on items to select them"
+msgstr "Натиснете върху обектите, за да ги изберете."
+
+#: ../src/mainToolbar.js:170
+#, javascript-format
+msgid "%d selected"
+msgid_plural "%d selected"
+msgstr[0] "Избран е %d обект"
+msgstr[1] "Избрани са %d обекта"
+
+#: ../src/mainToolbar.js:200
+msgid "Cancel"
+msgstr "Отказ"
+
+#: ../src/mainToolbar.js:242
+msgid "Select Items"
+msgstr "Избор на обекти"
+
+#: ../src/mainWindow.js:301
+msgid "translator-credits"
+msgstr ""
+"Валентин Ласков <laskov@festa.bg>\n"
+"Ивайло Вълков <ivaylo@e-valkov.org>\n"
+"Александър Шопов <ash@kambanaria.org>\n"
+"\n"
+"Проектът за превод на GNOME има нужда от подкрепа.\n"
+"Научете повече за нас на <a href=\"http://gnome.cult.bg\">http://gnome.cult."
+"bg</a>\n"
+"Докладвайте за грешки на <a href=\"http://gnome.cult.bg/bugs\">http://gnome."
+"cult.bg/bugs</a>"
+
+#: ../src/mainWindow.js:303
+msgid "A document manager application"
+msgstr "Програма за управление на документи"
+
+#: ../src/notifications.js:50
+msgid "Selected item has been deleted"
+msgid_plural "Selected items have been deleted"
+msgstr[0] "Избраният обект е изтрит"
+msgstr[1] "Избраните обекти са изтрити"
+
+#: ../src/notifications.js:57
+msgid "Undo"
+msgstr "Отмяна"
+
+#: ../src/notifications.js:157
+#, javascript-format
+msgid "Printing “%s”: %s"
+msgstr "Отпечатване на „%s“: %s"
+
+#: ../src/notifications.js:213
+msgid "Your documents are being indexed"
+msgstr "Документите в момента се индексират"
+
+#: ../src/notifications.js:214
+msgid "Some documents might not be available during this process"
+msgstr "По време на този процес някои документи може да не са достъпни"
+
+#: ../src/notifications.js:236
+#, javascript-format
+msgid "Fetching documents from %s"
+msgstr "Извличане на документи от %s"
+
+#: ../src/notifications.js:238
+msgid "Fetching documents from online accounts"
+msgstr "Извличане на документи от регистрации онлайн"
+
+#: ../src/password.js:46
+msgid "Password Required"
+msgstr "Изисква се парола"
+
+#: ../src/password.js:49
+msgid "_Unlock"
+msgstr "_Отключване"
+
+#: ../src/password.js:65
+#, javascript-format
+msgid "Document %s is locked and requires a password to be opened."
+msgstr "Документът %s е заключен и изисква парола, за да бъде отключен."
+
+#: ../src/password.js:79
+msgid "_Password"
+msgstr "_Парола"
+
+#: ../src/presentation.js:104
+msgid "Running in presentation mode"
+msgstr "Работа в режим презентация"
+
+#: ../src/presentation.js:157
+msgid "Present On"
+msgstr "Презентация на"
+
+#: ../src/preview.js:588
+msgid "Bookmark this page"
+msgstr "Отметка за тази страница"
+
+#: ../src/preview.js:823 ../src/selections.js:857
+#, javascript-format
+msgid "Open with %s"
+msgstr "Отваряне с %s"
+
+#: ../src/preview.js:885
+msgid "Find Previous"
+msgstr "Предишна поява"
+
+#: ../src/preview.js:892
+msgid "Find Next"
+msgstr "Следваща поява"
+
+#: ../src/properties.js:61 ../src/resources/preview-menu.ui.h:9
+#: ../src/selections.js:767
+msgid "Properties"
+msgstr "Свойства"
+
+#: ../src/properties.js:81
+msgctxt "Document Title"
+msgid "Title"
+msgstr "Заглавие"
+
+#: ../src/properties.js:90
+msgctxt "Document Author"
+msgid "Author"
+msgstr "Автор"
+
+#: ../src/properties.js:97
+msgid "Source"
+msgstr "Източник"
+
+#: ../src/properties.js:103
+msgid "Date Modified"
+msgstr "Дата на промяна"
+
+#: ../src/properties.js:110
+msgid "Date Created"
+msgstr "Дата на създаване"
+
+#: ../src/properties.js:119
+msgctxt "Document Type"
+msgid "Type"
+msgstr "Вид"
+
+#: ../src/resources/app-menu.ui.h:1
+msgid "Fullscreen"
+msgstr "На цял екран"
+
+#: ../src/resources/app-menu.ui.h:2
+msgid "Help"
+msgstr "Помощ"
+
+#: ../src/resources/app-menu.ui.h:3
+msgid "About"
+msgstr "Относно"
+
+#: ../src/resources/app-menu.ui.h:4
+msgid "Quit"
+msgstr "Спиране на програмата"
+
+#: ../src/resources/preview-context-menu.ui.h:1
+msgid "_Copy"
+msgstr "_Копиране"
+
+#: ../src/resources/preview-menu.ui.h:1 ../src/selections.js:747
+#: ../src/selections.js:860
+msgid "Open"
+msgstr "Отваряне"
+
+#: ../src/resources/preview-menu.ui.h:2
+msgid "Edit"
+msgstr "Редактиране"
+
+#: ../src/resources/preview-menu.ui.h:3
+msgid "Print…"
+msgstr "Отпечатване…"
+
+#: ../src/resources/preview-menu.ui.h:4
+msgid "Present"
+msgstr "Презентация"
+
+#: ../src/resources/preview-menu.ui.h:5
+msgid "Zoom In"
+msgstr "Увеличаване"
+
+#: ../src/resources/preview-menu.ui.h:6
+msgid "Zoom Out"
+msgstr "Намаляване"
+
+#: ../src/resources/preview-menu.ui.h:7
+msgid "Rotate ↶"
+msgstr "Завъртане ↶"
+
+#: ../src/resources/preview-menu.ui.h:8
+msgid "Rotate ↷"
+msgstr "Завъртане ↷"
+
+#: ../src/resources/selection-menu.ui.h:1
+msgid "Select All"
+msgstr "Избор на всичко"
+
+#: ../src/resources/selection-menu.ui.h:2
+msgid "Select None"
+msgstr "Изчистване на избора"
+
+#: ../src/search.js:114
+msgid "Category"
+msgstr "Категория"
+
+#: ../src/search.js:119 ../src/search.js:180 ../src/search.js:265
+#: ../src/search.js:421
+msgid "All"
+msgstr "Всички"
+
+#: ../src/search.js:125
+msgid "Favorites"
+msgstr "Любими"
+
+#: ../src/search.js:130
+msgid "Shared with you"
+msgstr "Споделени с вас"
+
+#: ../src/search.js:177
+msgctxt "Search Filter"
+msgid "Type"
+msgstr "Вид"
+
+#: ../src/search.js:182
+msgid "Collections"
+msgstr "Колекции"
+
+#: ../src/search.js:186
+msgid "PDF Documents"
+msgstr "Документи — PDF"
+
+#: ../src/search.js:190
+msgid "Presentations"
+msgstr "Презентации"
+
+#: ../src/search.js:193
+msgid "Spreadsheets"
+msgstr "Електронни таблици"
+
+#: ../src/search.js:196
+msgid "Text Documents"
+msgstr "Документи — текст"
+
+#: ../src/search.js:262
+msgid "Match"
+msgstr "Съвпадение"
+
+#: ../src/search.js:268
+msgctxt "Search Filter"
+msgid "Title"
+msgstr "Заглавие"
+
+#: ../src/search.js:271
+msgctxt "Search Filter"
+msgid "Author"
+msgstr "Автор"
+
+#: ../src/search.js:417
+msgid "Sources"
+msgstr "Изходни файлове"
+
+#: ../src/selections.js:461
+msgid "You don't have any collections yet. Enter a new collection name above."
+msgstr "Няма създадени колекции. Въведете име на нова колекция по-горе."
+
+#: ../src/selections.js:604
+msgid "Create new collection"
+msgstr "Създаване на нова колекция"
+
+#: ../src/selections.js:640
+msgctxt "Dialog Title"
+msgid "Collections"
+msgstr "Колекции"
+
+#: ../src/selections.js:752
+msgid "Print"
+msgstr "Печат"
+
+#: ../src/selections.js:757
+msgid "Delete"
+msgstr "Изтриване"
+
+#: ../src/selections.js:762
+msgid "Share"
+msgstr "Споделяне"
+
+#: ../src/selections.js:772
+msgid "Add to Collection"
+msgstr "Добавяне към колекция"
+
+#: ../src/sharing.js:98
+msgid "Sharing Settings"
+msgstr "Настройки за споделяне"
+
+#: ../src/sharing.js:102
+msgid "Done"
+msgstr "Готово"
+
+#: ../src/sharing.js:135
+msgid "Document permissions"
+msgstr "Права за документа"
+
+#: ../src/sharing.js:142 ../src/sharing.js:320
+msgid "Change"
+msgstr "Смяна"
+
+#: ../src/sharing.js:166 ../src/sharing.js:295
+msgid "Private"
+msgstr "Личен"
+
+#: ../src/sharing.js:176 ../src/sharing.js:288
+msgid "Public"
+msgstr "Публичен"
+
+#: ../src/sharing.js:180 ../src/sharing.js:290
+msgid "Everyone can edit"
+msgstr "Всеки може да редактира"
+
+#: ../src/sharing.js:187
+msgid "Add people"
+msgstr "Добавяне на хора"
+
+#: ../src/sharing.js:194
+msgid "Enter an email address"
+msgstr "Въведете адрес на е-поща"
+
+#: ../src/sharing.js:209 ../src/sharing.js:376
+msgid "Can edit"
+msgstr "Може да редактира"
+
+#: ../src/sharing.js:209 ../src/sharing.js:379
+msgid "Can view"
+msgstr "Може да вижда"
+
+#: ../src/sharing.js:216
+msgid "Add"
+msgstr "Добавяне"
+
+#: ../src/sharing.js:292
+msgid "Everyone can read"
+msgstr "Всеки може да чете"
+
+#: ../src/sharing.js:307
+msgid "Save"
+msgstr "Запис"
+
+#: ../src/sharing.js:373
+msgid "Owner"
+msgstr "Собственик"
+
+#: ../src/sharing.js:442
+#, javascript-format
+msgid "You can ask %s for access"
+msgstr "Може да помолите %s за достъп"
+
+#: ../src/sharing.js:479 ../src/sharing.js:515 ../src/sharing.js:572
+#: ../src/sharing.js:589 ../src/sharing.js:608
+msgid "The document was not updated"
+msgstr "Документът не е бил обновен"
+
+#: ../src/shellSearchProvider.js:294
+msgid "Untitled Document"
+msgstr "Документ без име"
+
+#: ../src/trackerController.js:170
+msgid "Unable to fetch the list of documents"
+msgstr "Списъкът с документи не може да бъде извлечен"
+
+#: ../src/view.js:62 ../src/view.js:93
+msgid "Load More"
+msgstr "Зареждане на още"
+
+#: ../src/view.js:307
+msgid "Yesterday"
+msgstr "Вчера"
+
+#: ../src/view.js:309
+#, javascript-format
+msgid "%d day ago"
+msgid_plural "%d days ago"
+msgstr[0] "Преди %d ден"
+msgstr[1] "Преди %d дена"
+
+#: ../src/view.js:313
+msgid "Last week"
+msgstr "Последната седмица"
+
+#: ../src/view.js:315
+#, javascript-format
+msgid "%d week ago"
+msgid_plural "%d weeks ago"
+msgstr[0] "Преди %d седмица"
+msgstr[1] "Преди %d седмици"
+
+#: ../src/view.js:319
+msgid "Last month"
+msgstr "Последният месец"
+
+#: ../src/view.js:321
+#, javascript-format
+msgid "%d month ago"
+msgid_plural "%d months ago"
+msgstr[0] "Преди %d месец"
+msgstr[1] "Преди %d месеца"
+
+#: ../src/view.js:325
+msgid "Last year"
+msgstr "Последната година"
+
+#: ../src/view.js:327
+#, javascript-format
+msgid "%d year ago"
+msgid_plural "%d years ago"
+msgstr[0] "Преди %d година"
+msgstr[1] "Преди %d години"
+
+#~ msgid ""
+#~ "<li>View recent local and online documents</li> <li>Access your Google, "
+#~ "ownCloud or SkyDrive content</li> <li>Search through documents</li> "
+#~ "<li>See new documents shared by friends</li> <li>View documents "
+#~ "fullscreen</li> <li>Print documents</li> <li>Select favorites</li> "
+#~ "<li>Allow opening full featured editor for non-trivial changes</li>"
+#~ msgstr ""
+#~ "<li>Преглеждате скорошни локални и онлайн документи</li> <li>Управлявате "
+#~ "съдържание в Google, ownCloud или SkyDrive</li> <li>Търсите в документи</"
+#~ "li> <li>Преглеждате нови документи, споделени от приятели</li> "
+#~ "<li>Преглеждате документи на цял екран</li> <li>Отпечатвате документи</"
+#~ "li> <li>Избирате любими</li> <li>Отворите пълнофункционален редактор за "
+#~ "по-сложни промени</li>"
+
+#~ msgid "Skydrive"
+#~ msgstr "SkyDrive"
+
+#~ msgid "Results for “%s”"
+#~ msgstr "Резултати за „%s“"
+
+#~ msgid "Close"
+#~ msgstr "Затвори"
+
+#~ msgid "Grid"
+#~ msgstr "Мрежа"
+
+#~ msgid "List"
+#~ msgstr "Списък"
