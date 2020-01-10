@@ -1,0 +1,31 @@
+From 9fc9ac1cbd811a907f623a4b31858a3b8072222d Mon Sep 17 00:00:00 2001
+From: Christopher Davis <brainblasted@disroot.org>
+Date: Fri, 18 Jan 2019 06:57:25 -0500
+Subject: [PATCH] src/meson.build: allow libgdprivate-1.0.so to find libgd
+
+This is thanks to a tip from Jan Tojnar in
+https://gitlab.gnome.org/GNOME/gnome-documents/issues/5.
+Previously libgdprivate could not find libgd, which caused the issue in https://gitlab.gnome.org/GNOME/gnome-documents/issues/12
+
+Closes https://gitlab.gnome.org/GNOME/gnome-documents/issues/12 and closes https://gitlab.gnome.org/GNOME/gnome-documents/issues/5
+---
+ src/meson.build | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/src/meson.build b/src/meson.build
+index 27380c7c0174..2ffbb0ecc5f2 100644
+--- a/src/meson.build
++++ b/src/meson.build
+@@ -151,7 +151,8 @@ libgdprivate = shared_library(
+   dependencies: documents_deps,
+   c_args: cflags,
+   install: true,
+-  install_dir: documents_pkglibdir
++  install_dir: documents_pkglibdir,
++  install_rpath: documents_pkglibdir
+ )
+ 
+ gir_sources = sources + headers
+-- 
+2.20.1
+

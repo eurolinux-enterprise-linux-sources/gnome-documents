@@ -7,7 +7,7 @@
 
 Name:           gnome-documents
 Version:        3.28.2
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        A document manager application for GNOME
 
 License:        GPLv2+
@@ -26,6 +26,9 @@ Patch3:         gnome-documents-tracker.patch
 
 # https://bugzilla.redhat.com/show_bug.cgi?id=1611565
 Patch4:         gnome-documents-dont-attempt-to-load-collections.patch
+
+# https://bugzilla.redhat.com/show_bug.cgi?id=1690935
+Patch5:         gnome-documents-meson.build-allow-libgdprivate-1.0.so-to-find-libgd.patch
 
 BuildRequires:  pkgconfig(evince-document-3.0) >= %{evince_version}
 BuildRequires:  pkgconfig(evince-view-3.0) >= %{evince_version}
@@ -74,6 +77,7 @@ Summary: Common libraries and data files for %{name}
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 
 %build
 %meson -Dgetting_started=true
@@ -135,6 +139,10 @@ gtk-update-icon-cache %{_datadir}/icons/hicolor >&/dev/null || :
 %{_libdir}/gnome-documents/
 
 %changelog
+* Wed Mar 20 2019 Debarshi Ray <rishi@fedoraproject.org> - 3.28.2-2
+- Make documents show up when started through search provider
+  Resolves: #1690935
+
 * Fri Aug 24 2018 Debarshi Ray <rishi@fedoraproject.org> - 3.28.2-1
 - Update to 3.28.2
 - Rebased downstream patches
