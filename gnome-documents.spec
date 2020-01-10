@@ -1,10 +1,11 @@
 %define evince_version 3.13.3
+%define gjs_version 1.50.2-3
 %define gnome_online_miners_version 3.22.0-2
 %define gtk3_version 3.19.1
 
 Name:           gnome-documents
 Version:        3.22.2
-Release:        5%{?dist}
+Release:        8%{?dist}
 Summary:        A document manager application for GNOME
 
 License:        GPLv2+
@@ -18,6 +19,13 @@ Source0:        https://download.gnome.org/sources/%{name}/3.22/%{name}-%{versio
 # https://bugzilla.redhat.com/show_bug.cgi?id=1444437
 Patch0:         gnome-documents-skydrive-printing-and-lok-fixes.patch
 
+# https://bugzilla.redhat.com/show_bug.cgi?id=1517770
+# https://bugzilla.redhat.com/show_bug.cgi?id=1517704
+Patch1:         gnome-documents-new-gjs-gtk.patch
+
+# https://bugzilla.redhat.com/show_bug.cgi?id=1517770
+Patch2:         gnome-documents-getting-started.patch
+
 BuildRequires:  autoconf automake libtool
 BuildRequires:  gnome-common
 BuildRequires:  yelp-tools
@@ -25,7 +33,7 @@ BuildRequires:  pkgconfig(evince-document-3.0) >= %{evince_version}
 BuildRequires:  pkgconfig(evince-view-3.0) >= %{evince_version}
 BuildRequires:  pkgconfig(webkit2gtk-4.0)
 BuildRequires:  pkgconfig(gtk+-3.0) >= %{gtk3_version}
-BuildRequires:  pkgconfig(gjs-1.0)
+BuildRequires:  pkgconfig(gjs-1.0) >= %{gjs_version}
 BuildRequires:  pkgconfig(tracker-control-1.0) >= 0.17.0
 BuildRequires:  pkgconfig(tracker-sparql-1.0) >= 0.17.0
 BuildRequires:  pkgconfig(goa-1.0)
@@ -43,6 +51,7 @@ BuildRequires:  poppler-utils
 BuildRequires:  docbook-style-xsl
 
 Requires:       evince-libs%{?_isa} >= %{evince_version}
+Requires:       gjs >= %{gjs_version}
 Requires:       gtk3%{?_isa} >= %{gtk3_version}
 Requires:       gnome-online-miners >= %{gnome_online_miners_version}
 Requires:       libgepub%{?_isa}
@@ -62,6 +71,8 @@ Summary: Common libraries and data files for %{name}
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p1
+%patch2 -p1
 
 %build
 autoreconf --force --install
@@ -123,6 +134,24 @@ gtk-update-icon-cache %{_datadir}/icons/hicolor >&/dev/null || :
 %{_libdir}/gnome-documents/
 
 %changelog
+* Tue Dec 12 2017 Debarshi Ray <rishi@fedoraproject.org> - 3.22.2-8
+- Initialize the getting started PDF only when presenting a UI, and before any
+  SPARQL has been submitted
+- Suppress WARNINGs from GJS 1.50.0 by using var instead of let/const for
+  exported symbols
+- Use the standard dialect of String.prototype.replace
+  Resolves: #1517770
+
+* Wed Dec 06 2017 Debarshi Ray <rishi@fedoraproject.org> - 3.22.2-7
+- Suppress WARNINGs from GJS 1.50.0 about replacing GObject signal methods
+  Resolves: #1517770
+
+* Mon Nov 27 2017 Debarshi Ray <rishi@fedoraproject.org> - 3.22.2-6
+- Adjust the LOKDocView detection to work with GJS 1.48.0
+- Suppress WARNINGs from GJS 1.50.0 by using var instead of let/const for
+  exported symbols
+  Resolves: #1517704
+
 * Fri Jun 09 2017 Debarshi Ray <rishi@fedoraproject.org> - 3.22.2-5
 - Fix CRITICALs on invoking the application when a primary instance is present
   Resolves: #1436566
